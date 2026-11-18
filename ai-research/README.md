@@ -2,7 +2,7 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_7 vetted findings · updated 2026-11-18 · ranked by composite · findings from the latest 31 days · [94 held for review](../REVIEW.md)._
+_11 vetted findings · updated 2026-11-18 · ranked by composite · findings from the latest 31 days · [93 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -39,10 +39,26 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
+| Cost Efficiency | 4 |
 | Evaluation & Benchmarks | 4 |
-| Cost Efficiency | 1 |
+| Work Efficiency | 1 |
 | Alignment & Reliability | 1 |
 | Agents & Harnesses | 1 |
+
+## Cost Efficiency
+
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **56.23** · Nov 12, 2026  
+  If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.  
+  _[Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)_
+- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **54.25** · Nov 9, 2026  
+  Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.  
+  _[UC Berkeley Sky Lab (Park et al.)](https://arxiv.org/abs/2611.12122)_
+- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **54.25** · Nov 9, 2026  
+  Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.  
+  _[York University (Sepidband et al.)](https://arxiv.org/abs/2611.13241)_
+- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **46.75** · Nov 3, 2026  
+  Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.  
+  _[Belcak et al.](https://arxiv.org/abs/2611.05306)_
 
 ## Evaluation & Benchmarks
 
@@ -59,11 +75,11 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.  
   _[source](https://arxiv.org/abs/2610.28522)_
 
-## Cost Efficiency
+## Work Efficiency
 
-- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **56.48** · Nov 12, 2026  
-  If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.  
-  _[Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)_
+- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **55.0** · Nov 17, 2026  
+  Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.  
+  _[@craigmart via Hacker News](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)_
 
 ## Alignment & Reliability
 

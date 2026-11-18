@@ -350,7 +350,7 @@ def test_efficiency_claims_empty():
     assert b.efficiency_claims([eff("x", "air.evals")]) == []
 
 
-def test_efficiency_findings_are_recent_in_domain_capped_at_three():
+def test_efficiency_findings_are_recent_in_domain_capped():
     rows = [
         {**row("a", "2026-10-19"), "domain_id": COST},
         {**row("b", "2026-10-18"), "domain_id": WORK},
@@ -359,8 +359,43 @@ def test_efficiency_findings_are_recent_in_domain_capped_at_three():
         {**row("e", "2026-10-16"), "domain_id": COST},
         {**row("f", "2026-10-15"), "domain_id": WORK},
     ]
-    assert ids(b.efficiency_findings(rows, NOW, 7)) == ["a", "b", "e"]
+    assert ids(b.efficiency_findings(rows, NOW, 7)) == ["a", "b", "e", "f"]
+    assert ids(b.efficiency_findings(rows, NOW, 7, n_max=3)) == ["a", "b", "e"]
     assert b.efficiency_findings([], NOW, 7) == []
+
+
+def test_efficiency_findings_window_reaches_back_a_month():
+    rows = [{**row("old", "2026-10-01"), "domain_id": COST}]
+    assert ids(b.efficiency_findings(rows, NOW, b.EFFICIENCY_FINDINGS_DAYS)) == ["old"]
+
+
+def test_newest_evidence_day_skips_undated_and_month_only():
+    c = eff(
+        "x",
+        COST,
+        evidence=[
+            {"stance": "supports", "url": "https://a", "published": "2026-11-09"},
+            {"stance": "supports", "url": "https://b"},
+            {"stance": "supports", "url": "https://c", "published": "2026-12"},
+            {"stance": "supports", "url": "https://d", "published": "2025-07-18"},
+        ],
+    )
+    assert b.newest_evidence_day(c) == "2026-11-09"
+    assert b.newest_evidence_day(eff("y", COST)) == ""
+
+
+def test_efficiency_claims_rank_by_newest_evidence_not_just_ledger_change():
+    fed = eff(
+        "fed",
+        COST,
+        "2025-07-01",
+        changed_on="2026-10-28",
+        evidence=[{"stance": "supports", "url": "https://n", "published": "2026-11-09"}],
+    )
+    quiet = eff("quiet", COST, "2025-07-01", changed_on="2026-10-30")
+    assert ids(b.efficiency_claims([quiet, fed])) == ["fed", "quiet"]
+    assert b.claim_updated(fed) == "2026-11-09"
+    assert b.claim_updated(quiet) == "2026-10-30"
 
 
 # --- What to learn (ISA F11) ---
@@ -729,3 +764,14 @@ def test_learning_all_orders_newest_first_then_composite_and_is_empty_unconfigur
     assert ids(b.learning_all([old, new], LEARN)[0]) == ["new", "old"]
     assert ids(b.learning_all([low, high], LEARN)[0]) == ["high", "low"]
     assert b.learning_all([old], {}) == ([], {})
+
+
+def test_newest_evidence_day_skips_invalid_and_future_dates():
+    claim = {
+        "evidence": [
+            {"published": "2026-13-45"},
+            {"published": "2999-01-01"},
+            {"published": "2026-10-02"},
+        ]
+    }
+    assert b.newest_evidence_day(claim) == "2026-10-02"

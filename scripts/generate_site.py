@@ -364,6 +364,7 @@ def write_topic(topic: str, conf: c.Config, now: str) -> list[dict]:
 # links into the site's views. Methodology and honest limits live on the site's
 # Methodology view.
 SITE_URL = gh.SITE_URL
+EFFICIENCY_FEED_URL = SITE_URL + "efficiency.md"
 SITE_VIEWS = (
     ("Briefing", "week"),
     ("Stories", "news"),
@@ -476,10 +477,15 @@ def _teaser(payload: dict) -> list[str]:
         out += _change_line(i, change, claims)
     picks = [claims[i] for i in payload.get("efficiency_claims", []) if i in claims]
     if picks:
-        out += ["", "## Efficiency", "", f"_{briefing.efficiency_note()}_", ""]
+        # The README stays under 80 lines: the month's findings live on the site and
+        # in the harness feed, which the section's note links.
+        note = f"{briefing.efficiency_note()} [Harness feed]({EFFICIENCY_FEED_URL})."
+        out += ["", "## Efficiency", "", f"_{note}_", ""]
         for claim in picks:
             link = site_link("claims", claim=claim["id"])
-            out.append(f"- [{_claim_label(claim)}]({link})")
+            updated = fmt_published({"published": briefing.claim_updated(claim)})
+            tail = f" · _updated {updated}_" if updated else ""
+            out.append(f"- [{_claim_label(claim)}]({link}){tail}")
     return out + [""]
 
 

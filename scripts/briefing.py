@@ -35,6 +35,7 @@ Pure functions over payload rows; generate_html.py and generate_site.py do I/O.
 
 from __future__ import annotations
 
+import datetime as _dt
 import re
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
@@ -321,7 +322,11 @@ def claim_domain(claim: dict, tax: taxonomy.Taxonomy) -> str:
 # --- Efficiency: cost and work efficiency read as their own tracks ---
 EFFICIENCY_DOMAINS = {"cost": "air.cost-efficiency", "work": "air.work-efficiency"}
 EFFICIENCY_CLAIMS_MAX = 4
-EFFICIENCY_FINDINGS_MAX = 3
+EFFICIENCY_FINDINGS_MAX = 5
+# Efficiency research arrives a few items a month, not a week: a 7-day window left
+# the section empty most days (Rohan, 2026-11-18), so its findings look back 30.
+EFFICIENCY_FINDINGS_DAYS = 30
+_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 def _last_change(claim: dict) -> str:
@@ -330,11 +335,38 @@ def _last_change(claim: dict) -> str:
     return next((str(claim[k]) for k in keys if claim.get(k)), "")
 
 
+def newest_evidence_day(claim: dict) -> str:
+    """The newest dated evidence item's publish day (YYYY-MM-DD), or "". Undated,
+    month-only, invalid and future dates are skipped rather than guessed."""
+    today = _dt.date.today().isoformat()
+    days = []
+    for e in claim.get("evidence") or []:
+        day = str(e.get("published") or "") if isinstance(e, dict) else ""
+        if not _DAY.match(day):
+            continue
+        try:
+            _dt.date.fromisoformat(day)
+        except ValueError:
+            continue  # 2026-13-45 matches the pattern but is no day
+        if day <= today:  # a future date would pin the claim to the top
+            days.append(day)
+    return max(days, default="")
+
+
+def claim_updated(claim: dict) -> str:
+    """When the claim last moved: its newest ledger change or its newest evidence,
+    whichever is later. Attaching evidence does not touch `changed_on` (that date is
+    reserved for status moves), so without this a claim fed new research every week
+    still read as the day it was written."""
+    return max(_last_change(claim), newest_evidence_day(claim))
+
+
 def efficiency_claims(
     claims: list[dict], n_max: int = EFFICIENCY_CLAIMS_MAX, exclude: frozenset | set = frozenset()
 ) -> list[dict]:
-    """Live claims filed under the cost or work efficiency domain, newest change first
-    (ties: claim id). Retired claims are history, not a track to follow."""
+    """Live claims filed under the cost or work efficiency domain, most recently
+    updated first (ledger change or newest evidence; ties: claim id). Retired claims
+    are history, not a track to follow."""
     ids = set(EFFICIENCY_DOMAINS.values())
     live = [
         c
@@ -345,7 +377,7 @@ def efficiency_claims(
         and c["id"] not in exclude
     ]
     live.sort(key=lambda c: str(c["id"]))
-    live.sort(key=_last_change, reverse=True)
+    live.sort(key=claim_updated, reverse=True)
     return live[:n_max]
 
 

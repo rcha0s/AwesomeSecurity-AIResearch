@@ -2633,10 +2633,34 @@
           "url": "https://code.claude.com/docs/en/best-practices",
           "title": "Claude Code docs: best practices",
           "note": "\"That’s discounted while the cache is warm and full price once it expires.\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://agnt.gg/whitepapers/the-cache-wars-prompt-cache-efficiency-llm-agent-harnesses",
+          "title": "The Cache Wars: An Empirical Study of Prompt-Cache Efficiency in Six LLM Agent Harnesses",
+          "published": "2026-07-07",
+          "note": "Pause test across six harnesses: those with 1-hour cache markers kept about 86% cache hits after a 390-second idle gap, those with 5-minute markers re-bought their whole context. Single trial per cell; the author's company makes one of the harnesses.",
+          "source_name": "AGNT Labs"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2611.13241",
+          "title": "FlowPlan: Reducing the Token Cost of Coding Agents with Abstraction-Guided Planning and Verification",
+          "published": "2026-11-09",
+          "note": "Claude Code on SWE-bench Pro averaged 3.7 million tokens per issue, 98% of them cache reads, so cache price dominates long runs.",
+          "source_name": "arXiv"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.louisbouchard.ai/context-engineering-2026/",
+          "title": "Context Engineering in 2026: Why We Stopped Compacting Our Agent's Context",
+          "published": "2026-08-18",
+          "note": "The cache only hits when the previous context is resent unchanged; a summary shortens the prefix by changing it, so the cache misses.",
+          "source_name": "Louis-François Bouchard"
         }
       ],
       "first_seen": "2025-07-18",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-18",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Keep the prompt prefix stable so cache reads dominate",
@@ -2685,10 +2709,26 @@
           "published": "2026-11-08",
           "note": "Library that searches a BM25 tool and skill catalog per turn instead of loading every schema; its token savings are self-reported.",
           "source_name": "ratel-ai/ratel"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.22732",
+          "title": "TokenEconomizer: Experience-Driven Black-Box Cost Control for Coding Agents",
+          "published": "2026-10-15",
+          "note": "An external controller that prunes unused tools, injects short micro-skills and stops failure loops cut mean cache-aware SWE-Bench cost 18.4-30.9% across Claude Code, Codex and Copilot CLI with comparable Pass@1 (Microsoft Research, UC Berkeley).",
+          "source_name": "arXiv"
+        },
+        {
+          "stance": "supports",
+          "url": "https://testdino.com/blog/harness-overhead-benchmark",
+          "title": "Harness Overhead Benchmark: How Many Tokens 11 Coding Agents Burn Before the Test Starts",
+          "published": "2026-10-09",
+          "note": "A one-word prompt cost 1,894 to 31,798 input tokens across 11 coding agents (16.8x spread); the post recommends deferring tools and trimming always-on instructions. Three runs per agent, one repo.",
+          "source_name": "TestDino"
         }
       ],
       "first_seen": "2025-11-04",
-      "last_reviewed": "2026-11-09",
+      "last_reviewed": "2026-11-18",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Load tool definitions on demand, not all at start",
@@ -2728,10 +2768,18 @@
           "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
           "title": "Anthropic Engineering: writing tools for agents",
           "note": "\"In this example, we use ~⅓ of the tokens with “concise” tool responses.\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2611.12122",
+          "title": "System Optimizations for Cost-Efficient Agent Harnesses",
+          "published": "2026-11-09",
+          "note": "Rereading existing context was the largest cost in real executions even with caching; compacting tool output, batching tool calls and metadata-assisted search cut cost up to 35% on unmodified Claude Code and Codex (UC Berkeley).",
+          "source_name": "arXiv"
         }
       ],
       "first_seen": "2025-07-18",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-18",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Keep intermediate tool results out of the model context",
@@ -2764,10 +2812,18 @@
           "title": "Anthropic Engineering: effective context engineering for ai agents",
           "published": "2025-09-29",
           "note": "\"Each subagent might explore extensively, using tens of thousands of tokens or more, but returns only a condensed, distilled summary of its work (often 1,000-2,000 tokens).\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.louisbouchard.ai/context-engineering-2026/",
+          "title": "Context Engineering in 2026: Why We Stopped Compacting Our Agent's Context",
+          "published": "2026-08-18",
+          "note": "Capping tool output alone took cost per turn from $0.189 to $0.117 (38%) and won 14 of 15 paired trajectories.",
+          "source_name": "Louis-François Bouchard"
         }
       ],
       "first_seen": "2025-09-29",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-18",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Return short tool responses and distilled subagent summaries",
@@ -2808,10 +2864,26 @@
           "title": "Anthropic Engineering: harness design long running apps",
           "published": "2026-03-24",
           "note": "\"Opus 4.5 largely removed that behavior on its own, so I was able to drop context resets from this harness entirely.\""
+        },
+        {
+          "stance": "contests",
+          "url": "https://www.louisbouchard.ai/context-engineering-2026/",
+          "title": "Context Engineering in 2026: Why We Stopped Compacting Our Agent's Context",
+          "published": "2026-08-18",
+          "note": "In paired trajectories a compacting preset sent about 41% fewer tokens yet paid roughly twice as much because each summary broke the cache; leaving the context untouched and capping tool output was cheapest.",
+          "source_name": "Louis-François Bouchard"
+        },
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2611.05306",
+          "title": "You don't need long context",
+          "published": "2026-11-03",
+          "note": "With Claude Opus 4.5 and GPT 5.6 Sol, frequent compaction kept contexts short while broadly maintaining accuracy on long-horizon and long-input tasks.",
+          "source_name": "arXiv"
         }
       ],
       "first_seen": "2025-09-29",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-18",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Compact near the context limit; reset only if the model needs it",
@@ -2850,10 +2922,18 @@
           "title": "Aider: architect",
           "published": "2024-09-26",
           "note": "\"Using o1-preview as the Architect with either DeepSeek or o1-mini as the Editor produced the SOTA score of 85%.\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://dev.to/arthur031221/does-routing-coding-agent-subtasks-to-cheaper-models-pay-off-a-benchmark-of-63-runs-per-arm-4cdd",
+          "title": "Does routing coding agent subtasks to cheaper models pay off? A benchmark of 63 runs per arm",
+          "published": "2026-10-22",
+          "note": "Routing subtasks to a cheaper worker model cut list-price cost 1.24x ($9.56 to $7.69 over 63 runs per arm) with quality 0.96 in both arms; routes were tuned on the same 21 tasks, by the author of the routing plugin.",
+          "source_name": "DEV Community"
         }
       ],
       "first_seen": "2024-09-26",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-18",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Send simple subagent jobs to a cheaper model",
@@ -3462,6 +3542,115 @@
       "title": "Model weights can be backdoored by direct edits, no training needed",
       "guidance": "Treat model weights as code: verify provenance of every weight file an agent loads, diff deployed weights against the publisher's original, and do not rely on behavioral evals alone to clear a third-party or internally stored model.",
       "scope": "Requires write access to the weight files (a compromised account, pipeline, or storage); does not apply to models served only through a provider API you cannot modify. Evidence so far is one Microsoft Research study."
+    },
+    {
+      "id": "harness-overhead-sets-agent-cost",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "statement": "On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.",
+      "status": "current",
+      "confidence": 0.65,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2611.12122",
+          "title": "System Optimizations for Cost-Efficient Agent Harnesses",
+          "published": "2026-11-09",
+          "note": "Harness choices changed cost by up to 2.6x on the same model and task while barely moving accuracy; Claude Code and Codex easily reached 2x the cost of a basic harness."
+        },
+        {
+          "stance": "supports",
+          "url": "https://testdino.com/blog/harness-overhead-benchmark",
+          "title": "Harness Overhead Benchmark: How Many Tokens 11 Coding Agents Burn Before the Test Starts",
+          "published": "2026-10-09",
+          "note": "A one-word prompt cost 1,894 to 31,798 input tokens across 11 coding agents, a 16.8x spread."
+        }
+      ],
+      "first_seen": "2026-10-09",
+      "last_reviewed": "2026-11-18",
+      "added_on": "2026-11-18",
+      "changed_on": "2026-11-18",
+      "title": "Harness choice alone can double an agent's cost",
+      "basis": "Cross-harness cost profiling on SWE-bench, SWE-bench Pro and Terminal-Bench 2 (UC Berkeley), plus a first-call token benchmark of 11 coding agents.",
+      "guidance": "Measure what your harness spends per task (fixed prompt and tool schemas, plus re-reading context) and cut what does not change outcomes before you switch models.",
+      "scope": "Shown on coding benchmarks and a one-word prompt with Nov 2026 harness versions; how much the overhead costs depends on how much of it is cached and how long sessions run.",
+      "applies_to": "model-era",
+      "model_note": "Claude Code, Codex and nine other coding agents, Oct-Nov 2026 versions",
+      "tags": [
+        "efficiency",
+        "cost-efficiency",
+        "harness"
+      ]
+    },
+    {
+      "id": "one-hour-cache-for-paused-sessions",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "statement": "Harnesses that write 5-minute prompt-cache markers re-buy their whole context after an idle gap longer than five minutes, while harnesses with 1-hour markers kept about 86% cache hits after a 390-second pause.",
+      "status": "current",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://agnt.gg/whitepapers/the-cache-wars-prompt-cache-efficiency-llm-agent-harnesses",
+          "title": "The Cache Wars: An Empirical Study of Prompt-Cache Efficiency in Six LLM Agent Harnesses",
+          "published": "2026-07-07",
+          "note": "After a 390-second pause, 1-hour-marker harnesses kept about 86% cache hits and 5-minute-marker harnesses kept none."
+        },
+        {
+          "stance": "supports",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+          "title": "Anthropic API docs: prompt caching"
+        }
+      ],
+      "first_seen": "2026-07-07",
+      "last_reviewed": "2026-11-18",
+      "added_on": "2026-11-18",
+      "changed_on": "2026-11-18",
+      "title": "Use one-hour cache markers when sessions pause over five minutes",
+      "basis": "A pause test across six agent harnesses with provider usage counters (AGNT Labs), plus Anthropic's published cache pricing.",
+      "guidance": "For interactive sessions where people or tools often pause for more than five minutes, cache the stable prefix with the 1-hour TTL; keep 5-minute caching for tight automated loops.",
+      "scope": "One vendor-authored report, a single trial per harness and one idle gap. Anthropic prices 1-hour cache writes at 2x input against 1.25x for 5-minute writes, so short sessions with no long pauses can cost more.",
+      "applies_to": "model-era",
+      "model_note": "Anthropic cache TTLs; six harnesses including Claude Code 2.1, Jul 2026",
+      "tags": [
+        "efficiency",
+        "cost-efficiency",
+        "harness",
+        "prompt-caching"
+      ]
+    },
+    {
+      "id": "learn-per-repo-cost-controls",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "statement": "A controller that learns from earlier runs in the same repository which tools to prune, which short notes to inject and when to stop unproductive failure loops cut coding-agent cost by 18-31% on SWE-Bench with comparable task success.",
+      "status": "current",
+      "confidence": 0.55,
+      "evidence": [
+        {
+          "stance": "supports",
+          "url": "https://arxiv.org/abs/2610.22732",
+          "title": "TokenEconomizer: Experience-Driven Black-Box Cost Control for Coding Agents",
+          "published": "2026-10-15",
+          "note": "Mean cache-aware cost fell 18.4-30.9% across five settings; Pass@1 improved in four and fell 1.0 point on Opus 4.8."
+        }
+      ],
+      "first_seen": "2026-10-15",
+      "last_reviewed": "2026-11-18",
+      "added_on": "2026-11-18",
+      "changed_on": "2026-11-18",
+      "title": "Learn per-repo cost controls from past coding agent runs",
+      "basis": "Black-box controller evaluated on 277 SWE-Bench tasks across Claude Code, Codex and GitHub Copilot CLI (Microsoft Research, UC Berkeley).",
+      "guidance": "Log where tokens go across runs in one repo; prune tools the repo never uses, add short notes for operations the agent keeps rediscovering, and guard against loops that keep failing the same way while letting recoverable ones continue.",
+      "scope": "Measured on sequences of tasks in the same repositories; a one-off task in a new repo has no history to learn from.",
+      "applies_to": "model-era",
+      "model_note": "Claude Code, Codex, Copilot CLI incl. Opus 4.8; SWE-Bench, Oct 2026",
+      "tags": [
+        "efficiency",
+        "cost-efficiency",
+        "harness"
+      ]
     }
   ]
 }

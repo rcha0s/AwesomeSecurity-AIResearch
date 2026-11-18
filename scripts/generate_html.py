@@ -36,6 +36,7 @@ import briefing
 import common as c
 import content_checks as cc
 import dedupe_stories as ds
+import efficiency_feed
 import story_ledger as sl
 import taxonomy
 import verify_citations as vc
@@ -547,6 +548,7 @@ def claims_payload(ledger: dict, tax: taxonomy.Taxonomy) -> list[dict]:
             "rank_score": cl.rank_score(claim, ref),
             "newest_evidence": cl.newest_evidence_year(claim),
             "evidence_age": cl.evidence_age(claim, ref),
+            "updated_on": briefing.claim_updated(claim),
         }
         for claim in cl.all_claims(ledger)
     ]
@@ -742,7 +744,10 @@ def front_page(
         "efficiency_claims": [claim["id"] for claim in eff_claims],
         **_learning_keys(learn, learn_why, learning),
         "efficiency_findings": [
-            row["id"] for row in briefing.efficiency_findings(rows, now, days, exclude=taken)
+            row["id"]
+            for row in briefing.efficiency_findings(
+                rows, now, max(days, briefing.EFFICIENCY_FINDINGS_DAYS), exclude=taken
+            )
         ],
     }
 
@@ -914,6 +919,9 @@ def main() -> int:
     page = render(payload, now)
     (docs / "index.html").write_text(page, encoding="utf-8")
     (docs / "feed.xml").write_text(render_feed_for_page(page), encoding="utf-8")
+    (docs / efficiency_feed.FEED_NAME).write_text(
+        efficiency_feed.render(payload, now, SITE_URL), encoding="utf-8"
+    )
     # Without this, Pages runs the output through Jekyll and mangles it.
     (docs / ".nojekyll").write_text("", encoding="utf-8")
     detail_pages = _copy_detail_pages(docs, conf)

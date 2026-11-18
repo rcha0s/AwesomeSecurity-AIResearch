@@ -276,13 +276,13 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Application Security
 
-- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **70.72** · Nov 17, 2026 · 🔗 +7 sources  
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **70.47** · Nov 17, 2026 · 🔗 +7 sources  
   Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.  
   _[Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)_
-- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **58.4** · Nov 3, 2026  
+- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **58.15** · Nov 3, 2026  
   If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.  
   _[IEEE S&P (via arXiv)](http://arxiv.org/abs/2611.04291v1)_
-- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **56.24** · Nov 9, 2026  
+- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **55.99** · Nov 9, 2026  
   Even Rust's standard library has soundness bugs of the three kinds the post names, and the authors say agents make the environment-dependent OS-boundary area practical to search.  
   _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)_
 - **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **53.63** · Oct 27, 2026  
@@ -291,10 +291,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **69.35** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **69.1** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **67.25** · Nov 13, 2026  
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **67.0** · Nov 13, 2026  
   A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
   _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
 - **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **60.89** · Oct 27, 2026 · 🔗 +1 sources  
