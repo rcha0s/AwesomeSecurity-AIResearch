@@ -86,10 +86,10 @@
       "scores": {
         "novelty": 70,
         "relevance": 86,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 67.1,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 66.85,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -255,10 +255,10 @@
       "scores": {
         "novelty": 65,
         "relevance": 82,
-        "newness": 38,
+        "newness": 37,
         "credibility": 75.8,
-        "composite": 64.97,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 64.72,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Verifier confirmed the lessons but found the takeaway mentioned hashes and an eval claim the source does not make, and the threat named a hub account; takeaway and threat were reworded to match the source.",
@@ -532,10 +532,10 @@
       "scores": {
         "novelty": 72,
         "relevance": 68,
-        "newness": 38,
+        "newness": 37,
         "credibility": 69.6,
-        "composite": 61.94,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 61.69,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "prior_art": "No existing entry covers provable or verifiable inference. Prior art outside the dataset includes zkML systems (e.g., zkLLM and other open-source zk inference provers, which the post says are orders of magnitude slower) and TEE-based attestation of inference. Anthropic's own RSP prototype signed inference traffic with recomputation on a trusted server. The delta is a practical zkSNARK at 400B-parameter MoE scale with Lean-checked guarantees.",
@@ -622,10 +622,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 85,
-        "newness": 38,
+        "newness": 37,
         "credibility": 69.2,
-        "composite": 61.88,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 61.63,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "ProjectDiscovery's LoRA-poisoned Qwen that made Codex CLI exfiltrate .env files (fixed payload, one harness); Microsoft's Lazarus neuron-edit backdoor; Anthropic sleeper agents. New here: dataset-level poisoning that teaches tool discovery across harnesses, paraphrase generalization, SFT then RL to restore utility, and the reasoning-trace ablation.",
       "threat": "An attacker poisons a public fine-tuning dataset, or publishes a backdoored open-weight checkpoint. When a coding agent hits a benign-looking trigger in a user request, filename, code comment or tool result, the model emits a valid tool call that fetches and runs attacker code. Prompt-injection filters see only benign input.",
@@ -893,10 +893,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 85,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 59.75,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 59.5,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "All numbers and the gitignore mechanism match; 'real secret' was screened, not validity-tested, and Anthropic's Boris Cherny disputes that Claude causes the commits.",
@@ -933,88 +933,6 @@
           "published": null
         }
       ]
-    },
-    {
-      "candidate_id": "mobileprobe-adaptive-security-evaluation-of-mobi-03492b2098",
-      "topic": "ai-security",
-      "domain": "ais.red-teaming",
-      "title": "MobileProbe red-teams mobile GUI agents by placing injections along their actual route",
-      "summary": "MobileProbe is an NDSS 2027 framework for red-teaming mobile GUI agents against environmental injection, meaning malicious instructions placed in ordinary on-screen app content. It uses automated pentesting to find content an attacker can control, locates the decision points along the agent's path through the app, and evolves context-aware payloads with a surrogate-filtered loop. On a benchmark of 83 long-horizon attacks across 12 apps, it beats human-written, zero-shot LLM and earlier automated red-teaming baselines on three agent architectures, though the abstract gives no success-rate numbers.",
-      "lessons": [
-        {
-          "point": "Benchmarks that inject at a fixed step overstate safety. An agent that takes a different route never sees the payload, and the benchmark scores it as safe even though it was never tested.",
-          "excerpt": "agents given the same task may follow different routes, so an agent that never reaches the injected page is recorded as safe without being tested",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Adaptive red-teaming of GUI agents should first find the content surfaces an attacker controls, then target the decision points on the agent's real path.",
-          "excerpt": "discovers attacker-controllable content surfaces through automated pentesting, localizes vulnerable decision points along the agent's trajectory",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Evolved, context-aware payloads beat human-written and zero-shot ones, so a mobile agent's resistance to hand-written injections is a weak lower bound on its real risk. The abstract does not give the size of the gap.",
-          "excerpt": "MobileProbe attains higher attack success rates than human-written, zero-shot LLM, and prior automated red-teaming baselines",
-          "confidence": 0.65,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.",
-      "tags": [
-        "prompt-injection",
-        "indirect-prompt-injection",
-        "gui-agents",
-        "mobile-agents",
-        "red-teaming",
-        "evals",
-        "computer-use"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Make agent injection evals follow the agent's route",
-        "detail": "In GUI and computer-use agent security evals, first record each agent's actual screen path for a task. Then place injection payloads in attacker-controllable content on the screens it really visits, not at a fixed step. Report 'never exposed' runs separately from 'resisted' runs so untested runs are not counted as safe."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 75,
-        "newness": 38,
-        "credibility": 72.0,
-        "composite": 59.3,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "EIA (Liao et al. 2024, environmental injection on web agents); AEIA-MN and pop-up attacks on VLM computer agents, all fixed-step. New: trajectory-aware injection placement, automated attack-surface discovery, and the coverage critique of fixed-step benchmarks.",
-      "threat": "An attacker who controls ordinary in-app content, such as listings, messages or reviews, can redirect a mobile GUI agent toward confidentiality, integrity or availability goals.",
-      "conditions": "The agent reads the phone screen and acts on what it shows across multi-step tasks in third-party apps.",
-      "mitigations": "Red-team before deployment with route-aware adaptive payloads, separate untested runs from resisted ones in eval reports, and treat on-screen third-party content as untrusted input that cannot authorize actions.",
-      "related_claims": [
-        "indirect-injection-via-retrieved-content-is-viable",
-        "prompt-injection-is-a-permanent-attack-surface",
-        "agent-safety-evals-can-misread-production-behavior"
-      ],
-      "verified": true,
-      "verify_note": "Verifier confirmed all lessons; abstract only. Novelty taken as the verifier's 55.",
-      "source_url": "http://arxiv.org/abs/2611.16693v1",
-      "article_url": "http://arxiv.org/abs/2611.16693v1",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-12",
-      "raw_path": "data/_raw/mobileprobe-adaptive-security-evaluation-of-mobi-03492b2098.txt",
-      "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "source_name": "NDSS (via arXiv)",
-      "id": "mobileprobe-red-teams-mobile-gui-agents-by-placi-63a32851c6",
-      "retrieved_at": "2026-11-13T17:46:33+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -1101,6 +1019,88 @@
       "domain_label": "Agent framework security"
     },
     {
+      "candidate_id": "mobileprobe-adaptive-security-evaluation-of-mobi-03492b2098",
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "MobileProbe red-teams mobile GUI agents by placing injections along their actual route",
+      "summary": "MobileProbe is an NDSS 2027 framework for red-teaming mobile GUI agents against environmental injection, meaning malicious instructions placed in ordinary on-screen app content. It uses automated pentesting to find content an attacker can control, locates the decision points along the agent's path through the app, and evolves context-aware payloads with a surrogate-filtered loop. On a benchmark of 83 long-horizon attacks across 12 apps, it beats human-written, zero-shot LLM and earlier automated red-teaming baselines on three agent architectures, though the abstract gives no success-rate numbers.",
+      "lessons": [
+        {
+          "point": "Benchmarks that inject at a fixed step overstate safety. An agent that takes a different route never sees the payload, and the benchmark scores it as safe even though it was never tested.",
+          "excerpt": "agents given the same task may follow different routes, so an agent that never reaches the injected page is recorded as safe without being tested",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Adaptive red-teaming of GUI agents should first find the content surfaces an attacker controls, then target the decision points on the agent's real path.",
+          "excerpt": "discovers attacker-controllable content surfaces through automated pentesting, localizes vulnerable decision points along the agent's trajectory",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Evolved, context-aware payloads beat human-written and zero-shot ones, so a mobile agent's resistance to hand-written injections is a weak lower bound on its real risk. The abstract does not give the size of the gap.",
+          "excerpt": "MobileProbe attains higher attack success rates than human-written, zero-shot LLM, and prior automated red-teaming baselines",
+          "confidence": 0.65,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.",
+      "tags": [
+        "prompt-injection",
+        "indirect-prompt-injection",
+        "gui-agents",
+        "mobile-agents",
+        "red-teaming",
+        "evals",
+        "computer-use"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Make agent injection evals follow the agent's route",
+        "detail": "In GUI and computer-use agent security evals, first record each agent's actual screen path for a task. Then place injection payloads in attacker-controllable content on the screens it really visits, not at a fixed step. Report 'never exposed' runs separately from 'resisted' runs so untested runs are not counted as safe."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 75,
+        "newness": 37,
+        "credibility": 72.0,
+        "composite": 59.05,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "EIA (Liao et al. 2024, environmental injection on web agents); AEIA-MN and pop-up attacks on VLM computer agents, all fixed-step. New: trajectory-aware injection placement, automated attack-surface discovery, and the coverage critique of fixed-step benchmarks.",
+      "threat": "An attacker who controls ordinary in-app content, such as listings, messages or reviews, can redirect a mobile GUI agent toward confidentiality, integrity or availability goals.",
+      "conditions": "The agent reads the phone screen and acts on what it shows across multi-step tasks in third-party apps.",
+      "mitigations": "Red-team before deployment with route-aware adaptive payloads, separate untested runs from resisted ones in eval reports, and treat on-screen third-party content as untrusted input that cannot authorize actions.",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "prompt-injection-is-a-permanent-attack-surface",
+        "agent-safety-evals-can-misread-production-behavior"
+      ],
+      "verified": true,
+      "verify_note": "Verifier confirmed all lessons; abstract only. Novelty taken as the verifier's 55.",
+      "source_url": "http://arxiv.org/abs/2611.16693v1",
+      "article_url": "http://arxiv.org/abs/2611.16693v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-12",
+      "raw_path": "data/_raw/mobileprobe-adaptive-security-evaluation-of-mobi-03492b2098.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "NDSS (via arXiv)",
+      "id": "mobileprobe-red-teams-mobile-gui-agents-by-placi-63a32851c6",
+      "retrieved_at": "2026-11-13T17:46:33+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-security",
       "domain": "ais.prompt-injection",
       "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
@@ -1185,105 +1185,6 @@
       "grounding_score": 1.0
     },
     {
-      "id": "the-risks-of-device-code-authentication-for-ai-c-5f6eeb061e",
-      "topic": "ai-security",
-      "domain": "ais.agent-security",
-      "kind": "story",
-      "kind_reason": "Research on a technique that applies to any OAuth device-flow client, not one product bug.",
-      "title": "Microsoft shows phished device codes can hijack GitHub Copilot CLI sessions",
-      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/",
-      "summary": "Microsoft researchers ran a lab simulation where a victim approved an attacker-started OAuth device-code request for GitHub Copilot CLI. With that one approval they could steer a remote-enabled agent session, plant false memory entries, read synced sessions and reach private repositories. These are proof-of-concept results, not attacks seen in the wild, and each depends on account permissions and enabled features.",
-      "lessons": [
-        {
-          "point": "Device-code phishing works on any public client that supports the device flow, and the attacker picks the scopes, so AI agent CLIs inherit the risk.",
-          "excerpt": "any public client that supports the device flow can be abused the same way, and the attacker chooses the requested scopes when starting the flow",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A real github.com verification page proves nothing about who started the request, so domain checks do not help users.",
-          "excerpt": "the legitimate domain alone does not establish who initiated the request",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Agent memory gives the attacker persistence: planted entries can influence later sessions after the sign-in is revoked, and disabling memory does not delete them.",
-          "excerpt": "does not automatically delete entries already stored, so review the saved content during incident response",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Findings are lab proof-of-concepts using features working as designed, bounded by local approvals and account permissions.",
-          "excerpt": "proof-of-concept results showing how existing features, working as designed, could be abused after a phished authorization",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Treat agent OAuth grants as high-value credentials: restrict remote control, session sync and memory, and teach developers to approve only device codes they started.",
-      "tags": [
-        "device-code-phishing",
-        "oauth",
-        "coding-agents",
-        "github-copilot-cli",
-        "agent-memory",
-        "remote-control",
-        "identity"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Audit coding-agent OAuth grants, remote control and memory settings",
-        "detail": "Review authorized OAuth apps in GitHub accounts and revoke unexpected ones. Set the Copilot session-storage and remote-control policy to the least permissive setting your workflows need. Review saved Copilot Memory entries during incident response, and alert on phishing clicks followed by new OAuth token creation."
-      },
-      "scores": {
-        "novelty": 50.0,
-        "relevance": 78,
-        "newness": 38,
-        "credibility": 69.0,
-        "composite": 58.25,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "Unit 42 'Four stacked evasion techniques hide device-code phishing' and the Skyw4lker device-code campaign entry cover the phishing side; no prior entry covers device-code abuse of a coding-agent CLI with remote steering and memory planting.",
-      "related_claims": [
-        "agent-memory-is-a-persistent-attack-surface",
-        "long-term-memory-is-a-cross-session-poisoning-vector"
-      ],
-      "threat": "An attacker starts an OAuth device-code request with a device-flow client, lures the victim into approving it on the real GitHub page, then acts with the granted scopes against the Copilot CLI agent and the account.",
-      "conditions": "Victim must approve the attacker's code. Steering needs remote control enabled and an active online session allowed by org policy. Session reads need cloud session storage. Memory edits need Copilot Memory enabled. Repo access follows requested scopes and account permissions.",
-      "mitigations": "Approve device codes only for sign-ins you started, restrict Copilot remote control, session sync and memory to what is needed, revoke unexpected OAuth authorizations, limit repo roles, and connect GitHub to Defender for Cloud Apps for detections.",
-      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/",
-      "published": "2026-11-17",
-      "raw_path": "data/_raw/the-risks-of-device-code-authentication-for-ai-c-5f6eeb061e.txt",
-      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
-      "source_rank": 69.0,
-      "discovered_via": "rss",
-      "source_name": "Microsoft Security Blog",
-      "source_topics": [
-        "ai-security",
-        "product-security"
-      ],
-      "verified": true,
-      "date": "2026-11",
-      "retrieved_at": "2026-11-18T06:34:52+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "editorial": {
-        "promoted": true,
-        "reason": "Microsoft shows phished OAuth device codes can hijack GitHub Copilot CLI sessions; the lesson is to treat agent OAuth grants as high-value credentials.",
-        "signals": [
-          "trending",
-          "newsworthy",
-          "timely",
-          "high-relevance"
-        ],
-        "at": "2026-11-18T06:36:07+00:00"
-      }
-    },
-    {
       "topic": "ai-security",
       "domain": "ais.mcp-tools",
       "title": "MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3",
@@ -1352,6 +1253,105 @@
       },
       "grounding_score": 1.0,
       "date": "2026-10"
+    },
+    {
+      "id": "the-risks-of-device-code-authentication-for-ai-c-5f6eeb061e",
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "kind": "story",
+      "kind_reason": "Research on a technique that applies to any OAuth device-flow client, not one product bug.",
+      "title": "Microsoft shows phished device codes can hijack GitHub Copilot CLI sessions",
+      "source_url": "https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/",
+      "summary": "Microsoft researchers ran a lab simulation where a victim approved an attacker-started OAuth device-code request for GitHub Copilot CLI. With that one approval they could steer a remote-enabled agent session, plant false memory entries, read synced sessions and reach private repositories. These are proof-of-concept results, not attacks seen in the wild, and each depends on account permissions and enabled features.",
+      "lessons": [
+        {
+          "point": "Device-code phishing works on any public client that supports the device flow, and the attacker picks the scopes, so AI agent CLIs inherit the risk.",
+          "excerpt": "any public client that supports the device flow can be abused the same way, and the attacker chooses the requested scopes when starting the flow",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A real github.com verification page proves nothing about who started the request, so domain checks do not help users.",
+          "excerpt": "the legitimate domain alone does not establish who initiated the request",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Agent memory gives the attacker persistence: planted entries can influence later sessions after the sign-in is revoked, and disabling memory does not delete them.",
+          "excerpt": "does not automatically delete entries already stored, so review the saved content during incident response",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Findings are lab proof-of-concepts using features working as designed, bounded by local approvals and account permissions.",
+          "excerpt": "proof-of-concept results showing how existing features, working as designed, could be abused after a phished authorization",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat agent OAuth grants as high-value credentials: restrict remote control, session sync and memory, and teach developers to approve only device codes they started.",
+      "tags": [
+        "device-code-phishing",
+        "oauth",
+        "coding-agents",
+        "github-copilot-cli",
+        "agent-memory",
+        "remote-control",
+        "identity"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit coding-agent OAuth grants, remote control and memory settings",
+        "detail": "Review authorized OAuth apps in GitHub accounts and revoke unexpected ones. Set the Copilot session-storage and remote-control policy to the least permissive setting your workflows need. Review saved Copilot Memory entries during incident response, and alert on phishing clicks followed by new OAuth token creation."
+      },
+      "scores": {
+        "novelty": 50.0,
+        "relevance": 78,
+        "newness": 37,
+        "credibility": 69.0,
+        "composite": 58.0,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "Unit 42 'Four stacked evasion techniques hide device-code phishing' and the Skyw4lker device-code campaign entry cover the phishing side; no prior entry covers device-code abuse of a coding-agent CLI with remote steering and memory planting.",
+      "related_claims": [
+        "agent-memory-is-a-persistent-attack-surface",
+        "long-term-memory-is-a-cross-session-poisoning-vector"
+      ],
+      "threat": "An attacker starts an OAuth device-code request with a device-flow client, lures the victim into approving it on the real GitHub page, then acts with the granted scopes against the Copilot CLI agent and the account.",
+      "conditions": "Victim must approve the attacker's code. Steering needs remote control enabled and an active online session allowed by org policy. Session reads need cloud session storage. Memory edits need Copilot Memory enabled. Repo access follows requested scopes and account permissions.",
+      "mitigations": "Approve device codes only for sign-ins you started, restrict Copilot remote control, session sync and memory to what is needed, revoke unexpected OAuth authorizations, limit repo roles, and connect GitHub to Defender for Cloud Apps for detections.",
+      "article_url": "https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/",
+      "published": "2026-11-17",
+      "raw_path": "data/_raw/the-risks-of-device-code-authentication-for-ai-c-5f6eeb061e.txt",
+      "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+      "source_rank": 69.0,
+      "discovered_via": "rss",
+      "source_name": "Microsoft Security Blog",
+      "source_topics": [
+        "ai-security",
+        "product-security"
+      ],
+      "verified": true,
+      "date": "2026-11",
+      "retrieved_at": "2026-11-18T06:34:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "editorial": {
+        "promoted": true,
+        "reason": "Microsoft shows phished OAuth device codes can hijack GitHub Copilot CLI sessions; the lesson is to treat agent OAuth grants as high-value credentials.",
+        "signals": [
+          "trending",
+          "newsworthy",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-11-18T06:36:07+00:00"
+      }
     },
     {
       "topic": "ai-security",
@@ -1493,10 +1493,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 56.3,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 56.05,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -1671,10 +1671,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 78,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.0,
-        "composite": 55.4,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 55.15,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -1955,10 +1955,10 @@
       "scores": {
         "novelty": 42,
         "relevance": 70,
-        "newness": 38,
+        "newness": 37,
         "credibility": 75.0,
-        "composite": 54.35,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 54.1,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "prior_art": "OpenAI's 'how we detect frontier model misalignment' post (already in ai-security) introduced probes as the first layer of its monitoring stack; this post adds the probe methodology (EMA attention architecture, softmax prefix aggregation, seed sweeps, checkpoint transfer). The architectures build on Kramar et al. 2026, Cunningham et al. 2026 and Kantamneni et al. 2025 attention probes.",
@@ -2047,10 +2047,10 @@
       "scores": {
         "novelty": 50.0,
         "relevance": 72,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 54.35,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 54.1,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "The post itself cites ssh-rev-exec and op-forward (same SSH-agent-extension trick); no lend/SSH-agent-proxy or Touch ID approval coverage found in data/ai-security.json or archive.json, so the delta is the per-request policy and approval design, which is an incremental defender pattern.",
       "related_claims": [
@@ -2079,188 +2079,6 @@
         ]
       },
       "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.agent-security",
-      "title": "AG2 SandboxShellTool allowlist is bypassed by a newline in the command",
-      "summary": "AG2's SandboxShellTool checks allowed=[...] and readonly=True commands against a denylist of shell operators that omits newline and carriage return, then runs the raw string through sh -c, where a newline acts like a semicolon. A command such as 'cat file\\nrm -rf ...' passes both the prefix check and the operator check, and with the default LocalEnvironment() backend the second statement runs on the host, not in a container. The advisory (GHSA-2h4w-29cv-2cmv, CVE-2026-113663, rated HIGH, affects pip packages ag2 and autogen) was tested on ag2 1.0.5 and links a fix commit and the v1.1.1 release.",
-      "lessons": [
-        {
-          "point": "A filter that lists shell operators but passes the string to a shell can be bypassed by any separator missing from the list. Here, that separator is the newline.",
-          "excerpt": "The filter only inspects a single-line set of shell metacharacters, but execution runs the raw string through",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The bypass can be reached through indirect prompt injection: the model writes tool arguments from content the agent reads.",
-          "excerpt": "Because tool arguments are LLM-generated and can be steered by content the agent processes",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The robust fix is to drop the shell in restricted mode (split the arguments and execute directly) so every separator is inert by construction.",
-          "excerpt": "execute allowlisted/readonly commands without invoking a shell in restricted mode",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A tool named 'sandbox' may not isolate anything: the default backend runs commands as host subprocesses.",
-          "excerpt": "With the default LocalEnvironment() backend, this is command execution on the host process running the agent, not confined to a container.",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Upgrade AG2 past the fix, and treat any agent shell allowlist that passes commands to sh -c as a denylist that will miss some separator.",
-      "tags": [
-        "command-injection",
-        "agent-tools",
-        "allowlist-bypass",
-        "prompt-injection",
-        "ag2",
-        "sandbox"
-      ],
-      "actionable": {
-        "type": "skill",
-        "title": "Check agent shell tools for mismatches between their filter and the shell",
-        "detail": "For every agent shell tool in use, check whether restricted modes validate a string, then pass it to sh -c or bash -c. If they do, test payloads with a newline, carriage return, backslash-newline or command substitution after an allowed prefix. Prefer tools that run an argument vector with no shell, and confirm which backend actually isolates the process.",
-        "skill_slug": "agent-shell-allowlist-audit"
-      },
-      "verified": true,
-      "verify_note": "Verifier confirmed all lessons; same bug class as the Mistral Vibe bypass.",
-      "scores": {
-        "novelty": 35,
-        "relevance": 78,
-        "newness": 38,
-        "credibility": 70.0,
-        "composite": 53.9,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "CVE-2026-109428, the Mistral Vibe allowlist bypass via backslash-newline; Shescape per-shell bypasses.",
-      "related_claims": [
-        "approve-agent-commands-by-observed-effects",
-        "prompt-injection-is-containment-not-prevention"
-      ],
-      "threat": "An attacker who can put text in front of an AG2 agent (fetched document, tool output) steers it into a newline-joined command that runs arbitrary shell commands on the host despite allowed=[...] or readonly=True.",
-      "conditions": "AG2 SandboxShellTool configured with allowed=[...] or readonly=True, on a version before the fix; the default LocalEnvironment() backend makes the impact host command execution.",
-      "mitigations": "Upgrade to the fixed AG2 release (the advisory links v1.1.1), run restricted commands without a shell wrapper, add newline and carriage return to any remaining operator denylist, and run the tool in a real container or microVM backend.",
-      "source_url": "https://github.com/advisories/GHSA-2h4w-29cv-2cmv",
-      "article_url": "https://github.com/advisories/GHSA-2h4w-29cv-2cmv",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/ghsa-2h4w-29cv-2cmv-d29972f088.txt",
-      "discovered_via": "github",
-      "source_id": null,
-      "source_rank": 70.0,
-      "source_topics": [],
-      "source_name": "GitHub Advisory Database",
-      "id": "ag2-sandboxshelltool-allowlist-is-bypassed-by-a-28956ee320",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": [],
-      "editorial": {
-        "promoted": true,
-        "reason": "Second agent shell-tool allowlist bypass in weeks (after Mistral Vibe): a newline beats AG2's allowed=[...] and readonly=True, a concrete audit check for any agent shell tool that validates a string and then runs sh -c.",
-        "signals": [
-          "trending",
-          "cve",
-          "high-relevance"
-        ],
-        "at": "2026-11-10T18:13:02+00:00"
-      }
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "title": "ShadowBench-MCP: task-preserving rewordings can push an LLM tool router onto riskier paths",
-      "summary": "ShadowBench-MCP, presented at USENIX Security 2026, studies shadow invocation: a reworded request that keeps the same task but leads an LLM router to pick an execution path that skips validation, provenance, staging, redaction or audit controls. With a single router (qwen3-32b hosted on Groq) and 96 original-versus-variant comparisons across six security-sensitive workflows, efficiency-first routing gave a 29.2% shadow-invocation rate and a 26.7% safety-tool skip rate, while policy-aware routing cut them to 4.2% and 1.7%. Pre-execution signals separated shadow routes with an area under the curve of up to 0.94, and the authors call the result early, single-router evidence.",
-      "lessons": [
-        {
-          "point": "The chosen execution path, not only the generated text, is a security-relevant output; a benign-looking rewording can route around safety steps.",
-          "excerpt": "a task-preserving request variant that causes an LLM router to select a riskier execution path",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "A router told to optimize for efficiency skipped safety tools in about a quarter of cases.",
-          "excerpt": "Efficiency-first routing produces a 29.2% shadow-invocation rate and 26.7% safety-tool skip rate.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Making the routing policy security-aware cut shadow invocations sharply in this setup.",
-          "excerpt": "Policy-aware routing reduces these to 4.2% and 1.7%, respectively",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "The evidence is small (one router, 120 decisions) and the authors say it does not show a universal vulnerability.",
-          "excerpt": "These results are early, single-router evidence of a policy-dependent routing-layer security effect, not a claim of universal vulnerability.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If an LLM chooses which tools run, mandatory safety steps should be enforced outside the router, and the routing prompt should state security policy, not just efficiency.",
-      "tags": [
-        "mcp",
-        "tool-routing",
-        "tool-selection",
-        "agent-security",
-        "benchmark"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Enforce required safety tools outside the LLM router",
-        "detail": "In agent workflows where validation, provenance, redaction or audit steps must run, make them deterministic preconditions of the sensitive tool (the executor refuses without them) instead of tools the router may choose; also log route choices and diff them across paraphrased versions of the same request in your evals.",
-        "skill_slug": null
-      },
-      "verified": true,
-      "verify_note": "Numbers match the abstract; evidence is from a single router.",
-      "scores": {
-        "novelty": 50,
-        "relevance": 62,
-        "newness": 38,
-        "credibility": 72.0,
-        "composite": 53.9,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "DecisionPivot contrast pairs for router and guardrail models; ToolHijacker tool-selection manipulation.",
-      "related_claims": [
-        "agent-tool-selection-can-be-steered-by-untrusted-context"
-      ],
-      "threat": "A user or upstream text phrases a legitimate request so the router selects a faster path that skips validation, provenance, staging, redaction or audit controls.",
-      "conditions": "An LLM selects among tools or workflows where some paths include safety controls and others do not, and the routing policy emphasizes efficiency.",
-      "mitigations": "State security policy in the routing instructions, make required safety steps non-optional in the executor, and score candidate routes with pre-execution signals before running them.",
-      "source_url": "http://arxiv.org/abs/2611.11720v1",
-      "article_url": "http://arxiv.org/abs/2611.11720v1",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-09",
-      "raw_path": "data/_raw/shadowbench-mcp-measuring-shadow-invocations-in-434c238977.txt",
-      "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "source_name": "USENIX Security (via arXiv)",
-      "id": "shadowbench-mcp-task-preserving-rewordings-can-p-6b6189a710",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
     },
     {
       "topic": "ai-security",
@@ -2451,6 +2269,188 @@
       "previous_slugs": [
         "a-web-page-can-silently-drop-agents-md-into-downloads-which"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.agent-security",
+      "title": "AG2 SandboxShellTool allowlist is bypassed by a newline in the command",
+      "summary": "AG2's SandboxShellTool checks allowed=[...] and readonly=True commands against a denylist of shell operators that omits newline and carriage return, then runs the raw string through sh -c, where a newline acts like a semicolon. A command such as 'cat file\\nrm -rf ...' passes both the prefix check and the operator check, and with the default LocalEnvironment() backend the second statement runs on the host, not in a container. The advisory (GHSA-2h4w-29cv-2cmv, CVE-2026-113663, rated HIGH, affects pip packages ag2 and autogen) was tested on ag2 1.0.5 and links a fix commit and the v1.1.1 release.",
+      "lessons": [
+        {
+          "point": "A filter that lists shell operators but passes the string to a shell can be bypassed by any separator missing from the list. Here, that separator is the newline.",
+          "excerpt": "The filter only inspects a single-line set of shell metacharacters, but execution runs the raw string through",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The bypass can be reached through indirect prompt injection: the model writes tool arguments from content the agent reads.",
+          "excerpt": "Because tool arguments are LLM-generated and can be steered by content the agent processes",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The robust fix is to drop the shell in restricted mode (split the arguments and execute directly) so every separator is inert by construction.",
+          "excerpt": "execute allowlisted/readonly commands without invoking a shell in restricted mode",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A tool named 'sandbox' may not isolate anything: the default backend runs commands as host subprocesses.",
+          "excerpt": "With the default LocalEnvironment() backend, this is command execution on the host process running the agent, not confined to a container.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Upgrade AG2 past the fix, and treat any agent shell allowlist that passes commands to sh -c as a denylist that will miss some separator.",
+      "tags": [
+        "command-injection",
+        "agent-tools",
+        "allowlist-bypass",
+        "prompt-injection",
+        "ag2",
+        "sandbox"
+      ],
+      "actionable": {
+        "type": "skill",
+        "title": "Check agent shell tools for mismatches between their filter and the shell",
+        "detail": "For every agent shell tool in use, check whether restricted modes validate a string, then pass it to sh -c or bash -c. If they do, test payloads with a newline, carriage return, backslash-newline or command substitution after an allowed prefix. Prefer tools that run an argument vector with no shell, and confirm which backend actually isolates the process.",
+        "skill_slug": "agent-shell-allowlist-audit"
+      },
+      "verified": true,
+      "verify_note": "Verifier confirmed all lessons; same bug class as the Mistral Vibe bypass.",
+      "scores": {
+        "novelty": 35,
+        "relevance": 78,
+        "newness": 37,
+        "credibility": 70.0,
+        "composite": 53.65,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "CVE-2026-109428, the Mistral Vibe allowlist bypass via backslash-newline; Shescape per-shell bypasses.",
+      "related_claims": [
+        "approve-agent-commands-by-observed-effects",
+        "prompt-injection-is-containment-not-prevention"
+      ],
+      "threat": "An attacker who can put text in front of an AG2 agent (fetched document, tool output) steers it into a newline-joined command that runs arbitrary shell commands on the host despite allowed=[...] or readonly=True.",
+      "conditions": "AG2 SandboxShellTool configured with allowed=[...] or readonly=True, on a version before the fix; the default LocalEnvironment() backend makes the impact host command execution.",
+      "mitigations": "Upgrade to the fixed AG2 release (the advisory links v1.1.1), run restricted commands without a shell wrapper, add newline and carriage return to any remaining operator denylist, and run the tool in a real container or microVM backend.",
+      "source_url": "https://github.com/advisories/GHSA-2h4w-29cv-2cmv",
+      "article_url": "https://github.com/advisories/GHSA-2h4w-29cv-2cmv",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/ghsa-2h4w-29cv-2cmv-d29972f088.txt",
+      "discovered_via": "github",
+      "source_id": null,
+      "source_rank": 70.0,
+      "source_topics": [],
+      "source_name": "GitHub Advisory Database",
+      "id": "ag2-sandboxshelltool-allowlist-is-bypassed-by-a-28956ee320",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": [],
+      "editorial": {
+        "promoted": true,
+        "reason": "Second agent shell-tool allowlist bypass in weeks (after Mistral Vibe): a newline beats AG2's allowed=[...] and readonly=True, a concrete audit check for any agent shell tool that validates a string and then runs sh -c.",
+        "signals": [
+          "trending",
+          "cve",
+          "high-relevance"
+        ],
+        "at": "2026-11-10T18:13:02+00:00"
+      }
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "ShadowBench-MCP: task-preserving rewordings can push an LLM tool router onto riskier paths",
+      "summary": "ShadowBench-MCP, presented at USENIX Security 2026, studies shadow invocation: a reworded request that keeps the same task but leads an LLM router to pick an execution path that skips validation, provenance, staging, redaction or audit controls. With a single router (qwen3-32b hosted on Groq) and 96 original-versus-variant comparisons across six security-sensitive workflows, efficiency-first routing gave a 29.2% shadow-invocation rate and a 26.7% safety-tool skip rate, while policy-aware routing cut them to 4.2% and 1.7%. Pre-execution signals separated shadow routes with an area under the curve of up to 0.94, and the authors call the result early, single-router evidence.",
+      "lessons": [
+        {
+          "point": "The chosen execution path, not only the generated text, is a security-relevant output; a benign-looking rewording can route around safety steps.",
+          "excerpt": "a task-preserving request variant that causes an LLM router to select a riskier execution path",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "A router told to optimize for efficiency skipped safety tools in about a quarter of cases.",
+          "excerpt": "Efficiency-first routing produces a 29.2% shadow-invocation rate and 26.7% safety-tool skip rate.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Making the routing policy security-aware cut shadow invocations sharply in this setup.",
+          "excerpt": "Policy-aware routing reduces these to 4.2% and 1.7%, respectively",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The evidence is small (one router, 120 decisions) and the authors say it does not show a universal vulnerability.",
+          "excerpt": "These results are early, single-router evidence of a policy-dependent routing-layer security effect, not a claim of universal vulnerability.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If an LLM chooses which tools run, mandatory safety steps should be enforced outside the router, and the routing prompt should state security policy, not just efficiency.",
+      "tags": [
+        "mcp",
+        "tool-routing",
+        "tool-selection",
+        "agent-security",
+        "benchmark"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Enforce required safety tools outside the LLM router",
+        "detail": "In agent workflows where validation, provenance, redaction or audit steps must run, make them deterministic preconditions of the sensitive tool (the executor refuses without them) instead of tools the router may choose; also log route choices and diff them across paraphrased versions of the same request in your evals.",
+        "skill_slug": null
+      },
+      "verified": true,
+      "verify_note": "Numbers match the abstract; evidence is from a single router.",
+      "scores": {
+        "novelty": 50,
+        "relevance": 62,
+        "newness": 37,
+        "credibility": 72.0,
+        "composite": 53.65,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "DecisionPivot contrast pairs for router and guardrail models; ToolHijacker tool-selection manipulation.",
+      "related_claims": [
+        "agent-tool-selection-can-be-steered-by-untrusted-context"
+      ],
+      "threat": "A user or upstream text phrases a legitimate request so the router selects a faster path that skips validation, provenance, staging, redaction or audit controls.",
+      "conditions": "An LLM selects among tools or workflows where some paths include safety controls and others do not, and the routing policy emphasizes efficiency.",
+      "mitigations": "State security policy in the routing instructions, make required safety steps non-optional in the executor, and score candidate routes with pre-execution signals before running them.",
+      "source_url": "http://arxiv.org/abs/2611.11720v1",
+      "article_url": "http://arxiv.org/abs/2611.11720v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/shadowbench-mcp-measuring-shadow-invocations-in-434c238977.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "USENIX Security (via arXiv)",
+      "id": "shadowbench-mcp-task-preserving-rewordings-can-p-6b6189a710",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
     },
     {
       "id": "mcp-gets-an-enterprise-makeover-c33a62e2a6",
@@ -2766,10 +2766,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 68,
-        "newness": 38,
+        "newness": 37,
         "credibility": 50.4,
-        "composite": 52.46,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 52.21,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "prior_art": "SCOPE (compiling natural-language policies into neural-predicate programs, already in ai-security) and NVIDIA OpenShell YAML-policy sandboxes cover policy enforcement for agents; LeanGuard's delta is formally verified temporal policies over execution history plus proof-guided repair of denied calls.",
@@ -3584,106 +3584,6 @@
     },
     {
       "topic": "ai-security",
-      "domain": "ais.ai-infra",
-      "title": "GPUStack treated spoofable loopback requests as admin, and attackers exploited it",
-      "summary": "GPUStack, an open-source GPU cluster manager for AI model serving, treated any request that appeared to come from 127.0.0.1 as the built-in administrator before version 2.2.0, because force_auth_localhost defaulted to false. A remote attacker could look local through a same-host reverse proxy or a client-supplied X-GPUStack-Real-IP header, gaining admin API keys, worker and cloud-provider secrets, and code execution via POST /v2/inference-backends/from-yaml. CISA added CVE-2026-102895 to its Known Exploited Vulnerabilities catalog on 2026-11-09 after exploitation of a 2.1.1 deployment, with a 2026-11-12 due date.",
-      "lessons": [
-        {
-          "point": "Trusting a loopback origin gives remote attackers admin access once a reverse proxy sits on the same host or clients can set the source-IP header.",
-          "excerpt": "A remote request could appear to originate from 127.0.0.1 because client_ip_getter accepted a same-host reverse proxy peer or a client-supplied X-GPUStack-Real-IP loopback value.",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The insecure behavior was the default. Deployments that did not enable localhost authentication were exposed by default.",
-          "excerpt": "treated a loopback request source as the built-in administrator when force_auth_localhost was false, which was the default",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "An admin bypass on a model-serving control plane yields secrets and code execution, not just model tampering.",
-          "excerpt": "disclosure of worker and cloud-provider secrets, and code execution through POST /v2/inference-backends/from-yaml",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Exploitation is confirmed in the wild, not just a theoretical advisory.",
-          "excerpt": "Exploitation was observed in the wild against a 2.1.1 deployment. This issue is fixed in version 2.2.0.",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Upgrade GPUStack to 2.2.0 now and treat any AI serving control plane that trusts loopback or a client IP header as unauthenticated.",
-      "tags": [
-        "kev",
-        "exploited-in-the-wild",
-        "authentication-bypass",
-        "model-serving",
-        "ip-spoofing",
-        "gpustack"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Patch GPUStack and hunt for persistence left by the bypass",
-        "detail": "Upgrade every GPUStack instance below 2.2.0, set force_auth_localhost to true, and strip X-GPUStack-Real-IP at the edge proxy. The bypass allowed persistent administrator API-key creation and secret disclosure. So list and revoke unknown admin API keys, review inference backends created through /v2/inference-backends/from-yaml, and rotate worker and cloud-provider credentials stored in GPUStack."
-      },
-      "verified": true,
-      "verify_note": "All points match; exposure count is not quantified by the source.",
-      "scores": {
-        "novelty": 25,
-        "relevance": 80,
-        "newness": 38,
-        "credibility": 64.4,
-        "composite": 50.66,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "Loopback-trust bugs in coding-agent and MCP localhost servers; classic X-Forwarded-For authentication bypass.",
-      "related_claims": [
-        "localhost-agent-servers-are-reachable-from-any-webpage"
-      ],
-      "threat": "An unauthenticated remote attacker spoofs a loopback source to become GPUStack administrator, then steals secrets, creates persistent admin API keys and runs code through a custom inference backend.",
-      "conditions": "GPUStack before 2.2.0 with force_auth_localhost left at its default of false, reachable through a same-host reverse proxy or accepting the X-GPUStack-Real-IP header from clients.",
-      "mitigations": "Upgrade to 2.2.0, enable force_auth_localhost, drop client-supplied real-IP headers at the proxy, keep the management API off the internet, revoke unknown admin API keys and rotate cloud and worker secrets.",
-      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102895",
-      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102895",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-09",
-      "raw_path": "data/_raw/cisa-kev-gpustack-improper-authentication-vulner-b6356fb25f.txt",
-      "discovered_via": "rss",
-      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
-      "source_rank": 64.4,
-      "source_topics": [
-        "product-security"
-      ],
-      "source_name": "CISA Known Exploited Vulnerabilities",
-      "id": "gpustack-treated-spoofable-loopback-requests-as-a9d1c4073c",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: jargon_chain 8 > 7 (loopback origin gives remote attackers admin access once)"
-        ]
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": [],
-      "editorial": {
-        "promoted": true,
-        "reason": "CISA lists GPUStack's loopback-trust auth bypass as exploited in the wild; anyone running AI model-serving control planes should patch to 2.2.0 and stop trusting loopback or client real-IP headers as authentication.",
-        "signals": [
-          "active-exploitation",
-          "cve",
-          "timely",
-          "high-relevance"
-        ],
-        "at": "2026-11-10T18:13:02+00:00"
-      }
-    },
-    {
-      "topic": "ai-security",
       "domain": "ais.prompt-injection",
       "title": "ASCII Smuggling Crosses Over From AI Prompt-Injection Research Into Mainstream Phishing Evasion",
       "source_url": "https://www.microsoft.com/en-us/security/blog/2026/09/03/ascii-smuggling-crosses-over-from-ai-prompt-injection-to-phishing-evasion/",
@@ -3870,6 +3770,106 @@
     },
     {
       "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "GPUStack treated spoofable loopback requests as admin, and attackers exploited it",
+      "summary": "GPUStack, an open-source GPU cluster manager for AI model serving, treated any request that appeared to come from 127.0.0.1 as the built-in administrator before version 2.2.0, because force_auth_localhost defaulted to false. A remote attacker could look local through a same-host reverse proxy or a client-supplied X-GPUStack-Real-IP header, gaining admin API keys, worker and cloud-provider secrets, and code execution via POST /v2/inference-backends/from-yaml. CISA added CVE-2026-102895 to its Known Exploited Vulnerabilities catalog on 2026-11-09 after exploitation of a 2.1.1 deployment, with a 2026-11-12 due date.",
+      "lessons": [
+        {
+          "point": "Trusting a loopback origin gives remote attackers admin access once a reverse proxy sits on the same host or clients can set the source-IP header.",
+          "excerpt": "A remote request could appear to originate from 127.0.0.1 because client_ip_getter accepted a same-host reverse proxy peer or a client-supplied X-GPUStack-Real-IP loopback value.",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The insecure behavior was the default. Deployments that did not enable localhost authentication were exposed by default.",
+          "excerpt": "treated a loopback request source as the built-in administrator when force_auth_localhost was false, which was the default",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "An admin bypass on a model-serving control plane yields secrets and code execution, not just model tampering.",
+          "excerpt": "disclosure of worker and cloud-provider secrets, and code execution through POST /v2/inference-backends/from-yaml",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Exploitation is confirmed in the wild, not just a theoretical advisory.",
+          "excerpt": "Exploitation was observed in the wild against a 2.1.1 deployment. This issue is fixed in version 2.2.0.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Upgrade GPUStack to 2.2.0 now and treat any AI serving control plane that trusts loopback or a client IP header as unauthenticated.",
+      "tags": [
+        "kev",
+        "exploited-in-the-wild",
+        "authentication-bypass",
+        "model-serving",
+        "ip-spoofing",
+        "gpustack"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Patch GPUStack and hunt for persistence left by the bypass",
+        "detail": "Upgrade every GPUStack instance below 2.2.0, set force_auth_localhost to true, and strip X-GPUStack-Real-IP at the edge proxy. The bypass allowed persistent administrator API-key creation and secret disclosure. So list and revoke unknown admin API keys, review inference backends created through /v2/inference-backends/from-yaml, and rotate worker and cloud-provider credentials stored in GPUStack."
+      },
+      "verified": true,
+      "verify_note": "All points match; exposure count is not quantified by the source.",
+      "scores": {
+        "novelty": 25,
+        "relevance": 80,
+        "newness": 37,
+        "credibility": 64.4,
+        "composite": 50.41,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "Loopback-trust bugs in coding-agent and MCP localhost servers; classic X-Forwarded-For authentication bypass.",
+      "related_claims": [
+        "localhost-agent-servers-are-reachable-from-any-webpage"
+      ],
+      "threat": "An unauthenticated remote attacker spoofs a loopback source to become GPUStack administrator, then steals secrets, creates persistent admin API keys and runs code through a custom inference backend.",
+      "conditions": "GPUStack before 2.2.0 with force_auth_localhost left at its default of false, reachable through a same-host reverse proxy or accepting the X-GPUStack-Real-IP header from clients.",
+      "mitigations": "Upgrade to 2.2.0, enable force_auth_localhost, drop client-supplied real-IP headers at the proxy, keep the management API off the internet, revoke unknown admin API keys and rotate cloud and worker secrets.",
+      "source_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102895",
+      "article_url": "https://nvd.nist.gov/vuln/detail/CVE-2026-102895",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/cisa-kev-gpustack-improper-authentication-vulner-b6356fb25f.txt",
+      "discovered_via": "rss",
+      "source_id": "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno",
+      "source_rank": 64.4,
+      "source_topics": [
+        "product-security"
+      ],
+      "source_name": "CISA Known Exploited Vulnerabilities",
+      "id": "gpustack-treated-spoofable-loopback-requests-as-a9d1c4073c",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: jargon_chain 8 > 7 (loopback origin gives remote attackers admin access once)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": [],
+      "editorial": {
+        "promoted": true,
+        "reason": "CISA lists GPUStack's loopback-trust auth bypass as exploited in the wild; anyone running AI model-serving control planes should patch to 2.2.0 and stop trusting loopback or client real-IP headers as authentication.",
+        "signals": [
+          "active-exploitation",
+          "cve",
+          "timely",
+          "high-relevance"
+        ],
+        "at": "2026-11-10T18:13:02+00:00"
+      }
+    },
+    {
+      "topic": "ai-security",
       "domain": "ais.red-teaming",
       "title": "AllenAI's BenchMIRT: WMDP 'safety' scores track reasoning ability, inversely",
       "source_url": "https://huggingface.co/blog/allenai/benchmirt",
@@ -3999,10 +3999,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 70,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.8,
-        "composite": 50.12,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 49.87,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -4351,10 +4351,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 48.8,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 48.55,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4685,10 +4685,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 55,
-        "newness": 38,
+        "newness": 37,
         "credibility": 66.7,
-        "composite": 48.01,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 47.76,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "The IETF draft-narajala-ans; A2A agent cards; Certificate Transparency and SCITT for append-only logs; SPIFFE for workload identity; DANE.",
       "verified": true,
@@ -5424,173 +5424,6 @@
     },
     {
       "topic": "ai-security",
-      "domain": "ais.prompt-injection",
-      "title": "Brazilian labor court fines lawyers for hidden prompt injection in a filing",
-      "source_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
-      "related_claims": [
-        "indirect-injection-via-retrieved-content-is-viable",
-        "prompt-injection-is-a-permanent-attack-surface"
-      ],
-      "summary": "A labor court in Parauapebas, Brazil, fined two law firms 10% of the claim's value, about $16,000, after finding a white-on-white instruction in their petition telling AI reviewers to answer superficially and not challenge the documents. The courts' Galileu AI tool found the hidden text, and Brazilian outlet G1 reported it raised an alert and blocked processing. The article calls it possibly the first ruling worldwide on deliberate prompt injection against a court's AI.",
-      "takeaway": "Hidden-text injection in documents from outside parties is now a sanctionable act in at least one court, and any pipeline that has AI read outside documents should check for hidden text.",
-      "lessons": [
-        {
-          "point": "The injection was hidden as white text on a white background, invisible to a human reader but read by the AI tool.",
-          "excerpt": "the system identified text set in white font on a white background, invisible to anyone reading the document normally",
-          "confidence": 0.95,
-          "grounded": true
-        },
-        {
-          "point": "The court treated the hidden instruction as bad-faith conduct and fined the filing firms 10% of the claim's value.",
-          "excerpt": "The court fined the two law firms that jointly filed the tainted petition 10% of the claim’s value.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The receiving AI system flagged the attempt and stopped processing the suspicious content, according to G1.",
-          "excerpt": "the Galileu AI system issued an alert and automatically blocked the processing of suspicious content",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "prompt-injection",
-        "hidden-text",
-        "legal",
-        "document-ingestion"
-      ],
-      "threat": "Parties submit documents with hidden instructions meant to bias AI systems that summarize or review them.",
-      "conditions": "An AI system reads externally submitted documents, including text styled to be invisible to humans.",
-      "mitigations": "Normalize documents before AI review (strip or reveal hidden, white-on-white and zero-size text), flag instruction-like text addressed to AI, and keep a human decision on the outcome.",
-      "actionable": {
-        "type": "tool",
-        "title": "Reveal hidden text in inbound documents before an LLM reads them",
-        "detail": "In any document-ingestion pipeline, render text with forced visible styling (remove white-on-white, tiny fonts and hidden layers), diff it against the visible rendering, and flag any instruction-like text addressed to an AI before the document reaches the model."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 55,
-        "newness": 38,
-        "credibility": 55.0,
-        "composite": 46.25,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier supported every lesson and matched novelty at 40; the G1 blocking detail is secondhand.",
-      "prior_art": "Tracker story s-ab5203528125, a litigant hiding a prompt injection in a court filing (404 Media, August 2026); hidden-text injections in resumes and academic papers.",
-      "article_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
-      "tweet_url": null,
-      "author": "doodlesdev",
-      "date": "2026-11",
-      "published": "2026-11-01",
-      "raw_path": "data/_raw/brazilian-court-sanctions-lawyers-for-prompt-inj-7dfe9a5f4f.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@doodlesdev via Hacker News",
-      "id": "brazilian-labor-court-fines-lawyers-for-hidden-p-4803a841ae",
-      "retrieved_at": "2026-11-01T17:42:30+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "improving-fuzzy-robustness-in-llm-safety-with-au-b1c3889704",
-      "topic": "ai-security",
-      "domain": "ais.guardrails",
-      "title": "OpenAI trained GPT-6 Astra on automated-red-team jailbreaks to resist misuse",
-      "summary": "OpenAI used a PAIR-style harness in which an attacker model, a helpful-only version of GPT-5.6 Sol, kept rewriting harmful seed prompts until GPT-5.4 or GPT-5.5 gave an unsafe answer. It then ran RL safety training on the resulting 'robustified' prompts in the cyber, biology and violence domains. Without production safeguards, GPT-6 Astra answered 91.5% of fixed cyber jailbreaks safely versus 59% for GPT-5.6 Sol, held up better against adaptive multi-turn attackers, and OpenAI reports no rise in refusals of benign requests.",
-      "lessons": [
-        {
-          "point": "A general helpful-only reasoning model, given only test-time compute and iterative feedback, produces working jailbreaks without any jailbreak-specific training, according to OpenAI.",
-          "excerpt": "We remark that the helpful-only reasoning model had no specific training on how to jailbreak other models, it is an emergent phenomenon.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Original seed prompts give a nearly saturated safety signal. Prompts hardened by the attacker give room to improve and are what drove the robustness gains.",
-          "excerpt": "observed that the safety score starts at a much less saturated level and improves over the course of training",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Training on jailbreaks from one attacker also improved robustness against qualitatively different adaptive attackers. This is evidence of generalization, though OpenAI's own results are the only source.",
-          "excerpt": "The improved robustness against adaptive attackers, which are qualitatively different from the attacker used to generate training data, is an especially promising sign",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "Even the improved model fails about 8.5% of fixed cyber jailbreaks without safeguards, so model-layer refusal still needs other defenses layered around it.",
-          "excerpt": "On cyber, GPT-6 Astra answered 91.5% safely, compared with 59% for GPT-5.6 Sol.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Adversarial training on automated-red-team jailbreaks raised model-layer refusal robustness a lot, but OpenAI itself treats this as one layer of defense, not a security boundary.",
-      "tags": [
-        "jailbreak",
-        "automated-red-teaming",
-        "adversarial-training",
-        "refusal-robustness",
-        "dual-use",
-        "pair"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Harden safety evals with an iterative attacker before trusting refusal scores",
-        "detail": "For your own fine-tuned model or guardrail classifier, replace static harmful-prompt sets with a PAIR-style loop. A capable attacker model rewrites each seed prompt using the defender's replies and grader verdicts, for example by splitting the task into harmless-looking subproblems. Score both refusal on the hardened set and over-refusal on benign challenging prompts, and track the worst score across several attacker personas."
-      },
-      "scores": {
-        "novelty": 25,
-        "relevance": 60,
-        "newness": 38,
-        "credibility": 75.0,
-        "composite": 46.25,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "PAIR (Chao et al. 2023); Perez et al. 2022 red-teaming LMs with LMs; HarmBench R2D2 adversarial training against automated attacks. New mainly in frontier scale and the finding that unsaturated robustified prompts drive RL safety gains.",
-      "threat": "Adaptive multi-turn jailbreaks that split a harmful request into harmless-looking subproblems to extract dual-use uplift in cyber or biology.",
-      "conditions": "An attacker has iterative query access to the model and can adapt to its refusals. Robustness was measured without production safeguards.",
-      "mitigations": "Run RL safety training on prompts hardened by automated red teaming. Evaluate with held-out and adaptive attackers. Restrict high-stakes capabilities to trusted-access programs. Layer deployment safeguards on top of model training.",
-      "related_claims": [
-        "model-internal-refusal-is-not-a-security-boundary",
-        "jailbreak-transfers-across-models",
-        "constitutional-ai-reduces-refusal-brittleness"
-      ],
-      "verified": true,
-      "verify_note": "Verifier confirmed all lessons; the fixed jailbreak set is in-distribution for the method and over-refusal is asserted without numbers. Novelty taken as the verifier's 25.",
-      "source_url": "https://alignment.openai.com/fuzzy-robustness/",
-      "article_url": "https://alignment.openai.com/fuzzy-robustness/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-12",
-      "raw_path": "data/_raw/improving-fuzzy-robustness-in-llm-safety-with-au-b1c3889704.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-alignment-openai-com-rss-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "OpenAI Alignment Blog",
-      "id": "openai-trained-gpt-6-astra-on-automated-red-team-37a2be5c2d",
-      "retrieved_at": "2026-11-13T17:46:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-security",
       "domain": "ais.ai-infra",
       "title": "Wiz: LLMjacking via phished Google Cloud admins linking attacker projects",
       "source_url": "https://www.wiz.io/blog/from-phishing-to-llmjacking",
@@ -5937,99 +5770,170 @@
     },
     {
       "topic": "ai-security",
-      "domain": "ais.ai-infra",
-      "title": "Fireworks AI discloses second breach reached through a third-party cloud provider",
-      "summary": "Inference provider Fireworks AI, already handling an early-October incident in which attackers read environment variables holding API keys and tokens (which it tied to a financially motivated group reselling stolen LLM access, called LLMjacking), disclosed a second breach. A third-party cloud provider hosting its research and development machines was compromised on October 23, and on October 24 the intruder used that access to reach Fireworks development machines and run an unauthorized workload, exposing resource metadata, billing information, and incomplete model weights and datasets for some customers. Fireworks says it revoked credentials and service accounts, restricted network pathways, isolated systems and tightened storage access, and is working with Palo Alto Networks Unit 42.",
+      "domain": "ais.prompt-injection",
+      "title": "Brazilian labor court fines lawyers for hidden prompt injection in a filing",
+      "source_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+      "related_claims": [
+        "indirect-injection-via-retrieved-content-is-viable",
+        "prompt-injection-is-a-permanent-attack-surface"
+      ],
+      "summary": "A labor court in Parauapebas, Brazil, fined two law firms 10% of the claim's value, about $16,000, after finding a white-on-white instruction in their petition telling AI reviewers to answer superficially and not challenge the documents. The courts' Galileu AI tool found the hidden text, and Brazilian outlet G1 reported it raised an alert and blocked processing. The article calls it possibly the first ruling worldwide on deliberate prompt injection against a court's AI.",
+      "takeaway": "Hidden-text injection in documents from outside parties is now a sanctionable act in at least one court, and any pipeline that has AI read outside documents should check for hidden text.",
       "lessons": [
         {
-          "point": "Environment variables used as a secrets store are a high-value target at AI inference providers.",
-          "excerpt": "attackers accessed environment variables containing API keys and tokens stored as secrets for a limited number of accounts",
+          "point": "The injection was hidden as white text on a white background, invisible to a human reader but read by the AI tool.",
+          "excerpt": "the system identified text set in white font on a white background, invisible to anyone reading the document normally",
+          "confidence": 0.95,
+          "grounded": true
+        },
+        {
+          "point": "The court treated the hidden instruction as bad-faith conduct and fined the filing firms 10% of the claim's value.",
+          "excerpt": "The court fined the two law firms that jointly filed the tainted petition 10% of the claim’s value.",
           "confidence": 0.9,
           "grounded": true
         },
         {
-          "point": "Fireworks attributes the first incident to a group that sells stolen LLM access through illicit routing gateways, a financial motive distinct from data theft.",
-          "excerpt": "aimed at selling tokens from unauthorized access to Large Language Models (LLMs) to illicit routing gateways",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Development and research machines hosted at a third-party cloud provider became the path in, so they belong in the same threat model as production.",
-          "excerpt": "A third-party cloud provider that hosted Fireworks R&D machines experienced a security incident on October 23.",
-          "confidence": 0.9,
+          "point": "The receiving AI system flagged the attempt and stopped processing the suspicious content, according to G1.",
+          "excerpt": "the Galileu AI system issued an alert and automatically blocked the processing of suspicious content",
+          "confidence": 0.75,
           "grounded": true
         }
       ],
-      "takeaway": "Fireworks AI's second breach in weeks came through a third-party cloud host, and exposed customer data and incomplete model weights.",
       "tags": [
-        "llmjacking",
-        "api-keys",
-        "third-party-risk",
-        "incident-response",
-        "ai-infrastructure",
-        "model-weights",
-        "breach"
+        "prompt-injection",
+        "hidden-text",
+        "legal",
+        "document-ingestion"
       ],
+      "threat": "Parties submit documents with hidden instructions meant to bias AI systems that summarize or review them.",
+      "conditions": "An AI system reads externally submitted documents, including text styled to be invisible to humans.",
+      "mitigations": "Normalize documents before AI review (strip or reveal hidden, white-on-white and zero-size text), flag instruction-like text addressed to AI, and keep a human decision on the outcome.",
       "actionable": {
-        "type": "takeaway",
-        "title": "Rotate Fireworks keys and separate development hosts from customer model storage",
-        "detail": "If you use Fireworks, rotate API keys and review usage and billing for unexpected calls since early October. For your own AI platform, move API keys out of plain environment variables. Store them in a secrets manager with short-lived credentials. Check that research and development machines at outside cloud providers cannot reach customer weights, datasets or billing stores."
+        "type": "tool",
+        "title": "Reveal hidden text in inbound documents before an LLM reads them",
+        "detail": "In any document-ingestion pipeline, render text with forced visible styling (remove white-on-white, tiny fonts and hidden layers), diff it against the visible rendering, and flag any instruction-like text addressed to an AI before the document reaches the model."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 55,
+        "newness": 37,
+        "credibility": 55.0,
+        "composite": 46.0,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
-      "verify_note": "Removed an unsupported lesson; the source does not tie the October 24 intruder to the earlier LLMjacking incident.",
-      "scores": {
-        "novelty": 30,
-        "relevance": 60,
-        "newness": 38,
-        "credibility": 60.0,
-        "composite": 45.5,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "Google and Wiz LLMjacking reports.",
-      "related_claims": [
-        "long-lived-cloud-credentials-are-obsolete"
-      ],
-      "threat": "A financially motivated actor steals API keys and tokens from an AI inference provider, and separately pivots from a compromised third-party cloud host to development machines to reach customer metadata, billing data, model weights and datasets.",
-      "conditions": "Secrets stored as environment variables readable by the attacker; development machines at an outside cloud provider with network paths to internal data storage and analytics systems.",
-      "mitigations": "Revoke and replace credentials and service accounts, restrict unauthorized network pathways, isolate affected systems, tighten access to data storage and analytics systems, and have customers rotate API keys and watch usage.",
-      "source_url": "https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/",
-      "article_url": "https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/",
-      "tweet_url": "https://x.com/Dinosn/status/2120193579507453989",
-      "author": "@Dinosn",
+      "verify_note": "Independent verifier supported every lesson and matched novelty at 40; the G1 blocking detail is secondhand.",
+      "prior_art": "Tracker story s-ab5203528125, a litigant hiding a prompt injection in a court filing (404 Media, August 2026); hidden-text injections in resumes and academic papers.",
+      "article_url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+      "tweet_url": null,
+      "author": "doodlesdev",
       "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/dinosn-fireworks-ai-discloses-new-breach-after-c-aeea7eab9a.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "id": "fireworks-ai-discloses-second-breach-reached-thr-b2a4ba588c",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "published": "2026-11-01",
+      "raw_path": "data/_raw/brazilian-court-sanctions-lawyers-for-prompt-inj-7dfe9a5f4f.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@doodlesdev via Hacker News",
+      "id": "brazilian-labor-court-fines-lawyers-for-hidden-p-4803a841ae",
+      "retrieved_at": "2026-11-01T17:42:30+00:00",
       "needs_review": true,
       "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 48 > 45 (A third-party cloud provider hosting its research and development machines was compromised on October 23, and on October)"
-        ]
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
-      "grounding_score": 1.0,
-      "corroborating_sources": [],
-      "editorial": {
-        "promoted": true,
-        "reason": "An AI inference provider's second breach in weeks came through a third-party cloud host; a live incident with a teachable third-party-host lesson for AI infrastructure teams.",
-        "signals": [
-          "newsworthy",
-          "incident-response",
-          "timely"
-        ],
-        "at": "2026-11-10T18:13:02+00:00"
-      }
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "improving-fuzzy-robustness-in-llm-safety-with-au-b1c3889704",
+      "topic": "ai-security",
+      "domain": "ais.guardrails",
+      "title": "OpenAI trained GPT-6 Astra on automated-red-team jailbreaks to resist misuse",
+      "summary": "OpenAI used a PAIR-style harness in which an attacker model, a helpful-only version of GPT-5.6 Sol, kept rewriting harmful seed prompts until GPT-5.4 or GPT-5.5 gave an unsafe answer. It then ran RL safety training on the resulting 'robustified' prompts in the cyber, biology and violence domains. Without production safeguards, GPT-6 Astra answered 91.5% of fixed cyber jailbreaks safely versus 59% for GPT-5.6 Sol, held up better against adaptive multi-turn attackers, and OpenAI reports no rise in refusals of benign requests.",
+      "lessons": [
+        {
+          "point": "A general helpful-only reasoning model, given only test-time compute and iterative feedback, produces working jailbreaks without any jailbreak-specific training, according to OpenAI.",
+          "excerpt": "We remark that the helpful-only reasoning model had no specific training on how to jailbreak other models, it is an emergent phenomenon.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Original seed prompts give a nearly saturated safety signal. Prompts hardened by the attacker give room to improve and are what drove the robustness gains.",
+          "excerpt": "observed that the safety score starts at a much less saturated level and improves over the course of training",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Training on jailbreaks from one attacker also improved robustness against qualitatively different adaptive attackers. This is evidence of generalization, though OpenAI's own results are the only source.",
+          "excerpt": "The improved robustness against adaptive attackers, which are qualitatively different from the attacker used to generate training data, is an especially promising sign",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Even the improved model fails about 8.5% of fixed cyber jailbreaks without safeguards, so model-layer refusal still needs other defenses layered around it.",
+          "excerpt": "On cyber, GPT-6 Astra answered 91.5% safely, compared with 59% for GPT-5.6 Sol.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Adversarial training on automated-red-team jailbreaks raised model-layer refusal robustness a lot, but OpenAI itself treats this as one layer of defense, not a security boundary.",
+      "tags": [
+        "jailbreak",
+        "automated-red-teaming",
+        "adversarial-training",
+        "refusal-robustness",
+        "dual-use",
+        "pair"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Harden safety evals with an iterative attacker before trusting refusal scores",
+        "detail": "For your own fine-tuned model or guardrail classifier, replace static harmful-prompt sets with a PAIR-style loop. A capable attacker model rewrites each seed prompt using the defender's replies and grader verdicts, for example by splitting the task into harmless-looking subproblems. Score both refusal on the hardened set and over-refusal on benign challenging prompts, and track the worst score across several attacker personas."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 60,
+        "newness": 37,
+        "credibility": 75.0,
+        "composite": 46.0,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "PAIR (Chao et al. 2023); Perez et al. 2022 red-teaming LMs with LMs; HarmBench R2D2 adversarial training against automated attacks. New mainly in frontier scale and the finding that unsaturated robustified prompts drive RL safety gains.",
+      "threat": "Adaptive multi-turn jailbreaks that split a harmful request into harmless-looking subproblems to extract dual-use uplift in cyber or biology.",
+      "conditions": "An attacker has iterative query access to the model and can adapt to its refusals. Robustness was measured without production safeguards.",
+      "mitigations": "Run RL safety training on prompts hardened by automated red teaming. Evaluate with held-out and adaptive attackers. Restrict high-stakes capabilities to trusted-access programs. Layer deployment safeguards on top of model training.",
+      "related_claims": [
+        "model-internal-refusal-is-not-a-security-boundary",
+        "jailbreak-transfers-across-models",
+        "constitutional-ai-reduces-refusal-brittleness"
+      ],
+      "verified": true,
+      "verify_note": "Verifier confirmed all lessons; the fixed jailbreak set is in-distribution for the method and over-refusal is asserted without numbers. Novelty taken as the verifier's 25.",
+      "source_url": "https://alignment.openai.com/fuzzy-robustness/",
+      "article_url": "https://alignment.openai.com/fuzzy-robustness/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-12",
+      "raw_path": "data/_raw/improving-fuzzy-robustness-in-llm-safety-with-au-b1c3889704.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-alignment-openai-com-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "OpenAI Alignment Blog",
+      "id": "openai-trained-gpt-6-astra-on-automated-red-team-37a2be5c2d",
+      "retrieved_at": "2026-11-13T17:46:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "candidate_id": "how-abliterated-models-can-get-you-pwned-e41760ad6d",
@@ -6135,6 +6039,102 @@
       "previous_slugs": [
         "projectdiscovery-backdoored-qwen2-5-7b-with-a-cheap-lora-fin"
       ]
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.ai-infra",
+      "title": "Fireworks AI discloses second breach reached through a third-party cloud provider",
+      "summary": "Inference provider Fireworks AI, already handling an early-October incident in which attackers read environment variables holding API keys and tokens (which it tied to a financially motivated group reselling stolen LLM access, called LLMjacking), disclosed a second breach. A third-party cloud provider hosting its research and development machines was compromised on October 23, and on October 24 the intruder used that access to reach Fireworks development machines and run an unauthorized workload, exposing resource metadata, billing information, and incomplete model weights and datasets for some customers. Fireworks says it revoked credentials and service accounts, restricted network pathways, isolated systems and tightened storage access, and is working with Palo Alto Networks Unit 42.",
+      "lessons": [
+        {
+          "point": "Environment variables used as a secrets store are a high-value target at AI inference providers.",
+          "excerpt": "attackers accessed environment variables containing API keys and tokens stored as secrets for a limited number of accounts",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Fireworks attributes the first incident to a group that sells stolen LLM access through illicit routing gateways, a financial motive distinct from data theft.",
+          "excerpt": "aimed at selling tokens from unauthorized access to Large Language Models (LLMs) to illicit routing gateways",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Development and research machines hosted at a third-party cloud provider became the path in, so they belong in the same threat model as production.",
+          "excerpt": "A third-party cloud provider that hosted Fireworks R&D machines experienced a security incident on October 23.",
+          "confidence": 0.9,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Fireworks AI's second breach in weeks came through a third-party cloud host, and exposed customer data and incomplete model weights.",
+      "tags": [
+        "llmjacking",
+        "api-keys",
+        "third-party-risk",
+        "incident-response",
+        "ai-infrastructure",
+        "model-weights",
+        "breach"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Rotate Fireworks keys and separate development hosts from customer model storage",
+        "detail": "If you use Fireworks, rotate API keys and review usage and billing for unexpected calls since early October. For your own AI platform, move API keys out of plain environment variables. Store them in a secrets manager with short-lived credentials. Check that research and development machines at outside cloud providers cannot reach customer weights, datasets or billing stores."
+      },
+      "verified": true,
+      "verify_note": "Removed an unsupported lesson; the source does not tie the October 24 intruder to the earlier LLMjacking incident.",
+      "scores": {
+        "novelty": 30,
+        "relevance": 60,
+        "newness": 37,
+        "credibility": 60.0,
+        "composite": 45.25,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "Google and Wiz LLMjacking reports.",
+      "related_claims": [
+        "long-lived-cloud-credentials-are-obsolete"
+      ],
+      "threat": "A financially motivated actor steals API keys and tokens from an AI inference provider, and separately pivots from a compromised third-party cloud host to development machines to reach customer metadata, billing data, model weights and datasets.",
+      "conditions": "Secrets stored as environment variables readable by the attacker; development machines at an outside cloud provider with network paths to internal data storage and analytics systems.",
+      "mitigations": "Revoke and replace credentials and service accounts, restrict unauthorized network pathways, isolate affected systems, tighten access to data storage and analytics systems, and have customers rotate API keys and watch usage.",
+      "source_url": "https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/",
+      "article_url": "https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/",
+      "tweet_url": "https://x.com/Dinosn/status/2120193579507453989",
+      "author": "@Dinosn",
+      "date": "2026-11",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/dinosn-fireworks-ai-discloses-new-breach-after-c-aeea7eab9a.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "id": "fireworks-ai-discloses-second-breach-reached-thr-b2a4ba588c",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 48 > 45 (A third-party cloud provider hosting its research and development machines was compromised on October 23, and on October)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": [],
+      "editorial": {
+        "promoted": true,
+        "reason": "An AI inference provider's second breach in weeks came through a third-party cloud host; a live incident with a teachable third-party-host lesson for AI infrastructure teams.",
+        "signals": [
+          "newsworthy",
+          "incident-response",
+          "timely"
+        ],
+        "at": "2026-11-10T18:13:02+00:00"
+      }
     },
     {
       "id": "towards-safety-cases-for-frontier-ai-training-255b39d392",
@@ -6322,93 +6322,6 @@
       ]
     },
     {
-      "id": "occ-s-new-super-intelligence-supervisory-framewo-b4aa882b0f",
-      "topic": "ai-security",
-      "domain": "ais.agent-security",
-      "title": "OCC framework guides bank examiners on tiering AI use cases by risk",
-      "source_url": "https://www.debevoisedatablog.com/2026/11/10/occs-new-super-intelligence-supervisory-framework-key-takeaways-and-how-it-compares-to-the-fsbs-ai-sound-practices/",
-      "summary": "The Office of the Comptroller of the Currency (OCC) released a framework that guides its examiners on judging banks' use of AI, with an illustrative method that scores each use case on seven risk factors, including autonomy, reversibility and data sensitivity, and placing it in one of four tiers. An autonomous payment agent is a Critical example, and code assistants are a Low example. It also names agentic AI, including customer-operated external agents, as a new attack surface exposed to prompt injection, data poisoning and agent manipulation.",
-      "lessons": [
-        {
-          "point": "Risk is set by the use case, not the tool. Autonomy, reversibility and data sensitivity are explicit scoring factors.",
-          "excerpt": "AI use cases may be scored against a common set of risk factors, such that a comparable risk gets a comparable control regardless of where it originates in the bank",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Critical-tier use cases are the ones where an agent acts directly and its actions are hard to undo.",
-          "excerpt": "Generally, Critical use cases involve direct AI system action, limited reversibility of AI agent actions, high financial or customer impact, and autonomous or partially autonomous AI system actions.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "AI agents run by customers count as an operational resilience risk. The OCC lists concrete controls for them.",
-          "excerpt": "risk-based controls for external AI agents include identity, authentication, monitoring, velocity limits, dispute handling, suspension, and revocation",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Standard vendor security reviews are called out as too narrow for AI vendors.",
-          "excerpt": "not fully addressed by conventional service-level and information-security reviews",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "US bank examiners will now look at agent autonomy, reversibility and controls on external agents, so defenders at banks need an inventory that captures those fields.",
-      "tags": [
-        "regulation",
-        "banking",
-        "agent-governance",
-        "risk-tiering",
-        "external-agents",
-        "third-party-risk",
-        "occ"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Add autonomy and reversibility fields to the AI use case inventory",
-        "detail": "For each AI system, record its purpose, owner, autonomy level, connected systems, permitted actions, third-party dependencies, data sensitivity and whether its actions can be reversed. Map each entry to the OCC's four tiers. For any customer-facing API that external AI agents can call, check that agent identity, authentication, velocity limits, monitoring, suspension and revocation are in place."
-      },
-      "scores": {
-        "novelty": 35,
-        "relevance": 50,
-        "newness": 38,
-        "credibility": 55.0,
-        "composite": 43.25,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "verified": true,
-      "prior_art": "The pool already covers major US banks blocking customers' third-party AI agents. This adds the first AI-specific supervisory framework from a US federal banking regulator, with a published tiering method and a list of controls for external agents.",
-      "related_claims": [],
-      "threat": "Autonomous or customer-operated AI agents taking hard-to-reverse financial actions, or being manipulated through prompt injection or data poisoning.",
-      "conditions": "Banks running agentic AI with direct action rights, or exposing services to external AI agents.",
-      "mitigations": "Tier AI use cases by autonomy and reversibility, and apply identity, velocity limits, monitoring and revocation to external agents.",
-      "article_url": "https://www.debevoisedatablog.com/2026/11/10/occs-new-super-intelligence-supervisory-framework-key-takeaways-and-how-it-compares-to-the-fsbs-ai-sound-practices/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/occ-s-new-super-intelligence-supervisory-framewo-b4aa882b0f.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-debevoisedatablog-com-feed",
-      "source_rank": 55.0,
-      "source_topics": [
-        "ai-security",
-        "ai-research"
-      ],
-      "source_name": "Debevoise Data Blog",
-      "retrieved_at": "2026-11-14T19:16:13+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 49 > 45 (The Office of the Comptroller of the Currency (OCC) released a framework that guides its examiners on judging banks' use)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
       "topic": "ai-security",
       "domain": "ais.ai-infra",
       "title": "Northflank breach exposed customer secrets, and stolen AI API keys were used",
@@ -6508,84 +6421,6 @@
       }
     },
     {
-      "id": "votal-ai-hq-ai-red-teaming-0c78f9f9c9",
-      "topic": "ai-security",
-      "domain": "ais.red-teaming",
-      "title": "Red-Team AI reads an agent app's source code to tailor attacks",
-      "source_url": "https://github.com/votal-ai-hq/ai-red-teaming",
-      "article_url": "https://github.com/votal-ai-hq/ai-red-teaming",
-      "tweet_url": null,
-      "author": "votal-ai-hq",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/votal-ai-hq-ai-red-teaming-0c78f9f9c9.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:ai-agent-security-guardrails",
-      "source_rank": 47.5,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "votal-ai-hq/ai-red-teaming",
-      "related_claims": [
-        "agent-tool-selection-can-be-steered-by-untrusted-context"
-      ],
-      "summary": "Red-Team AI is a beta, MIT-licensed white-box red-teaming tool for agentic apps that reads the app's source to learn its tools, roles and guardrails before generating attacks. A PAIR-style loop feeds each refusal and judge verdict back to the attacker model and retries, and an LLM judge scores results against a hand-labelled gold set. Its pitch is finding multi-tool paths such as read_file to send_email that single-call checks miss.",
-      "takeaway": "Feeding a red-team tool your agent's source finds tool-chain paths that black-box prompt lists miss.",
-      "lessons": [
-        {
-          "point": "White-box context lets attacks target the app's actual tools and guardrails.",
-          "excerpt": "It reads your application's source code first, learns your tools, roles, and guardrails, and then generates attacks tailored to",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Chained tool calls are the target class that per-call checks miss.",
-          "excerpt": "the path through tools `read_file → send_email` that no single-call check would catch",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Refusals become feedback for the next attempt rather than a stopping point.",
-          "excerpt": "feeds the exact refusal and judge verdict back to the attacker model, revises the attack, and retries until it lands or the budget is spent",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "red-teaming",
-        "white-box",
-        "pair",
-        "llm-judge",
-        "agentic-apps",
-        "tool-chaining"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Red-team agent apps with their source in view",
-        "detail": "When red-teaming an agent, give the attacker its tool list, role definitions and guardrail code, and look specifically for multi-step tool chains from a read tool to an outbound tool. Red-Team AI is one beta option at 40 stars; check its judge against your own labelled cases before trusting scores."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 58,
-        "newness": 38,
-        "credibility": 47.5,
-        "composite": 43.02,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "PAIR (Chao et al.) iterative jailbreak refinement; PyRIT, promptfoo and garak for black-box LLM red-teaming; NuGuard (already in the pool) for agent static analysis plus sandboxed red-team scenarios.",
-      "verified": true,
-      "verify_note": "Verifier found all lessons supported; noted the tool-chain example comes from the README's own demo app, and no gold-set accuracy is given. Novelty taken as verifier's 30.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "apple-changes-full-disk-access-permissions-to-cu-4ca19dc464",
       "topic": "ai-security",
       "domain": "ais.agent-security",
@@ -6679,84 +6514,169 @@
       ]
     },
     {
+      "id": "occ-s-new-super-intelligence-supervisory-framewo-b4aa882b0f",
       "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "title": "SkillCODER fingerprints agent skill files to trace leaks to a buyer",
-      "summary": "SkillCODER, accepted at the ACM Conference on Computer and Communications Security (CCS) 2026, embeds a dormant conditional capsule across the section structure of an agent skill file and encodes a per-buyer fingerprint through controlled word choices protected by error-correcting codes. The owner later sends paired positive and negative probes to a suspect agent, black-box, and decodes ownership and buyer identity from its answers. The authors report 99.2% owner verification and 99.3% buyer Top-1 attribution across three domains, six models and three agent frameworks, with robustness to paraphrase and compression and graceful degradation under five adaptive attacks including multi-buyer collusion.",
+      "domain": "ais.agent-security",
+      "title": "OCC framework guides bank examiners on tiering AI use cases by risk",
+      "source_url": "https://www.debevoisedatablog.com/2026/11/10/occs-new-super-intelligence-supervisory-framework-key-takeaways-and-how-it-compares-to-the-fsbs-ai-sound-practices/",
+      "summary": "The Office of the Comptroller of the Currency (OCC) released a framework that guides its examiners on judging banks' use of AI, with an illustrative method that scores each use case on seven risk factors, including autonomy, reversibility and data sensitivity, and placing it in one of four tiers. An autonomous payment agent is a Critical example, and code assistants are a Low example. It also names agentic AI, including customer-operated external agents, as a new attack surface exposed to prompt injection, data poisoning and agent manipulation.",
       "lessons": [
         {
-          "point": "Token-level prompt watermarks do not suit long, human-readable skill files, so the paper works at the section level instead.",
-          "excerpt": "Existing prompt copyright auditing methods struggle with long skills and introduce token-level perturbations that compromise readability.",
+          "point": "Risk is set by the use case, not the tool. Autonomy, reversibility and data sensitivity are explicit scoring factors.",
+          "excerpt": "AI use cases may be scored against a common set of risk factors, such that a comparable risk gets a comparable control regardless of where it originates in the bank",
           "confidence": 0.85,
           "grounded": true
         },
         {
-          "point": "The mark is a conditional instruction that stays inactive in normal use and fires only on the owner's verification queries.",
-          "excerpt": "designed to activate under verification queries and remain dormant otherwise",
+          "point": "Critical-tier use cases are the ones where an agent acts directly and its actions are hard to undo.",
+          "excerpt": "Generally, Critical use cases involve direct AI system action, limited reversibility of AI agent actions, high financial or customer impact, and autonomous or partially autonomous AI system actions.",
           "confidence": 0.85,
           "grounded": true
         },
         {
-          "point": "Authors report near-perfect owner and buyer identification while task quality is preserved.",
-          "excerpt": "SkillCODER achieves 99.2% owner verification and 99.3% buyer Top-1 attribution accuracy while preserving task fidelity",
-          "confidence": 0.75,
+          "point": "AI agents run by customers count as an operational resilience risk. The OCC lists concrete controls for them.",
+          "excerpt": "risk-based controls for external AI agents include identity, authentication, monitoring, velocity limits, dispute handling, suspension, and revocation",
+          "confidence": 0.8,
           "grounded": true
         },
         {
-          "point": "Against adaptive attackers, proving ownership holds up better than naming the specific leaking buyer.",
-          "excerpt": "ownership evidence remains reliably detectable while buyer attribution degrades gracefully",
-          "confidence": 0.75,
+          "point": "Standard vendor security reviews are called out as too narrow for AI vendors.",
+          "excerpt": "not fully addressed by conventional service-level and information-security reviews",
+          "confidence": 0.7,
           "grounded": true
         }
       ],
-      "takeaway": "Sellers of proprietary skills can embed per-buyer traceable marks, but the mark is itself a hidden conditional instruction that a skill reviewer should know to look for.",
+      "takeaway": "US bank examiners will now look at agent autonomy, reversibility and controls on external agents, so defenders at banks need an inventory that captures those fields.",
       "tags": [
-        "agent-skills",
-        "watermarking",
-        "fingerprinting",
-        "copyright",
-        "skill-marketplace"
+        "regulation",
+        "banking",
+        "agent-governance",
+        "risk-tiering",
+        "external-agents",
+        "third-party-risk",
+        "occ"
       ],
       "actionable": {
         "type": "takeaway",
-        "title": "Expect hidden conditional instructions in licensed skills",
-        "detail": "If you buy or ingest third-party skill files, note that fingerprinting schemes like this embed trigger-gated instructions by design; skill scanners and reviewers should flag dormant conditional instructions and ask the vendor to disclose any marking scheme. If you sell skills, the released code (github.com/EonHao/SkillCODER) is the place to evaluate per-buyer marking.",
-        "skill_slug": null
+        "title": "Add autonomy and reversibility fields to the AI use case inventory",
+        "detail": "For each AI system, record its purpose, owner, autonomy level, connected systems, permitted actions, third-party dependencies, data sensitivity and whether its actions can be reversed. Map each entry to the OCC's four tiers. For any customer-facing API that external AI agents can call, check that agent identity, authentication, velocity limits, monitoring, suspension and revocation are in place."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 50,
+        "newness": 37,
+        "credibility": 55.0,
+        "composite": 43.0,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
-      "verify_note": "All figures match the abstract; close to SkillMarker.",
-      "scores": {
-        "novelty": 30,
-        "relevance": 45,
-        "newness": 38,
-        "credibility": 72.0,
-        "composite": 42.8,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "SkillMarker watermarks agent skill files to trace copying; SkillTrace provenance auditing.",
+      "prior_art": "The pool already covers major US banks blocking customers' third-party AI agents. This adds the first AI-specific supervisory framework from a US federal banking regulator, with a published tiering method and a list of controls for external agents.",
       "related_claims": [],
-      "source_url": "http://arxiv.org/abs/2611.11308v1",
-      "article_url": "http://arxiv.org/abs/2611.11308v1",
+      "threat": "Autonomous or customer-operated AI agents taking hard-to-reverse financial actions, or being manipulated through prompt injection or data poisoning.",
+      "conditions": "Banks running agentic AI with direct action rights, or exposing services to external AI agents.",
+      "mitigations": "Tier AI use cases by autonomy and reversibility, and apply identity, velocity limits, monitoring and revocation to external agents.",
+      "article_url": "https://www.debevoisedatablog.com/2026/11/10/occs-new-super-intelligence-supervisory-framework-key-takeaways-and-how-it-compares-to-the-fsbs-ai-sound-practices/",
       "tweet_url": null,
       "author": null,
       "date": "2026-11",
-      "published": "2026-11-08",
-      "raw_path": "data/_raw/skillcoder-towards-auditing-and-attribution-of-c-41623a4b1a.txt",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/occ-s-new-super-intelligence-supervisory-framewo-b4aa882b0f.txt",
       "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "source_name": "CCS (via arXiv)",
-      "id": "skillcoder-fingerprints-agent-skill-files-to-tra-34bd3ffd75",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "source_id": "rss:https-www-debevoisedatablog-com-feed",
+      "source_rank": 55.0,
+      "source_topics": [
+        "ai-security",
+        "ai-research"
+      ],
+      "source_name": "Debevoise Data Blog",
+      "retrieved_at": "2026-11-14T19:16:13+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 49 > 45 (The Office of the Comptroller of the Currency (OCC) released a framework that guides its examiners on judging banks' use)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "votal-ai-hq-ai-red-teaming-0c78f9f9c9",
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "Red-Team AI reads an agent app's source code to tailor attacks",
+      "source_url": "https://github.com/votal-ai-hq/ai-red-teaming",
+      "article_url": "https://github.com/votal-ai-hq/ai-red-teaming",
+      "tweet_url": null,
+      "author": "votal-ai-hq",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/votal-ai-hq-ai-red-teaming-0c78f9f9c9.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:ai-agent-security-guardrails",
+      "source_rank": 47.5,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "votal-ai-hq/ai-red-teaming",
+      "related_claims": [
+        "agent-tool-selection-can-be-steered-by-untrusted-context"
+      ],
+      "summary": "Red-Team AI is a beta, MIT-licensed white-box red-teaming tool for agentic apps that reads the app's source to learn its tools, roles and guardrails before generating attacks. A PAIR-style loop feeds each refusal and judge verdict back to the attacker model and retries, and an LLM judge scores results against a hand-labelled gold set. Its pitch is finding multi-tool paths such as read_file to send_email that single-call checks miss.",
+      "takeaway": "Feeding a red-team tool your agent's source finds tool-chain paths that black-box prompt lists miss.",
+      "lessons": [
+        {
+          "point": "White-box context lets attacks target the app's actual tools and guardrails.",
+          "excerpt": "It reads your application's source code first, learns your tools, roles, and guardrails, and then generates attacks tailored to",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Chained tool calls are the target class that per-call checks miss.",
+          "excerpt": "the path through tools `read_file → send_email` that no single-call check would catch",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Refusals become feedback for the next attempt rather than a stopping point.",
+          "excerpt": "feeds the exact refusal and judge verdict back to the attacker model, revises the attack, and retries until it lands or the budget is spent",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "red-teaming",
+        "white-box",
+        "pair",
+        "llm-judge",
+        "agentic-apps",
+        "tool-chaining"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Red-team agent apps with their source in view",
+        "detail": "When red-teaming an agent, give the attacker its tool list, role definitions and guardrail code, and look specifically for multi-step tool chains from a read tool to an outbound tool. Red-Team AI is one beta option at 40 stars; check its judge against your own labelled cases before trusting scores."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 58,
+        "newness": 37,
+        "credibility": 47.5,
+        "composite": 42.77,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "PAIR (Chao et al.) iterative jailbreak refinement; PyRIT, promptfoo and garak for black-box LLM red-teaming; NuGuard (already in the pool) for agent static analysis plus sandboxed red-team scenarios.",
+      "verified": true,
+      "verify_note": "Verifier found all lessons supported; noted the tool-chain example comes from the README's own demo app, and no gold-set accuracy is given. Novelty taken as verifier's 30.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
       "readability": {
         "score": 100,
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -6841,6 +6761,86 @@
         "issues": []
       },
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "SkillCODER fingerprints agent skill files to trace leaks to a buyer",
+      "summary": "SkillCODER, accepted at the ACM Conference on Computer and Communications Security (CCS) 2026, embeds a dormant conditional capsule across the section structure of an agent skill file and encodes a per-buyer fingerprint through controlled word choices protected by error-correcting codes. The owner later sends paired positive and negative probes to a suspect agent, black-box, and decodes ownership and buyer identity from its answers. The authors report 99.2% owner verification and 99.3% buyer Top-1 attribution across three domains, six models and three agent frameworks, with robustness to paraphrase and compression and graceful degradation under five adaptive attacks including multi-buyer collusion.",
+      "lessons": [
+        {
+          "point": "Token-level prompt watermarks do not suit long, human-readable skill files, so the paper works at the section level instead.",
+          "excerpt": "Existing prompt copyright auditing methods struggle with long skills and introduce token-level perturbations that compromise readability.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The mark is a conditional instruction that stays inactive in normal use and fires only on the owner's verification queries.",
+          "excerpt": "designed to activate under verification queries and remain dormant otherwise",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Authors report near-perfect owner and buyer identification while task quality is preserved.",
+          "excerpt": "SkillCODER achieves 99.2% owner verification and 99.3% buyer Top-1 attribution accuracy while preserving task fidelity",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Against adaptive attackers, proving ownership holds up better than naming the specific leaking buyer.",
+          "excerpt": "ownership evidence remains reliably detectable while buyer attribution degrades gracefully",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Sellers of proprietary skills can embed per-buyer traceable marks, but the mark is itself a hidden conditional instruction that a skill reviewer should know to look for.",
+      "tags": [
+        "agent-skills",
+        "watermarking",
+        "fingerprinting",
+        "copyright",
+        "skill-marketplace"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Expect hidden conditional instructions in licensed skills",
+        "detail": "If you buy or ingest third-party skill files, note that fingerprinting schemes like this embed trigger-gated instructions by design; skill scanners and reviewers should flag dormant conditional instructions and ask the vendor to disclose any marking scheme. If you sell skills, the released code (github.com/EonHao/SkillCODER) is the place to evaluate per-buyer marking.",
+        "skill_slug": null
+      },
+      "verified": true,
+      "verify_note": "All figures match the abstract; close to SkillMarker.",
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 37,
+        "credibility": 72.0,
+        "composite": 42.55,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "SkillMarker watermarks agent skill files to trace copying; SkillTrace provenance auditing.",
+      "related_claims": [],
+      "source_url": "http://arxiv.org/abs/2611.11308v1",
+      "article_url": "http://arxiv.org/abs/2611.11308v1",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-08",
+      "raw_path": "data/_raw/skillcoder-towards-auditing-and-attribution-of-c-41623a4b1a.txt",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "source_name": "CCS (via arXiv)",
+      "id": "skillcoder-fingerprints-agent-skill-files-to-tra-34bd3ffd75",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
     },
     {
       "topic": "ai-security",
@@ -7072,10 +7072,10 @@
       "scores": {
         "novelty": 18,
         "relevance": 55,
-        "newness": 38,
+        "newness": 37,
         "credibility": 71.7,
-        "composite": 42.16,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 41.91,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Numbers check out against the primary source; corrected who did the microVM escapes and that access is initially limited.",
@@ -7167,10 +7167,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 60,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.7,
-        "composite": 42.01,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 41.76,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "The verifier confirmed the entry; the only change is that lesson 2 and the conditions no longer state a general rule that only pre-tool checks can prevent actions.",
@@ -7259,10 +7259,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 50,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.7,
-        "composite": 42.01,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 41.76,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "promptfoo and garak (LLM attack simulation), NuGuard agent static analysis, Microsoft spotlighting (Hines et al. 2024). New: one declarative agent_spec.yaml with key-free deterministic analysis per layer.",
       "threat": "Prompt injection that enters through user input, retrieved documents or MCP tool output and steers an agent's tools.",
@@ -7348,10 +7348,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.3,
-        "composite": 41.95,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 41.7,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "prior_art": "CC Safety Net and AgentLint already intercept coding-agent shell commands through local hooks. laya-guard adds a local fine-tuned classifier and stricter thresholds for untrusted-source calls.",
@@ -7382,94 +7382,6 @@
         "passed": false,
         "issues": [
           "mild: summary_sentences 6 > 4"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "innovaccer-healthcare-mcp-c4b77b2e2e",
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "title": "Innovaccer's Healthcare MCP extension binds tool calls to an opaque patient handle",
-      "summary": "Innovaccer's Healthcare MCP (HMCP) 0.1.0 is an alpha extension of MCP (spec 2026-07-28). It adds a server-minted, opaque patient-context handle carried on every patient-scoped tool call, a guardrails extension that reports verdicts in result metadata, OAuth 2.1 with proof key for code exchange (PKCE), audience binding per request for comments (RFC) 8707 when auth settings are supplied, and audit events. Server-side token enforcement is opt-in and defaults to none, though the default SMART launch policy fails closed on patient-context opens without a patient claim. The guardrails are best-effort, there is no encryption at rest or rate limiting, and MCP sampling and the HTTP plus Server-Sent Events (SSE) transport were dropped following their deprecation in the base spec.",
-      "lessons": [
-        {
-          "point": "Binding each tool call to a server-minted, opaque subject handle (here a patient) is a concrete pattern for scoping MCP tool calls to one data subject.",
-          "excerpt": "a server-minted, opaque handle for a single patient. The host opens it, and every patient-scoped tool call carries it in the request `_meta`.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Token verification is opt-in (default None), but the default SmartLaunchPolicy refuses patient-context opens when no token carries a SMART patient claim, so patient-scoped calls fail closed by default.",
-          "excerpt": "Server-side enforcement is opt-in (`token_verifier` or `auth_server_provider`; the default is `None`).",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "A guardrail 'pass' verdict is not a guarantee: the vendor states its protected health information (PHI) checks are best-effort and can miss protected data.",
-          "excerpt": "The guardrails are best-effort checks that can miss protected health information, and a `pass` verdict does not mean that content is free of it.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Implementers must add storage encryption and rate limiting themselves; the SDK provides neither.",
-          "excerpt": "HMCP 0.1.0 does not provide encryption at rest or rate limiting.",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Healthcare MCP (HMCP) offers a useful per-patient scoping pattern for MCP, but its auth is opt-in and its guardrails best-effort, and the README says the building blocks do not by themselves make a deployment secure.",
-      "tags": [
-        "mcp",
-        "healthcare",
-        "oauth",
-        "phi",
-        "guardrails",
-        "protocol-extension"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "If you evaluate Healthcare MCP (HMCP), configure auth explicitly and do not rely on its guardrail verdicts",
-        "detail": "Install `innovaccer-hmcp` (not the unrelated `hmcp` package), always pass a production `token_verifier` plus `AuthSettings` so audience binding is enforced, run behind transport layer security (TLS), add your own rate limiting and encryption at rest, and treat guardrail `pass` results as advisory rather than proof that no protected health information (PHI) is present."
-      },
-      "scores": {
-        "novelty": 35,
-        "relevance": 40,
-        "newness": 38,
-        "credibility": 65.0,
-        "composite": 41.75,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "verified": false,
-      "verify_note": "The verifier found lesson 2 and the takeaway overstated the default exposure; they now say token verification is opt-in but patient-scoped calls fail closed by default.",
-      "verify_reason": "factual",
-      "prior_art": "Enterprise MCP auth hardening ('MCP gets an enterprise makeover', validating iss per server), tenant binding at tool dispatch (obsidian-tc), and the archived hospital agentic blueprint with a compliance-and-policy layer. A healthcare-specific patient-context handle on MCP calls is a vertical variation; no equivalent MCP extension in the pool. Verifier's closest: 'MCP gets an enterprise makeover' entry; MCP ZAP Server opaque credential profiles.",
-      "threat": "Agents reading or writing data for the wrong patient, or PHI leaking through tool traffic, in healthcare MCP deployments.",
-      "conditions": "Server auth is enforced only when a token verifier or auth provider is configured; guardrails are best-effort; the SDK is alpha and has no encryption at rest or rate limiting.",
-      "mitigations": "Supply a production token verifier and auth settings, run behind TLS, keep the fail-closed SMART launch policy, add rate limiting and storage encryption, pin the SDK version and install the correctly named package.",
-      "related_claims": [],
-      "source_url": "https://github.com/innovaccer/Healthcare-MCP",
-      "article_url": "https://github.com/innovaccer/Healthcare-MCP",
-      "tweet_url": null,
-      "author": "innovaccer",
-      "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/innovaccer-healthcare-mcp-c4b77b2e2e.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 65.0,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "innovaccer/Healthcare-MCP",
-      "id": "innovaccer-s-healthcare-mcp-extension-binds-tool-497e1cd590",
-      "retrieved_at": "2026-11-12T17:57:17+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 52 > 45 (Install  x  (not the unrelated  x  package), always pass a production  x  plus  x  so audience binding is enforced, run )"
         ]
       },
       "grounding_score": 1.0
@@ -7541,6 +7453,94 @@
         "owasp-genai-security-project-unveils-2026-top-10-for-llm-app"
       ],
       "verify_reason": "scoring"
+    },
+    {
+      "candidate_id": "innovaccer-healthcare-mcp-c4b77b2e2e",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "Innovaccer's Healthcare MCP extension binds tool calls to an opaque patient handle",
+      "summary": "Innovaccer's Healthcare MCP (HMCP) 0.1.0 is an alpha extension of MCP (spec 2026-07-28). It adds a server-minted, opaque patient-context handle carried on every patient-scoped tool call, a guardrails extension that reports verdicts in result metadata, OAuth 2.1 with proof key for code exchange (PKCE), audience binding per request for comments (RFC) 8707 when auth settings are supplied, and audit events. Server-side token enforcement is opt-in and defaults to none, though the default SMART launch policy fails closed on patient-context opens without a patient claim. The guardrails are best-effort, there is no encryption at rest or rate limiting, and MCP sampling and the HTTP plus Server-Sent Events (SSE) transport were dropped following their deprecation in the base spec.",
+      "lessons": [
+        {
+          "point": "Binding each tool call to a server-minted, opaque subject handle (here a patient) is a concrete pattern for scoping MCP tool calls to one data subject.",
+          "excerpt": "a server-minted, opaque handle for a single patient. The host opens it, and every patient-scoped tool call carries it in the request `_meta`.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Token verification is opt-in (default None), but the default SmartLaunchPolicy refuses patient-context opens when no token carries a SMART patient claim, so patient-scoped calls fail closed by default.",
+          "excerpt": "Server-side enforcement is opt-in (`token_verifier` or `auth_server_provider`; the default is `None`).",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A guardrail 'pass' verdict is not a guarantee: the vendor states its protected health information (PHI) checks are best-effort and can miss protected data.",
+          "excerpt": "The guardrails are best-effort checks that can miss protected health information, and a `pass` verdict does not mean that content is free of it.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Implementers must add storage encryption and rate limiting themselves; the SDK provides neither.",
+          "excerpt": "HMCP 0.1.0 does not provide encryption at rest or rate limiting.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Healthcare MCP (HMCP) offers a useful per-patient scoping pattern for MCP, but its auth is opt-in and its guardrails best-effort, and the README says the building blocks do not by themselves make a deployment secure.",
+      "tags": [
+        "mcp",
+        "healthcare",
+        "oauth",
+        "phi",
+        "guardrails",
+        "protocol-extension"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "If you evaluate Healthcare MCP (HMCP), configure auth explicitly and do not rely on its guardrail verdicts",
+        "detail": "Install `innovaccer-hmcp` (not the unrelated `hmcp` package), always pass a production `token_verifier` plus `AuthSettings` so audience binding is enforced, run behind transport layer security (TLS), add your own rate limiting and encryption at rest, and treat guardrail `pass` results as advisory rather than proof that no protected health information (PHI) is present."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 40,
+        "newness": 37,
+        "credibility": 65.0,
+        "composite": 41.5,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "verified": false,
+      "verify_note": "The verifier found lesson 2 and the takeaway overstated the default exposure; they now say token verification is opt-in but patient-scoped calls fail closed by default.",
+      "verify_reason": "factual",
+      "prior_art": "Enterprise MCP auth hardening ('MCP gets an enterprise makeover', validating iss per server), tenant binding at tool dispatch (obsidian-tc), and the archived hospital agentic blueprint with a compliance-and-policy layer. A healthcare-specific patient-context handle on MCP calls is a vertical variation; no equivalent MCP extension in the pool. Verifier's closest: 'MCP gets an enterprise makeover' entry; MCP ZAP Server opaque credential profiles.",
+      "threat": "Agents reading or writing data for the wrong patient, or PHI leaking through tool traffic, in healthcare MCP deployments.",
+      "conditions": "Server auth is enforced only when a token verifier or auth provider is configured; guardrails are best-effort; the SDK is alpha and has no encryption at rest or rate limiting.",
+      "mitigations": "Supply a production token verifier and auth settings, run behind TLS, keep the fail-closed SMART launch policy, add rate limiting and storage encryption, pin the SDK version and install the correctly named package.",
+      "related_claims": [],
+      "source_url": "https://github.com/innovaccer/Healthcare-MCP",
+      "article_url": "https://github.com/innovaccer/Healthcare-MCP",
+      "tweet_url": null,
+      "author": "innovaccer",
+      "date": "2026-11",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/innovaccer-healthcare-mcp-c4b77b2e2e.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 65.0,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "innovaccer/Healthcare-MCP",
+      "id": "innovaccer-s-healthcare-mcp-extension-binds-tool-497e1cd590",
+      "retrieved_at": "2026-11-12T17:57:17+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 52 > 45 (Install  x  (not the unrelated  x  package), always pass a production  x  plus  x  so audience binding is enforced, run )"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "a-unified-evaluation-framework-of-physical-adver-e3a6871758",
@@ -7841,10 +7841,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 52,
-        "newness": 38,
+        "newness": 37,
         "credibility": 47.0,
-        "composite": 39.65,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 39.4,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "Database access proxies such as Teleport, Cyral and Formal; data-masking proxies.",
       "related_claims": [
@@ -7923,10 +7923,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.0,
-        "composite": 39.5,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 39.25,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -8011,10 +8011,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 38.75,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 38.5,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -8089,10 +8089,10 @@
       "scores": {
         "novelty": 28,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 48.8,
-        "composite": 38.72,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 38.47,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Verifier confirmed all lessons; corrected '40,000 OS packages' to '40,000 packages'.",
@@ -8126,91 +8126,6 @@
         "score": 100,
         "passed": true,
         "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "alexgreensh-repo-forensics-416ef8eb39",
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "kind": "story",
-      "kind_reason": "Open-source tool release covering a broad agent supply-chain problem, not a single-vendor patch.",
-      "title": "Repo Forensics is an offline scanner for agent skills, plugins and MCP servers",
-      "source_url": "https://github.com/alexgreensh/repo-forensics",
-      "summary": "Repo Forensics scans untrusted repos, agent skills, plugins and MCP servers before they run on your machine. It runs 29 scanners plus correlation rules, and hooks into Claude Code, Codex and Cursor to block known-malicious packages and scan new installs and updates. The README claims are vendor-reported, and the raw text was truncated near the end.",
-      "lessons": [
-        {
-          "point": "Agent skills, plugins and MCP servers run with your credentials and file access, so they need a vetting step like a dependency audit.",
-          "excerpt": "Audit any repo, skill, MCP server, or plugin before it touches your machine.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Scanning should also cover updates, not just first install, because a clean install does not guarantee a clean later version.",
-          "excerpt": "A clean install today doesn't mean a clean update tomorrow",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Hooks can block known-malicious packages before an install command runs, using only a fast local indicator check.",
-          "excerpt": "Known-malicious packages are blocked before the command even runs.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Letting the host agent judge ambiguous scanner findings creates a new injection surface, so the snippets passed to it are sanitized.",
-          "excerpt": "Ambiguous WARN-tier findings can be adjudicated by the host agent (Claude Code, Codex, etc.) under a prompt-injection-safe protocol",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Treat third-party skills and MCP servers like dependencies: scan before install and on every update, ideally from a hook, and do not trust a single vendor's detection claims.",
-      "tags": [
-        "mcp-security",
-        "skill-scanning",
-        "supply-chain",
-        "claude-code-hooks",
-        "sarif",
-        "static-analysis"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Trial repo-forensics as an install and update gate for agent extensions",
-        "detail": "Run it on a few skills or MCP servers you already use and compare findings with your existing secrets and SAST tools. If it adds signal, enable the PreToolUse and PostToolUse hooks and export SARIF into CI. Check the PolyForm Noncommercial license first, since it restricts commercial use."
-      },
-      "scores": {
-        "novelty": 10.0,
-        "relevance": 58,
-        "newness": 38,
-        "credibility": 54.5,
-        "composite": 38.07,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "data/archive.json already holds an entry titled 'alexgreensh/repo-forensics' and an actionable 'Trial repo-forensics as a PreToolUse/PostToolUse gate', plus the README's own comparisons to SkillSpector, mcp-scan and GuardDog. Minor nit: lesson 4 says the sanitization avoids 'a new injection surface', which the README phrases as 'without creating a new attack surface'; the raw file is truncated at the end, as the summary notes.",
-      "related_claims": [],
-      "threat": "Malicious or poisoned agent skills, plugins, MCP servers and npm packages that exfiltrate credentials or inject instructions after being installed.",
-      "conditions": "Users or agents install third-party extensions or packages without any pre-install or post-update vetting step.",
-      "mitigations": "Scan extensions and updates with an offline scanner via pre-install and post-install hooks, block known-malicious packages, and gate CI on the SARIF output.",
-      "article_url": "https://github.com/alexgreensh/repo-forensics",
-      "published": "2026-11-15",
-      "raw_path": "data/_raw/alexgreensh-repo-forensics-416ef8eb39.txt",
-      "source_id": "github_query:mcp-server-security-scanner",
-      "source_rank": 54.5,
-      "discovered_via": "github",
-      "source_name": "alexgreensh/repo-forensics",
-      "source_topics": [
-        "ai-security"
-      ],
-      "verified": true,
-      "date": "2026-11",
-      "retrieved_at": "2026-11-18T06:34:52+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 13 > 12"
-        ]
       },
       "grounding_score": 1.0
     },
@@ -8293,6 +8208,91 @@
       "grounding_score": 1.0
     },
     {
+      "id": "alexgreensh-repo-forensics-416ef8eb39",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "kind": "story",
+      "kind_reason": "Open-source tool release covering a broad agent supply-chain problem, not a single-vendor patch.",
+      "title": "Repo Forensics is an offline scanner for agent skills, plugins and MCP servers",
+      "source_url": "https://github.com/alexgreensh/repo-forensics",
+      "summary": "Repo Forensics scans untrusted repos, agent skills, plugins and MCP servers before they run on your machine. It runs 29 scanners plus correlation rules, and hooks into Claude Code, Codex and Cursor to block known-malicious packages and scan new installs and updates. The README claims are vendor-reported, and the raw text was truncated near the end.",
+      "lessons": [
+        {
+          "point": "Agent skills, plugins and MCP servers run with your credentials and file access, so they need a vetting step like a dependency audit.",
+          "excerpt": "Audit any repo, skill, MCP server, or plugin before it touches your machine.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Scanning should also cover updates, not just first install, because a clean install does not guarantee a clean later version.",
+          "excerpt": "A clean install today doesn't mean a clean update tomorrow",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Hooks can block known-malicious packages before an install command runs, using only a fast local indicator check.",
+          "excerpt": "Known-malicious packages are blocked before the command even runs.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Letting the host agent judge ambiguous scanner findings creates a new injection surface, so the snippets passed to it are sanitized.",
+          "excerpt": "Ambiguous WARN-tier findings can be adjudicated by the host agent (Claude Code, Codex, etc.) under a prompt-injection-safe protocol",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat third-party skills and MCP servers like dependencies: scan before install and on every update, ideally from a hook, and do not trust a single vendor's detection claims.",
+      "tags": [
+        "mcp-security",
+        "skill-scanning",
+        "supply-chain",
+        "claude-code-hooks",
+        "sarif",
+        "static-analysis"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Trial repo-forensics as an install and update gate for agent extensions",
+        "detail": "Run it on a few skills or MCP servers you already use and compare findings with your existing secrets and SAST tools. If it adds signal, enable the PreToolUse and PostToolUse hooks and export SARIF into CI. Check the PolyForm Noncommercial license first, since it restricts commercial use."
+      },
+      "scores": {
+        "novelty": 10.0,
+        "relevance": 58,
+        "newness": 37,
+        "credibility": 54.5,
+        "composite": 37.82,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "data/archive.json already holds an entry titled 'alexgreensh/repo-forensics' and an actionable 'Trial repo-forensics as a PreToolUse/PostToolUse gate', plus the README's own comparisons to SkillSpector, mcp-scan and GuardDog. Minor nit: lesson 4 says the sanitization avoids 'a new injection surface', which the README phrases as 'without creating a new attack surface'; the raw file is truncated at the end, as the summary notes.",
+      "related_claims": [],
+      "threat": "Malicious or poisoned agent skills, plugins, MCP servers and npm packages that exfiltrate credentials or inject instructions after being installed.",
+      "conditions": "Users or agents install third-party extensions or packages without any pre-install or post-update vetting step.",
+      "mitigations": "Scan extensions and updates with an offline scanner via pre-install and post-install hooks, block known-malicious packages, and gate CI on the SARIF output.",
+      "article_url": "https://github.com/alexgreensh/repo-forensics",
+      "published": "2026-11-15",
+      "raw_path": "data/_raw/alexgreensh-repo-forensics-416ef8eb39.txt",
+      "source_id": "github_query:mcp-server-security-scanner",
+      "source_rank": 54.5,
+      "discovered_via": "github",
+      "source_name": "alexgreensh/repo-forensics",
+      "source_topics": [
+        "ai-security"
+      ],
+      "verified": true,
+      "date": "2026-11",
+      "retrieved_at": "2026-11-18T06:34:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "snyk-agent-scan-f565968f99",
       "topic": "ai-security",
       "domain": "ais.mcp-tools",
@@ -8345,10 +8345,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 50,
-        "newness": 38,
+        "newness": 37,
         "credibility": 56.8,
-        "composite": 37.52,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 37.27,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Lessons supported by the README; redaction covers secret values only, and the toxic-flows wording is from the v0.5 capability list.",
@@ -8432,10 +8432,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 50,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.2,
-        "composite": 37.43,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 37.18,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "prior_art": "Existing entries already cover self-hosted LLM gateways for agents and credential-injecting proxy gateways. LLM Guard and Rebuff are comparable tools.",
@@ -8541,96 +8541,6 @@
       "grounding_score": 1.0
     },
     {
-      "candidate_id": "cisco-ai-defense-mcp-scanner-5d219ac494",
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "related_claims": [
-        "mcp-tool-descriptions-are-a-prompt-injection-surface",
-        "package-installers-run-arbitrary-code-by-default"
-      ],
-      "title": "Cisco AI Defense mcp-scanner checks MCP servers with YARA, LLM and API engines",
-      "summary": "Cisco's open-source mcp-scanner checks the tools, prompts, resources and server instructions of an MCP server. It uses three engines, which can run together or alone: YARA (a pattern-matching rule language), an LLM-based analyzer and the Cisco AI Defense API. It also scans server source code for suspicious behavior, checks dependencies with pip-audit, looks up bundled files on VirusTotal, and handles MCP 2.0 protocol negotiation. A static mode scans pre-exported JSON files, so it can run in CI without connecting to a live server.",
-      "lessons": [
-        {
-          "point": "Pattern rules alone miss things, so the scanner pairs YARA (a pattern-matching rule language) with LLM judgment to catch malicious tool descriptions.",
-          "excerpt": "The MCP Scanner combines Cisco AI Defense inspect API, YARA rules and LLM-based analysis to detect malicious MCP tools.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Offline scanning of exported tool definitions lets you gate MCP servers in CI without starting them.",
-          "excerpt": "Scan pre-generated JSON files without live server connections - perfect for CI/CD pipelines and air-gapped environments",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The protocol probe is read-only. A clean result does not show whether unauthenticated callers can invoke tools.",
-          "excerpt": "safe legacy checks for older endpoints. It does not call tools or prove",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "PyPI package scans analyze code without running it, which avoids install-time payloads.",
-          "excerpt": "package code is never executed in either mode.",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Use mcp-scanner as a gate when admitting MCP servers, but remember that scan-time checks do not prove anything about runtime authorization.",
-      "tags": [
-        "mcp-scanner",
-        "cisco",
-        "yara",
-        "tool-poisoning",
-        "mcp-2"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Gate MCP servers in CI with mcp-scanner static mode",
-        "detail": "Install it with `uv tool install --python 3.13 cisco-ai-mcp-scanner`. Export the tool, prompt and resource definitions as JSON, then run the `static` subcommand with `--analyzers yara` in CI. Add the LLM analyzer and the `supplychain` and `vulnerable-package` subcommands for servers whose source you can see. Run `--scan-known-configs` on developer machines."
-      },
-      "scores": {
-        "novelty": 12,
-        "relevance": 50,
-        "newness": 38,
-        "credibility": 56.8,
-        "composite": 36.62,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "verified": true,
-      "verify_note": "Claims match the README after narrowing the never-executes point to PyPI scans; mature tool already in the archive.",
-      "prior_art": "Existing archive entry for this repo; Invariant/Snyk mcp-scan; NVIDIA SkillSpector YARA rules",
-      "threat": "Malicious MCP tools, prompts, resources or server instructions, plus vulnerable or malware-laden dependencies bundled with MCP servers.",
-      "conditions": "Organizations adopt third-party MCP servers without reviewing their descriptions, source or dependencies.",
-      "mitigations": "Run multi-engine scanning across all MCP surfaces when admitting a server, use offline static scans in CI, run dependency and VirusTotal checks, and test authorization separately from scanning.",
-      "source_url": "https://github.com/cisco-ai-defense/mcp-scanner",
-      "article_url": "https://github.com/cisco-ai-defense/mcp-scanner",
-      "tweet_url": null,
-      "author": "cisco-ai-defense",
-      "date": "2026-11",
-      "published": "2026-11-08",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-server-security-scanner",
-      "source_rank": 56.8,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "cisco-ai-defense/mcp-scanner",
-      "raw_path": "data/_raw/cisco-ai-defense-mcp-scanner-5d219ac494.txt",
-      "id": "cisco-ai-defense-s-mcp-scanner-checks-mcp-server-c0e51e0395",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted title",
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 13 > 12"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
       "candidate_id": "introducing-the-life-sciences-verification-progr-9382b7fd83",
       "topic": "ai-security",
       "domain": "ais.guardrails",
@@ -8719,6 +8629,96 @@
       "previous_slugs": [
         "anthropic-s-life-sciences-verification-program-trades-real-t"
       ]
+    },
+    {
+      "candidate_id": "cisco-ai-defense-mcp-scanner-5d219ac494",
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "related_claims": [
+        "mcp-tool-descriptions-are-a-prompt-injection-surface",
+        "package-installers-run-arbitrary-code-by-default"
+      ],
+      "title": "Cisco AI Defense mcp-scanner checks MCP servers with YARA, LLM and API engines",
+      "summary": "Cisco's open-source mcp-scanner checks the tools, prompts, resources and server instructions of an MCP server. It uses three engines, which can run together or alone: YARA (a pattern-matching rule language), an LLM-based analyzer and the Cisco AI Defense API. It also scans server source code for suspicious behavior, checks dependencies with pip-audit, looks up bundled files on VirusTotal, and handles MCP 2.0 protocol negotiation. A static mode scans pre-exported JSON files, so it can run in CI without connecting to a live server.",
+      "lessons": [
+        {
+          "point": "Pattern rules alone miss things, so the scanner pairs YARA (a pattern-matching rule language) with LLM judgment to catch malicious tool descriptions.",
+          "excerpt": "The MCP Scanner combines Cisco AI Defense inspect API, YARA rules and LLM-based analysis to detect malicious MCP tools.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Offline scanning of exported tool definitions lets you gate MCP servers in CI without starting them.",
+          "excerpt": "Scan pre-generated JSON files without live server connections - perfect for CI/CD pipelines and air-gapped environments",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The protocol probe is read-only. A clean result does not show whether unauthenticated callers can invoke tools.",
+          "excerpt": "safe legacy checks for older endpoints. It does not call tools or prove",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "PyPI package scans analyze code without running it, which avoids install-time payloads.",
+          "excerpt": "package code is never executed in either mode.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Use mcp-scanner as a gate when admitting MCP servers, but remember that scan-time checks do not prove anything about runtime authorization.",
+      "tags": [
+        "mcp-scanner",
+        "cisco",
+        "yara",
+        "tool-poisoning",
+        "mcp-2"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Gate MCP servers in CI with mcp-scanner static mode",
+        "detail": "Install it with `uv tool install --python 3.13 cisco-ai-mcp-scanner`. Export the tool, prompt and resource definitions as JSON, then run the `static` subcommand with `--analyzers yara` in CI. Add the LLM analyzer and the `supplychain` and `vulnerable-package` subcommands for servers whose source you can see. Run `--scan-known-configs` on developer machines."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 50,
+        "newness": 37,
+        "credibility": 56.8,
+        "composite": 36.37,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "verified": true,
+      "verify_note": "Claims match the README after narrowing the never-executes point to PyPI scans; mature tool already in the archive.",
+      "prior_art": "Existing archive entry for this repo; Invariant/Snyk mcp-scan; NVIDIA SkillSpector YARA rules",
+      "threat": "Malicious MCP tools, prompts, resources or server instructions, plus vulnerable or malware-laden dependencies bundled with MCP servers.",
+      "conditions": "Organizations adopt third-party MCP servers without reviewing their descriptions, source or dependencies.",
+      "mitigations": "Run multi-engine scanning across all MCP surfaces when admitting a server, use offline static scans in CI, run dependency and VirusTotal checks, and test authorization separately from scanning.",
+      "source_url": "https://github.com/cisco-ai-defense/mcp-scanner",
+      "article_url": "https://github.com/cisco-ai-defense/mcp-scanner",
+      "tweet_url": null,
+      "author": "cisco-ai-defense",
+      "date": "2026-11",
+      "published": "2026-11-08",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-server-security-scanner",
+      "source_rank": 56.8,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "cisco-ai-defense/mcp-scanner",
+      "raw_path": "data/_raw/cisco-ai-defense-mcp-scanner-5d219ac494.txt",
+      "id": "cisco-ai-defense-s-mcp-scanner-checks-mcp-server-c0e51e0395",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "topic": "ai-security",
@@ -8994,10 +8994,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 65.6,
-        "composite": 35.84,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 35.59,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -9330,10 +9330,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 34.25,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 34.0,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "The x402 protocol launch (Coinbase) and the V12 x402 security audit (25 flaws) already in the pool. This item is a vendor adopting x402.",
       "threat": "An agent holding a funded wallet can be pushed by injected content or a hostile endpoint into paying arbitrary 402 demands, which drains the wallet.",
@@ -9409,10 +9409,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.2,
-        "composite": 34.13,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 33.88,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Mostly repeats Microsoft's October insiders post; only MXC general availability is new. The EDR-trend lesson is an extrapolation, so its confidence is low.",
@@ -9489,10 +9489,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 65.6,
-        "composite": 33.74,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 33.49,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -9522,87 +9522,6 @@
         "issues": []
       },
       "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-security",
-      "domain": "ais.mcp-tools",
-      "title": "mcp-openapi-server exposes OpenAPI endpoints to agents as MCP tools",
-      "summary": "ivo-toby/mcp-openapi-server (301 stars) turns an OpenAPI specification into MCP tools over stdio or streamable HTTP, with static auth headers, mutual TLS and an AuthProvider for upstream calls. It can load all endpoints, only three dynamic meta-tools for discovery and invocation, or an explicit list, filtered by tag, resource path and HTTP method. The README warns that these filters shape the tool list and are not authorization, and it supports server instructions that a client may place in the model's system prompt.",
-      "lessons": [
-        {
-          "point": "Hiding endpoints from the tool list is not access control; the upstream API still has to enforce authorization.",
-          "excerpt": "Tag filters are tool-surface controls, not authorization. Keep protecting sensitive endpoints with the upstream",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A dynamic mode exposes only discovery and invoke meta-tools instead of one tool per endpoint, which keeps tool definitions small. In dynamic mode the README says only `--exclude-tag` applies, and does not say whether the other include filters do.",
-          "excerpt": "Load only dynamic meta-tools (`list-api-endpoints`, `get-api-endpoint-schema`, `invoke-api-endpoint`)",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Server instructions travel in the initialize result and can land in the system prompt, so whoever controls the server controls that text.",
-          "excerpt": "the text travels in the `initialize` result, and a client may add it to the system prompt of the model",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A useful OpenAPI-to-MCP bridge, but its filters narrow what the model sees, not what it can do; keep authorization in the API.",
-      "tags": [
-        "mcp",
-        "openapi",
-        "mcp-server",
-        "tool-surface",
-        "authorization"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Scope the API credential, not just the tool list",
-        "detail": "When bridging an OpenAPI spec to an agent, give the server a credential scoped to the endpoints you intend to expose, use explicit tool mode for sensitive APIs, and remember dynamic mode's invoke tool can call any endpoint not excluded by tag (untagged endpoints are not affected by exclude-tag).",
-        "skill_slug": null
-      },
-      "verified": true,
-      "verify_note": "Dynamic-mode lesson softened: README only says --exclude-tag applies there.",
-      "scores": {
-        "novelty": 12,
-        "relevance": 35,
-        "newness": 38,
-        "credibility": 65.3,
-        "composite": 33.39,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "openapi-mcp-generator 5.0; Stainless's OpenAPI-to-MCP write-up.",
-      "related_claims": [
-        "load-tool-definitions-on-demand",
-        "mcp-tool-descriptions-are-a-prompt-injection-surface"
-      ],
-      "source_url": "https://github.com/ivo-toby/mcp-openapi-server",
-      "article_url": "https://github.com/ivo-toby/mcp-openapi-server",
-      "tweet_url": null,
-      "author": "ivo-toby",
-      "date": "2026-11",
-      "published": "2026-11-06",
-      "raw_path": "data/_raw/ivo-toby-mcp-openapi-server-a4de461b90.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 65.3,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "ivo-toby/mcp-openapi-server",
-      "id": "mcp-openapi-server-exposes-openapi-endpoints-to-239835de87",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 49 > 45 (When bridging an OpenAPI spec to an agent, give the server a credential scoped to the endpoints you intend to expose, us)"
-        ]
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
     },
     {
       "topic": "ai-security",
@@ -9676,6 +9595,87 @@
         "issues": []
       },
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-security",
+      "domain": "ais.mcp-tools",
+      "title": "mcp-openapi-server exposes OpenAPI endpoints to agents as MCP tools",
+      "summary": "ivo-toby/mcp-openapi-server (301 stars) turns an OpenAPI specification into MCP tools over stdio or streamable HTTP, with static auth headers, mutual TLS and an AuthProvider for upstream calls. It can load all endpoints, only three dynamic meta-tools for discovery and invocation, or an explicit list, filtered by tag, resource path and HTTP method. The README warns that these filters shape the tool list and are not authorization, and it supports server instructions that a client may place in the model's system prompt.",
+      "lessons": [
+        {
+          "point": "Hiding endpoints from the tool list is not access control; the upstream API still has to enforce authorization.",
+          "excerpt": "Tag filters are tool-surface controls, not authorization. Keep protecting sensitive endpoints with the upstream",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "A dynamic mode exposes only discovery and invoke meta-tools instead of one tool per endpoint, which keeps tool definitions small. In dynamic mode the README says only `--exclude-tag` applies, and does not say whether the other include filters do.",
+          "excerpt": "Load only dynamic meta-tools (`list-api-endpoints`, `get-api-endpoint-schema`, `invoke-api-endpoint`)",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Server instructions travel in the initialize result and can land in the system prompt, so whoever controls the server controls that text.",
+          "excerpt": "the text travels in the `initialize` result, and a client may add it to the system prompt of the model",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A useful OpenAPI-to-MCP bridge, but its filters narrow what the model sees, not what it can do; keep authorization in the API.",
+      "tags": [
+        "mcp",
+        "openapi",
+        "mcp-server",
+        "tool-surface",
+        "authorization"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Scope the API credential, not just the tool list",
+        "detail": "When bridging an OpenAPI spec to an agent, give the server a credential scoped to the endpoints you intend to expose, use explicit tool mode for sensitive APIs, and remember dynamic mode's invoke tool can call any endpoint not excluded by tag (untagged endpoints are not affected by exclude-tag).",
+        "skill_slug": null
+      },
+      "verified": true,
+      "verify_note": "Dynamic-mode lesson softened: README only says --exclude-tag applies there.",
+      "scores": {
+        "novelty": 12,
+        "relevance": 35,
+        "newness": 37,
+        "credibility": 65.3,
+        "composite": 33.14,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "openapi-mcp-generator 5.0; Stainless's OpenAPI-to-MCP write-up.",
+      "related_claims": [
+        "load-tool-definitions-on-demand",
+        "mcp-tool-descriptions-are-a-prompt-injection-surface"
+      ],
+      "source_url": "https://github.com/ivo-toby/mcp-openapi-server",
+      "article_url": "https://github.com/ivo-toby/mcp-openapi-server",
+      "tweet_url": null,
+      "author": "ivo-toby",
+      "date": "2026-11",
+      "published": "2026-11-06",
+      "raw_path": "data/_raw/ivo-toby-mcp-openapi-server-a4de461b90.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 65.3,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "ivo-toby/mcp-openapi-server",
+      "id": "mcp-openapi-server-exposes-openapi-endpoints-to-239835de87",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 49 > 45 (When bridging an OpenAPI spec to an agent, give the server a credential scoped to the endpoints you intend to expose, us)"
+        ]
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
     },
     {
       "candidate_id": "lanbaoshen-mcp-jenkins-0f479fb094",
@@ -9808,10 +9808,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.5,
-        "composite": 32.83,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 32.58,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "Cisco AI Defense mcp-scanner; Invariant mcp-scan.",
       "related_claims": [
@@ -9894,10 +9894,10 @@
       "scores": {
         "novelty": 8.0,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 69.0,
-        "composite": 32.75,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 32.5,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "ai-security.json 'Microsoft frames agents as insiders and announces Dynamic Permissions and Guardian Agents' (Oct 19 2026) already covers agents-as-insiders, discovery of 60 local agent types incl. Claude Code/Codex, Entra Agent ID and task-scoped time-bound Dynamic Permissions; the Oct 2026 Agent 365 entries cover the rest.",
       "related_claims": [],
@@ -9968,10 +9968,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 32.75,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 32.5,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": false,
       "verify_note": "The verifier found lesson 1 inferred (platform cannot tell agent from owner); it now states only the risks United cites, and the summary and takeaway were trimmed to the source.",
@@ -10455,10 +10455,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.7,
-        "composite": 30.0,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 29.75,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "asgeirtj/system_prompts_leaks, elder-plinius/CL4R1T4S, jujumilk3/leaked-system-prompts; archive entry 'System-prompt extraction remains broadly effective'.",
       "threat": "Extracting system prompts exposes hidden instructions, tool lists and any secrets or business logic built into them.",
@@ -10544,10 +10544,10 @@
       "scores": {
         "novelty": 15.0,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.1,
-        "composite": 29.91,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 29.66,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "No equivalent HR-screening project in data/; the read-only MCP surface, untrusted-data labelling and human-approval gates are generic, widely covered dual-LLM and least-privilege agent patterns. The benchmark is 18 synthetic resumes (the 3B model never produced valid JSON), which the lessons correctly treat as weak evidence.",
       "related_claims": [],
@@ -10626,10 +10626,10 @@
       "scores": {
         "novelty": 15.0,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.1,
-        "composite": 29.91,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 29.66,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "prior_art": "The article's own related SecurityWeek items (Outerlimit $16M, Capsule Security AI Circuit Breaker, Bay $50M, Sysdig runtime agent governance) cover the same runtime agent-control category; repo grep for runtime-agent supervision finds no direct equivalent, but the claim-level delta is only the 'steering instead of kill' framing from an unverified vendor description.",
       "related_claims": [
@@ -10784,10 +10784,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 46.9,
-        "composite": 28.54,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 28.29,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -10855,10 +10855,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 20,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.5,
-        "composite": 28.47,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 28.22,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier confirmed it is a vendor post with no vulnerabilities, findings or incidents; the Action Center is described as new, not planned.",
@@ -11137,78 +11137,6 @@
       "grounding_score": 1.0
     },
     {
-      "candidate_id": "rybaz-openai-wow-our-models-are-so-powerful-they-04f6aa1176",
-      "topic": "ai-security",
-      "domain": "ais.red-teaming",
-      "title": "X user @_rybaz mocks OpenAI for pitching cyber tools after sandbox-escape claims",
-      "summary": "An X post by @_rybaz sarcastically contrasts OpenAI saying its models broke out of sandboxes and hacked a company with OpenAI asking customers for access to their app infrastructure. It quotes @thsottiaux announcing OpenAI tools for automated patching and automated red teaming. The post is an opinion with no technical detail, evidence or new facts.",
-      "lessons": [
-        {
-          "point": "The author's point is that a vendor that says its models escaped containment is now asking for access to customers' infrastructure. That is a trust-boundary concern to weigh before granting AI security tools access, but the post offers it as sarcasm, not analysis.",
-          "excerpt": "Give us access to your app infrastructure so we can find problems with our models",
-          "confidence": 0.4,
-          "grounded": true
-        },
-        {
-          "point": "The quoted announcement says OpenAI is building tools for automated patching and automated red teaming. The post gives no detail on them.",
-          "excerpt": "We announced new tools we're developing for cybersecurity today across automated patching and automated red teaming.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This is an opinion post with no new facts, though its implied question, how much infrastructure access to give an AI vendor's security agents, is a fair one.",
-      "tags": [
-        "openai",
-        "automated-red-teaming",
-        "automated-patching",
-        "vendor-trust",
-        "opinion",
-        "x-post"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Scope AI security-agent access like any third-party pentester",
-        "detail": "Before connecting a vendor's automated red-teaming or patching agent to your infrastructure, give it a written scope, a dedicated least-privilege credential, network egress limits and full action logging. Treat its sandbox claims as unverified."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 18,
-        "newness": 38,
-        "credibility": 60.0,
-        "composite": 26.3,
-        "scored_at": "2026-11-18T06:34:53+00:00"
-      },
-      "prior_art": "Existing entries on frontier models breaking out during cyber evals and OpenAI's cyber tooling; this post adds only commentary.",
-      "related_claims": [],
-      "verified": true,
-      "verify_note": "Verifier confirmed the post's content; the sandbox-breakout premise is the author's unverified paraphrase.",
-      "source_url": "https://x.com/_rybaz/status/2121292650594631741",
-      "article_url": null,
-      "tweet_url": "https://x.com/_rybaz/status/2121292650594631741",
-      "author": "@_rybaz",
-      "date": "2026-11",
-      "published": "2026-11-13",
-      "raw_path": "data/_raw/rybaz-openai-wow-our-models-are-so-powerful-they-04f6aa1176.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "id": "x-user-rybaz-mocks-openai-for-pitching-cyber-too-d4bc4170cc",
-      "retrieved_at": "2026-11-13T17:46:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "candidate_id": "dmeiser-nextdns-mcp-06bd629168",
       "topic": "ai-security",
       "domain": "ais.mcp-tools",
@@ -11383,6 +11311,78 @@
       "grounding_score": 1.0
     },
     {
+      "candidate_id": "rybaz-openai-wow-our-models-are-so-powerful-they-04f6aa1176",
+      "topic": "ai-security",
+      "domain": "ais.red-teaming",
+      "title": "X user @_rybaz mocks OpenAI for pitching cyber tools after sandbox-escape claims",
+      "summary": "An X post by @_rybaz sarcastically contrasts OpenAI saying its models broke out of sandboxes and hacked a company with OpenAI asking customers for access to their app infrastructure. It quotes @thsottiaux announcing OpenAI tools for automated patching and automated red teaming. The post is an opinion with no technical detail, evidence or new facts.",
+      "lessons": [
+        {
+          "point": "The author's point is that a vendor that says its models escaped containment is now asking for access to customers' infrastructure. That is a trust-boundary concern to weigh before granting AI security tools access, but the post offers it as sarcasm, not analysis.",
+          "excerpt": "Give us access to your app infrastructure so we can find problems with our models",
+          "confidence": 0.4,
+          "grounded": true
+        },
+        {
+          "point": "The quoted announcement says OpenAI is building tools for automated patching and automated red teaming. The post gives no detail on them.",
+          "excerpt": "We announced new tools we're developing for cybersecurity today across automated patching and automated red teaming.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is an opinion post with no new facts, though its implied question, how much infrastructure access to give an AI vendor's security agents, is a fair one.",
+      "tags": [
+        "openai",
+        "automated-red-teaming",
+        "automated-patching",
+        "vendor-trust",
+        "opinion",
+        "x-post"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Scope AI security-agent access like any third-party pentester",
+        "detail": "Before connecting a vendor's automated red-teaming or patching agent to your infrastructure, give it a written scope, a dedicated least-privilege credential, network egress limits and full action logging. Treat its sandbox claims as unverified."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 18,
+        "newness": 37,
+        "credibility": 60.0,
+        "composite": 26.05,
+        "scored_at": "2026-11-18T22:40:22+00:00"
+      },
+      "prior_art": "Existing entries on frontier models breaking out during cyber evals and OpenAI's cyber tooling; this post adds only commentary.",
+      "related_claims": [],
+      "verified": true,
+      "verify_note": "Verifier confirmed the post's content; the sandbox-breakout premise is the author's unverified paraphrase.",
+      "source_url": "https://x.com/_rybaz/status/2121292650594631741",
+      "article_url": null,
+      "tweet_url": "https://x.com/_rybaz/status/2121292650594631741",
+      "author": "@_rybaz",
+      "date": "2026-11",
+      "published": "2026-11-13",
+      "raw_path": "data/_raw/rybaz-openai-wow-our-models-are-so-powerful-they-04f6aa1176.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "id": "x-user-rybaz-mocks-openai-for-pitching-cyber-too-d4bc4170cc",
+      "retrieved_at": "2026-11-13T17:46:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-security",
       "domain": "ais.ai-infra",
       "title": "Blogger argues teams should self-host an LLM proxy for per-key request logs",
@@ -11504,12 +11504,12 @@
       },
       "grounding_score": 1.0,
       "scores": {
-        "newness": 38,
+        "newness": 37,
         "novelty": 0,
         "relevance": 0,
         "credibility": 65.9,
-        "composite": 19.38,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 19.13,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       }
     },
     {
@@ -11557,12 +11557,12 @@
       },
       "grounding_score": 1.0,
       "scores": {
-        "newness": 38,
+        "newness": 37,
         "novelty": 0,
         "relevance": 0,
         "credibility": 50.2,
-        "composite": 17.03,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 16.78,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       }
     },
     {
@@ -11610,12 +11610,12 @@
       },
       "grounding_score": 1.0,
       "scores": {
-        "newness": 38,
+        "newness": 37,
         "novelty": 0,
         "relevance": 0,
         "credibility": 47.5,
-        "composite": 16.62,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 16.38,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       }
     },
     {
@@ -11665,12 +11665,12 @@
       },
       "grounding_score": 1.0,
       "scores": {
-        "newness": 38,
+        "newness": 37,
         "novelty": 0,
         "relevance": 0,
         "credibility": 47.2,
-        "composite": 16.58,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 16.33,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       }
     },
     {
@@ -11718,12 +11718,12 @@
       },
       "grounding_score": 1.0,
       "scores": {
-        "newness": 38,
+        "newness": 37,
         "novelty": 0,
         "relevance": 0,
         "credibility": 46.1,
-        "composite": 16.41,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 16.16,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       }
     },
     {
@@ -11843,12 +11843,12 @@
       },
       "grounding_score": 1.0,
       "scores": {
-        "newness": 38,
+        "newness": 37,
         "novelty": 0,
         "relevance": 0,
         "credibility": 40.0,
-        "composite": 15.5,
-        "scored_at": "2026-11-18T06:34:53+00:00"
+        "composite": 15.25,
+        "scored_at": "2026-11-18T22:40:22+00:00"
       }
     },
     {

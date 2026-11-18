@@ -17008,13 +17008,13 @@
     {
       "topic": "ai-research",
       "tag": "coding-agents",
-      "count": 14,
-      "recent": 9,
+      "count": 16,
+      "recent": 11,
       "baseline": 0.9,
       "state": "rising",
-      "excess": 8.1,
-      "momentum": 8.1,
-      "sources": 10,
+      "excess": 10.1,
+      "momentum": 10.1,
+      "sources": 12,
       "first_seen": "2026-07-21",
       "last_seen": "2026-11-12",
       "members": [
@@ -17034,6 +17034,18 @@
           "title": "Matt Pocock's dictionary splits hallucinations into factuality and faithfulness",
           "url": "https://www.aihero.dev/ai-coding-dictionary/hallucination",
           "date": "2026-11-12",
+          "fresh": true
+        },
+        {
+          "title": "UC Berkeley finds harness overhead can double agent cost at similar accuracy",
+          "url": "https://arxiv.org/abs/2611.12122",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
+          "url": "https://arxiv.org/abs/2611.13241",
+          "date": "2026-11-09",
           "fresh": true
         },
         {
@@ -17460,6 +17472,84 @@
     },
     {
       "topic": "ai-research",
+      "tag": "cost-efficiency",
+      "count": 4,
+      "recent": 4,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 4.0,
+      "momentum": 4.0,
+      "sources": 4,
+      "first_seen": "2026-11-03",
+      "last_seen": "2026-11-12",
+      "members": [
+        {
+          "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
+          "url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
+          "date": "2026-11-12",
+          "fresh": true
+        },
+        {
+          "title": "UC Berkeley finds harness overhead can double agent cost at similar accuracy",
+          "url": "https://arxiv.org/abs/2611.12122",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
+          "url": "https://arxiv.org/abs/2611.13241",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
+          "url": "https://arxiv.org/abs/2611.05306",
+          "date": "2026-11-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "prompt-caching",
+      "count": 4,
+      "recent": 4,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 4.0,
+      "momentum": 4.0,
+      "sources": 4,
+      "first_seen": "2026-10-23",
+      "last_seen": "2026-11-09",
+      "members": [
+        {
+          "title": "UC Berkeley finds harness overhead can double agent cost at similar accuracy",
+          "url": "https://arxiv.org/abs/2611.12122",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
+          "url": "https://arxiv.org/abs/2611.13241",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
+          "url": "https://github.com/DFKHelper/token-goat",
+          "date": "2026-11-04",
+          "fresh": true
+        },
+        {
+          "title": "Moonshot's Kimi K3.1 Pro nears frontier scores, with open weights promised",
+          "url": "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/",
+          "date": "2026-10-23",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "claude-code",
       "count": 12,
       "recent": 5,
@@ -17721,6 +17811,69 @@
           "title": "RobustReview finds LLM paper reviewers change scores on content-preserving rewrites",
           "url": "https://arxiv.org/abs/2609.39027",
           "date": "2026-09-30",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "harness-design",
+      "count": 8,
+      "recent": 4,
+      "baseline": 0.7,
+      "state": "rising",
+      "excess": 3.3,
+      "momentum": 3.3,
+      "sources": 7,
+      "first_seen": "2026-07-21",
+      "last_seen": "2026-11-12",
+      "members": [
+        {
+          "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
+          "url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
+          "date": "2026-11-12",
+          "fresh": true
+        },
+        {
+          "title": "UC Berkeley finds harness overhead can double agent cost at similar accuracy",
+          "url": "https://arxiv.org/abs/2611.12122",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
+          "url": "https://arxiv.org/abs/2611.05306",
+          "date": "2026-11-03",
+          "fresh": true
+        },
+        {
+          "title": "Daniel Miessler argues harnesses should describe what you want, not steps",
+          "url": "https://danielmiessler.com/blog/models-how-harnesses-what",
+          "date": "2026-10-25",
+          "fresh": true
+        },
+        {
+          "title": "Birfy/agentdescent",
+          "url": "https://github.com/Birfy/agentdescent",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding",
+          "url": "https://arxiv.org/abs/2608.05876",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "VLMs for Videogame Data Annotation",
+          "url": "https://arxiv.org/abs/2608.05949",
+          "date": "2026-08-07",
+          "fresh": false
+        },
+        {
+          "title": "How the Claude Code team designs its harness, tools and evals",
+          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
+          "date": "2026-07-21",
           "fresh": false
         }
       ]
@@ -18309,6 +18462,33 @@
     },
     {
       "topic": "ai-research",
+      "tag": "context-compaction",
+      "count": 2,
+      "recent": 2,
+      "baseline": 0.0,
+      "state": "rising",
+      "excess": 2.0,
+      "momentum": 2.0,
+      "sources": 2,
+      "first_seen": "2026-11-03",
+      "last_seen": "2026-11-12",
+      "members": [
+        {
+          "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
+          "url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
+          "date": "2026-11-12",
+          "fresh": true
+        },
+        {
+          "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
+          "url": "https://arxiv.org/abs/2611.05306",
+          "date": "2026-11-03",
+          "fresh": true
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "decision-models",
       "count": 2,
       "recent": 2,
@@ -18492,33 +18672,6 @@
           "title": "Ratel loads agent tools and skills per turn through BM25 search",
           "url": "https://github.com/ratel-ai/ratel",
           "date": "2026-11-08",
-          "fresh": true
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "prompt-caching",
-      "count": 2,
-      "recent": 2,
-      "baseline": 0.0,
-      "state": "rising",
-      "excess": 2.0,
-      "momentum": 2.0,
-      "sources": 2,
-      "first_seen": "2026-10-23",
-      "last_seen": "2026-11-04",
-      "members": [
-        {
-          "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
-          "url": "https://github.com/DFKHelper/token-goat",
-          "date": "2026-11-04",
-          "fresh": true
-        },
-        {
-          "title": "Moonshot's Kimi K3.1 Pro nears frontier scores, with open weights promised",
-          "url": "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/",
-          "date": "2026-10-23",
           "fresh": true
         }
       ]
@@ -18807,6 +18960,81 @@
           "title": "PawBench: benchmarking LLM x harness performance",
           "url": "https://github.com/agentscope-ai/PawBench",
           "date": "2026-05",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "long-context",
+      "count": 10,
+      "recent": 3,
+      "baseline": 1.2,
+      "state": "rising",
+      "excess": 1.8,
+      "momentum": 1.8,
+      "sources": 4,
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-11-03",
+      "members": [
+        {
+          "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
+          "url": "https://arxiv.org/abs/2611.05306",
+          "date": "2026-11-03",
+          "fresh": true
+        },
+        {
+          "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Workshop paper proposes retrieval as a local walk through memory",
+          "url": "http://arxiv.org/abs/2610.40545v1",
+          "date": "2026-10-29",
+          "fresh": true
+        },
+        {
+          "title": "Kimi K3: Open Frontier Intelligence",
+          "url": "https://arxiv.org/abs/2607.24653",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
+          "url": "https://arxiv.org/abs/2607.20457",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Global allocation of resolution and coverage improves KV cache compression",
+          "url": "https://arxiv.org/abs/2608.07001",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
+          "url": "https://arxiv.org/abs/2608.06849",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
+          "url": "https://arxiv.org/abs/2608.07458",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+          "url": "https://arxiv.org/abs/2608.02515",
+          "date": "2026-08-10",
+          "fresh": false
+        },
+        {
+          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
+          "url": "https://arxiv.org/abs/2504.17584",
+          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -19476,57 +19704,6 @@
     },
     {
       "topic": "ai-research",
-      "tag": "harness-design",
-      "count": 6,
-      "recent": 2,
-      "baseline": 0.7,
-      "state": "rising",
-      "excess": 1.3,
-      "momentum": 1.3,
-      "sources": 5,
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-11-12",
-      "members": [
-        {
-          "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
-          "url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
-          "date": "2026-11-12",
-          "fresh": true
-        },
-        {
-          "title": "Daniel Miessler argues harnesses should describe what you want, not steps",
-          "url": "https://danielmiessler.com/blog/models-how-harnesses-what",
-          "date": "2026-10-25",
-          "fresh": true
-        },
-        {
-          "title": "Birfy/agentdescent",
-          "url": "https://github.com/Birfy/agentdescent",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding",
-          "url": "https://arxiv.org/abs/2608.05876",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "VLMs for Videogame Data Annotation",
-          "url": "https://arxiv.org/abs/2608.05949",
-          "date": "2026-08-07",
-          "fresh": false
-        },
-        {
-          "title": "How the Claude Code team designs its harness, tools and evals",
-          "url": "https://simonwillison.net/2026/Jul/21/cat-and-thariq/",
-          "date": "2026-07-21",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
       "tag": "lora",
       "count": 6,
       "recent": 2,
@@ -19854,75 +20031,6 @@
           "title": "DoctorAgents iteratively refines AutoML pipelines for small clinical data",
           "url": "https://arxiv.org/abs/2608.05375",
           "date": "2026-08-07",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "long-context",
-      "count": 9,
-      "recent": 2,
-      "baseline": 1.2,
-      "state": "rising",
-      "excess": 0.8,
-      "momentum": 0.8,
-      "sources": 3,
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-10-29",
-      "members": [
-        {
-          "title": "Workshop paper proposes retrieval as local traversal through a memory address space",
-          "url": "http://arxiv.org/abs/2610.40545v1",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "Workshop paper proposes retrieval as a local walk through memory",
-          "url": "http://arxiv.org/abs/2610.40545v1",
-          "date": "2026-10-29",
-          "fresh": true
-        },
-        {
-          "title": "Kimi K3: Open Frontier Intelligence",
-          "url": "https://arxiv.org/abs/2607.24653",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention",
-          "url": "https://arxiv.org/abs/2607.20457",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Global allocation of resolution and coverage improves KV cache compression",
-          "url": "https://arxiv.org/abs/2608.07001",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry",
-          "url": "https://arxiv.org/abs/2608.06849",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "CoinRAG: Contextualized Information Nugget KV Cache Reuse for Long-Context RAG",
-          "url": "https://arxiv.org/abs/2608.07458",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
-          "url": "https://arxiv.org/abs/2608.02515",
-          "date": "2026-08-10",
-          "fresh": false
-        },
-        {
-          "title": "CHIME: A Case for Efficient Long-Context Attention-FC Disaggregated Inference with DIMM-PIM",
-          "url": "https://arxiv.org/abs/2504.17584",
-          "date": "2026-08-10",
           "fresh": false
         }
       ]
@@ -21105,6 +21213,39 @@
     },
     {
       "topic": "ai-research",
+      "tag": "verification",
+      "count": 3,
+      "recent": 1,
+      "baseline": 0.3,
+      "state": "steady",
+      "excess": 0.7,
+      "momentum": 0.0,
+      "sources": 3,
+      "first_seen": "2026-07-28",
+      "last_seen": "2026-11-09",
+      "members": [
+        {
+          "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
+          "url": "https://arxiv.org/abs/2611.13241",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
+          "url": "https://www.anthropic.com/research/claude-shaped-science",
+          "date": "2026-10-01",
+          "fresh": false
+        },
+        {
+          "title": "Scientific computing in the age of agentic AI",
+          "url": "https://openai.com/index/scientific-computing-agentic-ai",
+          "date": "2026-07-28",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
       "tag": "agentic-coding",
       "count": 2,
       "recent": 1,
@@ -21639,6 +21780,33 @@
           "title": "Willison: OpenAI/Hugging Face 'accidental attack' happened in RLVR training, not deployment",
           "url": "https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything",
           "date": "2026-08-08",
+          "fresh": false
+        }
+      ]
+    },
+    {
+      "topic": "ai-research",
+      "tag": "planning",
+      "count": 2,
+      "recent": 1,
+      "baseline": 0.2,
+      "state": "steady",
+      "excess": 0.8,
+      "momentum": 0.0,
+      "sources": 2,
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-11-09",
+      "members": [
+        {
+          "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
+          "url": "https://arxiv.org/abs/2611.13241",
+          "date": "2026-11-09",
+          "fresh": true
+        },
+        {
+          "title": "WorldClaw: Agentic 3D Open-World Generation at Scale",
+          "url": "https://arxiv.org/abs/2608.05248",
+          "date": "2026-08-07",
           "fresh": false
         }
       ]
@@ -24216,33 +24384,6 @@
           "title": "Conformal Fusion Under Missing Modalities",
           "url": "https://arxiv.org/abs/2608.07183",
           "date": "2026-08-10",
-          "fresh": false
-        }
-      ]
-    },
-    {
-      "topic": "ai-research",
-      "tag": "verification",
-      "count": 2,
-      "recent": 0,
-      "baseline": 0.3,
-      "state": "quiet",
-      "excess": -0.3,
-      "momentum": 0.0,
-      "sources": 2,
-      "first_seen": "2026-07-28",
-      "last_seen": "2026-10-01",
-      "members": [
-        {
-          "title": "Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering",
-          "url": "https://www.anthropic.com/research/claude-shaped-science",
-          "date": "2026-10-01",
-          "fresh": false
-        },
-        {
-          "title": "Scientific computing in the age of agentic AI",
-          "url": "https://openai.com/index/scientific-computing-agentic-ai",
-          "date": "2026-07-28",
           "fresh": false
         }
       ]

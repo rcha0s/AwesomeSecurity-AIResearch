@@ -69,10 +69,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 38,
+        "newness": 37,
         "credibility": 73.2,
-        "composite": 62.48,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 62.23,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier confirmed every number; caveat: the objective-framing intervention ran on one model (GPT-6.1 Sol), not all six.",
@@ -226,10 +226,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 38,
+        "newness": 37,
         "credibility": 73.2,
-        "composite": 56.48,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 56.23,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "prior_art": "The pool already covers when to trigger compaction (a model-invoked compaction tool with a fire/hold rubric), encrypted Codex compaction and compaction as an injection path. This adds large-scale cost data and a background, non-blocking compaction method.",
@@ -325,92 +325,6 @@
       ]
     },
     {
-      "candidate_id": "the-components-of-agent-memory-ef2485a576",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "related_claims": [
-        "persist-feature-list-and-progress-across-sessions"
-      ],
-      "title": "Anthropic tests which agent memory practices help Claude across sessions",
-      "summary": "Anthropic tested Claude's memory, meaning notes kept between sessions, on CL-Bench (Continual Learning Bench), Pokémon Red and document question answering. Stronger models did better when told what memory is for than when given fixed rules about what to save. Dreaming, an offline pass that checks notes against past transcripts and builds linked wikis, fixed a wrong note in one Pokémon run. On one internal code corpus with 25 questions, a wiki-only setup rose from 13% to 48% of graded criteria as dreaming scaled from 2 to 128 sessions, but with search plus wiki the score moved only from 54% to 61%, against 53% for search alone.",
-      "lessons": [
-        {
-          "point": "For stronger models, letting the model judge what is worth saving beat fixed rules, such as recording only failures.",
-          "excerpt": "For stronger models, giving them freedom to judge salience was more effective than setting fixed rules in advance",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Saving everything hurts. Notes that go stale or repeat what is already on screen push the agent into managing memory instead of doing the task.",
-          "excerpt": "Sonnet 3.7 wrote 413 memory files across 225 folders and earned one badge",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "Checking memory notes against the original transcripts offline caught and fixed a wrong note that had sent the agent into a loop.",
-          "excerpt": "Dreaming gives Claude a way to test its notes against the original transcripts",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "Memory loaded into every session costs tokens and can carry a wrong note forward each time, so keep that top layer small and leave links to the rest.",
-          "excerpt": "Injected memories use up valuable tokens, and an incorrect note can be carried into every session.",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Tell the agent what memory is for, keep the always-loaded layer small, and regularly check notes against transcripts so wrong notes do not carry forward.",
-      "tags": [
-        "agent-memory",
-        "dreaming",
-        "long-running-agents",
-        "context-injection",
-        "claude"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add a dreaming pass that checks memory notes against session transcripts",
-        "detail": "Between sessions, run a job that reads the memory folder and recent transcripts, checks each note against the transcript, fixes or removes wrong notes, and moves detail out of the always-loaded index file, leaving links behind. Cap that index file (Claude Code loads only the first 200 lines or 25 KB of MEMORY.md). In the system prompt, say what memory is for, not fixed rules about what to save."
-      },
-      "scores": {
-        "novelty": 33,
-        "relevance": 85,
-        "newness": 38,
-        "credibility": 70.8,
-        "composite": 55.52,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": false,
-      "verify_reason": "scoring",
-      "verify_note": "Lessons hold, but the verifier rated novelty 33 vs 68 (sleep-time compute, Karpathy's LLM wiki, Letta tiers) and flagged single-run evidence; the summary was corrected to keep the wiki-only caveat and the small search-plus-wiki gain.",
-      "prior_art": "Sleep-time compute (Letta and UC Berkeley), Karpathy's LLM-wiki gist, MemGPT/Letta memory tiers, Hugging Face funes, Anthropic's memory tool docs",
-      "source_url": "https://www.anthropic.com/research/components-of-agent-memory",
-      "article_url": "https://www.anthropic.com/research/components-of-agent-memory",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-06",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-research",
-      "source_rank": 70.8,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Anthropic Research",
-      "raw_path": "data/_raw/the-components-of-agent-memory-ef2485a576.txt",
-      "id": "anthropic-tests-which-agent-memory-practices-hel-643745cb50",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted actionable.detail",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "topic": "ai-research",
       "domain": "air.models",
       "cluster": "H",
@@ -490,6 +404,92 @@
       ]
     },
     {
+      "candidate_id": "the-components-of-agent-memory-ef2485a576",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "related_claims": [
+        "persist-feature-list-and-progress-across-sessions"
+      ],
+      "title": "Anthropic tests which agent memory practices help Claude across sessions",
+      "summary": "Anthropic tested Claude's memory, meaning notes kept between sessions, on CL-Bench (Continual Learning Bench), Pokémon Red and document question answering. Stronger models did better when told what memory is for than when given fixed rules about what to save. Dreaming, an offline pass that checks notes against past transcripts and builds linked wikis, fixed a wrong note in one Pokémon run. On one internal code corpus with 25 questions, a wiki-only setup rose from 13% to 48% of graded criteria as dreaming scaled from 2 to 128 sessions, but with search plus wiki the score moved only from 54% to 61%, against 53% for search alone.",
+      "lessons": [
+        {
+          "point": "For stronger models, letting the model judge what is worth saving beat fixed rules, such as recording only failures.",
+          "excerpt": "For stronger models, giving them freedom to judge salience was more effective than setting fixed rules in advance",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Saving everything hurts. Notes that go stale or repeat what is already on screen push the agent into managing memory instead of doing the task.",
+          "excerpt": "Sonnet 3.7 wrote 413 memory files across 225 folders and earned one badge",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Checking memory notes against the original transcripts offline caught and fixed a wrong note that had sent the agent into a loop.",
+          "excerpt": "Dreaming gives Claude a way to test its notes against the original transcripts",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Memory loaded into every session costs tokens and can carry a wrong note forward each time, so keep that top layer small and leave links to the rest.",
+          "excerpt": "Injected memories use up valuable tokens, and an incorrect note can be carried into every session.",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Tell the agent what memory is for, keep the always-loaded layer small, and regularly check notes against transcripts so wrong notes do not carry forward.",
+      "tags": [
+        "agent-memory",
+        "dreaming",
+        "long-running-agents",
+        "context-injection",
+        "claude"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add a dreaming pass that checks memory notes against session transcripts",
+        "detail": "Between sessions, run a job that reads the memory folder and recent transcripts, checks each note against the transcript, fixes or removes wrong notes, and moves detail out of the always-loaded index file, leaving links behind. Cap that index file (Claude Code loads only the first 200 lines or 25 KB of MEMORY.md). In the system prompt, say what memory is for, not fixed rules about what to save."
+      },
+      "scores": {
+        "novelty": 33,
+        "relevance": 85,
+        "newness": 37,
+        "credibility": 70.8,
+        "composite": 55.27,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Lessons hold, but the verifier rated novelty 33 vs 68 (sleep-time compute, Karpathy's LLM wiki, Letta tiers) and flagged single-run evidence; the summary was corrected to keep the wiki-only caveat and the small search-plus-wiki gain.",
+      "prior_art": "Sleep-time compute (Letta and UC Berkeley), Karpathy's LLM-wiki gist, MemGPT/Letta memory tiers, Hugging Face funes, Anthropic's memory tool docs",
+      "source_url": "https://www.anthropic.com/research/components-of-agent-memory",
+      "article_url": "https://www.anthropic.com/research/components-of-agent-memory",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-06",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "raw_path": "data/_raw/the-components-of-agent-memory-ef2485a576.txt",
+      "id": "anthropic-tests-which-agent-memory-practices-hel-643745cb50",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted actionable.detail",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "how-the-claude-code-team-thinks-about-verificati-6c752ae9b8",
       "topic": "ai-research",
       "domain": "air.work-efficiency",
@@ -541,10 +541,10 @@
       "scores": {
         "novelty": 40.0,
         "relevance": 85,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 55.25,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 55.0,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Corpus entries on verification loops and separate grader (ai-research.json mentions of verification loops, claim separate-grader-from-generator); the post's novel parts are first-party base-branch rule loading, observe-mode commit gates and reviewing the reviewers, but much of the E2E/property/differential testing advice is generic and the post itself links earlier Anthropic code-review and verification-loop posts.",
       "related_claims": [
@@ -563,7 +563,166 @@
       "verified": true,
       "date": "2026-11",
       "retrieved_at": "2026-11-18T06:34:52+00:00",
-      "needs_review": true,
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "article_url": "https://arxiv.org/abs/2611.12122",
+      "tweet_url": null,
+      "author": "UC Berkeley Sky Lab (Park et al.)",
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/system-optimizations-for-cost-efficient-agent-ha-3e7b804b61.txt",
+      "discovered_via": "manual",
+      "source_name": "UC Berkeley Sky Lab (Park et al.)",
+      "source_url": "https://arxiv.org/abs/2611.12122",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "kind": "story",
+      "title": "UC Berkeley finds harness overhead can double agent cost at similar accuracy",
+      "summary": "UC Berkeley researchers profiled Claude Code, Codex and a plain ReAct harness on SWE-bench, SWE-bench Pro and Terminal-Bench 2 across five models. Harness choices barely moved accuracy but changed cost by up to 2.6x, and rereading existing context was the largest cost even with caching. Their interposition layer, Agency, applied fixes such as compacting tool output, batching tool calls and metadata-assisted search to unmodified harnesses and cut cost by up to 35% without losing accuracy.",
+      "lessons": [
+        {
+          "point": "Rereading context already in the window is the biggest cost line, even when it is cached.",
+          "excerpt": "reading existing context is the largest source of agent cost in real-world executions even with caching",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "On the same task, Claude Code and Codex can cost about twice a bare agent loop; the paper traces this to their extra system prompts and tools.",
+          "excerpt": "Claude Code and Codex easily reaching 2× the cost of Basic harnesses",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Batching independent tool calls into one turn cut turns, and every turn re-sends the context.",
+          "excerpt": "yielding up to a 30% reduction in agent turns with 1.8 batched tool calls per turn on average",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Metadata-assisted search removed most exploratory search calls in its isolated test.",
+          "excerpt": "metadata-assisted search in isolation reduces search calls by up to 80%",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.",
+      "tags": [
+        "cost-efficiency",
+        "harness-design",
+        "prompt-caching",
+        "tool-batching",
+        "coding-agents"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Audit fixed overhead, then batch tool calls",
+        "detail": "Log input tokens per turn split into system prompt, tool schemas, cached history and new content for a week of real sessions. Cut always-on instructions and unused tool schemas, add a system-prompt line asking the model to batch independent reads into one turn, and compare cost per completed task before and after."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 85,
+        "newness": 37,
+        "credibility": 50.0,
+        "composite": 54.25,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "prior_art": "The ledger already holds keep-bulk-tool-output-out-of-context and load-tool-definitions-on-demand from vendor posts. This adds a controlled cross-harness measurement showing harness overhead, not the model, sets much of the cost.",
+      "related_claims": [
+        "harness-overhead-sets-agent-cost",
+        "keep-bulk-tool-output-out-of-context",
+        "load-tool-definitions-on-demand"
+      ],
+      "verify_note": "Verifier upheld the excerpts; lessons were reworded to drop inferred causes. Novelty taken as verifier's 40.",
+      "id": "uc-berkeley-finds-harness-overhead-can-double-ag-49f29b0015",
+      "retrieved_at": "2026-11-18T22:40:22+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "article_url": "https://arxiv.org/abs/2611.13241",
+      "tweet_url": null,
+      "author": "York University (Sepidband et al.)",
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/flowplan-reducing-the-token-cost-of-coding-agent-26af4ae339.txt",
+      "discovered_via": "manual",
+      "source_name": "York University (Sepidband et al.)",
+      "source_url": "https://arxiv.org/abs/2611.13241",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "kind": "story",
+      "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
+      "summary": "FlowPlan has a coding agent localize the fault, state its intended change as a delta on per-function control-flow or data-flow graphs, and then check the actual change against that plan. On SWE-bench Pro, SWE-bench Verified and SecBench with Claude Code on Haiku 4.5 and Sonnet 5, resolution rate did not change significantly while token use fell in every setting, to as low as about a third of baseline. The baseline spent 3.7 million tokens per issue, 98% of them cache reads.",
+      "lessons": [
+        {
+          "point": "In these long coding runs, 98% of tokens were cache reads of the growing trajectory, so each extra turn adds cost.",
+          "excerpt": "the vanilla Claude Code consumes an average of 3.7 million tokens per issue, 98% of which are cache reads.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "An explicit plan the agent verifies against can replace much of the re-reading and re-testing that inflates trajectories.",
+          "excerpt": "saves tokens by replacing much of the costly post-edit re-reading and testing with explicit verification",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The saving held without hurting fix rate on these benchmarks.",
+          "excerpt": "does not significantly change resolution rate relative to the vanilla agent",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Gains shrink when baseline runs are already short, so this pays most on long repairs.",
+          "excerpt": "The smaller reduction on SecBench reflects its substantially shorter baseline trajectories",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.",
+      "tags": [
+        "cost-efficiency",
+        "coding-agents",
+        "planning",
+        "verification",
+        "prompt-caching"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add a stated-plan check before edits",
+        "detail": "For bug-fix tasks, have the agent write down which functions it will change and how before editing, then check the diff against that plan instead of re-reading files and rerunning the full suite after each edit. Track turns and cache-read tokens per resolved issue."
+      },
+      "scores": {
+        "novelty": 50,
+        "relevance": 75,
+        "newness": 37,
+        "credibility": 50.0,
+        "composite": 54.25,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "prior_art": "Closest pool items are the stable-prefix and compaction claims; FlowPlan is a new mechanism (graph-delta planning) with SWE-bench measurements.",
+      "related_claims": [
+        "stable-prompt-prefix-keeps-cache-reads-cheap",
+        "verify-end-to-end-as-a-user"
+      ],
+      "verify_note": "Verifier upheld the excerpts; lesson 1 and the takeaway were reworded to stay with the paper's claim.",
+      "id": "york-university-s-flowplan-cuts-claude-code-toke-ab96ed416c",
+      "retrieved_at": "2026-11-18T22:40:22+00:00",
+      "needs_review": false,
       "readability": {
         "score": 100,
         "passed": true,
@@ -642,94 +801,6 @@
       "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
       "retrieved_at": "2026-10-19T23:35:59+00:00",
       "needs_review": false,
-      "grounding_score": 1.0
-    },
-    {
-      "id": "building-strong-safety-evaluations-1b36b00175",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Anthropic shares how it designs, runs and grades model safety evaluations",
-      "source_url": "https://www.anthropic.com/research/building-strong-safety-evaluations",
-      "summary": "Anthropic gives practical guidance for building safety evaluations (evals), drawing on reforms from psychology's replication crisis. It argues that refusal rate is often the wrong thing to measure. Its multi-turn evals score the share of whole conversations judged appropriate against expert rubrics, and a single bad turn fails the whole conversation. The post also covers contamination, reward hacking, saturated single-turn suites (94-98% harmless response rates), and LLM graders that fail silently.",
-      "lessons": [
-        {
-          "point": "Refusal rate can reward the wrong behavior. In self-harm cases, a model that refuses everything scores perfectly but is not safer, so score appropriate responses against a rubric written for each risk area.",
-          "excerpt": "A model that refuses to respond to any prompt related to suicide or self-harm would get a perfect score on a refusal-rate eval, but it is not necessarily a safer model.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Grade multi-turn safety evals per conversation, not per message. Gradual escalation means one failing turn should fail the whole transcript.",
-          "excerpt": "One bad turn—like a model divulging details on how to run a scam when repeatedly pressed—results in a failing grade for the whole conversation.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Single-turn safety suites are saturated. They now work mainly as regression checks, and multi-turn tasks are needed to tell models apart.",
-          "excerpt": "On our API, the current aggregate harmless response rates for our single-turn evaluations are between 94% and 98% for every recent model.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "LLM graders can break without anyone noticing and keep producing scores. Add alerting, and send uncertain grades to a human.",
-          "excerpt": "graders may still silently tally scores (incorrectly) even when they break",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A safety claim is only as sound as the eval behind it, so measure appropriate behavior across whole conversations and watch the grader as closely as the model.",
-      "tags": [
-        "safety-evals",
-        "multi-turn-evals",
-        "llm-as-judge",
-        "construct-validity",
-        "over-refusal",
-        "eval-contamination",
-        "simulated-users"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Build a multi-turn safety eval harness with a simulated user and a rubric grader",
-        "detail": "Write a spec for each risk area that covers user objective, tactics, persona, situation and tone. Fix the first user turn. Have a separate model generate later user turns by sampling spec dimensions, crossed independently, and run each scenario several times. Grade each transcript with a rubric grader where one bad turn fails the conversation, and report the appropriate-response rate. Pair harmful prompts with benign prompts from the same domain to track over-refusal. Alert on grader failures and send low-confidence grades to a human. Run the eval in a sandbox with no internet access and real-time monitoring."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 82,
-        "newness": 38,
-        "credibility": 69.4,
-        "composite": 53.51,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": false,
-      "verify_reason": "scoring",
-      "verify_note": "Lessons hold, but the verifier rated novelty 30 vs 55: the post mostly consolidates known eval practice (Anthropic's earlier agent-evals guide, XSTest/OR-Bench over-refusal work); the 'refusal rate is wrong' point is scoped to self-harm in the source.",
-      "prior_art": "Tracker entries already cover hardening refusal scores with iterative attackers, multilingual safety eval gaps, and OpenAI's eval-to-production gap. This post adds construct validity, conversation-level grading and grader-calibration practice from a frontier lab.",
-      "related_claims": [
-        "separate-grader-from-generator",
-        "llm-eval-datasets-leak-into-training-sets",
-        "agent-safety-evals-can-misread-production-behavior"
-      ],
-      "article_url": "https://www.anthropic.com/research/building-strong-safety-evaluations",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-13",
-      "raw_path": "data/_raw/building-strong-safety-evaluations-1b36b00175.txt",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-research",
-      "source_rank": 69.4,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Anthropic Research",
-      "retrieved_at": "2026-11-14T19:16:13+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
       "grounding_score": 1.0
     },
     {
@@ -901,6 +972,94 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "id": "building-strong-safety-evaluations-1b36b00175",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Anthropic shares how it designs, runs and grades model safety evaluations",
+      "source_url": "https://www.anthropic.com/research/building-strong-safety-evaluations",
+      "summary": "Anthropic gives practical guidance for building safety evaluations (evals), drawing on reforms from psychology's replication crisis. It argues that refusal rate is often the wrong thing to measure. Its multi-turn evals score the share of whole conversations judged appropriate against expert rubrics, and a single bad turn fails the whole conversation. The post also covers contamination, reward hacking, saturated single-turn suites (94-98% harmless response rates), and LLM graders that fail silently.",
+      "lessons": [
+        {
+          "point": "Refusal rate can reward the wrong behavior. In self-harm cases, a model that refuses everything scores perfectly but is not safer, so score appropriate responses against a rubric written for each risk area.",
+          "excerpt": "A model that refuses to respond to any prompt related to suicide or self-harm would get a perfect score on a refusal-rate eval, but it is not necessarily a safer model.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Grade multi-turn safety evals per conversation, not per message. Gradual escalation means one failing turn should fail the whole transcript.",
+          "excerpt": "One bad turn—like a model divulging details on how to run a scam when repeatedly pressed—results in a failing grade for the whole conversation.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Single-turn safety suites are saturated. They now work mainly as regression checks, and multi-turn tasks are needed to tell models apart.",
+          "excerpt": "On our API, the current aggregate harmless response rates for our single-turn evaluations are between 94% and 98% for every recent model.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "LLM graders can break without anyone noticing and keep producing scores. Add alerting, and send uncertain grades to a human.",
+          "excerpt": "graders may still silently tally scores (incorrectly) even when they break",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A safety claim is only as sound as the eval behind it, so measure appropriate behavior across whole conversations and watch the grader as closely as the model.",
+      "tags": [
+        "safety-evals",
+        "multi-turn-evals",
+        "llm-as-judge",
+        "construct-validity",
+        "over-refusal",
+        "eval-contamination",
+        "simulated-users"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Build a multi-turn safety eval harness with a simulated user and a rubric grader",
+        "detail": "Write a spec for each risk area that covers user objective, tactics, persona, situation and tone. Fix the first user turn. Have a separate model generate later user turns by sampling spec dimensions, crossed independently, and run each scenario several times. Grade each transcript with a rubric grader where one bad turn fails the conversation, and report the appropriate-response rate. Pair harmful prompts with benign prompts from the same domain to track over-refusal. Alert on grader failures and send low-confidence grades to a human. Run the eval in a sandbox with no internet access and real-time monitoring."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 82,
+        "newness": 37,
+        "credibility": 69.4,
+        "composite": 53.26,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Lessons hold, but the verifier rated novelty 30 vs 55: the post mostly consolidates known eval practice (Anthropic's earlier agent-evals guide, XSTest/OR-Bench over-refusal work); the 'refusal rate is wrong' point is scoped to self-harm in the source.",
+      "prior_art": "Tracker entries already cover hardening refusal scores with iterative attackers, multilingual safety eval gaps, and OpenAI's eval-to-production gap. This post adds construct validity, conversation-level grading and grader-calibration practice from a frontier lab.",
+      "related_claims": [
+        "separate-grader-from-generator",
+        "llm-eval-datasets-leak-into-training-sets",
+        "agent-safety-evals-can-misread-production-behavior"
+      ],
+      "article_url": "https://www.anthropic.com/research/building-strong-safety-evaluations",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-13",
+      "raw_path": "data/_raw/building-strong-safety-evaluations-1b36b00175.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-research",
+      "source_rank": 69.4,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic Research",
+      "retrieved_at": "2026-11-14T19:16:13+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
       "grounding_score": 1.0
     },
     {
@@ -1109,10 +1268,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 60,
-        "newness": 38,
+        "newness": 37,
         "credibility": 68.8,
-        "composite": 49.82,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 49.57,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "prior_art": "Existing entries already treat the LLM judge as a component to test and flag judge prompt sensitivity. This paper adds evidence that judge quality barely tracks MMLU and that frontier models can agree with humans less.",
@@ -1139,90 +1298,6 @@
         "score": 100,
         "passed": true,
         "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "scrapebench-evaluating-legal-compliance-of-ai-ag-6fe1e7bf5e",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "ScrapeBench measures whether web agents honor terms of service and robots.txt",
-      "summary": "ScrapeBench, from the Neural Information Processing Systems (NeurIPS) 2026 Evaluations and Datasets Track, is presented as the first agentic benchmark of whether AI agents comply with website scraping policies: terms of service (ToS) and robots.txt directives. The abstract reports low compliance for most closed- and open-weight agents, but the exact figure is garbled in the captured text. On 269 websites that do not prohibit scraping, some agents over-refuse, with Claude Opus 4.6 refusing 98.5% of the time. A human baseline of 180 participants complied at similar rates but over-refused far more.",
-      "lessons": [
-        {
-          "point": "Legal and contractual compliance of web agents, covering terms of service (ToS) and robots.txt, is now an explicit benchmark axis, separate from task success.",
-          "excerpt": "we introduce ScrapeBench, the first agentic benchmark for empirically evaluating the legal compliance of AI agents with website scraping policies",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Compliance evals need a control set of lawful sites: on sites that permit scraping, agents can refuse legitimate work.",
-          "excerpt": "in our sample of 269 websites that do not prohibit scraping, we observe that agents sometimes refuse to scrape despite it being lawful",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Over-refusal can be extreme for a single model, so measure both violation and over-refusal before picking a model for web tasks.",
-          "excerpt": "such as Claude Opus 4.6 exhibiting an over-refusal rate of 98.5%",
-          "confidence": 0.65,
-          "grounded": true
-        },
-        {
-          "point": "Humans are not a stricter baseline: they complied at similar rates but over-refused more.",
-          "excerpt": "suggest that humans exhibit compliance rates comparable to AI agents but over-refuse at much higher rates",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "The paper reports low compliance for most agents; as the tracker's recommendation, do not assume a web agent respects robots.txt or terms of service (ToS) on its own, enforce scraping policy in the harness and test for over-refusal too.",
-      "tags": [
-        "web-agents",
-        "scraping",
-        "robots-txt",
-        "evals",
-        "over-refusal",
-        "legal-compliance"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Enforce robots.txt and terms of service (ToS) checks in the fetch tool, not the model",
-        "detail": "Tracker recommendation, not a finding of the paper: add a deterministic robots.txt check (and a per-domain allow/deny list for sites restricted by terms of service (ToS)) in the agent's fetch/browse tool, log blocked attempts, and add a small eval with permitted and prohibited sites to measure both violations and over-refusals when switching models."
-      },
-      "scores": {
-        "novelty": 60,
-        "relevance": 45,
-        "newness": 38,
-        "credibility": 48.5,
-        "composite": 48.27,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "The verifier confirmed the entry; the summary now says sites that 'do not prohibit' scraping and the takeaway and actionable are labelled as the tracker's recommendation.",
-      "prior_art": "Pool has guardrail over-refusal work (guardrail benchmarks measure label policy, scary object names cause over-refusal) and Simon Willison's scraping-tool review, but no benchmark of agent compliance with ToS/robots.txt. Only the abstract was captured, so findings rest on it. Verifier's closest: no ToS/robots.txt agent-compliance benchmark in the pool; over-refusal guardrail entry.",
-      "related_claims": [],
-      "source_url": "https://arxiv.org/abs/2611.11306",
-      "article_url": "https://arxiv.org/abs/2611.11306",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/scrapebench-evaluating-legal-compliance-of-ai-ag-6fe1e7bf5e.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 48.5,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Hugging Face Daily Papers",
-      "id": "scrapebench-measures-whether-web-agents-honor-te-f18d0571da",
-      "retrieved_at": "2026-11-12T17:57:17+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 54 > 45 (Tracker recommendation, not a finding of the paper: add a deterministic robots.txt check (and a per-domain allow/deny li)"
-        ]
       },
       "grounding_score": 1.0
     },
@@ -1315,6 +1390,90 @@
       "previous_slugs": [
         "openai-dataset-level-g-mean-can-misrank-model-monitorability"
       ]
+    },
+    {
+      "candidate_id": "scrapebench-evaluating-legal-compliance-of-ai-ag-6fe1e7bf5e",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "ScrapeBench measures whether web agents honor terms of service and robots.txt",
+      "summary": "ScrapeBench, from the Neural Information Processing Systems (NeurIPS) 2026 Evaluations and Datasets Track, is presented as the first agentic benchmark of whether AI agents comply with website scraping policies: terms of service (ToS) and robots.txt directives. The abstract reports low compliance for most closed- and open-weight agents, but the exact figure is garbled in the captured text. On 269 websites that do not prohibit scraping, some agents over-refuse, with Claude Opus 4.6 refusing 98.5% of the time. A human baseline of 180 participants complied at similar rates but over-refused far more.",
+      "lessons": [
+        {
+          "point": "Legal and contractual compliance of web agents, covering terms of service (ToS) and robots.txt, is now an explicit benchmark axis, separate from task success.",
+          "excerpt": "we introduce ScrapeBench, the first agentic benchmark for empirically evaluating the legal compliance of AI agents with website scraping policies",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Compliance evals need a control set of lawful sites: on sites that permit scraping, agents can refuse legitimate work.",
+          "excerpt": "in our sample of 269 websites that do not prohibit scraping, we observe that agents sometimes refuse to scrape despite it being lawful",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Over-refusal can be extreme for a single model, so measure both violation and over-refusal before picking a model for web tasks.",
+          "excerpt": "such as Claude Opus 4.6 exhibiting an over-refusal rate of 98.5%",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Humans are not a stricter baseline: they complied at similar rates but over-refused more.",
+          "excerpt": "suggest that humans exhibit compliance rates comparable to AI agents but over-refuse at much higher rates",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "The paper reports low compliance for most agents; as the tracker's recommendation, do not assume a web agent respects robots.txt or terms of service (ToS) on its own, enforce scraping policy in the harness and test for over-refusal too.",
+      "tags": [
+        "web-agents",
+        "scraping",
+        "robots-txt",
+        "evals",
+        "over-refusal",
+        "legal-compliance"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Enforce robots.txt and terms of service (ToS) checks in the fetch tool, not the model",
+        "detail": "Tracker recommendation, not a finding of the paper: add a deterministic robots.txt check (and a per-domain allow/deny list for sites restricted by terms of service (ToS)) in the agent's fetch/browse tool, log blocked attempts, and add a small eval with permitted and prohibited sites to measure both violations and over-refusals when switching models."
+      },
+      "scores": {
+        "novelty": 60,
+        "relevance": 45,
+        "newness": 37,
+        "credibility": 48.5,
+        "composite": 48.02,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "The verifier confirmed the entry; the summary now says sites that 'do not prohibit' scraping and the takeaway and actionable are labelled as the tracker's recommendation.",
+      "prior_art": "Pool has guardrail over-refusal work (guardrail benchmarks measure label policy, scary object names cause over-refusal) and Simon Willison's scraping-tool review, but no benchmark of agent compliance with ToS/robots.txt. Only the abstract was captured, so findings rest on it. Verifier's closest: no ToS/robots.txt agent-compliance benchmark in the pool; over-refusal guardrail entry.",
+      "related_claims": [],
+      "source_url": "https://arxiv.org/abs/2611.11306",
+      "article_url": "https://arxiv.org/abs/2611.11306",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/scrapebench-evaluating-legal-compliance-of-ai-ag-6fe1e7bf5e.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 48.5,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "scrapebench-measures-whether-web-agents-honor-te-f18d0571da",
+      "retrieved_at": "2026-11-12T17:57:17+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 54 > 45 (Tracker recommendation, not a finding of the paper: add a deterministic robots.txt check (and a per-domain allow/deny li)"
+        ]
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "our-framework-for-reporting-model-misalignment-19d153bc9f",
@@ -1489,6 +1648,84 @@
       "grounding_score": 1.0
     },
     {
+      "article_url": "https://arxiv.org/abs/2611.05306",
+      "tweet_url": null,
+      "author": "Belcak et al.",
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "raw_path": "data/_raw/you-don-t-need-long-context-9ed82b38dd.txt",
+      "discovered_via": "manual",
+      "source_name": "Belcak et al.",
+      "source_url": "https://arxiv.org/abs/2611.05306",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "kind": "story",
+      "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
+      "summary": "This paper argues that generating later tokens in a long context costs more than earlier ones, by up to 7x on frontier open-weight models, and tests whether agents need long context at all. With Claude Opus 4.5 and GPT 5.6 Sol, frequent compaction and reading long inputs selectively as stored documents kept task accuracy largely intact on long-horizon and long-input tasks. It also proposes semantic state space models, which would need a trained model.",
+      "lessons": [
+        {
+          "point": "Keeping contexts short costs little accuracy on frontier models.",
+          "excerpt": "frontier language models sacrifice little to no task accuracy when maintaining short contexts.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Frequent compaction kept contexts short while broadly holding accuracy.",
+          "excerpt": "Frequent compaction keeps the context short while broadly maintaining task accuracy.",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Store long inputs as documents the agent reads on demand instead of pasting them into context.",
+          "excerpt": "We enable selective input reading by storing each long input as one or more documents",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "On frontier open-weight models the cost gap between short and long contexts can reach 7x.",
+          "excerpt": "On frontier open weight models, the disparity in cost may rise to as much as 7x.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.",
+      "tags": [
+        "cost-efficiency",
+        "context-compaction",
+        "long-context",
+        "harness-design"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Test frequent compaction against your cache savings",
+        "detail": "Run the same task set with compaction at the context limit, at a lower threshold, and with long inputs moved to files the agent reads on demand. Compare accuracy and total cost including cache writes, since each compaction rewrites the prefix and loses cache hits."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 70,
+        "newness": 37,
+        "credibility": 50.0,
+        "composite": 46.75,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "prior_art": "compact-first-reset-only-if-the-model-needs-it and Microsoft's compaction-cost finding cover when to compact; this adds evidence that compacting early and often keeps accuracy.",
+      "related_claims": [
+        "compact-first-reset-only-if-the-model-needs-it",
+        "keep-bulk-tool-output-out-of-context"
+      ],
+      "verify_note": "Verifier upheld the excerpts; dropped an unconfirmed affiliation and the self-hosted framing. Novelty taken as verifier's 30.",
+      "id": "researchers-find-agents-keep-accuracy-with-short-ee04e9e827",
+      "retrieved_at": "2026-11-18T22:40:22+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "building-ai-for-lawyers-jacob-lauritzen-cto-of-l-1ed6155fe8",
       "topic": "ai-research",
       "domain": "air.evals",
@@ -1538,10 +1775,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 68,
-        "newness": 38,
+        "newness": 37,
         "credibility": 69.6,
-        "composite": 46.94,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 46.69,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "prior_art": "Microsoft's synthetic, time-evolving enterprise tenants for Copilot evals (already in ai-research) cover building eval worlds without customer data. Legora adds a practitioner account: domain-expert-built RL environments, per-practice-area heat maps that show model regressions, a fixed failure taxonomy with flagged LLM checks, and a pilot-sample pattern for bulk extraction.",
@@ -1625,10 +1862,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 60,
-        "newness": 38,
+        "newness": 37,
         "credibility": 48.3,
-        "composite": 46.74,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 46.49,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "RGB (Chen et al. 2023) noise and counterfactual robustness; knowledge-conflict benchmarks (ClashEval, ConflictBank, FaithEval); SearchAuditor (archive). New: per-query synthetic evidence control for multi-step deep-search agents and cost-aware caution metrics.",
       "related_claims": [
@@ -1862,10 +2099,10 @@
       "scores": {
         "novelty": 45.0,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 45.8,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 45.55,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Separate-grader-from-generator claim and generic planner/verifier multi-agent orchestration; no Tamarin protocol-modeling agent work in the corpus (only generic 'formal verification' mentions in ai-security.json and product-security.json).",
       "related_claims": [
@@ -1935,10 +2172,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.8,
-        "composite": 45.62,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 45.37,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported all three lessons; the figures are vendor-reported, best-case, single-dataset (Natural Questions), and learned routing and query adaptation for ANN search have substantial prior art, so novelty takes its lower score.",
@@ -2208,10 +2445,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 60,
-        "newness": 38,
+        "newness": 37,
         "credibility": 47.2,
-        "composite": 45.08,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 44.83,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
       "verified": true,
@@ -2284,10 +2521,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 50,
-        "newness": 38,
+        "newness": 37,
         "credibility": 66.7,
-        "composite": 45.01,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 44.76,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
       "verified": true,
@@ -2605,10 +2842,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.0,
-        "composite": 42.5,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 42.25,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -2759,10 +2996,10 @@
       "scores": {
         "novelty": 28.0,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 64.9,
-        "composite": 41.14,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 40.89,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "data/archive.json has 'Emit enforcement-ready agent traces with harness-bound provenance' and 'Log full operation traces for autonomous analysis agents'; none covers a plain-text trace format or the PostToolUse vs PostToolUseFailure gotcha, which is the only real delta. The excerpt 'rejects a trace that hides a failure: an `ok` next to a' is a valid substring that ends mid-sentence at a line break.",
       "related_claims": [],
@@ -2836,10 +3073,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 58,
-        "newness": 38,
+        "newness": 37,
         "credibility": 52.5,
-        "composite": 40.77,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 40.52,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3104,10 +3341,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 39.8,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 39.55,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Numbers match the abstract; 'harder to game' is the authors' argument, not a measured reward-hacking test.",
@@ -3177,10 +3414,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 50,
-        "newness": 38,
+        "newness": 37,
         "credibility": 70.8,
-        "composite": 39.62,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 39.37,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "prior_art": "This is the same AI Coding Dictionary series already on file (agent as model plus harness, hallucination types), and existing entries already back AGENTS.md-style context files.",
@@ -3258,10 +3495,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 22,
-        "newness": 38,
+        "newness": 37,
         "credibility": 65.0,
-        "composite": 39.35,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 39.1,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
@@ -3350,10 +3587,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 67.5,
-        "composite": 39.12,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 38.88,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3384,80 +3621,6 @@
         "issues": [
           "mild: summary_sentences 5 > 4"
         ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in",
-      "source_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
-      "article_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
-      "tweet_url": null,
-      "author": "novaRom",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@novaRom via Hacker News",
-      "related_claims": [],
-      "summary": "A MindStudio write-up of testing on the MSI Prestige RTX Spark laptop found native Linux ran GPT-OSS-120B at 13.9 tokens per second versus 65.4 on Windows and 65.1 under WSL, because the GPU is held near 780 MHz when plugged in. The cause is a Windows-only Nvidia platform controller whose firmware power table is encrypted and only the Windows driver can decrypt. On battery, Linux speeds were close to Windows. Until Nvidia ships equivalent Linux support, WSL is the practical way to run Linux-first tools such as vLLM at full speed.",
-      "takeaway": "On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.",
-      "lessons": [
-        {
-          "point": "On wall power, the throughput gap is about five times on the same hardware, depending only on the OS path.",
-          "excerpt": "Windows hit 65.4 tokens per second, WSL hit 65.1, the Nvidia DGX Spark hit 61, and native Linux on the same laptop managed only 13.9.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The cause is encrypted firmware power settings that only the Windows driver can read.",
-          "excerpt": "because the firmware’s power table is encrypted and only the Windows driver can decrypt it",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Turning the controller off in Windows dropped GPU clocks to the level seen on Linux, pointing at it as the cause.",
-          "excerpt": "Disabling that controller in Windows reproduced the slowdown directly",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "local-inference",
-        "nvidia",
-        "linux",
-        "wsl",
-        "gpu-firmware",
-        "benchmarks"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Check GPU clocks before trusting local inference benchmarks",
-        "detail": "When benchmarking local models on new Nvidia RTX Spark laptops, log GPU clock speed alongside tokens per second and compare Linux, WSL and battery versus wall power. Use WSL for Linux-first serving tools until Nvidia ships the platform controller logic for Linux."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 30,
-        "newness": 38,
-        "credibility": 55.0,
-        "composite": 38.75,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
-      "verified": true,
-      "verify_note": "Verifier found lessons supported but flagged the slowdown applies only on wall power (Linux on battery matched Windows) and the source is a secondary blog summary. Title, lesson 1 and summary now say so. Novelty kept at the lower 40.",
-      "retrieved_at": "2026-11-04T20:09:56+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted takeaway",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -3554,6 +3717,80 @@
       ]
     },
     {
+      "id": "nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Nvidia RTX Spark laptops throttle local LLMs on Linux when plugged in",
+      "source_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "article_url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "tweet_url": null,
+      "author": "novaRom",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/nvidia-rtx-spark-encrypted-firmware-slows-infere-e1838a88cc.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@novaRom via Hacker News",
+      "related_claims": [],
+      "summary": "A MindStudio write-up of testing on the MSI Prestige RTX Spark laptop found native Linux ran GPT-OSS-120B at 13.9 tokens per second versus 65.4 on Windows and 65.1 under WSL, because the GPU is held near 780 MHz when plugged in. The cause is a Windows-only Nvidia platform controller whose firmware power table is encrypted and only the Windows driver can decrypt. On battery, Linux speeds were close to Windows. Until Nvidia ships equivalent Linux support, WSL is the practical way to run Linux-first tools such as vLLM at full speed.",
+      "takeaway": "On RTX Spark laptops, benchmark local inference under WSL or on battery; native Linux on wall power is throttled.",
+      "lessons": [
+        {
+          "point": "On wall power, the throughput gap is about five times on the same hardware, depending only on the OS path.",
+          "excerpt": "Windows hit 65.4 tokens per second, WSL hit 65.1, the Nvidia DGX Spark hit 61, and native Linux on the same laptop managed only 13.9.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The cause is encrypted firmware power settings that only the Windows driver can read.",
+          "excerpt": "because the firmware’s power table is encrypted and only the Windows driver can decrypt it",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Turning the controller off in Windows dropped GPU clocks to the level seen on Linux, pointing at it as the cause.",
+          "excerpt": "Disabling that controller in Windows reproduced the slowdown directly",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "local-inference",
+        "nvidia",
+        "linux",
+        "wsl",
+        "gpu-firmware",
+        "benchmarks"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check GPU clocks before trusting local inference benchmarks",
+        "detail": "When benchmarking local models on new Nvidia RTX Spark laptops, log GPU clock speed alongside tokens per second and compare Linux, WSL and battery versus wall power. Use WSL for Linux-first serving tools until Nvidia ships the platform controller logic for Linux."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 30,
+        "newness": 37,
+        "credibility": 55.0,
+        "composite": 38.5,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
+      "verified": true,
+      "verify_note": "Verifier found lessons supported but flagged the slowdown applies only on wall power (Linux on battery matched Windows) and the source is a secondary blog summary. Title, lesson 1 and summary now say so. Novelty kept at the lower 40.",
+      "retrieved_at": "2026-11-04T20:09:56+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.ml-research",
       "related_claims": [],
@@ -3588,10 +3825,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 38.3,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 38.05,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported both lessons; closest prior is Deep Partition Aggregation and Finite Aggregation certificates.",
@@ -3672,10 +3909,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 66.7,
-        "composite": 37.51,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 37.26,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
       "verified": true,
@@ -3742,10 +3979,10 @@
       "scores": {
         "novelty": 30.0,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 65.9,
-        "composite": 37.38,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 37.13,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "ai-research.json 'Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access' (same concept, same 'no standards yet' point); OpenAI's version adds named assessors and concrete protocols (on-site, attestation, redaction).",
       "related_claims": [],
@@ -3813,10 +4050,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 75.0,
-        "composite": 37.25,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 37.0,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported; the title now says hallucinations generally since the source defines hallucination broadly with coding examples.",
@@ -3898,10 +4135,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 45,
-        "newness": 38,
+        "newness": 37,
         "credibility": 50.8,
-        "composite": 37.22,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 36.97,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3978,10 +4215,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 20,
-        "newness": 38,
+        "newness": 37,
         "credibility": 69.9,
-        "composite": 36.48,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 36.23,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4055,10 +4292,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 15,
-        "newness": 38,
+        "newness": 37,
         "credibility": 69.6,
-        "composite": 36.44,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 36.19,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Gao, Schulman and Hilton 2022 reward-model overoptimization scaling laws; Beirami et al. 2024 best-of-n guarantees; Coste et al. 2023 reward-model ensembles. New: exact Jeffreys-divergence characterization replacing the sqrt-KL bound, and a formal proof for ensembling. Abstract-only page.",
       "related_claims": [],
@@ -4137,10 +4374,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 36.35,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 36.1,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Summary corrected on where the benchmark numbers come from; the security and cost claims are vendor assertions.",
@@ -4211,10 +4448,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 35.75,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 35.5,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4286,10 +4523,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 35.75,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 35.5,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported as vendor claims; the single-device wording was dropped and the perplexity figures are noted as coming from one model.",
@@ -4851,10 +5088,10 @@
       "scores": {
         "novelty": 40.0,
         "relevance": 15,
-        "newness": 38,
+        "newness": 37,
         "credibility": 48.1,
-        "composite": 33.22,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 32.97,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Refusal-direction (Arditi et al.) style work already referenced in ai-security.json and archive.json; this paper extends it to ambiguity and knowledge-limit abstention, with only a loosely related abstention mention in ai-research.json.",
       "related_claims": [],
@@ -4934,10 +5171,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 38,
+        "newness": 37,
         "credibility": 68.1,
-        "composite": 33.21,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 32.96,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Numbers and attributions check out; the long-run finding is for DeepSeek V4.1 Flash only.",
@@ -5016,10 +5253,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 35,
-        "newness": 38,
+        "newness": 37,
         "credibility": 66.2,
-        "composite": 32.93,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 32.68,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported by the source; the guardrails-first point was softened and the human-labeled judge set is marked as the tracker's suggestion.",
@@ -5103,10 +5340,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 40,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 32.75,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 32.5,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "GitClear AI code-churn reports; DORA 2024 finding on AI adoption and delivery stability.",
       "related_claims": [
@@ -5342,10 +5579,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 38,
+        "newness": 37,
         "credibility": 68.8,
-        "composite": 31.82,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 31.57,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported every detail; it is a secondary roundup of a paper already in the tracker, and the harness figures are DeepSeek's own test.",
@@ -5491,10 +5728,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 10,
-        "newness": 38,
+        "newness": 37,
         "credibility": 72.0,
-        "composite": 29.9,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 29.65,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Abstract-only source; claims match, datasets correct.",
@@ -5521,145 +5758,6 @@
           "mild: jargon_chain 8 > 7 (authors claim consistent robustness gains across several datasets)",
           "mild: summary_sentences 5 > 4"
         ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "related_claims": [],
-      "title": "Gradium releases Phonon, a small on-device text-to-speech model",
-      "summary": "Gradium released Phonon, a small text-to-speech (TTS) model that runs fully on the device with no server or network. It comes in two sizes, about 65 MB and 75 MB, and covers five European languages. The English 31m version is licensed Apache 2.0 and the other models are non-commercial (CC BY-NC). The post says Phonon is in the top three for intelligibility in every language it was tested on, and first on the CPU streaming p95 time-to-first-audio benchmark of Hugging Face's Open TTS Leaderboard.",
-      "lessons": [
-        {
-          "point": "A TTS model under 100 MB can now cover five languages and run on phones, laptops and in the browser.",
-          "excerpt": "Phonon comes in two sizes, at about 65 MB and 75 MB. Together they speak English, French, German, Spanish and Portuguese.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The flow-matching approach that made the model small was hard to train stably, according to the vendor.",
-          "excerpt": "The training was initially numerically unstable and required several tricks to produce quality results on all five languages.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If you need offline voice output for an agent, Phonon 31m is a small option you can use commercially, but the benchmark claims come from the vendor.",
-      "tags": [
-        "text-to-speech",
-        "on-device",
-        "model-release",
-        "flow-matching",
-        "open-weights",
-        "hugging-face"
-      ],
-      "actionable": {
-        "type": "tool",
-        "title": "Try Phonon 31m for offline voice output",
-        "detail": "gradium/phonon-31m-en (Apache 2.0) loads in Transformers v5.21+ or runs through the ptts runtime on CPU, GPU or NPU. Check its intelligibility and latency on your own text before relying on the leaderboard figures."
-      },
-      "scores": {
-        "novelty": 20,
-        "relevance": 12,
-        "newness": 38,
-        "credibility": 70.8,
-        "composite": 29.72,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier supported the claims; corrected the license (CC BY-NC for the other models) and narrowed the speed claim to the CPU streaming benchmark.",
-      "prior_art": "Hugging Face Open TTS Leaderboard launch (data/ai-research.json); Kyutai Pocket TTS lineage",
-      "source_url": "https://huggingface.co/blog/phonon-tts",
-      "article_url": "https://huggingface.co/blog/phonon-tts",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-05",
-      "raw_path": "data/_raw/a-closer-look-at-phonon-tts-launching-high-quali-27b3339785.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-huggingface-co-blog-feed-xml",
-      "source_rank": 70.8,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Hugging Face Blog",
-      "id": "gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30",
-      "retrieved_at": "2026-11-05T17:48:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "askalphaxiv-yoshua-bengio-and-collaborators-just-1592869c6e",
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Bengio and collaborators publish a 182-page survey on mechanistic interpretability",
-      "summary": "An alphaXiv post on X announces a 182-page survey, \"Understanding AI from the Inside\", by Yoshua Bengio and collaborators. The post says it runs from neurons and circuits to how interpretability can support AI safety. It covers sparse autoencoders (SAEs) and circuit discovery. The post itself is only a few lines and gives no findings from the survey.",
-      "takeaway": "A broad reading map for model internals, not a practical change for anyone building agents or harnesses.",
-      "lessons": [
-        {
-          "point": "The survey is long (182 pages) and comes from Yoshua Bengio's group.",
-          "excerpt": "Yoshua Bengio and collaborators just released a goldmine 182-page survey on mechanistic interpretability!",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Its scope runs from low-level model internals up to how interpretability can support AI safety.",
-          "excerpt": "This paper will take you from neurons & circuits to how interpretability can help with AI safety",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "interpretability",
-        "survey",
-        "sparse-autoencoders",
-        "ai-safety"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Keep as a reference for interpretability background",
-        "detail": "If you need background on sparse autoencoders or circuit discovery, for example to judge interpretability-based monitoring claims, use this survey as a starting index. Read the paper itself; the X post carries no findings."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 15,
-        "newness": 38,
-        "credibility": 60.0,
-        "composite": 29.6,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier found every lesson supported by the source.",
-      "prior_art": "Existing interpretability surveys and SAE work already in the archive (e.g. Equivariant Sparse Autoencoders entry); a survey restates known work by design.",
-      "related_claims": [],
-      "source_url": "https://x.com/askalphaxiv/status/2119836067591573781",
-      "article_url": null,
-      "tweet_url": "https://x.com/askalphaxiv/status/2119836067591573781",
-      "author": "@askalphaxiv",
-      "date": "2026-11",
-      "published": "2026-11-09",
-      "raw_path": "data/_raw/askalphaxiv-yoshua-bengio-and-collaborators-just-1592869c6e.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "retrieved_at": "2026-11-09T17:53:09+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -5814,6 +5912,145 @@
       "grounding_score": 1.0
     },
     {
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "related_claims": [],
+      "title": "Gradium releases Phonon, a small on-device text-to-speech model",
+      "summary": "Gradium released Phonon, a small text-to-speech (TTS) model that runs fully on the device with no server or network. It comes in two sizes, about 65 MB and 75 MB, and covers five European languages. The English 31m version is licensed Apache 2.0 and the other models are non-commercial (CC BY-NC). The post says Phonon is in the top three for intelligibility in every language it was tested on, and first on the CPU streaming p95 time-to-first-audio benchmark of Hugging Face's Open TTS Leaderboard.",
+      "lessons": [
+        {
+          "point": "A TTS model under 100 MB can now cover five languages and run on phones, laptops and in the browser.",
+          "excerpt": "Phonon comes in two sizes, at about 65 MB and 75 MB. Together they speak English, French, German, Spanish and Portuguese.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The flow-matching approach that made the model small was hard to train stably, according to the vendor.",
+          "excerpt": "The training was initially numerically unstable and required several tricks to produce quality results on all five languages.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you need offline voice output for an agent, Phonon 31m is a small option you can use commercially, but the benchmark claims come from the vendor.",
+      "tags": [
+        "text-to-speech",
+        "on-device",
+        "model-release",
+        "flow-matching",
+        "open-weights",
+        "hugging-face"
+      ],
+      "actionable": {
+        "type": "tool",
+        "title": "Try Phonon 31m for offline voice output",
+        "detail": "gradium/phonon-31m-en (Apache 2.0) loads in Transformers v5.21+ or runs through the ptts runtime on CPU, GPU or NPU. Check its intelligibility and latency on your own text before relying on the leaderboard figures."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 12,
+        "newness": 37,
+        "credibility": 70.8,
+        "composite": 29.47,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier supported the claims; corrected the license (CC BY-NC for the other models) and narrowed the speed claim to the CPU streaming benchmark.",
+      "prior_art": "Hugging Face Open TTS Leaderboard launch (data/ai-research.json); Kyutai Pocket TTS lineage",
+      "source_url": "https://huggingface.co/blog/phonon-tts",
+      "article_url": "https://huggingface.co/blog/phonon-tts",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-05",
+      "raw_path": "data/_raw/a-closer-look-at-phonon-tts-launching-high-quali-27b3339785.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 70.8,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Hugging Face Blog",
+      "id": "gradium-releases-phonon-a-small-on-device-text-t-ed6613fb30",
+      "retrieved_at": "2026-11-05T17:48:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "askalphaxiv-yoshua-bengio-and-collaborators-just-1592869c6e",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Bengio and collaborators publish a 182-page survey on mechanistic interpretability",
+      "summary": "An alphaXiv post on X announces a 182-page survey, \"Understanding AI from the Inside\", by Yoshua Bengio and collaborators. The post says it runs from neurons and circuits to how interpretability can support AI safety. It covers sparse autoencoders (SAEs) and circuit discovery. The post itself is only a few lines and gives no findings from the survey.",
+      "takeaway": "A broad reading map for model internals, not a practical change for anyone building agents or harnesses.",
+      "lessons": [
+        {
+          "point": "The survey is long (182 pages) and comes from Yoshua Bengio's group.",
+          "excerpt": "Yoshua Bengio and collaborators just released a goldmine 182-page survey on mechanistic interpretability!",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Its scope runs from low-level model internals up to how interpretability can support AI safety.",
+          "excerpt": "This paper will take you from neurons & circuits to how interpretability can help with AI safety",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "interpretability",
+        "survey",
+        "sparse-autoencoders",
+        "ai-safety"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Keep as a reference for interpretability background",
+        "detail": "If you need background on sparse autoencoders or circuit discovery, for example to judge interpretability-based monitoring claims, use this survey as a starting index. Read the paper itself; the X post carries no findings."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 15,
+        "newness": 37,
+        "credibility": 60.0,
+        "composite": 29.35,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier found every lesson supported by the source.",
+      "prior_art": "Existing interpretability surveys and SAE work already in the archive (e.g. Equivariant Sparse Autoencoders entry); a survey restates known work by design.",
+      "related_claims": [],
+      "source_url": "https://x.com/askalphaxiv/status/2119836067591573781",
+      "article_url": null,
+      "tweet_url": "https://x.com/askalphaxiv/status/2119836067591573781",
+      "author": "@askalphaxiv",
+      "date": "2026-11",
+      "published": "2026-11-09",
+      "raw_path": "data/_raw/askalphaxiv-yoshua-bengio-and-collaborators-just-1592869c6e.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "retrieved_at": "2026-11-09T17:53:09+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "cantraj-recovering-vehicle-trajectories-from-can-969f1a3fa0",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -5859,10 +6096,10 @@
       "scores": {
         "novelty": 30.0,
         "relevance": 12,
-        "newness": 38,
+        "newness": 37,
         "credibility": 48.1,
-        "composite": 29.31,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 29.06,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "The paper itself cites earlier CAN/speed/steering route-inference attacks; no equivalent vehicle-telemetry privacy entry in the repo data, and the benchmark is mainly a consolidation with an LLM route-selector add-on.",
       "related_claims": [],
@@ -6142,10 +6379,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 25,
-        "newness": 38,
+        "newness": 37,
         "credibility": 60.0,
-        "composite": 28.4,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 28.15,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -6257,146 +6494,6 @@
       ]
     },
     {
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Amazon Science published Mitra-v2, a synthetically pretrained tabular foundation model",
-      "summary": "Amazon Science posted about Mitra-v2, a tabular foundation model pretrained on synthetic data. The captured page contains only site navigation, not the article body, so no method or result can be verified here. The feed teaser says a broader synthetic-data mix lets it adapt to new tables without new models. It also says it leads single models on the TabArena benchmark. It is off-thesis ML research for this tracker.",
-      "lessons": [
-        {
-          "point": "The captured page names the topic as scaling synthetic pretraining for tabular foundation models. It has no article body to support any result.",
-          "excerpt": "Mitra-v2: Scaling synthetic pretraining for tabular foundation models - Amazon Science",
-          "confidence": 0.2,
-          "grounded": true
-        },
-        {
-          "point": "The fetch captured only Amazon Science navigation menus; the benchmark claim from the feed teaser is unverified.",
-          "excerpt": "Amazon Science Blog Technical deep-dives and perspectives from our scientists.",
-          "confidence": 0.1,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Off-thesis tabular ML research with no usable captured text; record as news only.",
-      "tags": [
-        "tabular",
-        "foundation-model",
-        "synthetic-data",
-        "pretraining",
-        "source-fetch-failed"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "Refetch the article if tabular models matter to you",
-        "detail": "The captured text is navigation only; refetch the amazon.science URL to read the TabArena results before citing them."
-      },
-      "verified": false,
-      "verify_note": "Fetched page held only navigation; claims come from the feed teaser.",
-      "verify_reason": "factual",
-      "scores": {
-        "novelty": 15,
-        "relevance": 10,
-        "newness": 38,
-        "credibility": 72.5,
-        "composite": 27.88,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "prior_art": "TabPFN and TabPFN v2; the original Mitra (2025).",
-      "related_claims": [],
-      "source_url": "https://www.amazon.science/blog/mitra-v2-scaling-synthetic-pretraining-for-tabular-foundation-models",
-      "article_url": "https://www.amazon.science/blog/mitra-v2-scaling-synthetic-pretraining-for-tabular-foundation-models",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/mitra-v2-scaling-synthetic-pretraining-for-tabul-0f1a9f9e4b.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-amazon-science-index-rss",
-      "source_rank": 72.5,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Amazon Science",
-      "id": "amazon-science-published-mitra-v2-a-syntheticall-39d64c515b",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 5 > 4"
-        ]
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
-    },
-    {
-      "candidate_id": "agent-ai-coding-dictionary-163b16e43b",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "Matt Pocock's AI Coding Dictionary defines an agent as model plus harness",
-      "summary": "A glossary entry from Matt Pocock's AI Coding Dictionary defines an agent as a model harnessed with tools, a system prompt and a context window that takes turns with a user. It separates the model (parameters) from the harness (software) and treats the agent as the combination you address. It contains no new technique or evidence.",
-      "lessons": [
-        {
-          "point": "The same underlying model can be used through different harnesses (the source's example is Claude Code locally and Cursor for UI work), so harness choice is a separate variable from model choice.",
-          "excerpt": "Claude Code locally, Cursor for the UI work — same model underneath, different harnesses.",
-          "confidence": 0.5,
-          "grounded": true
-        },
-        {
-          "point": "The glossary recommends avoiding vague terms like \"the AI\" because they hide whether you mean the parameters or the harnessed system.",
-          "excerpt": "too vague — they hide whether you mean the parameters or the harnessed thing",
-          "confidence": 0.5,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A vocabulary page, useful for team terminology but with no new finding.",
-      "tags": [
-        "glossary",
-        "agent-harness",
-        "terminology"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Name model and harness separately in reports",
-        "detail": "When logging agent results or comparing tools, record the model and the harness as separate fields, since the same model can behave differently in different harnesses."
-      },
-      "scores": {
-        "novelty": 3,
-        "relevance": 20,
-        "newness": 38,
-        "credibility": 75.0,
-        "composite": 27.65,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "Lessons are supported; the claim that one model behaves as different agents was removed since the source only gives the same-model-different-harness example.",
-      "prior_art": "Standard model-vs-harness framing found in many harness-engineering posts already tracked; no prior dictionary entry from this source, but the content is definitional. Verifier's closest: PawBench entry: evaluate model-plus-harness as a unit.",
-      "related_claims": [],
-      "source_url": "https://www.aihero.dev/ai-coding-dictionary/agent",
-      "article_url": "https://www.aihero.dev/ai-coding-dictionary/agent",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-12",
-      "raw_path": "data/_raw/agent-ai-coding-dictionary-163b16e43b.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-aihero-dev-rss-xml",
-      "source_rank": 75.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "AI Hero (Matt Pocock)",
-      "id": "matt-pocock-s-ai-coding-dictionary-defines-an-ag-dc5e4369dd",
-      "retrieved_at": "2026-11-12T17:57:17+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "general-hill-climbing-the-one-main-loop-in-ai-7782ea7ec3",
       "topic": "ai-research",
       "domain": "air.evals",
@@ -6472,6 +6569,79 @@
         "issues": []
       },
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Amazon Science published Mitra-v2, a synthetically pretrained tabular foundation model",
+      "summary": "Amazon Science posted about Mitra-v2, a tabular foundation model pretrained on synthetic data. The captured page contains only site navigation, not the article body, so no method or result can be verified here. The feed teaser says a broader synthetic-data mix lets it adapt to new tables without new models. It also says it leads single models on the TabArena benchmark. It is off-thesis ML research for this tracker.",
+      "lessons": [
+        {
+          "point": "The captured page names the topic as scaling synthetic pretraining for tabular foundation models. It has no article body to support any result.",
+          "excerpt": "Mitra-v2: Scaling synthetic pretraining for tabular foundation models - Amazon Science",
+          "confidence": 0.2,
+          "grounded": true
+        },
+        {
+          "point": "The fetch captured only Amazon Science navigation menus; the benchmark claim from the feed teaser is unverified.",
+          "excerpt": "Amazon Science Blog Technical deep-dives and perspectives from our scientists.",
+          "confidence": 0.1,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Off-thesis tabular ML research with no usable captured text; record as news only.",
+      "tags": [
+        "tabular",
+        "foundation-model",
+        "synthetic-data",
+        "pretraining",
+        "source-fetch-failed"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Refetch the article if tabular models matter to you",
+        "detail": "The captured text is navigation only; refetch the amazon.science URL to read the TabArena results before citing them."
+      },
+      "verified": false,
+      "verify_note": "Fetched page held only navigation; claims come from the feed teaser.",
+      "verify_reason": "factual",
+      "scores": {
+        "novelty": 15,
+        "relevance": 10,
+        "newness": 37,
+        "credibility": 72.5,
+        "composite": 27.62,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "prior_art": "TabPFN and TabPFN v2; the original Mitra (2025).",
+      "related_claims": [],
+      "source_url": "https://www.amazon.science/blog/mitra-v2-scaling-synthetic-pretraining-for-tabular-foundation-models",
+      "article_url": "https://www.amazon.science/blog/mitra-v2-scaling-synthetic-pretraining-for-tabular-foundation-models",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/mitra-v2-scaling-synthetic-pretraining-for-tabul-0f1a9f9e4b.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-amazon-science-index-rss",
+      "source_rank": 72.5,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Amazon Science",
+      "id": "amazon-science-published-mitra-v2-a-syntheticall-39d64c515b",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
     },
     {
       "topic": "ai-research",
@@ -6611,6 +6781,73 @@
       "grounding_score": 1.0
     },
     {
+      "candidate_id": "agent-ai-coding-dictionary-163b16e43b",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Matt Pocock's AI Coding Dictionary defines an agent as model plus harness",
+      "summary": "A glossary entry from Matt Pocock's AI Coding Dictionary defines an agent as a model harnessed with tools, a system prompt and a context window that takes turns with a user. It separates the model (parameters) from the harness (software) and treats the agent as the combination you address. It contains no new technique or evidence.",
+      "lessons": [
+        {
+          "point": "The same underlying model can be used through different harnesses (the source's example is Claude Code locally and Cursor for UI work), so harness choice is a separate variable from model choice.",
+          "excerpt": "Claude Code locally, Cursor for the UI work — same model underneath, different harnesses.",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "The glossary recommends avoiding vague terms like \"the AI\" because they hide whether you mean the parameters or the harnessed system.",
+          "excerpt": "too vague — they hide whether you mean the parameters or the harnessed thing",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A vocabulary page, useful for team terminology but with no new finding.",
+      "tags": [
+        "glossary",
+        "agent-harness",
+        "terminology"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Name model and harness separately in reports",
+        "detail": "When logging agent results or comparing tools, record the model and the harness as separate fields, since the same model can behave differently in different harnesses."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 20,
+        "newness": 37,
+        "credibility": 75.0,
+        "composite": 27.4,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "Lessons are supported; the claim that one model behaves as different agents was removed since the source only gives the same-model-different-harness example.",
+      "prior_art": "Standard model-vs-harness framing found in many harness-engineering posts already tracked; no prior dictionary entry from this source, but the content is definitional. Verifier's closest: PawBench entry: evaluate model-plus-harness as a unit.",
+      "related_claims": [],
+      "source_url": "https://www.aihero.dev/ai-coding-dictionary/agent",
+      "article_url": "https://www.aihero.dev/ai-coding-dictionary/agent",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-12",
+      "raw_path": "data/_raw/agent-ai-coding-dictionary-163b16e43b.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-aihero-dev-rss-xml",
+      "source_rank": 75.0,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "AI Hero (Matt Pocock)",
+      "id": "matt-pocock-s-ai-coding-dictionary-defines-an-ag-dc5e4369dd",
+      "retrieved_at": "2026-11-12T17:57:17+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "addyosmani-article-e57aa0166a",
       "topic": "ai-research",
       "domain": "air.work-efficiency",
@@ -6646,10 +6883,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 22,
-        "newness": 38,
+        "newness": 37,
         "credibility": 60.0,
-        "composite": 27.5,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 27.25,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Teaser-only source; lessons restate the headline.",
@@ -6718,10 +6955,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 5,
-        "newness": 38,
+        "newness": 37,
         "credibility": 49.6,
-        "composite": 27.44,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 27.19,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported the claims as the authors' own; closest prior is DMD/DMD2 and Trajectory Distribution Matching.",
@@ -6800,10 +7037,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 12,
-        "newness": 38,
+        "newness": 37,
         "credibility": 66.7,
-        "composite": 26.7,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 26.45,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
       "verified": false,
@@ -6895,73 +7132,6 @@
         "issues": [
           "mild: sentence_words 49 > 45 (Dark Reading asked vendors how they measure AI models on security work: XBOW builds its own harness and scores exploit-f)"
         ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "related_claims": [
-        "mcp-tool-descriptions-are-a-prompt-injection-surface"
-      ],
-      "title": "MCP Explained site walks through how the Model Context Protocol works",
-      "summary": "This is an interactive explainer of the Model Context Protocol (MCP), not new research. It shows the basic flow: the app asks a server which tools it has, puts that list in the model's context, and runs tool calls for the model. It points out that the model never talks to a server directly and that MCP is JSON-RPC with defined methods, transports and auth.",
-      "lessons": [
-        {
-          "point": "The host app sits between the model and every MCP server. It fetches the tool list, gives it to the model, and makes the calls itself.",
-          "excerpt": "A server says what it can do, the app shows that to the model, and when the model wants something the app calls the server and hands the result back.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The tool inventory comes from the server and goes into the model's context first, before the user's message. Whatever the server says about its tools reaches the model.",
-          "excerpt": "Before anything else, the app asks the server for its menu of abilities. It can't offer the model a tool it doesn't know about, so this inventory comes first.",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "A useful primer for newcomers, but the captured text adds nothing new for security or harness builders.",
-      "tags": [
-        "mcp",
-        "explainer",
-        "json-rpc",
-        "tool-calling"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "Use as onboarding material for MCP basics",
-        "detail": "Share mcp-explained.com with engineers new to MCP so they understand the tools/list then tools/call flow. That flow is the background for tool-poisoning threat models, where server-supplied tool descriptions land in the model's context. Go to existing ledger entries on MCP tool poisoning for the security analysis."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 20,
-        "newness": 38,
-        "credibility": 55.0,
-        "composite": 26.15,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier: basic educational material, accurately described.",
-      "prior_art": "Existing MCP entries in data/ai-security.json, e.g. 'Researchers find no agent framework defends against MCP tool poisoning' and 'Treat MCP tool descriptions as system prompts: silent re-trust poisoning'",
-      "source_url": "https://mcp-explained.com/",
-      "article_url": "https://mcp-explained.com/",
-      "tweet_url": null,
-      "author": "rwilinski",
-      "date": "2026-11",
-      "published": "2026-11-05",
-      "raw_path": "data/_raw/mcp-explained-0ebb45888c.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@rwilinski via Hacker News",
-      "id": "mcp-explained-site-walks-through-how-the-model-c-10c07f36f7",
-      "retrieved_at": "2026-11-05T17:48:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -7182,6 +7352,73 @@
       ],
       "source_name": "Simon Willison's Weblog",
       "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "related_claims": [
+        "mcp-tool-descriptions-are-a-prompt-injection-surface"
+      ],
+      "title": "MCP Explained site walks through how the Model Context Protocol works",
+      "summary": "This is an interactive explainer of the Model Context Protocol (MCP), not new research. It shows the basic flow: the app asks a server which tools it has, puts that list in the model's context, and runs tool calls for the model. It points out that the model never talks to a server directly and that MCP is JSON-RPC with defined methods, transports and auth.",
+      "lessons": [
+        {
+          "point": "The host app sits between the model and every MCP server. It fetches the tool list, gives it to the model, and makes the calls itself.",
+          "excerpt": "A server says what it can do, the app shows that to the model, and when the model wants something the app calls the server and hands the result back.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The tool inventory comes from the server and goes into the model's context first, before the user's message. Whatever the server says about its tools reaches the model.",
+          "excerpt": "Before anything else, the app asks the server for its menu of abilities. It can't offer the model a tool it doesn't know about, so this inventory comes first.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "A useful primer for newcomers, but the captured text adds nothing new for security or harness builders.",
+      "tags": [
+        "mcp",
+        "explainer",
+        "json-rpc",
+        "tool-calling"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Use as onboarding material for MCP basics",
+        "detail": "Share mcp-explained.com with engineers new to MCP so they understand the tools/list then tools/call flow. That flow is the background for tool-poisoning threat models, where server-supplied tool descriptions land in the model's context. Go to existing ledger entries on MCP tool poisoning for the security analysis."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 20,
+        "newness": 37,
+        "credibility": 55.0,
+        "composite": 25.9,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier: basic educational material, accurately described.",
+      "prior_art": "Existing MCP entries in data/ai-security.json, e.g. 'Researchers find no agent framework defends against MCP tool poisoning' and 'Treat MCP tool descriptions as system prompts: silent re-trust poisoning'",
+      "source_url": "https://mcp-explained.com/",
+      "article_url": "https://mcp-explained.com/",
+      "tweet_url": null,
+      "author": "rwilinski",
+      "date": "2026-11",
+      "published": "2026-11-05",
+      "raw_path": "data/_raw/mcp-explained-0ebb45888c.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@rwilinski via Hacker News",
+      "id": "mcp-explained-site-walks-through-how-the-model-c-10c07f36f7",
+      "retrieved_at": "2026-11-05T17:48:33+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -7437,83 +7674,6 @@
       ]
     },
     {
-      "candidate_id": "theo-biased-but-this-is-accurate-1140f5c76e",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "related_claims": [],
-      "title": "Theo endorses a quick guide on which coding-agent harness to use",
-      "summary": "Theo reposts, and calls accurate, a three-line guide from @amritwt on picking a coding-agent setup. It suggests T3Code if you have several subscriptions and a remote machine. It suggests the lab's own harness if you have one subscription, and Factory, Droid or Devin if you want models from several labs. Theo says up front that he is biased, and the post gives no evidence or comparison.",
-      "lessons": [
-        {
-          "point": "With several coding subscriptions and your own remote machine, the guide recommends a single front end, T3Code.",
-          "excerpt": "If you have multiple coding subscriptions + Your own remote machine: Just use T3Code",
-          "confidence": 0.3,
-          "grounded": true
-        },
-        {
-          "point": "With just one subscription, the guide says to use that vendor's own harness, alone or behind T3Code.",
-          "excerpt": "If you have just one subscription: Use their harness raw or with T3Code",
-          "confidence": 0.3,
-          "grounded": true
-        },
-        {
-          "point": "For mixing models from different labs, the guide points to multi-model products.",
-          "excerpt": "If you want to use multiple models from different labs: Use Factory / Droid / Devin",
-          "confidence": 0.3,
-          "grounded": true
-        }
-      ],
-      "takeaway": "This is a biased opinion with no measurements, so treat it as a list of options to try rather than a recommendation.",
-      "tags": [
-        "coding-agents",
-        "harness-choice",
-        "t3code",
-        "opinion"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Choose a harness by how many model subscriptions you have, then measure",
-        "detail": "If you use models from more than one lab, trial one multi-model front end against each vendor's own harness on the same few tasks from your repo. Record whether each task succeeded, how long it took and what it cost before you standardize on one."
-      },
-      "scores": {
-        "novelty": 5,
-        "relevance": 15,
-        "newness": 38,
-        "credibility": 60.0,
-        "composite": 24.5,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "Correctly attributed opinion tweet with no evidence.",
-      "prior_art": "Common community advice on vendor CLIs versus model-agnostic harnesses",
-      "source_url": "https://x.com/theo/status/2119329490568691717",
-      "article_url": null,
-      "tweet_url": "https://x.com/theo/status/2119329490568691717",
-      "author": "@theo",
-      "date": "2026-11",
-      "published": "2026-11-08",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "raw_path": "data/_raw/theo-biased-but-this-is-accurate-1140f5c76e.txt",
-      "id": "theo-endorses-a-quick-guide-on-which-coding-agen-ee4710dbf1",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "donating-agent-skills-to-the-agentic-ai-foundati-d53589b814",
       "topic": "ai-research",
       "domain": "air.tooling",
@@ -7591,6 +7751,83 @@
           "published": "2026-10-22"
         }
       ]
+    },
+    {
+      "candidate_id": "theo-biased-but-this-is-accurate-1140f5c76e",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "related_claims": [],
+      "title": "Theo endorses a quick guide on which coding-agent harness to use",
+      "summary": "Theo reposts, and calls accurate, a three-line guide from @amritwt on picking a coding-agent setup. It suggests T3Code if you have several subscriptions and a remote machine. It suggests the lab's own harness if you have one subscription, and Factory, Droid or Devin if you want models from several labs. Theo says up front that he is biased, and the post gives no evidence or comparison.",
+      "lessons": [
+        {
+          "point": "With several coding subscriptions and your own remote machine, the guide recommends a single front end, T3Code.",
+          "excerpt": "If you have multiple coding subscriptions + Your own remote machine: Just use T3Code",
+          "confidence": 0.3,
+          "grounded": true
+        },
+        {
+          "point": "With just one subscription, the guide says to use that vendor's own harness, alone or behind T3Code.",
+          "excerpt": "If you have just one subscription: Use their harness raw or with T3Code",
+          "confidence": 0.3,
+          "grounded": true
+        },
+        {
+          "point": "For mixing models from different labs, the guide points to multi-model products.",
+          "excerpt": "If you want to use multiple models from different labs: Use Factory / Droid / Devin",
+          "confidence": 0.3,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This is a biased opinion with no measurements, so treat it as a list of options to try rather than a recommendation.",
+      "tags": [
+        "coding-agents",
+        "harness-choice",
+        "t3code",
+        "opinion"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Choose a harness by how many model subscriptions you have, then measure",
+        "detail": "If you use models from more than one lab, trial one multi-model front end against each vendor's own harness on the same few tasks from your repo. Record whether each task succeeded, how long it took and what it cost before you standardize on one."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 15,
+        "newness": 37,
+        "credibility": 60.0,
+        "composite": 24.25,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "Correctly attributed opinion tweet with no evidence.",
+      "prior_art": "Common community advice on vendor CLIs versus model-agnostic harnesses",
+      "source_url": "https://x.com/theo/status/2119329490568691717",
+      "article_url": null,
+      "tweet_url": "https://x.com/theo/status/2119329490568691717",
+      "author": "@theo",
+      "date": "2026-11",
+      "published": "2026-11-08",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "raw_path": "data/_raw/theo-biased-but-this-is-accurate-1140f5c76e.txt",
+      "id": "theo-endorses-a-quick-guide-on-which-coding-agen-ee4710dbf1",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "early-progress-on-accelerating-drug-development-0bec8872c4",
@@ -7703,10 +7940,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 12,
-        "newness": 38,
+        "newness": 37,
         "credibility": 50.8,
-        "composite": 23.72,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 23.47,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -7779,10 +8016,10 @@
       "scores": {
         "novelty": 6,
         "relevance": 15,
-        "newness": 38,
+        "newness": 37,
         "credibility": 51.2,
-        "composite": 23.48,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 23.23,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Two overstated lesson points (server metrics, doubled work) were corrected to what the post says; off-topic web performance note for this audience.",
@@ -7993,10 +8230,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 22.25,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 22.0,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "Routine provider status incidents, including earlier Anthropic authentication incidents.",
       "related_claims": [],
@@ -8059,10 +8296,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 38,
+        "newness": 37,
         "credibility": 60.0,
-        "composite": 21.8,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 21.55,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "prior_art": "Generic startup advice; no technical prior art applies.",
@@ -8120,10 +8357,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 5,
-        "newness": 38,
+        "newness": 37,
         "credibility": 60.0,
-        "composite": 21.5,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 21.25,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "The lesson is supported; 'far ahead' was replaced with the plain counts from the post.",
@@ -8250,10 +8487,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 3,
-        "newness": 38,
+        "newness": 37,
         "credibility": 55.0,
-        "composite": 20.15,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 19.9,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported the lesson; off-topic.",
@@ -8361,137 +8598,6 @@
       "grounding_score": 1.0
     },
     {
-      "id": "theo-since-getting-my-iphone-duo-i-keep-falling-6e859ca0e7",
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "kind": "story",
-      "kind_reason": "Personal gadget opinion post; no security or AI content.",
-      "title": "Theo posts that he loves his iPhone Duo and cannot go back",
-      "source_url": "https://x.com/theo/status/2122856187729424869",
-      "summary": "This is a short personal post from a developer who says he enjoys his new iPhone Duo. He calls it his favorite hardware in years. The post has no security, AI or engineering content.",
-      "lessons": [
-        {
-          "point": "The post is only a personal product opinion with no security or AI claim to learn from.",
-          "excerpt": "Now I cannot imagine going back.",
-          "confidence": 0.2,
-          "grounded": true
-        },
-        {
-          "point": "No technical details (features, flaws, threat model) are given, so there is nothing actionable for defenders or agent builders.",
-          "excerpt": "Last time I enjoyed a new gadget this much was AirPods Pro.",
-          "confidence": 0.2,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Off-thesis personal gadget opinion; nothing here for security or AI practitioners.",
-      "tags": [
-        "off-thesis",
-        "consumer-hardware",
-        "social-post"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "No action",
-        "detail": "Skip. The post carries no security or AI information; it was routed here only because of a loose mobile keyword match."
-      },
-      "scores": {
-        "novelty": 2,
-        "relevance": 1,
-        "newness": 38,
-        "credibility": 60.0,
-        "composite": 19.4,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "prior_art": "None; off-topic personal gadget opinion with no security or AI content.",
-      "related_claims": [],
-      "article_url": null,
-      "published": "2026-11-18",
-      "raw_path": "data/_raw/theo-since-getting-my-iphone-duo-i-keep-falling-6e859ca0e7.txt",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "discovered_via": "x-list",
-      "source_name": "X list",
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "verified": false,
-      "verify_reason": "factual",
-      "verify_note": "Summary calls the author 'a developer'; the three-line post never says so (minor, from author context only).",
-      "date": "2026-11",
-      "retrieved_at": "2026-11-18T06:34:52+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.models",
-      "related_claims": [],
-      "title": "Tunguz posted a one-line jab at local AI enthusiasts",
-      "summary": "The post is a single sarcastic line about people who run AI locally, with angry emojis. It contains no claim, data or technique. It has no use beyond showing community sentiment.",
-      "lessons": [
-        {
-          "point": "The post gives no technical content. At most it is a sentiment signal about the local-model community.",
-          "excerpt": "Those greedy local AI fanatics. 🤬😡",
-          "confidence": 0.2,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Nothing here to act on.",
-      "tags": [
-        "local-ai",
-        "social-post",
-        "low-signal"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "No action",
-        "detail": "Skip this post. It has no technical claim, data or method to evaluate."
-      },
-      "scores": {
-        "novelty": 0,
-        "relevance": 3,
-        "newness": 38,
-        "credibility": 60.0,
-        "composite": 19.4,
-        "scored_at": "2026-11-18T06:34:54+00:00"
-      },
-      "verified": true,
-      "verify_note": "Independent verifier: one sarcastic line with no technical content.",
-      "prior_art": "none found",
-      "source_url": "https://x.com/tunguz/status/2118051184779076026",
-      "article_url": null,
-      "tweet_url": "https://x.com/tunguz/status/2118051184779076026",
-      "author": "@tunguz",
-      "date": "2026-11",
-      "published": "2026-11-04",
-      "raw_path": "data/_raw/tunguz-those-greedy-local-ai-fanatics-a384cb7e92.txt",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "id": "tunguz-posted-a-one-line-jab-at-local-ai-enthusi-5a9b6d14be",
-      "retrieved_at": "2026-11-05T17:48:32+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "candidate_id": "ai-for-science-expands-to-foundations-and-resear-ea6046e123",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -8567,6 +8673,137 @@
       "grounding_score": 1.0
     },
     {
+      "id": "theo-since-getting-my-iphone-duo-i-keep-falling-6e859ca0e7",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "kind": "story",
+      "kind_reason": "Personal gadget opinion post; no security or AI content.",
+      "title": "Theo posts that he loves his iPhone Duo and cannot go back",
+      "source_url": "https://x.com/theo/status/2122856187729424869",
+      "summary": "This is a short personal post from a developer who says he enjoys his new iPhone Duo. He calls it his favorite hardware in years. The post has no security, AI or engineering content.",
+      "lessons": [
+        {
+          "point": "The post is only a personal product opinion with no security or AI claim to learn from.",
+          "excerpt": "Now I cannot imagine going back.",
+          "confidence": 0.2,
+          "grounded": true
+        },
+        {
+          "point": "No technical details (features, flaws, threat model) are given, so there is nothing actionable for defenders or agent builders.",
+          "excerpt": "Last time I enjoyed a new gadget this much was AirPods Pro.",
+          "confidence": 0.2,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Off-thesis personal gadget opinion; nothing here for security or AI practitioners.",
+      "tags": [
+        "off-thesis",
+        "consumer-hardware",
+        "social-post"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action",
+        "detail": "Skip. The post carries no security or AI information; it was routed here only because of a loose mobile keyword match."
+      },
+      "scores": {
+        "novelty": 2,
+        "relevance": 1,
+        "newness": 37,
+        "credibility": 60.0,
+        "composite": 19.15,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "prior_art": "None; off-topic personal gadget opinion with no security or AI content.",
+      "related_claims": [],
+      "article_url": null,
+      "published": "2026-11-18",
+      "raw_path": "data/_raw/theo-since-getting-my-iphone-duo-i-keep-falling-6e859ca0e7.txt",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "discovered_via": "x-list",
+      "source_name": "X list",
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "verified": false,
+      "verify_reason": "factual",
+      "verify_note": "Summary calls the author 'a developer'; the three-line post never says so (minor, from author context only).",
+      "date": "2026-11",
+      "retrieved_at": "2026-11-18T06:34:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "related_claims": [],
+      "title": "Tunguz posted a one-line jab at local AI enthusiasts",
+      "summary": "The post is a single sarcastic line about people who run AI locally, with angry emojis. It contains no claim, data or technique. It has no use beyond showing community sentiment.",
+      "lessons": [
+        {
+          "point": "The post gives no technical content. At most it is a sentiment signal about the local-model community.",
+          "excerpt": "Those greedy local AI fanatics. 🤬😡",
+          "confidence": 0.2,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Nothing here to act on.",
+      "tags": [
+        "local-ai",
+        "social-post",
+        "low-signal"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action",
+        "detail": "Skip this post. It has no technical claim, data or method to evaluate."
+      },
+      "scores": {
+        "novelty": 0,
+        "relevance": 3,
+        "newness": 37,
+        "credibility": 60.0,
+        "composite": 19.15,
+        "scored_at": "2026-11-18T22:40:23+00:00"
+      },
+      "verified": true,
+      "verify_note": "Independent verifier: one sarcastic line with no technical content.",
+      "prior_art": "none found",
+      "source_url": "https://x.com/tunguz/status/2118051184779076026",
+      "article_url": null,
+      "tweet_url": "https://x.com/tunguz/status/2118051184779076026",
+      "author": "@tunguz",
+      "date": "2026-11",
+      "published": "2026-11-04",
+      "raw_path": "data/_raw/tunguz-those-greedy-local-ai-fanatics-a384cb7e92.txt",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "id": "tunguz-posted-a-one-line-jab-at-local-ai-enthusi-5a9b6d14be",
+      "retrieved_at": "2026-11-05T17:48:32+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "tunguz-invest-everything-into-stepmaxxing-move-t-4c4d140881",
       "topic": "ai-research",
       "domain": "air.ml-research",
@@ -8594,10 +8831,10 @@
       "scores": {
         "novelty": 0,
         "relevance": 1,
-        "newness": 38,
+        "newness": 37,
         "credibility": 60.0,
-        "composite": 18.8,
-        "scored_at": "2026-11-18T06:34:54+00:00"
+        "composite": 18.55,
+        "scored_at": "2026-11-18T22:40:23+00:00"
       },
       "prior_art": "None. The post is not technical.",
       "related_claims": [],

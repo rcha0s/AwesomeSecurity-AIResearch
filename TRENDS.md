@@ -3150,15 +3150,15 @@ _First seen 2023-12-07 · latest 2026-11-17._
 - [Handshake AI demos the agent benchmarks it builds for frontier labs](https://latent.space/p/handshake/) (2026-11-09) · _latest_
 - [Legora evaluates legal agent on simulated work because it cannot read traces](https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/) (2026-11-02) · _latest_
 
-### 🔺 rising coding-agents  ·  14 findings (9 recent vs 0.9 expected) · 10 sources
+### 🔺 rising coding-agents  ·  16 findings (11 recent vs 0.9 expected) · 12 sources
 _First seen 2026-07-21 · latest 2026-11-12._
 
 - [Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/) (2026-11-12) · _latest_
 - [Matt Pocock's dictionary says to keep AGENTS.md short](https://www.aihero.dev/ai-coding-dictionary/agents-md) (2026-11-12) · _latest_
 - [Matt Pocock's dictionary splits hallucinations into factuality and faithfulness](https://www.aihero.dev/ai-coding-dictionary/hallucination) (2026-11-12) · _latest_
+- [UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122) (2026-11-09) · _latest_
+- [York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241) (2026-11-09) · _latest_
 - [Simon Willison folds agent-written PR descriptions under a human summary](https://simonwillison.net/2026/Nov/9/details-summary/) (2026-11-09) · _latest_
-- [Addy Osmani argues that working with coding agents is a management job](https://x.com/addyosmani/status/2119332146485891501) (2026-11-08) · _latest_
-- [Theo endorses a quick guide on which coding-agent harness to use](https://x.com/theo/status/2119329490568691717) (2026-11-08) · _latest_
 
 ### 🔺 rising opinion  ·  6 findings (6 recent vs 0.0 expected) · 3 sources
 _First seen 2026-10-25 · latest 2026-11-10._
@@ -3217,6 +3217,22 @@ _First seen 2026-10-27 · latest 2026-11-09._
 - [Theo video on running Claude for weeks, transcript not captured](https://www.youtube.com/watch?v=NBCM_ZoWZo8) (2026-10-28) · _latest_
 - [Anthropic reports early results from Claude-driven drug development partnerships](https://www.anthropic.com/research/early-progress-drug-development) (2026-10-27) · _latest_
 
+### 🔺 rising cost-efficiency  ·  4 findings (4 recent vs 0.0 expected) · 4 sources
+_First seen 2026-11-03 · latest 2026-11-12._
+
+- [Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/) (2026-11-12) · _latest_
+- [UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122) (2026-11-09) · _latest_
+- [York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241) (2026-11-09) · _latest_
+- [Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306) (2026-11-03) · _latest_
+
+### 🔺 rising prompt-caching  ·  4 findings (4 recent vs 0.0 expected) · 4 sources
+_First seen 2026-10-23 · latest 2026-11-09._
+
+- [UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122) (2026-11-09) · _latest_
+- [York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241) (2026-11-09) · _latest_
+- [Token-Goat hooks coding agents to cut repeat reads and bulky tool output](https://github.com/DFKHelper/token-goat) (2026-11-04) · _latest_
+- [Moonshot's Kimi K3.1 Pro nears frontier scores, with open weights promised](https://simonwillison.net/2026/Oct/23/kimi-k31-pro/) (2026-10-23) · _latest_
+
 ### 🔺 rising claude-code  ·  12 findings (5 recent vs 1.2 expected) · 9 sources
 _First seen 2026-06 · latest 2026-11-17._
 
@@ -3262,6 +3278,16 @@ _First seen 2026-09-30 · latest 2026-11-12._
 - [SAFT adversarially trains only robustness-critical parameters and beats LoRA](http://arxiv.org/abs/2610.39455v1) (2026-10-29) · _latest_
 - [Sparse Adversarial Fine-Tuning (SAFT) updates only about 5% of a network's parameters](http://arxiv.org/abs/2610.39455v1) (2026-10-29) · _latest_
 - [RobustReview finds LLM paper reviewers change scores on content-preserving rewrites](https://arxiv.org/abs/2609.39027) (2026-09-30)
+
+### 🔺 rising harness-design  ·  8 findings (4 recent vs 0.7 expected) · 7 sources
+_First seen 2026-07-21 · latest 2026-11-12._
+
+- [Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/) (2026-11-12) · _latest_
+- [UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122) (2026-11-09) · _latest_
+- [Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306) (2026-11-03) · _latest_
+- [Daniel Miessler argues harnesses should describe what you want, not steps](https://danielmiessler.com/blog/models-how-harnesses-what) (2026-10-25) · _latest_
+- [Birfy/agentdescent](https://github.com/Birfy/agentdescent) (2026-08-10)
+- [Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding](https://arxiv.org/abs/2608.05876) (2026-08-07)
 
 ### 🔺 rising agents-md  ·  3 findings (3 recent vs 0.0 expected) · 2 sources
 _First seen 2026-11-04 · latest 2026-11-14._
@@ -3363,6 +3389,12 @@ _First seen 2025-03-13 · latest 2026-11-12._
 - [Rubric Curriculum RL uses pairwise rubric judging to make reward hacking harder](http://arxiv.org/abs/2611.06244v1) (2026-11-04) · _latest_
 - [Blind teams hunt a hidden objective planted in a model](https://www.anthropic.com/research/auditing-hidden-objectives) (2025-03-13)
 
+### 🔺 rising context-compaction  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
+_First seen 2026-11-03 · latest 2026-11-12._
+
+- [Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/) (2026-11-12) · _latest_
+- [Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306) (2026-11-03) · _latest_
+
 ### 🔺 rising decision-models  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-30 · latest 2026-11-09._
 
@@ -3405,12 +3437,6 @@ _First seen 2026-11-08 · latest 2026-11-12._
 - [Matt Pocock's dictionary says to keep AGENTS.md short](https://www.aihero.dev/ai-coding-dictionary/agents-md) (2026-11-12) · _latest_
 - [Ratel loads agent tools and skills per turn through BM25 search](https://github.com/ratel-ai/ratel) (2026-11-08) · _latest_
 
-### 🔺 rising prompt-caching  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
-_First seen 2026-10-23 · latest 2026-11-04._
-
-- [Token-Goat hooks coding agents to cut repeat reads and bulky tool output](https://github.com/DFKHelper/token-goat) (2026-11-04) · _latest_
-- [Moonshot's Kimi K3.1 Pro nears frontier scores, with open weights promised](https://simonwillison.net/2026/Oct/23/kimi-k31-pro/) (2026-10-23) · _latest_
-
 ### 🔺 rising reproducibility  ·  2 findings (2 recent vs 0.0 expected) · 2 sources
 _First seen 2026-10-19 · latest 2026-10-30._
 
@@ -3450,6 +3476,16 @@ _First seen 2026-05 · latest 2026-11-13._
 - [PRISM benchmark shows pathology model calibration breaks down with scarce labels](http://arxiv.org/abs/2610.36517v1) (2026-10-27) · _latest_
 - [SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues](https://github.com/logic-star-ai/swt-bench) (2026-10-26) · _latest_
 - [RobustReview finds LLM paper reviewers change scores on content-preserving rewrites](https://arxiv.org/abs/2609.39027) (2026-09-30)
+
+### 🔺 rising long-context  ·  10 findings (3 recent vs 1.2 expected) · 4 sources
+_First seen 2026-08-10 · latest 2026-11-03._
+
+- [Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306) (2026-11-03) · _latest_
+- [Workshop paper proposes retrieval as local traversal through a memory address space](http://arxiv.org/abs/2610.40545v1) (2026-10-29) · _latest_
+- [Workshop paper proposes retrieval as a local walk through memory](http://arxiv.org/abs/2610.40545v1) (2026-10-29) · _latest_
+- [Kimi K3: Open Frontier Intelligence](https://arxiv.org/abs/2607.24653) (2026-08-10)
+- [Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention](https://arxiv.org/abs/2607.20457) (2026-08-10)
+- [Global allocation of resolution and coverage improves KV cache compression](https://arxiv.org/abs/2608.07001) (2026-08-10)
 
 ### 🔺 rising ai-for-science  ·  3 findings (2 recent vs 0.2 expected) · 2 sources
 _First seen 2026-10-01 · latest 2026-11-05._
@@ -3587,16 +3623,6 @@ _First seen 2026-08-07 · latest 2026-11-09._
 - [Survey of adversarial attacks that degrade Vision Transformer efficiency](https://arxiv.org/abs/2608.05217) (2026-08-07)
 - [When Agentic AI Meets Integrated Sensing and Communication](https://arxiv.org/abs/2608.05792) (2026-08-07)
 
-### 🔺 rising harness-design  ·  6 findings (2 recent vs 0.7 expected) · 5 sources
-_First seen 2026-07-21 · latest 2026-11-12._
-
-- [Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/) (2026-11-12) · _latest_
-- [Daniel Miessler argues harnesses should describe what you want, not steps](https://danielmiessler.com/blog/models-how-harnesses-what) (2026-10-25) · _latest_
-- [Birfy/agentdescent](https://github.com/Birfy/agentdescent) (2026-08-10)
-- [Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding](https://arxiv.org/abs/2608.05876) (2026-08-07)
-- [VLMs for Videogame Data Annotation](https://arxiv.org/abs/2608.05949) (2026-08-07)
-- [How the Claude Code team designs its harness, tools and evals](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) (2026-07-21)
-
 ### 🔺 rising lora  ·  6 findings (2 recent vs 0.7 expected) · 4 sources
 _First seen 2026-08-10 · latest 2026-10-29._
 
@@ -3646,16 +3672,6 @@ _First seen 2026-08-07 · latest 2026-11-16._
 - [openai/openai-agents-python](https://github.com/openai/openai-agents-python) (2026-08-10)
 - [Multi-Agent Forensic Reasoning for Generalizable Deepfake Video Detection](https://arxiv.org/abs/2608.06865) (2026-08-10)
 - [AutoMOOSE: An Agentic AI for Autonomous Phase-Field Simulation](https://arxiv.org/abs/2603.20986) (2026-08-10)
-
-### 🔺 rising long-context  ·  9 findings (2 recent vs 1.2 expected) · 3 sources
-_First seen 2026-08-10 · latest 2026-10-29._
-
-- [Workshop paper proposes retrieval as local traversal through a memory address space](http://arxiv.org/abs/2610.40545v1) (2026-10-29) · _latest_
-- [Workshop paper proposes retrieval as a local walk through memory](http://arxiv.org/abs/2610.40545v1) (2026-10-29) · _latest_
-- [Kimi K3: Open Frontier Intelligence](https://arxiv.org/abs/2607.24653) (2026-08-10)
-- [Dropping the Anchor: Statistical Context Summarization for Distributed Systems via Pulsar Attention](https://arxiv.org/abs/2607.20457) (2026-08-10)
-- [Global allocation of resolution and coverage improves KV cache compression](https://arxiv.org/abs/2608.07001) (2026-08-10)
-- [Autonomy-of-Heads: Data-Free Sparse Attention from Frozen Query-Key Geometry](https://arxiv.org/abs/2608.06849) (2026-08-10)
 
 ### 🔺 rising rag  ·  11 findings (2 recent vs 1.6 expected) · 4 sources
 _First seen 2026-08-07 · latest 2026-11-12._
@@ -3852,6 +3868,13 @@ _First seen 2026-08-10 · latest 2026-10-26._
 - [HarnessTax finds harness choice barely moved success but changed cost](https://harnesstax.github.io/) (2026-09-16)
 - [Coupling Planning with Episodic Memory in LLM Agents for Software Issue Resolution](https://arxiv.org/abs/2608.06811) (2026-08-10)
 
+### ▪️ steady verification  ·  3 findings (1 recent vs 0.3 expected) · 3 sources
+_First seen 2026-07-28 · latest 2026-11-09._
+
+- [York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241) (2026-11-09) · _latest_
+- [Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering](https://www.anthropic.com/research/claude-shaped-science) (2026-10-01)
+- [Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai) (2026-07-28)
+
 ### ▪️ steady agentic-coding  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-07-28 · latest 2026-10-30._
 
@@ -3971,6 +3994,12 @@ _First seen 2026-08-08 · latest 2026-11-16._
 
 - [OpenAI signs Apollo, METR, Transluce and Goodfire for embedded safety assessments](https://openai.com/index/our-first-phase-of-embedded-assessments) (2026-11-16) · _latest_
 - [Willison: OpenAI/Hugging Face 'accidental attack' happened in RLVR training, not deployment](https://simonwillison.net/2026/Aug/8/now-we-have-a-timeline-of-the-openai-accidental-attack-against-h/#atom-everything) (2026-08-08)
+
+### ▪️ steady planning  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
+_First seen 2026-08-07 · latest 2026-11-09._
+
+- [York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241) (2026-11-09) · _latest_
+- [WorldClaw: Agentic 3D Open-World Generation at Scale](https://arxiv.org/abs/2608.05248) (2026-08-07)
 
 ### ▪️ steady recursive-self-improvement  ·  2 findings (1 recent vs 0.2 expected) · 2 sources
 _First seen 2026-09-21 · latest 2026-11-02._
@@ -4512,12 +4541,6 @@ _First seen 2026-08-10 · latest 2026-08-10._
 
 - [INTRYGUE: Induction-Aware Entropy Gating for Reliable RAG Uncertainty Estimation](https://arxiv.org/abs/2603.21607) (2026-08-10)
 - [Conformal Fusion Under Missing Modalities](https://arxiv.org/abs/2608.07183) (2026-08-10)
-
-### ▫️ quiet verification  ·  2 findings (0 recent vs 0.3 expected) · 2 sources
-_First seen 2026-07-28 · latest 2026-10-01._
-
-- [Anthropic physicist's BootLoops: Claude agents did checkable science with expert steering](https://www.anthropic.com/research/claude-shaped-science) (2026-10-01)
-- [Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai) (2026-07-28)
 
 ---
 

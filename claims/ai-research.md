@@ -4,11 +4,41 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_33 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-18_
+_36 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-18_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
 ## ✅ Current
+
+<a id="claim-stable-prompt-prefix-keeps-cache-reads-cheap"></a>
+
+### Keep the prompt prefix stable so cache reads dominate
+
+`stable-prompt-prefix-keeps-cache-reads-cheap` · confidence **0.80** · Cost Efficiency · standing since Jul 18, 2025
+
+A harness that keeps its context append-only and its prefix stable gets cached input at roughly a tenth of the uncached price.
+
+**Basis —** Manus's production write-up plus Anthropic's published cache pricing (reads at 0.1x input).
+
+**Do this —** Never edit earlier turns or reorder the system prompt/tools mid-session; only append.
+
+**Conditions —** Applies where the provider offers prefix caching; savings depend on cache lifetime and how often the prefix really repeats.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (7)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
+| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
+| supports | [The Cache Wars: An Empirical Study of Prompt-Cache Efficiency in Six LLM Agent Harnesses](https://agnt.gg/whitepapers/the-cache-wars-prompt-cache-efficiency-llm-agent-harnesses) | Jul 7, 2026 |
+| supports | [FlowPlan: Reducing the Token Cost of Coding Agents with Abstraction-Guided Planning and Verification](https://arxiv.org/abs/2611.13241) | Nov 9, 2026 |
+| supports | [Context Engineering in 2026: Why We Stopped Compacting Our Agent's Context](https://www.louisbouchard.ai/context-engineering-2026/) | Aug 18, 2026 |
+
+</details>
 
 <a id="claim-coding-agents-produce-plausible-but-hallucinated-apis"></a>
 
@@ -131,33 +161,6 @@ _Tags: `harness`, `agents`, `prompting`, `evals`_
 
 </details>
 
-<a id="claim-stable-prompt-prefix-keeps-cache-reads-cheap"></a>
-
-### Keep the prompt prefix stable so cache reads dominate
-
-`stable-prompt-prefix-keeps-cache-reads-cheap` · confidence **0.80** · Cost Efficiency · standing since Jul 18, 2025
-
-A harness that keeps its context append-only and its prefix stable gets cached input at roughly a tenth of the uncached price.
-
-**Basis —** Manus's production write-up plus Anthropic's published cache pricing (reads at 0.1x input).
-
-**Do this —** Never edit earlier turns or reorder the system prompt/tools mid-session; only append.
-
-**Conditions —** Applies where the provider offers prefix caching; savings depend on cache lifetime and how often the prefix really repeats.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (4)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
-
-</details>
-
 <a id="claim-measure-speedups-with-repeated-trials"></a>
 
 ### Measure speedups with repeated trials, not impressions
@@ -257,6 +260,31 @@ _Tags: `prompting`, `deployment`, `regression`_
 
 </details>
 
+<a id="claim-harness-overhead-sets-agent-cost"></a>
+
+### Harness overhead, not the model, can double an agent's cost
+
+`harness-overhead-sets-agent-cost` · confidence **0.65** · Claude Code, Codex and nine other coding agents, Oct-Nov 2026 versions · Cost Efficiency · standing since Oct 9, 2026
+
+On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.
+
+**Basis —** Cross-harness cost profiling on SWE-bench, SWE-bench Pro and Terminal-Bench 2 (UC Berkeley), plus a first-call token benchmark of 11 coding agents.
+
+**Do this —** Measure your harness's fixed per-call overhead (system prompt, tool schemas, always-on instructions) and cut what does not change outcomes before you switch models.
+
+**Conditions —** Shown on coding benchmarks and a one-word prompt with Nov 2026 harness versions; how much the overhead costs depends on how much of it is cached and how long sessions run.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [System Optimizations for Cost-Efficient Agent Harnesses](https://arxiv.org/abs/2611.12122) | Nov 9, 2026 |
+| supports | [Harness Overhead Benchmark: How Many Tokens 11 Coding Agents Burn Before the Test Starts](https://testdino.com/blog/harness-overhead-benchmark) | Oct 9, 2026 |
+
+</details>
+
 <a id="claim-load-tool-definitions-on-demand"></a>
 
 ### Load tool definitions on demand, not all at start
@@ -273,7 +301,7 @@ Vendors report that loading tool definitions only when needed cut tokens by 47% 
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
-<details><summary>Evidence (4)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -281,6 +309,34 @@ _Tags: `efficiency`, `cost-efficiency`, `harness`_
 | supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
 | supports | [Cursor: dynamic context discovery](https://cursor.com/blog/dynamic-context-discovery) | Jan 6, 2026 |
 | supports | [ratel-ai/ratel](https://github.com/ratel-ai/ratel) | Nov 8, 2026 |
+| supports | [TokenEconomizer: Experience-Driven Black-Box Cost Control for Coding Agents](https://arxiv.org/abs/2610.22732) | Oct 15, 2026 |
+| supports | [Harness Overhead Benchmark: How Many Tokens 11 Coding Agents Burn Before the Test Starts](https://testdino.com/blog/harness-overhead-benchmark) | Oct 9, 2026 |
+
+</details>
+
+<a id="claim-concise-tool-responses-and-subagent-summaries"></a>
+
+### Return short tool responses and distilled subagent summaries
+
+`concise-tool-responses-and-subagent-summaries` · confidence **0.65** · Cost Efficiency · standing since Sep 29, 2025
+
+A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.
+
+**Basis —** Anthropic engineering guidance with one worked example (about a third of the tokens).
+
+**Do this —** Offer a concise response format on tools and cap subagent reports.
+
+**Conditions —** Shown on Anthropic's own examples, not a controlled study.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
+| supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
+| supports | [Context Engineering in 2026: Why We Stopped Compacting Our Agent's Context](https://www.louisbouchard.ai/context-engineering-2026/) | Aug 18, 2026 |
 
 </details>
 
@@ -300,13 +356,42 @@ A harness should compact long sessions automatically, and add hard context reset
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (5)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
 | supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
 | supports | [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Mar 24, 2026 |
+| contests | [Context Engineering in 2026: Why We Stopped Compacting Our Agent's Context](https://www.louisbouchard.ai/context-engineering-2026/) | Aug 18, 2026 |
+| supports | [You don't need long context](https://arxiv.org/abs/2611.05306) | Nov 3, 2026 |
+
+</details>
+
+<a id="claim-keep-bulk-tool-output-out-of-context"></a>
+
+### Keep intermediate tool results out of the model context
+
+`keep-bulk-tool-output-out-of-context` · confidence **0.65** · Cost Efficiency · standing since Jul 18, 2025
+
+In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.
+
+**Basis —** Anthropic's own measurement of programmatic tool calling (37% fewer tokens), with Manus's file-system-as-context design as supporting practice.
+
+**Do this —** Run bulk filtering in a code sandbox or write long output to a file and let the agent grep it.
+
+**Conditions —** Needs a code sandbox or file access the agent can search; a single small tool result gains little.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (4)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
+| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
+| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
+| supports | [System Optimizations for Cost-Efficient Agent Harnesses](https://arxiv.org/abs/2611.12122) | Nov 9, 2026 |
 
 </details>
 
@@ -597,54 +682,27 @@ An agent safety eval's score can differ sharply from the agent's behavior on mat
 
 </details>
 
-<a id="claim-concise-tool-responses-and-subagent-summaries"></a>
+<a id="claim-learn-per-repo-cost-controls"></a>
 
-### Return short tool responses and distilled subagent summaries
+### Learn per-repo cost controls from past coding agent runs
 
-`concise-tool-responses-and-subagent-summaries` · confidence **0.65** · Cost Efficiency · standing since Sep 29, 2025
+`learn-per-repo-cost-controls` · confidence **0.55** · Claude Code, Codex, Copilot CLI incl. Opus 4.8; SWE-Bench, Oct 2026 · Cost Efficiency · standing since Oct 15, 2026
 
-A harness that makes tools return concise fields, and subagents return condensed summaries (often 1,000-2,000 tokens), keeps the main context smaller; Anthropic's example used about a third of the tokens.
+A controller that learns from earlier runs in the same repository which tools to prune, which short notes to inject and when to stop unproductive failure loops cut coding-agent cost by 18-31% on SWE-Bench with comparable task success.
 
-**Basis —** Anthropic engineering guidance with one worked example (about a third of the tokens).
+**Basis —** Black-box controller evaluated on 277 SWE-Bench tasks across Claude Code, Codex and GitHub Copilot CLI (Microsoft Research, UC Berkeley).
 
-**Do this —** Offer a concise response format on tools and cap subagent reports.
+**Do this —** Log where tokens go across runs in one repo; prune tools the repo never uses, add short notes for operations the agent keeps rediscovering, and guard against loops that keep failing the same way while letting recoverable ones continue.
 
-**Conditions —** Shown on Anthropic's own examples, not a controlled study.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
-| supports | [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Sep 29, 2025 |
-
-</details>
-
-<a id="claim-keep-bulk-tool-output-out-of-context"></a>
-
-### Keep intermediate tool results out of the model context
-
-`keep-bulk-tool-output-out-of-context` · confidence **0.65** · Cost Efficiency · standing since Jul 18, 2025
-
-In Anthropic's own measurement, processing tool output in code and passing only results to the model cut average tokens by 37% on complex research tasks.
-
-**Basis —** Anthropic's own measurement of programmatic tool calling (37% fewer tokens), with Manus's file-system-as-context design as supporting practice.
-
-**Do this —** Run bulk filtering in a code sandbox or write long output to a file and let the agent grep it.
-
-**Conditions —** Needs a code sandbox or file access the agent can search; a single small tool result gains little.
+**Conditions —** Measured on sequences of tasks in the same repositories; a one-off task in a new repo has no history to learn from.
 
 _Tags: `efficiency`, `cost-efficiency`, `harness`_
 
-<details><summary>Evidence (3)</summary>
+<details><summary>Evidence (1)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
-| supports | [Anthropic Engineering: advanced tool use](https://www.anthropic.com/engineering/advanced-tool-use) | Nov 24, 2025 |
-| supports | [Manus: Context Engineering for AI Agents Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Jul 18, 2025 |
-| supports | [Anthropic Engineering: writing tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) | undated |
+| supports | [TokenEconomizer: Experience-Driven Black-Box Cost Control for Coding Agents](https://arxiv.org/abs/2610.22732) | Oct 15, 2026 |
 
 </details>
 
@@ -672,6 +730,58 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 | supports | [Anthropic Engineering: multi agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) | Jun 13, 2025 |
 | supports | [Cognition: dont build multi agents](https://cognition.ai/blog/dont-build-multi-agents) | Jun 12, 2025 |
 | supports | [Cognition: dont build multi agents](https://cognition.ai/blog/dont-build-multi-agents) | Jun 12, 2025 |
+
+</details>
+
+<a id="claim-cheaper-models-for-simple-subagent-jobs"></a>
+
+### Send simple subagent jobs to a cheaper model
+
+`cheaper-models-for-simple-subagent-jobs` · confidence **0.55** · Cost Efficiency · standing since Sep 26, 2024
+
+Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing quality.
+
+**Basis —** Vendor guidance, not a measured saving: Claude Code docs, plus Aider's architect/editor quality result.
+
+**Do this —** Set Haiku-class models on search and summarizing subagents; keep the top model for the lead.
+
+**Conditions —** No source here measures the cost saving; Aider's result is about quality, not cost.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`_
+
+<details><summary>Evidence (4)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Claude Code docs: sub agents](https://code.claude.com/docs/en/sub-agents) | undated |
+| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
+| supports | [Aider: architect](https://aider.chat/2024/09/26/architect.html) | Sep 26, 2024 |
+| supports | [Does routing coding agent subtasks to cheaper models pay off? A benchmark of 63 runs per arm](https://dev.to/arthur031221/does-routing-coding-agent-subtasks-to-cheaper-models-pay-off-a-benchmark-of-63-runs-per-arm-4cdd) | Oct 22, 2026 |
+
+</details>
+
+<a id="claim-one-hour-cache-for-paused-sessions"></a>
+
+### Use one-hour cache markers when sessions pause over five minutes
+
+`one-hour-cache-for-paused-sessions` · confidence **0.50** · Anthropic cache TTLs; six harnesses including Claude Code 2.1, Jul 2026 · Cost Efficiency · standing since Jul 7, 2026
+
+Harnesses that write 5-minute prompt-cache markers re-buy their whole context after an idle gap longer than five minutes, while harnesses with 1-hour markers kept about 86% cache hits after a 390-second pause.
+
+**Basis —** A pause test across six agent harnesses with provider usage counters (AGNT Labs), plus Anthropic's published cache pricing.
+
+**Do this —** For interactive sessions where people or tools often pause for more than five minutes, cache the stable prefix with the 1-hour TTL; keep 5-minute caching for tight automated loops.
+
+**Conditions —** One vendor-authored report, a single trial per harness and one idle gap. Anthropic prices 1-hour cache writes at 2x input against 1.25x for 5-minute writes, so short sessions with no long pauses can cost more.
+
+_Tags: `efficiency`, `cost-efficiency`, `harness`, `prompt-caching`_
+
+<details><summary>Evidence (2)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [The Cache Wars: An Empirical Study of Prompt-Cache Efficiency in Six LLM Agent Harnesses](https://agnt.gg/whitepapers/the-cache-wars-prompt-cache-efficiency-llm-agent-harnesses) | Jul 7, 2026 |
+| supports | [Anthropic API docs: prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) | undated |
 
 </details>
 
@@ -792,32 +902,6 @@ _Tags: `prompting`, `few-shot`, `brittleness`_
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Calibrate Before Use](https://arxiv.org/abs/2102.09690) | Feb 2021 |
-
-</details>
-
-<a id="claim-cheaper-models-for-simple-subagent-jobs"></a>
-
-### Send simple subagent jobs to a cheaper model
-
-`cheaper-models-for-simple-subagent-jobs` · confidence **0.55** · Cost Efficiency · standing since Sep 26, 2024
-
-Anthropic's docs recommend routing simple subagent jobs to a cheaper model such as Haiku, and Aider's architect/editor split shows a reasoning model can pair with a weaker editor without losing quality.
-
-**Basis —** Vendor guidance, not a measured saving: Claude Code docs, plus Aider's architect/editor quality result.
-
-**Do this —** Set Haiku-class models on search and summarizing subagents; keep the top model for the lead.
-
-**Conditions —** No source here measures the cost saving; Aider's result is about quality, not cost.
-
-_Tags: `efficiency`, `cost-efficiency`, `harness`_
-
-<details><summary>Evidence (3)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Claude Code docs: sub agents](https://code.claude.com/docs/en/sub-agents) | undated |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
-| supports | [Aider: architect](https://aider.chat/2024/09/26/architect.html) | Sep 26, 2024 |
 
 </details>
 

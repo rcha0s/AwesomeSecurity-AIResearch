@@ -24,7 +24,7 @@ StepSecurity followed up JFrog's report on AccuraSoftHire, a fake company that g
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [StepSecurity](https://www.stepsecurity.io/blog/accurasofthire-fake-interview-developer-machines)  ·  **Retrieved:** 2026-11-13  
-**Scores:** Newness 38 · Novelty 30 · Relevance 74 · Credibility 50 · **Composite 48** _(each 0-100)_  
+**Scores:** Newness 37 · Novelty 30 · Relevance 74 · Credibility 50 · **Composite 48** _(each 0-100)_  
 **Tags:** `supply-chain`, `npm`, `typosquatting`, `dprk`, `fake-interview`, `polinrider`, `blockchain-c2`, `developer-endpoint`, `cooldown`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: JFrog's AccuraSoftHire research; OpenSourceMalware's NullReceiver and PolinRider write-ups; EtherHiding blockchain C2; the Binance theft entry citing fake recruitment interviews. New: measured npm dwell times (169 and 211 days) and the decoded eight-server history.
 

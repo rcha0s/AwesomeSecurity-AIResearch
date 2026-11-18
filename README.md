@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--18-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-30-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-80-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--18-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-34-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -21,7 +21,8 @@ _Your focus areas, last 7 days: most areas matched first, then newest._
 _From the last 14 days: each has proof (the work itself or a measured comparison) and serves one of your goals; more independent sources rank first._
 
 1. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
-2. **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=when-feedback-becomes-a-backdoor-tracing-backdoo-7b704b8008#week)** · _AI Security · Nov 6, 2026_
+2. **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uc-berkeley-finds-harness-overhead-can-double-ag-49f29b0015#week)** · _AI Research · Nov 9, 2026_
+3. **[York University's FlowPlan cuts Claude Code tokens by planning edits first](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=york-university-s-flowplan-cuts-claude-code-toke-ab96ed416c#week)** · _AI Research · Nov 9, 2026_
 
 ## Biggest this week
 
@@ -41,25 +42,25 @@ _The last 7 days, most covered first._
 
 ## Claim changes
 
-_No claim changed in the last 7 days; the last change was Nov 9, 2026._
+_3 changes in the last 7 days; earlier ones fill in, each with its date._
 
-1. **Added:** [Output-only watermark audits can be evaded by the audited provider](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims) · _current · Nov 9, 2026 · 1 source_  
-   Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and…
-2. **Added:** [Poisoned optimizer feedback can plant trigger rules in agent Skills](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=skill-optimization-feedback-can-plant-backdoors#claims) · _current · Nov 9, 2026 · 1 source_  
-   When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final…
-3. **Added:** [Coding-agent permission files leak secrets into public repositories](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims) · _current · Nov 8, 2026 · 1 source_  
-   Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and…
+1. **Added:** [Harness overhead, not the model, can double an agent's cost](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims) · _current · Nov 18, 2026 · 2 sources_  
+   On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges…
+2. **Added:** [Learn per-repo cost controls from past coding agent runs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=learn-per-repo-cost-controls#claims) · _current · Nov 18, 2026 · 1 source_  
+   A controller that learns from earlier runs in the same repository which tools to prune, which short notes to inject and when to stop unproductive failure loops cut coding-agent cost by 18-31% on…
+3. **Added:** [Use one-hour cache markers when sessions pause over five minutes](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=one-hour-cache-for-paused-sessions#claims) · _current · Nov 18, 2026 · 2 sources_  
+   Harnesses that write 5-minute prompt-cache markers re-buy their whole context after an idle gap longer than five minutes, while harnesses with 1-hour markers kept about 86% cache hits after a…
 4. **Last reversal:** [Constrained decoding wins for structured output, not TOON](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims) · _current · Jul 28, 2026 · 1 source_  
    Replaces ~~Assumed TOON's input savings would carry to generation~~: Benchmarked head-to-head, plain JSON generation had the best one-shot and final accuracy while constrained decoding used the fewest tokens; TOON was outperformed by constrained decoding even on…
 
 ## Efficiency
 
-_Where agent harnesses still waste tokens or time, and what to change._
+_Where agent harnesses still waste tokens or time, and what to change. [Harness feed](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md)._
 
-- [Send simple subagent jobs to a cheaper model](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=cheaper-models-for-simple-subagent-jobs#claims)
-- [Compact near the context limit; reset only if the model needs it](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=compact-first-reset-only-if-the-model-needs-it#claims)
-- [Return short tool responses and distilled subagent summaries](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims)
-- [Keep intermediate tool results out of the model context](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims)
+- [Harness overhead, not the model, can double an agent's cost](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims) · _updated Nov 18, 2026_
+- [Learn per-repo cost controls from past coding agent runs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=learn-per-repo-cost-controls#claims) · _updated Nov 18, 2026_
+- [Use one-hour cache markers when sessions pause over five minutes](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=one-hour-cache-for-paused-sessions#claims) · _updated Nov 18, 2026_
+- [Keep intermediate tool results out of the model context](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims) · _updated Nov 9, 2026_
 
 ## Explore
 

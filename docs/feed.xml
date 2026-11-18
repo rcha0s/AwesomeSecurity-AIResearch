@@ -87,25 +87,25 @@
     <summary type="text">Teams building agents on Python SDKs should pin versions, scan site-packages for unexpected .pth files, and treat any host that ran 1.26.1 or 1.26.2 as having leaked its cloud identities.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims</id>
-    <title>Output-only watermark audits can be evaded by the audited provider</title>
-    <updated>2026-11-09T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=output-only-watermark-audits-are-evadable#claims" rel="alternate" type="text/html" />
-    <summary type="text">Data-use audits that detect training-data watermarks only through a model's outputs can be defeated by a non-compliant provider that reshapes logits at inference time, leaving weights unchanged and downstream utility largely intact.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>
+    <title>Harness overhead, not the model, can double an agent's cost</title>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims" rel="alternate" type="text/html" />
+    <summary type="text">On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=skill-optimization-feedback-can-plant-backdoors#claims</id>
-    <title>Poisoned optimizer feedback can plant trigger rules in agent Skills</title>
-    <updated>2026-11-09T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=skill-optimization-feedback-can-plant-backdoors#claims" rel="alternate" type="text/html" />
-    <summary type="text">When agent Skills are rewritten by a text-space optimizer from reference answers, an attacker who poisons only those reference answers can induce a persistent trigger-to-payload rule in the final Skill without access to the model, optimizer or Skill file, while clean accuracy stays close to a benign run.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=learn-per-repo-cost-controls#claims</id>
+    <title>Learn per-repo cost controls from past coding agent runs</title>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=learn-per-repo-cost-controls#claims" rel="alternate" type="text/html" />
+    <summary type="text">A controller that learns from earlier runs in the same repository which tools to prune, which short notes to inject and when to stop unproductive failure loops cut coding-agent cost by 18-31% on SWE-Bench with comparable task success.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims</id>
-    <title>Coding-agent permission files leak secrets into public repositories</title>
-    <updated>2026-11-08T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=agent-permission-files-leak-secrets#claims" rel="alternate" type="text/html" />
-    <summary type="text">Coding agents that persist approved shell commands verbatim (such as Claude Code's .claude/settings.local.json) store any password or token typed in those commands in plaintext project files, and those files are committed to public repositories at measurable rates; format-based secret scanners miss many of these in-command passwords.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=one-hour-cache-for-paused-sessions#claims</id>
+    <title>Use one-hour cache markers when sessions pause over five minutes</title>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=one-hour-cache-for-paused-sessions#claims" rel="alternate" type="text/html" />
+    <summary type="text">Harnesses that write 5-minute prompt-cache markers re-buy their whole context after an idle gap longer than five minutes, while harnesses with 1-hour markers kept about 86% cache hits after a 390-second pause.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims</id>
