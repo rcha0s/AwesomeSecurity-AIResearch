@@ -19,8 +19,10 @@
 #   watch_min_relevance
 #                     a finding the curated view held only for its scores (novelty
 #                     or composite below the floor) still enters as tier `watch`
-#                     when its relevance is at least this. Refuted, ungrounded,
-#                     domain-held and readability-held findings never enter.
+#                     when its relevance is at least this, its quotes were checked
+#                     and grounded (grounding 1.0) and its source clears
+#                     min_credibility. Refuted, ungrounded, unchecked, domain-held
+#                     and readability-held findings never enter.
 #                     Leave it out to list vetted findings only.
 #   subcategories     checked in order; a finding lands in the FIRST that matches:
 #     domains         a finding whose domain is one of these always matches
@@ -30,6 +32,9 @@
 #                     matcher). This is how a sub-category draws on a broad domain
 #                     like air.agents without splitting it.
 #   A finding that matches no sub-category is not in the stream.
+#   Because the first match wins, a `from` list may not name a domain that a LATER
+#   sub-category owns in `domains` (it would take that sub-category's findings),
+#   except the last sub-category, the catch-all. streams.py rejects it.
 #
 # IDs are stable: a harness may filter the JSON feed by sub-category id.
 
@@ -50,7 +55,7 @@ streams:
         name: Cost efficiency
         scope: Token use and spend - prompt caching, context budgets, cheaper subagents and model routing, keeping tool output out of context, cost per task.
         domains: [air.cost-efficiency]
-        from: [air.agents, air.context, air.model-io, air.tooling, air.evals]
+        from: [air.agents, air.tooling, air.evals]
         keywords: [token cost, token costs, token usage, token budget, token efficiency, prompt caching, prompt cache, cache hit rate, cost per task, inference cost, cheaper model, model routing]
       - id: work-efficiency
         name: Work efficiency
@@ -59,12 +64,12 @@ streams:
       - id: speed-latency
         name: Speed and latency
         scope: Wall-clock time per task, agent-loop and tool latency, parallel and speculative tool calls, cache reuse for speed.
-        from: [air.agents, air.tooling, air.context, air.evals]
+        from: [air.agents, air.tooling, air.evals]
         keywords: [latency, wall-clock, wall clock, time to first token, parallel tool calls, speculative execution, speculative decoding, prefix caching, throughput, tokens per second]
       - id: reliability
         name: Reliability and recovery
         scope: Getting runs to finish correctly - error recovery, loop and stall detection, long-horizon drift, failure taxonomies, tracing, run-to-run variance.
-        from: [air.agents, air.tooling, air.model-io]
+        from: [air.agents, air.tooling]
         keywords: [failure mode, failure modes, failure taxonomy, error recovery, retry, retries, loop detection, stuck, long-horizon, run-to-run, flaky, nondeterminism, observability, tracing, self-correction]
       - id: context-memory
         name: Context and memory

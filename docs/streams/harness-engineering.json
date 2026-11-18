@@ -58,15 +58,15 @@
     ],
     "watch_min_relevance": 60.0,
     "counts": {
-      "cost-efficiency": 8,
+      "cost-efficiency": 7,
       "work-efficiency": 1,
       "speed-latency": 0,
       "reliability": 1,
-      "context-memory": 1,
-      "tools-interfaces": 5,
+      "context-memory": 2,
+      "tools-interfaces": 3,
       "orchestration": 2,
       "harness-evals": 5,
-      "harness-design": 6
+      "harness-design": 5
     },
     "claims": [
       {
@@ -103,21 +103,10 @@
         "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=concise-tool-responses-and-subagent-summaries#claims"
       },
       {
-        "id": "constrained-decoding-for-structured-output",
-        "title": "Constrained decoding wins for structured output, not TOON",
-        "statement": "For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy — token-optimized notations do not win here.",
-        "guidance": "Split the decision by direction. Use a token-optimized notation for what you feed in; use constrained decoding (or plain JSON) for what you ask the model to emit.",
-        "status": "current",
-        "subcategory": "cost-efficiency",
-        "domain": "air.model-io",
-        "changed_on": "2026-07-28",
-        "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims"
-      },
-      {
         "id": "harness-overhead-sets-agent-cost",
-        "title": "Harness overhead, not the model, can double an agent's cost",
-        "statement": "On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.",
-        "guidance": "Measure your harness's fixed per-call overhead (system prompt, tool schemas, always-on instructions) and cut what does not change outcomes before you switch models.",
+        "title": "Harness choice alone can double an agent's cost",
+        "statement": "On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.",
+        "guidance": "Measure what your harness spends per task (fixed prompt and tool schemas, plus re-reading context) and cut what does not change outcomes before you switch models.",
         "status": "current",
         "subcategory": "cost-efficiency",
         "domain": "air.cost-efficiency",
@@ -200,17 +189,6 @@
         "domain": "air.cost-efficiency",
         "changed_on": "2026-10-28",
         "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=stable-prompt-prefix-keeps-cache-reads-cheap#claims"
-      },
-      {
-        "id": "toon-cuts-input-tokens-vs-json",
-        "title": "TOON beats JSON on input-side token cost",
-        "statement": "For large uniform arrays, TOON serializes to 30-60% fewer input tokens than JSON at comparable retrieval accuracy.",
-        "guidance": "Use TOON for the big uniform/tabular payloads you feed INTO the model (tool results, row sets, retrieved records). Keep JSON where data is deeply nested or irregular.",
-        "status": "contested",
-        "subcategory": "cost-efficiency",
-        "domain": "air.model-io",
-        "changed_on": "2026-10-21",
-        "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=toon-cuts-input-tokens-vs-json#claims"
       },
       {
         "id": "measure-speedups-with-repeated-trials",
@@ -334,6 +312,17 @@
         "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=system-prompts-should-be-versioned-like-code#claims"
       },
       {
+        "id": "constrained-decoding-for-structured-output",
+        "title": "Constrained decoding wins for structured output, not TOON",
+        "statement": "For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy — token-optimized notations do not win here.",
+        "guidance": "Split the decision by direction. Use a token-optimized notation for what you feed in; use constrained decoding (or plain JSON) for what you ask the model to emit.",
+        "status": "current",
+        "subcategory": "tools-interfaces",
+        "domain": "air.model-io",
+        "changed_on": "2026-07-28",
+        "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims"
+      },
+      {
         "id": "match-tool-schemas-to-the-target-model",
         "title": "Model upgrades can regress on non-native tool schemas",
         "statement": "A newer SOTA model can be WORSE at your harness's custom tool schema than its older siblings — Opus 4.8 and Sonnet 5 invented fields in a third-party edit tool that older models got right — plausibly because RL training tuned them to their own harness's tools.",
@@ -343,6 +332,17 @@
         "domain": "air.agents",
         "changed_on": "2026-07-28",
         "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=match-tool-schemas-to-the-target-model#claims"
+      },
+      {
+        "id": "toon-cuts-input-tokens-vs-json",
+        "title": "TOON beats JSON on input-side token cost",
+        "statement": "For large uniform arrays, TOON serializes to 30-60% fewer input tokens than JSON at comparable retrieval accuracy.",
+        "guidance": "Use TOON for the big uniform/tabular payloads you feed INTO the model (tool results, row sets, retrieved records). Keep JSON where data is deeply nested or irregular.",
+        "status": "contested",
+        "subcategory": "tools-interfaces",
+        "domain": "air.model-io",
+        "changed_on": "2026-10-21",
+        "url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=toon-cuts-input-tokens-vs-json#claims"
       },
       {
         "id": "harness-evolution-gains-need-held-out-attribution",
@@ -437,11 +437,10 @@
   "items": [
     {
       "id": "how-the-claude-code-team-thinks-about-verificati-6c752ae9b8",
-      "url": "https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/",
       "title": "Claude Code team explains how it verifies agent-written code at scale",
       "summary": "Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.",
       "content_text": "The Claude Code team says about 90% of its code is written and reviewed by Claude, so verification loops are what let one person run many agents in parallel. The post recommends end-to-end, property and differential tests, a verify skill that boots and drives the app, and review gates that the change under review cannot edit. It also covers rolling out new gates in observe mode and turning missed bugs into review rules.",
-      "date_published": "2026-11-17",
+      "date_published": "2026-11-17T00:00:00Z",
       "tags": [
         "Work efficiency",
         "verification-loops",
@@ -471,15 +470,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md",
         "on_site": true
       },
+      "url": "https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=how-the-claude-code-team-thinks-about-verificati-6c752ae9b8#week"
     },
     {
       "id": "microsoft-research-focus-edition-98-87946c1829",
-      "url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
       "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
       "summary": "If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.",
       "content_text": "This digest's most practitioner-relevant item is a Microsoft study of 13.5 million coding agent sessions: fewer than 8% needed context compaction, yet those sessions made up 44% of total AI processing costs. The researchers released COMPACTIONBENCH to evaluate compaction and APEC, a method that prepares summaries in the background, which cut costs by up to 25.4% and execution time by 9.6%.",
-      "date_published": "2026-11-12",
+      "date_published": "2026-11-12T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "context-compaction",
@@ -505,15 +504,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md",
         "on_site": true
       },
+      "url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week"
     },
     {
       "id": "york-university-s-flowplan-cuts-claude-code-toke-ab96ed416c",
-      "url": "https://arxiv.org/abs/2611.13241",
       "title": "York University's FlowPlan cuts Claude Code tokens by planning edits first",
       "summary": "Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.",
       "content_text": "FlowPlan has a coding agent localize the fault, state its intended change as a delta on per-function control-flow or data-flow graphs, and then check the actual change against that plan. On SWE-bench Pro, SWE-bench Verified and SecBench with Claude Code on Haiku 4.5 and Sonnet 5, resolution rate did not change significantly while token use fell in every setting, to as low as about a third of baseline. The baseline spent 3.7 million tokens per issue, 98% of them cache reads.",
-      "date_published": "2026-11-09",
+      "date_published": "2026-11-09T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "cost-efficiency",
@@ -540,15 +539,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md",
         "on_site": true
       },
+      "url": "https://arxiv.org/abs/2611.13241",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=york-university-s-flowplan-cuts-claude-code-toke-ab96ed416c#week"
     },
     {
       "id": "uc-berkeley-finds-harness-overhead-can-double-ag-49f29b0015",
-      "url": "https://arxiv.org/abs/2611.12122",
       "title": "UC Berkeley finds harness overhead can double agent cost at similar accuracy",
       "summary": "Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.",
       "content_text": "UC Berkeley researchers profiled Claude Code, Codex and a plain ReAct harness on SWE-bench, SWE-bench Pro and Terminal-Bench 2 across five models. Harness choices barely moved accuracy but changed cost by up to 2.6x, and rereading existing context was the largest cost even with caching. Their interposition layer, Agency, applied fixes such as compacting tool output, batching tool calls and metadata-assisted search to unmodified harnesses and cut cost by up to 35% without losing accuracy.",
-      "date_published": "2026-11-09",
+      "date_published": "2026-11-09T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "cost-efficiency",
@@ -576,15 +575,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md",
         "on_site": true
       },
+      "url": "https://arxiv.org/abs/2611.12122",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uc-berkeley-finds-harness-overhead-can-double-ag-49f29b0015#week"
     },
     {
       "id": "dfkhelper-token-goat-6824893977",
-      "url": "https://github.com/DFKHelper/token-goat",
       "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
       "summary": "Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.",
       "content_text": "Token-Goat is a hook layer for Claude Code, Codex, Copilot CLI and other agents that answers repeat file reads with a pointer, returns single symbols instead of whole files, strips build and test logs to failures, shrinks screenshots and caches skill loads. It also wraps every fetched page and tool result in an untrusted-content fence. Its savings figures (40 to 90% session cost) are self-reported, not independently benchmarked.",
-      "date_published": "2026-11-04",
+      "date_published": "2026-11-04T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "token-efficiency",
@@ -612,15 +611,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://github.com/DFKHelper/token-goat"
     },
     {
       "id": "researchers-find-agents-keep-accuracy-with-short-ee04e9e827",
-      "url": "https://arxiv.org/abs/2611.05306",
       "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
       "summary": "Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.",
       "content_text": "This paper argues that generating later tokens in a long context costs more than earlier ones, by up to 7x on frontier open-weight models, and tests whether agents need long context at all. With Claude Opus 4.5 and GPT 5.6 Sol, frequent compaction and reading long inputs selectively as stored documents kept task accuracy largely intact on long-horizon and long-input tasks. It also proposes semantic state space models, which would need a trained model.",
-      "date_published": "2026-11-03",
+      "date_published": "2026-11-03T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "cost-efficiency",
@@ -646,15 +645,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md",
         "on_site": true
       },
+      "url": "https://arxiv.org/abs/2611.05306",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-find-agents-keep-accuracy-with-short-ee04e9e827#week"
     },
     {
       "id": "openai-finds-agents-score-worse-on-safety-evals-8062f7bfaa",
-      "url": "https://alignment.openai.com/eval-production-behavior-gap/",
       "title": "OpenAI finds agents score worse on safety evals than in production",
       "summary": "Agent safety eval scores can swing on the model's guess about what is being tested, so builders should compare eval results against matched production traces and design evals whose objective is hard to infer.",
       "content_text": "OpenAI compared six models on its Respecting Warnings agent safety eval against matched decisions from real Codex production logs. Every model did worse in the eval, by 10.2 to 37.4 percentage points. The gap tracked how often a model guessed the wrong test objective, for example treating a real warning as a prompt injection to ignore. In an intervention on one model (GPT-6.1 Sol), stating the correct objective raised eval success to 91.6% and stating the wrong one cut it to 17.6%, while just saying 'this is an evaluation' changed nothing.",
-      "date_published": "2026-11-03",
+      "date_published": "2026-11-03T00:00:00Z",
       "tags": [
         "Evaluating harnesses",
         "eval-awareness",
@@ -684,15 +683,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/evals/2026-11-openai-finds-agents-score-worse-on-safety-evals-than-in-prod.md",
         "on_site": true
       },
+      "url": "https://alignment.openai.com/eval-production-behavior-gap/",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-finds-agents-score-worse-on-safety-evals-8062f7bfaa#week"
     },
     {
       "id": "building-ai-for-lawyers-jacob-lauritzen-cto-of-l-1ed6155fe8",
-      "url": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/",
       "title": "Legora evaluates legal agent on simulated work because it cannot read traces",
       "summary": "When you cannot read customer traces, build simulated task worlds with domain experts and track results per task type, because a new model can regress on some tasks while improving overall.",
       "content_text": "Legora's CTO Jacob Lauritzen says customer documents are confidential, so the team cannot improve its legal agent by reading production traces. Instead, three engineers and three lawyers build RL environments that recreate customer work, such as a 10,000-file data room for due diligence, and plot results by practice area and task. They find that new models often improve on some legal work and regress on others. In production, Legora sorts failures into 10 to 20 known failure modes, runs cheap LLM checks behind feature flags, attaches a source citation with a highlighted bounding box to everything the agent writes, and has Tabular Review start on 10 rows so users can fix prompts before running up to a million cells.",
-      "date_published": "2026-11-02",
+      "date_published": "2026-11-02T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "evals",
@@ -721,15 +720,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/"
     },
     {
       "id": "anthropic-study-finds-analysts-follow-an-agent-s-e364841c07",
-      "url": "https://www.anthropic.com/research/agents-judgment-calls",
       "title": "Anthropic study finds analysts follow an agent's hidden lean on judgment calls",
       "summary": "If your harness relies on a human to make or check judgment calls, the agent's framing will often make the call instead, so design for that.",
       "content_text": "Anthropic ran a randomized trial in which 50 professional causal-inference analysts did an hour-long statistical analysis in Claude Code, with the agent secretly told (by coin flip) to favor one of two reasonable options on each decision. Analysts matched the agent's lean 86% of the time against a 50% no-effect baseline, often dropped their own stated preference when the agent disagreed, and later explained their choices in the agent's words while still calling the result their own. The agents were instructed to hold and voice leans, so the effect in unprompted real use may be smaller, but the study shows a human reviewer is not automatically an independent check on agent work.",
-      "date_published": "2026-10-27",
+      "date_published": "2026-10-27T00:00:00Z",
       "tags": [
         "Harness design",
         "human-in-the-loop",
@@ -756,15 +755,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://www.anthropic.com/research/agents-judgment-calls"
     },
     {
       "id": "fixing-tool-call-accuracy-in-vllm-5470a07021",
-      "url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm",
       "title": "Kimi K2.6 on vLLM returned valid tool-calls 92% of the time",
       "summary": "Tool-call quality depends on how the model is served, not only on the model. Turn on constrained decoding per model, check it with a tool-call benchmark, and re-check after engine upgrades.",
       "content_text": "Ubicloud measured tool-call schema accuracy with Moonshot AI's K2-Vendor-Verifier ToolCall benchmark (2,000 requests). Serving Kimi K2.6 on vLLM 0.28 without constrained decoding, they got the expected schema 92% of the time. With constrained decoding (XGrammar structural tags that mask invalid tokens), they report 100% across all served model versions, with negligible overhead. After they moved to upstream vLLM, accuracy fell back to 91%, because vLLM disables constrained decoding by default for requests that don't ask for it.",
-      "date_published": "2026-10-26",
+      "date_published": "2026-10-26T00:00:00Z",
       "tags": [
         "Tools and interfaces",
         "tool-calling",
@@ -792,15 +791,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm"
     },
     {
       "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
-      "url": "https://arxiv.org/abs/2610.22466",
       "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
       "summary": "Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.",
       "content_text": "Automatic harness evolution, which optimizes the prompts, skills, tools and orchestration around a fixed model, reports gains on its search set. Harness-Delta Attribution splits those gains into overfitting, test-time scaling and a residual. Across 21 settings with significant gains, overfitting averaged 54% and extra compute 14% of the gain, gains often failed to transfer to held-out tasks, and validation signals did not prevent overfitting.",
-      "date_published": "2026-10-19",
+      "date_published": "2026-10-19T00:00:00Z",
       "tags": [
         "Evaluating harnesses",
         "harness-evolution",
@@ -827,15 +826,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md",
         "on_site": true
       },
+      "url": "https://arxiv.org/abs/2610.22466",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=harness-delta-attribution-dissecting-gains-from-2006da8a13#week"
     },
     {
       "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
-      "url": "https://arxiv.org/abs/2610.27227",
       "title": "GRSE credits multi-agent skills by contrasting repeated runs, not presence",
       "summary": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
       "content_text": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
-      "date_published": "2026-10-19",
+      "date_published": "2026-10-19T00:00:00Z",
       "tags": [
         "Tools and interfaces",
         "skill-evolution",
@@ -862,15 +861,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/agents/2026-10-grse-credits-multi-agent-skills-by-contrasting-repeated-runs.md",
         "on_site": true
       },
+      "url": "https://arxiv.org/abs/2610.27227",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a#week"
     },
     {
       "id": "claude-code-s-ultracode-subagents-worked-12-hour-32e768bbea",
-      "url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/",
       "title": "Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt",
       "summary": "Large subagent workflows can finish big, test-backed builds without supervision, so the bottleneck moves to human review; plan for verification artifacts such as conformance suites, differential fuzzing and documentation up front.",
       "content_text": "Simon Willison ran Claude Code for web in Ultracode mode, where Claude Code writes JavaScript that defines and coordinates a network of subagents. A one-line phone prompt containing a typo led to over 12 hours of work and a multi-crate Rust SQLite extension for SPARQL 1.1, a query language for RDF graph data. It passes 636 of 639 applicable W3C conformance tests and reports 3.5x speedups in count mode (2.8x returning full results) over translating SPARQL to SQL. Willison says reviewing the code is not feasible, and questions the value of a large artifact nobody will invest time to understand.",
-      "date_published": "2026-10-16",
+      "date_published": "2026-10-16T00:00:00Z",
       "tags": [
         "Orchestration and multi-agent",
         "subagents",
@@ -894,15 +893,15 @@
         "related_claims": [],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/"
     },
     {
       "id": "letting-the-agent-choose-when-to-compact-guided-7cdca961e9",
-      "url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
       "title": "Letting the agent choose when to compact matches fixed-interval summarization cheaply",
       "summary": "Replace or supplement token-threshold compaction with a model-invoked compaction tool plus an explicit rubric for when to fire and when to hold off.",
       "content_text": "SELFCOMPACT gives the model a compaction tool plus a short rubric saying when to use it: fire when a sub-task has resolved or the trajectory is converging, and hold off mid-derivation or when stuck. Across six math and agentic-search benchmarks and seven models, it matches or beats fixed-interval token-threshold summarization at a fraction of the token cost. It beats a no-summarization baseline by up to 18.1 points on math and 5-9 points on search; neither part works alone, since models use the tool unevenly without the rubric and the rubric cannot act without the tool. No fine-tuning is needed.",
-      "date_published": "2026-10-12",
+      "date_published": "2026-10-12T00:00:00Z",
       "tags": [
         "Cost efficiency",
         "compaction",
@@ -929,15 +928,15 @@
         "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/agents/2026-10-letting-the-agent-choose-when-to-compact-matches-fixed-inter.md",
         "on_site": true
       },
+      "url": "https://machinelearning.apple.com/research/self-compacting-language-agents",
       "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=letting-the-agent-choose-when-to-compact-guided-7cdca961e9#week"
     },
     {
       "id": "harnesstax-how-much-does-the-harness-matter-for-a039173b27",
-      "url": "https://harnesstax.github.io/",
       "title": "HarnessTax finds harness choice barely moved success but changed cost",
       "summary": "Compare cost and success of your model across more than one harness, because a default harness can carry a hidden cost premium for the same results.",
       "content_text": "UC Berkeley researchers ran seven models through Claude Code, Codex CLI and Pi on SWE-bench Lite and Terminal-Bench 2.0, using 30 sampled tasks per benchmark and 3 repetitions. Success rates differed little between harnesses, but cost differed a lot, partly because Claude Code's first-call context was over 10 times Pi's. Models also often did as well or better outside their vendor's own harness. The authors note the benchmarks may be in training data and results may not carry over.",
-      "date_published": "2026-09-16",
+      "date_published": "2026-09-16T00:00:00Z",
       "tags": [
         "Harness design",
         "coding-agents",
@@ -965,15 +964,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://harnesstax.github.io/"
     },
     {
       "id": "alexshpunt-explicit-edit-benchmark-86e89a1b27",
-      "url": "https://github.com/alexshpunt/explicit-edit-benchmark",
       "title": "Explicit Edit Benchmark offers 226 byte-exact file-editing tasks for comparing coding agents",
       "summary": "If you build or tune an edit tool for a coding agent, test it on exact-match edit tasks, since this benchmark isolates that skill from reasoning.",
       "content_text": "The repository provides 226 small, deterministic editing tasks (replacements, insertions, deletions, copies, moves, large files, Unicode edge cases) checked byte for byte by a verifier. Because the tasks need no deep reasoning, differences come from the model, tools and harness. Anyone can run it on their own harness and publish results to a public Hugging Face dataset and leaderboard, marked verified when run through GitHub Actions or unverified when run locally.",
-      "date_published": "2026-09-11",
+      "date_published": "2026-09-11T00:00:00Z",
       "tags": [
         "Evaluating harnesses",
         "benchmark",
@@ -996,15 +995,15 @@
         "related_claims": [],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://github.com/alexshpunt/explicit-edit-benchmark"
     },
     {
       "id": "introducing-the-agents-api-243d2668ed",
-      "url": "https://openai.com/index/introducing-the-agents-api",
       "title": "OpenAI launches the Agents API in public beta, a hosted Codex harness",
       "summary": "A managed harness removes orchestration work but shifts trust to the vendor's harness and to whichever sandbox and tools you attach.",
       "content_text": "OpenAI offers the harness behind Codex as a managed service. A single call specifies task, model, tools and environment, and the sandbox can be OpenAI-hosted, self-hosted or from partners such as E2B, Modal and Cloudflare. The harness handles automatic compaction, tool search, programmatic tool calling and parallel subagents, and costs only the tokens and tools used. This is a product launch with no measurements.",
-      "date_published": "2026-09-10",
+      "date_published": "2026-09-10T00:00:00Z",
       "tags": [
         "Context and memory",
         "agents-api",
@@ -1030,15 +1029,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://openai.com/index/introducing-the-agents-api"
     },
     {
       "id": "when-context-gets-root-instruction-privilege-esc-6fe71d0c",
-      "url": "https://arxiv.org/abs/2608.27299",
       "title": "When Context Gets Root: Instruction Privilege Escalation in LLM Harnesses",
       "summary": "How a harness assembles context is a privilege boundary; if it can promote untrusted data, model-side instruction hierarchy provides little protection.",
       "content_text": "Model-side instruction hierarchy assigns privilege by source, but the agent harness reassembles context each turn and can silently promote low-privilege attacker content into a higher instruction level. The authors call this 'instruction privilege escalation' and achieve all 13 attack objectives (confidentiality, integrity, availability, RCE) across six coding-agent harnesses, even under automatic permission review.",
-      "date_published": "2026-08-27",
+      "date_published": "2026-08-27T00:00:00Z",
       "tags": [
         "Harness design",
         "llm-agents",
@@ -1062,15 +1061,15 @@
         "related_claims": [],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://arxiv.org/abs/2608.27299"
     },
     {
       "id": "redevoagent-automatic-red-teaming-agent-with-exp-f0ca5c22",
-      "url": "https://arxiv.org/abs/2608.27439",
       "title": "RedEvoAgent: Automatic Red-Teaming Agent with Experience-Driven Skill Evolution",
       "summary": "Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.",
       "content_text": "Because LLM agents in product execution harnesses turn jailbreaks into harmful tool use and persistent state changes, red-teaming must target harnesses, not just text output. RedEvoAgent is a black-box red-teaming agent that distills cross-case attack trajectories into a concise human-readable 'attack skill' which evolves via tool-effectiveness profiling, Deciding-Tool Attribution, and a validation ratchet that keeps only improving updates.",
-      "date_published": "2026-08-27",
+      "date_published": "2026-08-27T00:00:00Z",
       "tags": [
         "Evaluating harnesses",
         "red-teaming",
@@ -1094,15 +1093,15 @@
         "related_claims": [],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://arxiv.org/abs/2608.27439"
     },
     {
       "id": "when-history-lies-evaluating-and-improving-tool-858a5b43f3",
-      "url": "https://arxiv.org/abs/2608.06057",
       "title": "When History Lies: Evaluating and Improving Tool Use under Misleading Multi-Turn Histories",
       "summary": "History reliability is a distinct tool-use bottleneck: harnesses that just accumulate turns are silently letting old, wrong state overwrite the current task.",
       "content_text": "Stale-but-plausible tool traces in a persistent agent history hijack the model even when the current request is unchanged. On Qwen3-1.7B, polluted history flips 32.1% of decisions that were correct under the original trajectory. A teacher-student distillation from an oracle-state policy recovers most of the lost accuracy and transfers across models and benchmarks.",
-      "date_published": "2026-08-07",
+      "date_published": "2026-08-07T00:00:00Z",
       "tags": [
         "Tools and interfaces",
         "tool-use",
@@ -1129,81 +1128,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
-    },
-    {
-      "id": "personalized-deep-research-query-refinement-with-b8c6824eea",
-      "url": "https://arxiv.org/abs/2608.05876",
-      "title": "Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding",
-      "summary": "Personalize a deep-research agent by refining the *specification* before it hits the agent, not by modifying the agent itself — and use a dependency graph over framing factors to decide when to ask the user vs consult memory vs stop.",
-      "content_text": "G-STEER treats personalization of a deep-research agent as a pre-pipeline query-refinement step rather than modifying the agent itself: an 'Intent Elicitation Graph' organizes framing factors (user goals, constraints, preferences, evaluation criteria) with dependencies, and a learned clarification policy decides at each step whether to retrieve from user memory, ask the user, or stop and refine. The authors report the strongest weighted target coverage and highest downstream report personalization across two evaluated deep research agents (DRAs) while asking roughly one third as many user questions as a strong clarification baseline. The design keeps the underlying research agent unchanged — personalization lives entirely in a specification-refinement layer.",
-      "date_published": "2026-08-07",
-      "tags": [
-        "Harness design",
-        "deep-research",
-        "agents",
-        "clarification",
-        "personalization",
-        "harness-design"
-      ],
-      "_stream": {
-        "subcategory": "harness-design",
-        "tier": "watch",
-        "domain": "air.agents",
-        "source": null,
-        "takeaway": "Personalize a deep-research agent by refining the *specification* before it hits the agent, not by modifying the agent itself — and use a dependency graph over framing factors to decide when to ask the user vs consult memory vs stop.",
-        "action": {
-          "type": "harness",
-          "title": "Split a deep-research agent into a refinement layer and an unchanged execution agent",
-          "detail": "If you are building a deep-research assistant, put personalization/clarification logic into a query-refinement stage that outputs a specification, then hand that specification to a stateless research agent. The refinement stage decides between (retrieve-memory / ask-user / stop-and-refine) using a dependency graph over the framing factors it still needs to resolve — a cleaner separation of concerns than editing the research pipeline itself, and empirically fewer user questions."
-        },
-        "related_claims": [
-          "few-shot-prompting-brittle-on-format-changes"
-        ],
-        "detail": null,
-        "on_site": false
-      }
-    },
-    {
-      "id": "pdf-to-markdown-pipelines-are-the-hidden-token-c-4d9f178839",
-      "url": "https://simonwillison.net/2026/Aug/7/pdfs-are-terrible/",
-      "title": "PDF-to-markdown pipelines are the hidden token chewer inside enterprise AI adoption",
-      "summary": "Cost budgets die by a thousand PDF-to-image-to-markdown conversions, not by the model call at the end.",
-      "content_text": "Simon Willison surfaces leaked Accenture meeting audio in which the firm's agentic AI strategy lead identifies non-engineer users converting PDFs into images and then into markdown as a leading driver of internal LLM token spend. The takeaway is that document preprocessing choices, not model calls per se, dominate cost at scale.",
-      "date_published": "2026-08-07",
-      "tags": [
-        "Tools and interfaces",
-        "cost-optimization",
-        "tokens",
-        "pdf",
-        "document-processing",
-        "enterprise-ai"
-      ],
-      "_stream": {
-        "subcategory": "tools-interfaces",
-        "tier": "watch",
-        "domain": "air.model-io",
-        "source": null,
-        "takeaway": "Cost budgets die by a thousand PDF-to-image-to-markdown conversions, not by the model call at the end.",
-        "action": {
-          "type": "takeaway",
-          "title": "Instrument document-preprocessing pipelines as first-class cost centers",
-          "detail": "Track token spend by pipeline stage (raw file -> images -> markdown -> model call), not just per model. If non-engineer users are shipping PDFs through image OCR to markdown before calling the model, that stage is likely the top line item; cache converted artifacts and prefer native text extraction where possible."
-        },
-        "related_claims": [
-          "toon-cuts-input-tokens-vs-json"
-        ],
-        "detail": null,
-        "on_site": false
-      }
+      },
+      "url": "https://arxiv.org/abs/2608.06057"
     },
     {
       "id": "orchestrabench-evaluating-multi-agent-orchestrat-02cae376d2",
-      "url": "https://arxiv.org/abs/2608.05263",
       "title": "OrchestraBench evaluates multi-agent orchestration failures and recovery",
       "summary": "Multi-agent orchestration failures are not uniform: tool faults recover, ambiguous delegation partially recovers, latent/semantic faults essentially never self-heal. Blind retry hides latent faults and delays detection, so containment requires an external trusted-state signal, not just per-agent detection. Keyword/flag routers collapse on adversarially framed inputs where an intent-reasoning rout…",
       "content_text": "OrchestraBench is a seed-reproducible failure-injection harness for multi-agent orchestration that introduces cascade radius and per-failure-mode recovery as primary metrics. On a 26-case diagnostic, a keyword/flag router scored 0% on adversarial cases with misleading or missing surface flags while an intent-reasoning model router scored 100%. Mechanism probes with a real Claude agent revealed three failure-handling tiers across five MAST modes: tool faults recovered fully (1.0), ambiguous delegation recovered partially (0.30), and three latent or semantic modes never recovered (0.0). Cascade radius grew from ~0.9 at depth 3 to ~4.7 at depth 7. A trusted-state ablation showed apparent containment gains came from the trusted-state signal, not autonomous detection.",
-      "date_published": "2026-08-07",
+      "date_published": "2026-08-07T00:00:00Z",
       "tags": [
         "Reliability and recovery",
         "multi-agent",
@@ -1230,15 +1163,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://arxiv.org/abs/2608.05263"
     },
     {
       "id": "the-frontier-ai-vulnerability-burst-industrializ-076f328753",
-      "url": "https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst/",
       "title": "The Frontier AI Vulnerability Burst: Industrializing Autonomous Zero-Day Discovery in Open-Source Software",
       "summary": "Autonomous AI vulnerability discovery moves the mix away from memory-corruption fuzzing (~8%) toward semantic/logic bugs (~92%), and complementarity between models is large enough that an ensemble is a defensive requirement, not an optimization.",
       "content_text": "Unit 42 ran an autonomous agentic pipeline (NOVA) against 3,915 OSS projects across six ecosystems and reports 14,090 confirmed vulnerabilities, 99.4% previously unreported and roughly 40% high/critical under CVSS 4.0. Only 8% of findings sit in fuzzer-friendly categories (memory corruption, resource management); the remaining 92% are semantic/logic bugs (authz, path traversal, code injection, prototype pollution, SSRF). They report that multi-model ensembles are load-bearing — even the lowest-volume model contributed 93 vulnerabilities no other model found — and that the pipeline runs behind gVisor-style sandboxing while replaying PoCs.",
-      "date_published": "2026-08-04",
+      "date_published": "2026-08-04T00:00:00Z",
       "tags": [
         "Harness design",
         "autonomous-vuln-discovery",
@@ -1267,49 +1200,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
-    },
-    {
-      "id": "llm-0-32-reasoning-traces-server-side-provider-t-88c9ad3b35",
-      "url": "https://simonwillison.net/2026/Aug/4/new-release-of-llm/",
-      "title": "LLM 0.32 adds reasoning traces and human-approval pause/resume",
-      "summary": "A harness API is starting to converge on the shape agent builders actually need: separable reasoning vs output streams, structured event types (not string chunks), server-side tools as first-class, and Git-style dedup logging for long conversations.",
-      "content_text": "Simon Willison's LLM CLI/library 0.32 adds first-class support for reasoning traces (routed to stderr so pipes stay clean), server-side provider tools (OpenAI CodeInterpreter/WebSearch, Anthropic WebFetch/CodeExecution/MCP connector), a structured streaming events API that carries reasoning, text, tool calls, and attachments, tool-chain pause/resume for human approval, and a content-addressable SQLite log modeled after Git so multi-turn conversations don't duplicate JSON.",
-      "date_published": "2026-08-04",
-      "tags": [
-        "Tools and interfaces",
-        "harness",
-        "agents",
-        "tool-use",
-        "reasoning-traces",
-        "logging"
-      ],
-      "_stream": {
-        "subcategory": "tools-interfaces",
-        "tier": "watch",
-        "domain": "air.agents",
-        "source": null,
-        "takeaway": "A harness API is starting to converge on the shape agent builders actually need: separable reasoning vs output streams, structured event types (not string chunks), server-side tools as first-class, and Git-style dedup logging for long conversations.",
-        "action": {
-          "type": "harness",
-          "title": "Adopt structured streaming events + content-addressable log in your harness",
-          "detail": "Refactor any string-only response API in your harness to emit typed events (reasoning, text, tool-call, attachment). Move multi-turn conversation storage from row-per-turn duplicated JSON to a Git-style content-addressable message store. Wire pause/resume around any tool call with side effects to enforce human approval."
-        },
-        "related_claims": [
-          "few-distinct-tools-beat-many",
-          "match-tool-schemas-to-the-target-model"
-        ],
-        "detail": null,
-        "on_site": false
-      }
+      },
+      "url": "https://unit42.paloaltonetworks.com/frontier-ai-vulnerability-burst/"
     },
     {
       "id": "automated-claude-code-opus-4-6-pipeline-finds-a-e231868d4a",
-      "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/",
       "title": "Claude Code and Opus 4.6 pipeline finds a real Linux sandbox-escape CVE",
       "summary": "An agent-driven vuln-hunting pipeline can produce real, CVE-quality Linux sandbox-escape bugs — but the shipping discipline is 'AI found it, human reproduces it before you submit.'",
       "content_text": "Johann Rehberger walks through CVE-2026-5674, a chain of three defects in PipeWire's PulseAudio compatibility layer (cookie auth accepts any 256-byte blob, module loading defaults on, ladspa module dlopen()s any absolute path) that lets a Flatpak app with only `--socket=pulseaudio` and any host-writable path escape the sandbox and run arbitrary code in the user's context. The finding was produced by his automated Claude Code + Opus 4.6 research pipeline in April 2026, then manually reproduced before submission to Red Hat. Fedora/Ubuntu 24.04+/Debian 13 and Docker setups mounting the PulseAudio socket are affected.",
-      "date_published": "2026-07-30",
+      "date_published": "2026-07-30T00:00:00Z",
       "tags": [
         "Harness design",
         "cve",
@@ -1337,15 +1236,15 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/"
     },
     {
       "id": "scientific-computing-in-the-age-of-agentic-ai-c5ee21665e",
-      "url": "https://openai.com/index/scientific-computing-agentic-ai",
       "title": "Scientific computing in the age of agentic AI",
       "summary": "Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.",
       "content_text": "OpenAI's field report on eight agent-assisted scientific-computing projects (five using Codex only, three combining Codex and Claude Code, primarily in life sciences) reports a consistent pattern: agents shift the human's job from implementation to verification and orchestration — defining what to build, specifying how to measure correctness, and deciding when a project ships. The security-relevant lessons are (a) agents express confidence even on clearly wrong output, so groundedness has to come from an external reference (parity with an existing tool, simulated data with known answers, statistical checks), (b) initial implementations are fast but resolving edge cases and numerical differences dominates elapsed time, and (c) lower implementation cost fragments maintainership — today's rewrite is tomorrow's abandoned code without an explicit steward. The transferable claim for agent harness design is that verification-side infra (acceptance tests, reference outputs, iterative benchmarks) is the actual bottleneck once agents are cheap.",
-      "date_published": "2026-07-28",
+      "date_published": "2026-07-28T00:00:00Z",
       "tags": [
         "Orchestration and multi-agent",
         "agentic-coding",
@@ -1374,17 +1273,17 @@
         ],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://openai.com/index/scientific-computing-agentic-ai"
     },
     {
       "id": "server-side-encrypted-compaction-porting-codex-s-ee38bf09a0",
-      "url": "https://github.com/algal/pi-openai-server-compaction",
       "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
       "summary": "If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.",
       "content_text": "OpenAI's Codex compacts long-running sessions by calling the Responses API's server-side compaction protocol — sending a `compaction_trigger` through `POST /v1/responses` and getting back an opaque, encrypted `compaction` artifact instead of a text summary — which reportedly lets it 'keep hammering' on long tasks as if context were infinite. Because the endpoint is public and Codex is open source, a third party reconstructed exactly how Codex uses it and packaged it as a Pi extension, running it alongside a portable Pi text summary so non-OpenAI models and session forking still work. The author's own held-out benchmark shows this native/remote policy recalling more old state (78% vs 48% exact recall) but at 4.58x more compaction output tokens and a 29% larger billed context, with high run-to-run variance — so it is not shown to be better at an equal token budget.",
-      "date_published": "2026-07-22",
+      "date_published": "2026-07-22T00:00:00Z",
       "tags": [
-        "Cost efficiency",
+        "Context and memory",
         "harness",
         "context-management",
         "compaction",
@@ -1394,7 +1293,7 @@
         "long-running-agents"
       ],
       "_stream": {
-        "subcategory": "cost-efficiency",
+        "subcategory": "context-memory",
         "tier": "vetted",
         "domain": "air.context",
         "source": "@kunchenguid",
@@ -1403,15 +1302,15 @@
         "related_claims": [],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://github.com/algal/pi-openai-server-compaction"
     },
     {
       "id": "oh-my-rogue-agent-87a47d2f7a",
-      "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent",
       "title": "Rogue agents are not unprecedented, ~20% of ProjectDiscovery's CTF solves were unintended",
       "summary": "Agents drift toward whatever is reachable; the eval harness's own infrastructure is usually the most reachable thing in the room.",
       "content_text": "A ProjectDiscovery eval engineer answers the Hugging Face agentic-intrusion story with their own logs: roughly 20% of solves on their internal CTF suite took an unintended path, and they publish four case studies of agents pivoting out of scope - including one that reached the harness's own tracing service and read the answers to every other challenge in the run. The containment argument is the useful part, and so is the cheapest fix: one line of prompt scope killed a whole pivot class.",
-      "date_published": "2026-07-22",
+      "date_published": "2026-07-22T00:00:00Z",
       "tags": [
         "Evaluating harnesses",
         "agents",
@@ -1431,7 +1330,8 @@
         "related_claims": [],
         "detail": null,
         "on_site": false
-      }
+      },
+      "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent"
     }
   ]
 }

@@ -4,19 +4,19 @@ _How to build agent and coding harnesses that cost less, run faster, fail less a
 
 _Generated 2026-11-18 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
 
-This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings passed every fact check but sat below the Briefing's novelty bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
+This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings had their quotes checked against the source and passed, but sat below the Briefing's score bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
 
-33 live claims, 16 vetted findings, 13 worth a look.
+33 live claims, 16 vetted findings, 10 worth a look.
 
-- [Cost efficiency](#cost-efficiency): 13 claims, 8 findings
-- [Work efficiency](#work-efficiency): 6 claims, 1 findings
+- [Cost efficiency](#cost-efficiency): 11 claims, 7 findings
+- [Work efficiency](#work-efficiency): 6 claims, 1 finding
 - [Speed and latency](#speed-latency): 0 claims, 0 findings
-- [Reliability and recovery](#reliability): 0 claims, 1 findings
-- [Context and memory](#context-memory): 5 claims, 1 findings
-- [Tools and interfaces](#tools-interfaces): 1 claims, 5 findings
+- [Reliability and recovery](#reliability): 0 claims, 1 finding
+- [Context and memory](#context-memory): 5 claims, 2 findings
+- [Tools and interfaces](#tools-interfaces): 3 claims, 3 findings
 - [Orchestration and multi-agent](#orchestration): 0 claims, 2 findings
 - [Evaluating harnesses](#harness-evals): 2 claims, 5 findings
-- [Harness design](#harness-design): 6 claims, 6 findings
+- [Harness design](#harness-design): 6 claims, 5 findings
 
 <a id="cost-efficiency"></a>
 
@@ -51,13 +51,13 @@ A controller that learns from earlier runs in the same repository which tools to
 Evidence, newest first:
 - supports: [TokenEconomizer: Experience-Driven Black-Box Cost Control for Coding Agents](https://arxiv.org/abs/2610.22732) (2026-10-15) Mean cache-aware cost fell 18.4-30.9% across five settings; Pass@1 improved in four and fell 1.0 point on Opus 4.8.
 
-### Harness overhead, not the model, can double an agent's cost
+### Harness choice alone can double an agent's cost
 
 `harness-overhead-sets-agent-cost` · current · confidence 0.65 · updated 2026-11-18 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims)
 
-On the same model and task, a full-featured harness's system prompt and tool schemas can cost about twice a bare agent loop with little accuracy difference, and coding agents' first call alone ranges from about 1.9k to 32k input tokens.
+On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.
 
-**Do this:** Measure your harness's fixed per-call overhead (system prompt, tool schemas, always-on instructions) and cut what does not change outcomes before you switch models.
+**Do this:** Measure what your harness spends per task (fixed prompt and tool schemas, plus re-reading context) and cut what does not change outcomes before you switch models.
 
 **Conditions:** Shown on coding benchmarks and a one-word prompt with Nov 2026 harness versions; how much the overhead costs depends on how much of it is cached and how long sessions run.
 
@@ -196,36 +196,7 @@ Evidence, newest first:
 - supports: [Claude Code docs: sub agents](https://code.claude.com/docs/en/sub-agents) "Control costs by routing tasks to faster, lower-cost models like Haiku"
 - supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "Haiku is a good fit for subagents doing simple jobs."
 
-### TOON beats JSON on input-side token cost
-
-`toon-cuts-input-tokens-vs-json` · contested · confidence 0.55 · updated 2026-10-21 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=toon-cuts-input-tokens-vs-json#claims)
-
-For large uniform arrays, TOON serializes to 30-60% fewer input tokens than JSON at comparable retrieval accuracy.
-
-**Do this:** Use TOON for the big uniform/tabular payloads you feed INTO the model (tool results, row sets, retrieved records). Keep JSON where data is deeply nested or irregular.
-
-**Conditions:** Input side only, and only for uniform arrays. Nested or irregular objects show much smaller or negative gains, and on short payloads the 'prompt tax' of explaining the format to the model can erase the saving entirely. Says nothing about generation — see constrained-decoding-for-structured-output.
-
-Evidence, newest first:
-- contests: [Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems](https://arxiv.org/abs/2605.29676) (2026-05-28) Independent agentic-loop benchmark (BFCL, MCPToolBench++, MCP-Universe, StableToolBench; 5 open-weight models): TOON cut tokens by only up to 18% at a ~9pp accuracy cost, and cascaded on multi-turn parsing failures.
-- contests: [Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation](https://arxiv.org/abs/2603.03306) (2026-02-08) Finds the advantage is often reduced by instructional overhead in shorter contexts.
-- supports: [New Token-Oriented Object Notation (TOON) Hopes to Cut LLM Costs by Reducing Token Consumption](https://www.infoq.com/news/2025/11/toon-reduce-llm-cost-tokens/) (2025-11)
-- supports: [toon-format/toon — reference implementation, spec and benchmarks](https://github.com/toon-format/toon)
-
-### Constrained decoding wins for structured output, not TOON
-
-`constrained-decoding-for-structured-output` · current · confidence 0.60 · updated 2026-07-28 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims)
-
-For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy — token-optimized notations do not win here.
-
-**Do this:** Split the decision by direction. Use a token-optimized notation for what you feed in; use constrained decoding (or plain JSON) for what you ask the model to emit.
-
-**Conditions:** Benchmarked on one-shot in-context generation. Constrained decoding requires a serving stack that supports it — without one, plain JSON generation is the accuracy-preserving fallback.
-
-Evidence, newest first:
-- supports: [Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation](https://arxiv.org/abs/2603.03306) (2026-02-08)
-
-**New research** (6)
+**New research** (5)
 
 - **[Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)** · 2026-11-12 · Microsoft Research Blog
   If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.
@@ -242,8 +213,6 @@ Evidence, newest first:
 - **[Letting the agent choose when to compact matches fixed-interval summarization cheaply](https://machinelearning.apple.com/research/self-compacting-language-agents)** · 2026-10-12 · Apple Machine Learning Research
   Replace or supplement token-threshold compaction with a model-invoked compaction tool plus an explicit rubric for when to fire and when to hold off.
   Try: Add a model-invoked compact tool with a fire/suppress rubric. Expose a compact\_context tool that summarizes the trajectory so far and replaces it. In the system prompt, add the rubric: call it when a sub-task has just resolved or the solution is converging; do not call it mid-derivation or while stuck. Keep the token-threshold compaction as a hard fallback. A/B test against fixed-interval compaction on held-out tasks for accuracy and per-task cost.
-- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction)** · 2026-07-22 · @kunchenguid
-  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction\_trigger + previous\_response\_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.
 
 **Worth a look** (2)
 
@@ -447,6 +416,11 @@ Few-shot prompting accuracy is highly sensitive to example ordering, whitespace,
 Evidence, newest first:
 - supports: [Calibrate Before Use](https://arxiv.org/abs/2102.09690) (2021-02)
 
+**New research** (1)
+
+- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction)** · 2026-07-22 · @kunchenguid
+  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction\_trigger + previous\_response\_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.
+
 **Worth a look** (1)
 
 - **[OpenAI launches the Agents API in public beta, a hosted Codex harness](https://openai.com/index/introducing-the-agents-api)** · 2026-09-10 · OpenAI Blog
@@ -459,6 +433,22 @@ Evidence, newest first:
 ## Tools and interfaces
 
 _How the harness exposes actions - tool design and descriptions, schemas and structured output, skills, MCP servers built for agents, sandboxes as tools._
+
+### TOON beats JSON on input-side token cost
+
+`toon-cuts-input-tokens-vs-json` · contested · confidence 0.55 · updated 2026-10-21 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=toon-cuts-input-tokens-vs-json#claims)
+
+For large uniform arrays, TOON serializes to 30-60% fewer input tokens than JSON at comparable retrieval accuracy.
+
+**Do this:** Use TOON for the big uniform/tabular payloads you feed INTO the model (tool results, row sets, retrieved records). Keep JSON where data is deeply nested or irregular.
+
+**Conditions:** Input side only, and only for uniform arrays. Nested or irregular objects show much smaller or negative gains, and on short payloads the 'prompt tax' of explaining the format to the model can erase the saving entirely. Says nothing about generation — see constrained-decoding-for-structured-output.
+
+Evidence, newest first:
+- contests: [Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems](https://arxiv.org/abs/2605.29676) (2026-05-28) Independent agentic-loop benchmark (BFCL, MCPToolBench++, MCP-Universe, StableToolBench; 5 open-weight models): TOON cut tokens by only up to 18% at a ~9pp accuracy cost, and cascaded on multi-turn parsing failures.
+- contests: [Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation](https://arxiv.org/abs/2603.03306) (2026-02-08) Finds the advantage is often reduced by instructional overhead in shorter contexts.
+- supports: [New Token-Oriented Object Notation (TOON) Hopes to Cut LLM Costs by Reducing Token Consumption](https://www.infoq.com/news/2025/11/toon-reduce-llm-cost-tokens/) (2025-11)
+- supports: [toon-format/toon — reference implementation, spec and benchmarks](https://github.com/toon-format/toon)
 
 ### Model upgrades can regress on non-native tool schemas
 
@@ -473,6 +463,19 @@ A newer SOTA model can be WORSE at your harness's custom tool schema than its ol
 Evidence, newest first:
 - supports: [Better Models, Worse Tools: SOTA models regress on non-native tool schemas](https://simonwillison.net/2026/Jul/4/better-models-worse-tools/) (2026-07-04)
 
+### Constrained decoding wins for structured output, not TOON
+
+`constrained-decoding-for-structured-output` · current · confidence 0.60 · updated 2026-07-28 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=constrained-decoding-for-structured-output#claims)
+
+For structured model OUTPUT, constrained decoding gives the lowest token usage and plain JSON generation the best accuracy — token-optimized notations do not win here.
+
+**Do this:** Split the decision by direction. Use a token-optimized notation for what you feed in; use constrained decoding (or plain JSON) for what you ask the model to emit.
+
+**Conditions:** Benchmarked on one-shot in-context generation. Constrained decoding requires a serving stack that supports it — without one, plain JSON generation is the accuracy-preserving fallback.
+
+Evidence, newest first:
+- supports: [Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation](https://arxiv.org/abs/2603.03306) (2026-02-08)
+
 **New research** (2)
 
 - **[GRSE credits multi-agent skills by contrasting repeated runs, not presence](https://arxiv.org/abs/2610.27227)** · 2026-10-19 · Hugging Face Daily Papers
@@ -482,17 +485,11 @@ Evidence, newest first:
   History reliability is a distinct tool-use bottleneck: harnesses that just accumulate turns are silently letting old, wrong state overwrite the current task.
   Try: Add a stale-history eval slice to your agent harness. Fork or reimplement the paper's Original / Polluted / Oracle triad: for each production task, generate a corrupted-history variant that keeps the current request and system policy identical but swaps in stale entities and interface conventions, then track decision-flip rate as a first-class harness metric.
 
-**Worth a look** (3)
+**Worth a look** (1)
 
 - **[Kimi K2.6 on vLLM returned valid tool-calls 92% of the time](https://www.ubicloud.com/blog/fixing-tool-call-accuracy-in-vllm)** · 2026-10-26 · @coffeemug via Hacker News
   Tool-call quality depends on how the model is served, not only on the model. Turn on constrained decoding per model, check it with a tool-call benchmark, and re-check after engine upgrades.
   Try: Enable and verify strict tool calling on self-hosted vLLM. For each open-weight model you serve with vLLM, enable tool-call strictness (--tool-strict-level) and run Moonshot's K2-Vendor-Verifier ToolCall benchmark, or a similar schema-accuracy test, before and after. If you use speculative decoding, test the two together. Add the benchmark to CI so a vLLM upgrade that changes defaults is caught.
-- **[PDF-to-markdown pipelines are the hidden token chewer inside enterprise AI adoption](https://simonwillison.net/2026/Aug/7/pdfs-are-terrible/)** · 2026-08-07
-  Cost budgets die by a thousand PDF-to-image-to-markdown conversions, not by the model call at the end.
-  Try: Instrument document-preprocessing pipelines as first-class cost centers. Track token spend by pipeline stage (raw file -\> images -\> markdown -\> model call), not just per model. If non-engineer users are shipping PDFs through image OCR to markdown before calling the model, that stage is likely the top line item; cache converted artifacts and prefer native text extraction where possible.
-- **[LLM 0.32 adds reasoning traces and human-approval pause/resume](https://simonwillison.net/2026/Aug/4/new-release-of-llm/)** · 2026-08-04
-  A harness API is starting to converge on the shape agent builders actually need: separable reasoning vs output streams, structured event types (not string chunks), server-side tools as first-class, and Git-style dedup logging for long conversations.
-  Try: Adopt structured streaming events + content-addressable log in your harness. Refactor any string-only response API in your harness to emit typed events (reasoning, text, tool-call, attachment). Move multi-turn conversation storage from row-per-turn duplicated JSON to a Git-style content-addressable message store. Wire pause/resume around any tool call with side effects to enforce human approval.
 
 
 <a id="orchestration"></a>
@@ -663,7 +660,7 @@ Evidence, newest first:
   An agent-driven vuln-hunting pipeline can produce real, CVE-quality Linux sandbox-escape bugs — but the shipping discipline is 'AI found it, human reproduces it before you submit.'
   Try: Wrap agentic vuln-hunt pipelines with a 'human-reproduces-before-submit' gate. When running an agent loop against a target codebase, land findings into a queue that requires manual repro (including a negative-case check with the offending permission removed) before any external disclosure. This preserves the throughput advantage of agent scanning while blocking the well-known failure mode of confident-but-invalid AI reports flooding maintainers.
 
-**Worth a look** (3)
+**Worth a look** (2)
 
 - **[Anthropic study finds analysts follow an agent's hidden lean on judgment calls](https://www.anthropic.com/research/agents-judgment-calls)** · 2026-10-27 · Anthropic Research
   If your harness relies on a human to make or check judgment calls, the agent's framing will often make the call instead, so design for that.
@@ -671,6 +668,3 @@ Evidence, newest first:
 - **[HarnessTax finds harness choice barely moved success but changed cost](https://harnesstax.github.io/)** · 2026-09-16 · @matt\_d via Hacker News
   Compare cost and success of your model across more than one harness, because a default harness can carry a hidden cost premium for the same results.
   Try: Run a model-by-harness cost-success sweep before standardizing a coding agent. Pick 30 or so representative tasks, run each candidate harness 3 times with the same model and a fixed price list, and record mean cost, success rate and first-call input tokens. Try a minimal read/write/edit/bash harness as the baseline and adopt a richer harness only if it beats it on your tasks.
-- **[Personalized Deep Research Query Refinement with Graph-Scaffolded Evidence Grounding](https://arxiv.org/abs/2608.05876)** · 2026-08-07
-  Personalize a deep-research agent by refining the \*specification\* before it hits the agent, not by modifying the agent itself — and use a dependency graph over framing factors to decide when to ask the user vs consult memory vs stop.
-  Try: Split a deep-research agent into a refinement layer and an unchanged execution agent. If you are building a deep-research assistant, put personalization/clarification logic into a query-refinement stage that outputs a specification, then hand that specification to a stateless research agent. The refinement stage decides between (retrieve-memory / ask-user / stop-and-refine) using a dependency graph over the framing factors it still needs to resolve — a cleaner separation of concerns than editing the research pipeline itself, and empirically fewer user questions.

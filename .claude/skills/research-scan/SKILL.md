@@ -260,6 +260,7 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    python scripts/trends.py               # data/trends.json + TRENDS.md (emerging themes)
    python scripts/generate_newsletter.py  # NEWSLETTER.md (rolling, 3 topic sections)
    python scripts/generate_review.py      # REVIEW.md (non-vetted queue)
+   python scripts/generate_stream.py      # docs/streams/ (research streams, data/streams.yaml)
    python scripts/generate_html.py        # docs/index.html — the GitHub Pages site
    ```
    Only **vetted** findings (not `needs_review`, composite ≥ `curation.min_composite`) appear on

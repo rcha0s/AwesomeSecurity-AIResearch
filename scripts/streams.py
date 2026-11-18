@@ -19,11 +19,12 @@ from __future__ import annotations
 
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import UTC, datetime
 from pathlib import Path
 
 import yaml
 
+import common as c
 import focus
 
 STREAMS_FILE = Path(__file__).resolve().parent.parent / "data" / "streams.yaml"
@@ -75,6 +76,20 @@ def _subcategory(raw: dict) -> Subcategory:
     return Subcategory(sid, str(raw.get("name") or sid), str(raw.get("scope") or ""), domains, sources, keywords)
 
 
+def _check_ownership(sid: str, subs: tuple[Subcategory, ...]) -> None:
+    """First match wins, so a keyword rule would take findings from a LATER
+    sub-category's own `domains`. That is allowed only for the last sub-category,
+    the stream's catch-all (air.agents for harness engineering)."""
+    for i, sub in enumerate(subs):
+        for later in subs[i + 1 : -1]:
+            stolen = sorted(set(sub.sources) & set(later.domains))
+            if stolen:
+                raise ValueError(
+                    f"streams.yaml: {sid}/{sub.id} reads {stolen} by keyword, "
+                    f"but a later sub-category ({later.id}) owns them"
+                )
+
+
 def parse(data: dict, known_domains: set[str] | None = None) -> dict[str, Stream]:
     """Streams from the parsed YAML. With `known_domains`, every domain a rule
     names must be a taxonomy ID (a typo would silently empty a sub-category)."""
@@ -84,6 +99,7 @@ def parse(data: dict, known_domains: set[str] | None = None) -> dict[str, Stream
         ids = [s.id for s in subs]
         if len(set(ids)) != len(ids):
             raise ValueError(f"streams.yaml: stream {sid!r} repeats a sub-category id")
+        _check_ownership(sid, subs)
         stream = Stream(
             id=sid,
             name=str(body.get("name") or sid),
@@ -133,27 +149,18 @@ def classify(item: dict, stream: Stream) -> str | None:
 
 
 def item_date(item: dict) -> str:
-    """The finding's own date (YYYY-MM-DD where known): published, else its month."""
-    for key in ("published", "date", "added_on", "first_seen"):
-        value = str(item.get(key) or "").strip()
-        if value:
-            return value[:10]
-    return ""
+    """The finding's own date (common.best_date: published, else its month), or ""."""
+    return str(c.best_date(item) or "")[:10]
 
 
 def in_library(item: dict, now: datetime, days: int) -> bool:
-    """True if the finding's date is inside the stream's library window. A
-    month-only date (YYYY-MM) counts from the first of that month."""
-    date = item_date(item)
-    if not date:
+    """True if a dated finding is inside the stream's library window
+    (common.is_fresh: a month-only date counts from the month's last day).
+    Undated findings stay out: a reading list should not grow on unknown ages."""
+    if not item_date(item):
         return False
-    if len(date) == 7:
-        date += "-01"
-    try:
-        when = datetime.strptime(date[:10], "%Y-%m-%d")
-    except ValueError:
-        return False
-    return when >= now.replace(tzinfo=None) - timedelta(days=days)
+    when = now if now.tzinfo else now.replace(tzinfo=UTC)
+    return c.is_fresh(item, days, when)
 
 
 def main(argv: list[str] | None = None) -> int:

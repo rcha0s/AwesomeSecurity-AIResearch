@@ -39,6 +39,7 @@ from collections import defaultdict
 import briefing
 import common as c
 import efficiency_feed as ef
+import generate_site
 import story_ledger as sl
 import streams as st
 import taxonomy as tx
@@ -59,24 +60,30 @@ def library_vetted(entry: dict, conf: c.Config) -> bool:
     floors, newness counted as fresh. A finding the curated view held stays out."""
     fresh = dict(entry)
     scores = dict(entry.get("scores") or {})
-    scores.pop("composite", None)
     scores["newness"] = 100.0
+    scores.setdefault("credibility", c.credibility_of(entry))
+    # Set the composite here: common.entry_composite would recompute decayed
+    # newness from the date if it were missing.
+    scores["composite"] = c.composite_score(scores, conf.weights)
     fresh["scores"] = scores
     return c.is_curated(fresh, conf)
 
 
 def watch_eligible(entry: dict, conf: c.Config, min_relevance: float | None) -> bool:
     """A finding held only for its scores, still worth a harness builder's look:
-    scored, not refuted, every checked excerpt grounded, not held for its domain
-    or its readability, and relevance at least `min_relevance`."""
+    scored, not refuted, its excerpts checked and grounded (grounding 1.0; an
+    unchecked finding stays out), not from a source below the credibility bar,
+    not held for its domain or its readability, and relevance at least
+    `min_relevance`."""
     if min_relevance is None or not c.is_scored(entry):
         return False
     if entry.get("verified") is False or c.domain_held(entry) or c.readability_held(entry):
         return False
     if c.reddit_only(entry):
         return False
-    grounding = entry.get("grounding_score")
-    if grounding is not None and grounding < 1.0:
+    if entry.get("grounding_score") != 1.0:
+        return False
+    if c.credibility_of(entry) < conf.curation.get("min_credibility", 0):
         return False
     return float((entry.get("scores") or {}).get("relevance") or 0) >= min_relevance
 
@@ -103,9 +110,16 @@ def detail_path(entry: dict, curated_ids: set[str]) -> str | None:
     """The repo page generate_site.py writes for a curated pool entry, if any."""
     if entry.get("id") not in curated_ids:
         return None
-    date = entry.get("date") or "undated"
-    name = f"{date}-{c.slugify(entry.get('title', ''), 60)}.md"
-    return f"{entry.get('topic')}/{c.domain_slug(entry.get('domain') or 'General')}/{name}"
+    return f"{entry.get('topic')}/{generate_site.entry_relpath(entry)}"
+
+
+def rfc3339(date: str) -> str | None:
+    """A finding date (YYYY-MM-DD or YYYY-MM) as the RFC 3339 date-time JSON Feed wants."""
+    if not date:
+        return None
+    if len(date) == 7:
+        date += "-01"
+    return f"{date[:10]}T00:00:00Z"
 
 
 def collect(stream: st.Stream, conf: c.Config, now, pools: dict, archive: list, index: dict) -> list[dict]:
@@ -165,11 +179,10 @@ def feed_item(row: dict, stream: st.Stream, curated_ids: set[str]) -> dict:
     action = row.get("actionable") or {}
     item = {
         "id": row.get("id"),
-        "url": entry_url(row),
         "title": row.get("title") or "",
         "summary": _clip(row.get("takeaway") or row.get("summary")),
         "content_text": _clip(row.get("summary"), 1200),
-        "date_published": st.item_date(row) or None,
+        "date_published": rfc3339(st.item_date(row)),
         "tags": [sub.name] + [str(t) for t in row.get("tags") or []][:8],
         "_stream": {
             "subcategory": sub.id,
@@ -183,6 +196,9 @@ def feed_item(row: dict, stream: st.Stream, curated_ids: set[str]) -> dict:
             "on_site": bool(row.get("_in_pool") and path),
         },
     }
+    url = entry_url(row)
+    if url:
+        item["url"] = url
     if path and row.get("_in_pool"):
         item["external_url"] = f"{SITE_URL}?finding={row.get('id')}#week"
     return item
@@ -222,6 +238,10 @@ def render_feed(stream: st.Stream, rows: list[dict], claims: list[dict], curated
         "items": [feed_item(r, stream, curated_ids) for r in rows[: stream.feed_max]],
     }
     return json.dumps(feed, indent=2, ensure_ascii=False) + "\n"
+
+
+def _count(n: int, noun: str) -> str:
+    return f"{n} {noun}" if n == 1 else f"{n} {noun}s"
 
 
 def _finding_row(row: dict) -> dict:
@@ -267,17 +287,17 @@ def render_md(stream: st.Stream, rows: list[dict], claims: list[dict], curated_i
         f"[efficiency.md]({SITE_URL}efficiency.md), which covers the first two sub-categories. "
         "Each claim is a standing answer: **Do this** is the change to make, **Conditions** is "
         "where it does not hold, and the evidence is newest first. Findings are research from "
-        f"the last {stream.library_days} days, newest first; **Worth a look** findings passed "
-        "every fact check but sat below the Briefing's novelty bar. "
+        f"the last {stream.library_days} days, newest first; **Worth a look** findings had their "
+        "quotes checked against the source and passed, but sat below the Briefing's score bar. "
         f"The same data as JSON Feed 1.1: [{stream.id}.json]({feed_url}) "
         "(filter items by `_stream.subcategory`).",
         "",
-        f"{len(claims)} live claims, {vetted} vetted findings, {watch} worth a look.",
+        f"{_count(len(claims), 'live claim')}, {_count(vetted, 'vetted finding')}, {watch} worth a look.",
         "",
     ]
     for sub in stream.subcategories:
         n_claims, n_rows = len(claims_by_sub[sub.id]), len(by_sub[sub.id])
-        out.append(f"- [{ef._md(sub.name)}](#{sub.id}): {n_claims} claims, {n_rows} findings")
+        out.append(f"- [{ef._md(sub.name)}](#{sub.id}): {_count(n_claims, 'claim')}, {_count(n_rows, 'finding')}")
     for sub in stream.subcategories:
         out += ["", f'<a id="{sub.id}"></a>', "", f"## {ef._md(sub.name)}", "", f"_{ef._md(sub.scope)}_", ""]
         for claim in claims_by_sub[sub.id]:
@@ -291,7 +311,7 @@ def render_md(stream: st.Stream, rows: list[dict], claims: list[dict], curated_i
             for row in tier_rows[:MD_PER_SUBCATEGORY]:
                 out += ef._finding_line(_finding_row(row))
             if len(tier_rows) > MD_PER_SUBCATEGORY:
-                out.append(f"- _{len(tier_rows) - MD_PER_SUBCATEGORY} more in the JSON feed._")
+                out.append(f"- _{len(tier_rows) - MD_PER_SUBCATEGORY} older not listed here._")
             out.append("")
         if not claims_by_sub[sub.id] and not sub_rows:
             out += ["_Nothing yet: no live claim or finding in the window._", ""]

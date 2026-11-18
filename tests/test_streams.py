@@ -90,8 +90,23 @@ def test_library_window_counts_from_the_finding_date():
     now = datetime(2026, 11, 18)
     assert st.in_library({"published": "2026-09-01"}, now, 90)
     assert not st.in_library({"published": "2026-08-01"}, now, 90)
-    assert st.in_library({"date": "2026-09"}, now, 90)
-    assert not st.in_library({}, now, 90)
+    assert st.in_library({"date": "2026-08"}, now, 90)  # a month counts from its last day
+    assert not st.in_library({}, now, 90)  # undated findings stay out
+
+
+def test_a_keyword_rule_may_not_take_a_later_subcategorys_own_domain():
+    bad = {"streams": {"s": {"subcategories": [
+        {"id": "a", "from": ["air.context"], "keywords": ["x"]},
+        {"id": "b", "domains": ["air.context"]},
+        {"id": "z", "domains": ["air.agents"]},
+    ]}}}  # fmt: skip
+    with pytest.raises(ValueError, match="owns them"):
+        st.parse(bad)
+    # the last sub-category is the catch-all: keywords may draw on its domains
+    st.parse({"streams": {"s": {"subcategories": [
+        {"id": "a", "from": ["air.agents"], "keywords": ["x"]},
+        {"id": "z", "domains": ["air.agents"]},
+    ]}}})  # fmt: skip
 
 
 def entry(eid: str, domain: str, published: str, **extra) -> dict:
@@ -112,6 +127,8 @@ def test_collect_keeps_vetted_and_watch_tiers_and_drops_refuted():
     pool = [
         entry("v", "air.agents", "2026-11-10"),
         entry("w", "air.agents", "2026-11-09", needs_review=True, scores={"novelty": 20, "relevance": 75}),
+        entry("unchecked", "air.agents", "2026-11-09", needs_review=True, grounding_score=None,
+              scores={"novelty": 20, "relevance": 75}),
         entry("low", "air.agents", "2026-11-08", needs_review=True, scores={"novelty": 20, "relevance": 30}),
         entry("refuted", "air.agents", "2026-11-07", needs_review=True, verified=False),
         entry("old", "air.agents", "2026-05-01"),
@@ -146,10 +163,25 @@ def test_feed_is_json_feed_1_1_with_stream_extension():
     assert feed["version"] == "https://jsonfeed.org/version/1.1"
     assert feed["feed_url"].endswith("/streams/harness.json")
     item = feed["items"][0]
-    assert item["url"] == "https://example.com/v" and item["date_published"] == "2026-11-10"
+    assert item["url"] == "https://example.com/v" and item["date_published"] == "2026-11-10T00:00:00Z"
     assert item["_stream"]["subcategory"] == "design" and item["_stream"]["tier"] == "vetted"
     assert [x["id"] for x in feed["_stream"]["claims"]] == ["k"]
     assert feed["_stream"]["claims"][0]["subcategory"] == "cost"
+
+
+def test_an_old_finding_is_vetted_as_if_fresh():
+    conf = c.load_config()
+    now = datetime(2026, 11, 18)
+    old = entry("old", "air.agents", "2026-09-01")  # past the site window, inside the stream's
+    rows = gs.collect(stream(), conf, now, {}, [old], {})
+    assert [(r["id"], r["_tier"]) for r in rows] == [("old", "vetted")]
+
+
+def test_feed_leaves_out_an_empty_url_and_pads_a_month_date():
+    row = {**entry("m", "air.agents", "2026-10", article_url=""), "date": "2026-10",
+           "_sub": "design", "_tier": "vetted", "_in_pool": False}  # fmt: skip
+    item = gs.feed_item(row, stream(), set())
+    assert "url" not in item and item["date_published"] == "2026-10-01T00:00:00Z"
 
 
 def test_markdown_lists_every_subcategory():

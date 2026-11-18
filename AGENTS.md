@@ -438,8 +438,9 @@ extension carries `subcategory`, `tier`, `domain`, `takeaway`, `action` and
 the pools and the archive for `library_days` (120), past the site's 31-day
 pruning. Tier `vetted` is the curated bar judged as if fresh; tier `watch` is a
 finding held only on score (novelty or composite) with relevance at least
-`watch_min_relevance`. Refuted, ungrounded, domain-held and readability-held
-findings never enter. The cost and work efficiency domains are sub-categories of
+`watch_min_relevance`, whose quotes were checked and grounded (grounding 1.0)
+and whose source clears `min_credibility`. Refuted, ungrounded, unchecked,
+domain-held and readability-held findings never enter. The cost and work efficiency domains are sub-categories of
 Harness Engineering; the Efficiency section of the Briefing still reads them
 directly.
 
