@@ -115,6 +115,55 @@ def test_a_rendered_story_missing_from_the_pools_fails(sandbox):
     assert any("is in no pool" in p for p in ei.run()["problems"])
 
 
+# --- the Learn tab's rows (pools or archive) are held to the published floor -----------------------
+def publish_learn(sandbox, entries, learn, archive=None):
+    publish(sandbox, entries, archive=archive)
+    data = {"findings": [site_row(e) for e in entries], "editorial": [], "learn": learn}
+    page = (
+        f'<html><script id="site-data" type="application/json">{json.dumps(data)}</script></html>'
+    )
+    (sandbox / "docs" / "index.html").write_text(page)
+
+
+def learn_row(entry: dict, **over) -> dict:
+    row = {
+        "id": entry["id"],
+        "topic": entry["topic"],
+        "domain_id": entry["domain"],
+        "url": entry["source_url"],
+        "lessons": [
+            {"point": le["point"], "excerpt": le["excerpt"], "grounded": True}
+            for le in entry["lessons"]
+        ],
+    }
+    return {**row, **over}
+
+
+def test_an_archive_only_learn_row_passes_and_a_bad_one_fails(sandbox):
+    old = good_entry(id="old")
+    publish_learn(sandbox, [], [learn_row(old)], archive=[old])
+    assert ei.run()["passed"], ei.run()["problems"]
+    bad = good_entry(id="old", lessons=[{"point": "p", "excerpt": "x", "grounded": False}])
+    publish_learn(sandbox, [], [learn_row(good_entry(id="old"))], archive=[bad])
+    assert any("marked ungrounded" in p for p in ei.run()["problems"])
+
+
+def test_a_learn_row_with_no_entry_or_a_forged_excerpt_fails(sandbox):
+    old = good_entry(id="old")
+    publish_learn(sandbox, [], [learn_row(good_entry(id="ghost"))], archive=[old])
+    assert any("is in no pool" in p for p in ei.run()["problems"])
+    forged = learn_row(old, lessons=[{"point": "p", "excerpt": "invented quote", "grounded": True}])
+    publish_learn(sandbox, [], [forged], archive=[old])
+    assert any("not one of the entry's grounded excerpts" in p for p in ei.run()["problems"])
+
+
+def test_a_malformed_learn_array_fails_instead_of_crashing(sandbox):
+    for bad in ({"a": 1}, "x", 7, ["junk"]):
+        publish_learn(sandbox, [], bad, archive=[])
+        report = ei.run()
+        assert not report["passed"] and any("learn" in p for p in report["problems"]), bad
+
+
 def test_pool_wide_invariants_and_warnings(sandbox):
     held = good_entry(id="held", needs_review=True, article_url="https://blog.example.org/")
     twin = good_entry(id="twin")

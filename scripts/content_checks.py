@@ -299,13 +299,15 @@ def reddit_shown_problems(payload: dict) -> list[str]:
     whatever predicate let the row through. Only ever adds a refusal."""
     out = []
     shown = (payload.get("findings") or []) + (payload.get("editorial") or [])
-    for row in shown + (payload.get("learn") or []):
+    # A Learn row renders only its own link, so a `corroborators` key on it counts for nothing.
+    learn = payload.get("learn")
+    learn = learn if isinstance(learn, list) else []  # a bad shape is eval_integrity's refusal
+    for lane, row in [(0, r) for r in shown] + [(1, r) for r in learn]:
         if not isinstance(row, dict):
             continue
-        urls = [row.get("url")] + [
-            s.get("url") for s in row.get("corroborators") or [] if isinstance(s, dict)
-        ]
-        urls = [u for u in urls if u]
+        covering = [] if lane else row.get("corroborators") or []
+        urls = [row.get("url")] + [s.get("url") for s in covering if isinstance(s, dict)]
+        urls = [u for u in urls if u and isinstance(u, str)]
         if urls and all(is_reddit_url(u) for u in urls):
             out.append(f"{REDDIT_SHOWN}: {row.get('id') or row.get('title', '?')}")
     return out

@@ -132,6 +132,45 @@ def published_problems(lane: str, row: dict, entry: dict | None, tax: tx.Taxonom
     return out
 
 
+_DASH = re.compile(r"\s*[—–]\s*")
+
+
+def _dashed(text: object) -> str:
+    """An excerpt as the site payload carries it: generate_html spaces every em/en dash."""
+    return _DASH.sub(" - ", str(text))
+
+
+def learn_problems(payload: dict, by_id: dict, tax: tx.Taxonomy) -> list[str]:
+    """The Learn tab's rows, from the pools or the archive, held to the same floor as a
+    published story, and each lesson it shows must be one of its entry's own grounded
+    lessons (the page quotes them as verbatim)."""
+    learn = payload.get("learn")
+    if learn is None:
+        return []
+    if not isinstance(learn, list):
+        return ["[site] learn is not a list"]
+    out: list[str] = []
+    for row in learn:
+        if not isinstance(row, dict):
+            out.append("[site] a learn row is not an object")
+            continue
+        entry = by_id.get(row.get("id"))
+        found = published_problems("learn", row, entry, tax)
+        if entry is not None:
+            own = {
+                _dashed(le.get("excerpt"))
+                for le in entry.get("lessons") or []
+                if isinstance(le, dict) and le.get("grounded") is not False
+            }
+            found += [
+                "lesson excerpt is not one of the entry's grounded excerpts"
+                for le in row.get("lessons") or []
+                if not isinstance(le, dict) or _dashed(le.get("excerpt")) not in own
+            ]
+        out += [f"[site] {row.get('id')}: {p}" for p in found]
+    return out
+
+
 def data_warnings(pools: list[tuple[str, dict]], archive: list[dict]) -> list[str]:
     live = {e.get("id") for _, e in pools}
     out = [f"{label(e)}: in a pool and in the archive" for e in archive if e.get("id") in live]
@@ -162,6 +201,7 @@ def run(page: str | None = None) -> dict:
         found = published_problems(lane, row, by_id.get(row.get("id")), tax)
         problems += [f"[site] {row.get('id')}: {p}" for p in found]
     problems += [f"[site] {p}" for p in cc.site_story_problems(payload)]
+    problems += learn_problems(payload, {**{e.get("id"): e for e in archive}, **by_id}, tax)
     warnings = data_warnings(pools, archive)
     return {
         "passed": not problems,

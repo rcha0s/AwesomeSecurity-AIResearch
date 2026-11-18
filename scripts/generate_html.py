@@ -682,7 +682,8 @@ def learn_rows(archive: list, conf: c.Config, snapshot_days: int, ctx) -> list[d
     newest first, never capped and never aged out, so the tab only grows. Each row
     carries its own lessons and `why`; the Briefing lane stays the latest few."""
     entries = [e for topic in c.TOPICS for e in c.load_pool(topic)["entries"]]
-    entries += [e for e in archive if isinstance(e, dict)]
+    live = {e.get("id") for e in entries}  # an id in both places is the live copy's
+    entries += [e for e in archive if isinstance(e, dict) and e.get("id") not in live]
     rows = [
         _with_kind(e, {**finding_row(e, conf, snapshot_days), **story_fields(e, ctx)})
         for e in entries

@@ -192,6 +192,7 @@ FNS = [
     "lessonsHTML",
     "learnMatches",
     "learnCardHTML",
+    "newsByMonth",
     "changesNote",
     "topEvidence",
     "evidenceLine",
@@ -1487,6 +1488,12 @@ def test_learn_search_and_track_survive_in_the_url_and_unknown_values_are_ignore
     assert run_js({}, expr) == ["lq=cache&ltopic=ai-security", ""]
     bad = "(function(){return [stateFromQuery('?ltopic=nope'), learnState];})()"
     assert run_js({}, bad) == [{}, {"topic": "all", "q": ""}]
+
+
+def test_grouping_by_month_survives_a_non_string_published_value():
+    rows = [{"published": 5}, {"published": "2026-01-02"}, {"published": None}, {"published": {}}]
+    got = run_js({}, "newsByMonth(" + json.dumps(rows) + ").map(function (g) { return g.month; })")
+    assert "2026-01" in got
 
 
 def test_the_briefing_lane_links_to_learn_with_the_total_kept():
