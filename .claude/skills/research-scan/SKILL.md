@@ -265,8 +265,8 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    of your `sources` must be a URL from the flag's `url` or `coverage`). Every field is grounded in the sources you read and says who claims what when
    outlets disagree. `exploitation` describes how an attack works at a high level: never a
    payload, command or code. If the incident is already in `data/hot_incidents.json`, update
-   that entry (same `id`) with what changed; keep its `cves` and `disclosed`, and set
-   `flag` too if this run flagged it again. Rohan, 2026-11-18: "you don't want to do this for
+   that entry (same `id`) with what changed in the summary text; keep its `cves`, `disclosed`,
+   `bar` and `flag` as published (`add` refuses changes to those; they change by PR). Rohan, 2026-11-18: "you don't want to do this for
    every advisory item", so never add an entry the fast path did not flag.
 
 7. **Merge + rerank + render:**

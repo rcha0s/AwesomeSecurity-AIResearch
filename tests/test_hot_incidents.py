@@ -426,7 +426,12 @@ def test_add_takes_only_a_flagged_new_entry(sandbox, tmp_path):
 
 def test_add_updates_keep_what_was_published(sandbox, tmp_path):
     e = {**entry(), "id": "new-incident", "disclosed": "2026-07-14", "updated": "2026-07-14"}
+    e["flag"] = "h0"
     hot.save([e])
+    common.save_json(
+        common.DATA_DIR / "_scan_hot.json",
+        [{"id": "other", "reasons": ["exploited", "ubiquitous"], "url": "https://x.example/"}],
+    )
     path = tmp_path / "e.json"
 
     def add(row) -> int:
@@ -435,7 +440,24 @@ def test_add_updates_keep_what_was_published(sandbox, tmp_path):
 
     assert add({**e, "status": "Now on CISA KEV.", "updated": "2026-07-15"}) == 0
     assert hot.load()[0]["status"] == "Now on CISA KEV."
-    assert add({**e, "bar": [*e["bar"], "exploited"]}) == 1  # no flag found it
-    assert add({**e, "cves": ["CVE-2026-1111"]}) == 1
-    assert add({**e, "disclosed": "2026-07-01"}) == 1
-    assert add({**e, "updated": "2026-12-31"}) == 1
+    e = hot.load()[0]
+    assert add({**e, "updated": "2026-07-15"}) == 1  # only re-dated
+    assert add({**e, "status": "x", "bar": [*e["bar"], "exploited"]}) == 1
+    # an unrelated flag never unlocks a change (review of 2026-11-19)
+    assert add({**e, "status": "x", "flag": "other", "cves": ["CVE-2026-9999"]}) == 1
+    assert add({**e, "status": "x", "flag": None}) == 1  # cannot free its flag
+    assert add({**e, "status": "x", "disclosed": "2026-07-01"}) == 1
+    assert add({**e, "status": "x", "updated": "2026-12-31"}) == 1
+
+
+def test_critical_infrastructure_is_not_a_critical_bug(sandbox):
+    copies = [
+        news(
+            50, "Hackers exploit nginx flaw CVE-2026-66666 against critical infrastructure", "thn"
+        ),
+        news(51, "nginx CVE-2026-66666 exploited at critical infrastructure sites", "bleeping"),
+        news(52, "nginx CVE-2026-66666 hits critical infrastructure", "register"),
+        news(53, "Critical infrastructure targeted via nginx CVE-2026-66666", "securityweek"),
+    ]
+    batch, _ = run(copies + flood())
+    assert not any(r.get("batch_hot") for r in batch)

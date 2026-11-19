@@ -110,6 +110,10 @@ ROUNDUP = re.compile(
     re.I,
 )
 NOT_OUTLETS = frozenset({"github.com", "ycombinator.com"})
+# A headline that says "critical" about the bug, not "critical infrastructure".
+CRITICAL_TITLE = re.compile(
+    r"\bcritical\b(?!\s+(?:infrastructure|services?|systems?|sectors?))", re.I
+)
 BAR_NOTE = (
     "Only incidents that are critical, covered by 3+ independent outlets, and clear two "
     "of: exploited in the wild (CISA KEV counts), 4+ outlets, very common software. "
@@ -398,27 +402,28 @@ def add_problems(entry: dict, rows: list[dict], flags: list[dict], today: str) -
     id in data/_scan_hot.json), cite at least one of the flagged story's own URLs, claim
     no reason the code did not find, and use a flag no other entry used.
 
-    An UPDATE (same id) keeps its CVEs and disclosure date, and may add a bar reason only
-    when a current flag for the same story found it. `updated` is never after today, so
-    an entry cannot hold the top of the section by moving its date forward.
-    Hand-curated entries arrive by reviewed PR, not through `add`."""
+    An UPDATE (same id) may rewrite the summary text and move `updated`, never past
+    today, and must change at least one summary field (so a scan cannot keep an entry
+    on top by re-dating it). It keeps the published CVEs, disclosure date, bar and flag:
+    those change only by reviewed PR, since the scan has no flag that proves a change
+    is about the same story. Hand-curated entries arrive by reviewed PR too."""
     tag = str(entry.get("id"))
     out = []
     if str(entry.get("updated") or "") > today:
         out.append(f"{tag}: updated is after today ({today})")
-    by_id = {str(f.get("id")): f for f in flags}
-    flag = by_id.get(str(entry.get("flag") or ""))
     old = next((r for r in rows if r.get("id") == entry.get("id")), None)
     if old is not None:
-        if sorted(entry.get("cves") or []) != sorted(old.get("cves") or []) and not flag:
-            out.append(f"{tag}: an update keeps the published CVEs unless a current flag backs it")
-        if entry.get("disclosed") != old.get("disclosed"):
-            out.append(f"{tag}: an update keeps the disclosure date")
-        allowed = set(old.get("bar") or []) | set((flag or {}).get("reasons") or [])
-        extra = set(entry.get("bar") or []) - allowed
-        if extra:
-            out.append(f"{tag}: bar adds {sorted(extra)}, which no current flag found")
+        for key in ("cves", "disclosed", "bar", "flag"):
+            a, b = entry.get(key), old.get(key)
+            if isinstance(a, list) and isinstance(b, list):
+                a, b = sorted(a), sorted(b)
+            if a != b:
+                out.append(f"{tag}: an update keeps the published {key}; change it by PR")
+        if all(entry.get(k) == old.get(k) for k in SUMMARY_FIELDS):
+            out.append(f"{tag}: an update must change the summary, not only the date")
         return out
+    by_id = {str(f.get("id")): f for f in flags}
+    flag = by_id.get(str(entry.get("flag") or ""))
     if flag is None:
         return out + [
             f"{tag}: a new entry needs `flag` set to a story id in data/_scan_hot.json; "

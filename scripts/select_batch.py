@@ -632,6 +632,8 @@ def hot_reasons(pool: list[dict], sigs: list, group: list[int], conf: c.Config) 
     if not copies or not any(recent(x, int(setting(conf, "batch_story_days"))) for x in copies):
         return []
     marks = frozenset().union(*(sigs[k].markers for k in keep))
+    if not any(hot.CRITICAL_TITLE.search(str(x.get("title") or "")) for x in copies):
+        marks -= {"critical"}  # "critical" must be said of the bug, in a headline
     kevs = [x for x in copies if str(x.get("source_id") or "").startswith("kev_json")]
     # CISA's catalog is the exploited signal, not an outlet covering the story.
     outlets = {nw.publisher(x) for x in copies if x not in kevs}
