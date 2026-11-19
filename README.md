@@ -10,7 +10,7 @@
 
 ## Hot incidents
 
-_Only incidents that are critical and clear at least two of: exploited in the wild (CISA KEV counts), covered by 4+ independent outlets, in very common software. Routine advisories never qualify. [Summaries](https://rcha0s.github.io/AwesomeSecurity-AIResearch/hot-incidents.md)._
+_Only incidents that are critical, covered by 3+ independent outlets, and clear two of: exploited in the wild (CISA KEV counts), 4+ outlets, very common software. Routine advisories and patch roundups never qualify. [Summaries](https://rcha0s.github.io/AwesomeSecurity-AIResearch/hot-incidents.md)._
 
 1. **[NGINX2Root: Unauthenticated remote code execution in nginx, chainable to root on the host](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?hot=nginx2root#week)** · _widely covered, very common software · CVE-2026-123007, CVE-2026-123633 · updated 2026-11-19_
 2. **[Java4Shell: Heap overflow in Java's Base64 decoder on AVX-512 CPUs, with claimed pre-auth RCE in Jira, Jenkins and Keycloak](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?hot=java4shell#week)** · _widely covered, very common software · CVE-2026-114938 · updated 2026-11-19_
@@ -36,8 +36,8 @@ _From the last 14 days: each has proof (the work itself or a measured comparison
 _Most covered in the last 7 days; single-outlet patch notices are left out._
 
 1. **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week)** · _Product Security · Nov 17, 2026 · 8 sources_
-2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 7 sources_
-3. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 6 sources_
+2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 6 sources_
+3. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 4 sources_
 
 ## This week's top stories
 

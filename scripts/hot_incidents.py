@@ -13,17 +13,23 @@ THE BAR (one definition, used by the intake fast path, the hourly watch and the
 validator of data/hot_incidents.json, and printed on the README, the site and the feed):
 
     critical      a critical rating (CVSS 9+ or the vendor's "critical"), or unauthenticated
-                  remote code execution, or confirmed exploitation in the wild
+                  remote code execution. "Exploited" alone is not critical: it is one of
+                  the reach reasons below, never counted twice.
+    and `min_outlets` (3) or more independent outlets (GitHub repos and HN posts do not
+    count; one registrable domain is one outlet; a patch roundup or weekly recap copy
+    is not an outlet),
     and at least TWO of:
       exploited     exploited in the wild (a CISA KEV listing counts)
       wide-coverage covered by `wide_outlets` (4) or more independent outlets
                     (GitHub repos and HN posts do not count)
-      ubiquitous    in very common software (config.yaml `hot_incidents.ubiquitous`)
+      ubiquitous    very common software (config.yaml `hot_incidents.ubiquitous`) named in a
+                    copy's headline. Edge appliances that are on CISA KEV most weeks
+                    (FortiOS, PAN-OS, Ivanti, NetScaler) are deliberately not on that list:
+                    they qualify only as exploited AND widely covered.
 
-    and never: a single outlet, a patch roundup (Patch Tuesday) or a lone vendor bulletin.
-
-So a CISA KEV entry for a niche product, a critical CVE one vendor posts, or a story two
-outlets carry does not qualify: those stay in the normal lanes. NGINX2Root (critical,
+So a CISA KEV entry for a niche product, a critical CVE one vendor posts, an exploited
+appliance bug two or three outlets write up, or a Patch Tuesday roundup does not
+qualify: those stay in the normal lanes. NGINX2Root (critical,
 nginx, a dozen outlets) and Java4Shell (critical, Java, eight outlets) do.
 
 data/hot_incidents.json holds the curated entries (`add` validates one; the scan writes
@@ -34,7 +40,7 @@ them for candidates the fast path flags). Each entry is a summary, never exploit
     affected, root_cause, conditions, exploitation, impact, fix
     sources[]       {name, url}: at least two independent outlets, https only
     finding_id      optional: the pool entry with the full writeup
-    flag            `add` only, for a new entry: the data/_scan_hot.json story id (not stored)
+    flag            set by `add` for a scan-written entry: the data/_scan_hot.json story id
 
 Usage:
     python scripts/hot_incidents.py validate            # every entry against the bar
@@ -65,7 +71,7 @@ REASON_LABEL = {
 }
 DEFAULTS = {
     "wide_outlets": 4,  # independent outlets for `wide-coverage` (3 let routine exploited-bug news in)
-    "min_outlets": 2,  # never a single outlet, whatever else holds
+    "min_outlets": 3,  # never fewer, whatever else holds (2 let weekly KEV news in)
     "min_reach": 2,  # how many REACH reasons it needs
     "show_days": 30,  # the Briefing shows an incident this long after its last update
     "ubiquitous": [],
@@ -96,10 +102,18 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # exploitation works at a high level; payloads and code blocks belong to the vendors.
 EXPLOIT_TEXT = re.compile(r"```|<script|\\x[0-9a-f]{2}|/bin/sh|curl\s+-|wget\s+http", re.I)
 FIELD_MAX = 700
+# Copies that bundle many bugs: never an outlet for one incident, never its markers.
+ROUNDUP = re.compile(
+    r"patch tuesday|roundup|round-up|recap|week in review|this week in|weekly|newsletter"
+    r"|security updates? for (?:\w+ )?(?:january|february|march|april|may|june|july"
+    r"|august|september|october|november|december)",
+    re.I,
+)
+NOT_OUTLETS = frozenset({"github.com", "ycombinator.com"})
 BAR_NOTE = (
-    "Only incidents that are critical and clear at least two of: exploited in the wild "
-    "(CISA KEV counts), covered by 4+ independent outlets, in very common software. "
-    "Routine advisories never qualify."
+    "Only incidents that are critical, covered by 3+ independent outlets, and clear two "
+    "of: exploited in the wild (CISA KEV counts), 4+ outlets, very common software. "
+    "Routine advisories and patch roundups never qualify."
 )
 
 
@@ -121,9 +135,10 @@ def settings(conf: c.Config | None = None) -> dict:
 
 # --- the bar -----------------------------------------------------------------------
 def is_critical(markers: frozenset[str] | set[str]) -> bool:
-    """Critical by newsworthy.py's markers: rated critical, pre-auth RCE, or exploited."""
+    """Critical by newsworthy.py's markers: rated critical, or pre-auth RCE. Exploited
+    alone is not (it is a reach reason; "zero-day" and "under attack" set it)."""
     m = set(markers)
-    return "critical" in m or "exploited" in m or {"rce", "unauthenticated"} <= m
+    return "critical" in m or {"rce", "unauthenticated"} <= m
 
 
 def ubiquitous_hit(text: str, names: list[str]) -> str:
@@ -180,12 +195,22 @@ def _https(url: object) -> bool:
 
 
 def _host(url: str) -> str:
-    host = urlparse(url).netloc.lower().split(":")[0]
-    return host[4:] if host.startswith("www.") else host
+    """The outlet behind a URL: its registrable domain, as newsworthy.publisher counts."""
+    host = (urlparse(url).hostname or "").lower()
+    labels = [p for p in host.split(".") if p]
+    if (
+        len(labels) >= 3
+        and labels[-2] in ("co", "com", "org", "net", "ac", "gov")
+        and len(labels[-1]) == 2
+    ):
+        return ".".join(labels[-3:])
+    return ".".join(labels[-2:])
 
 
-def problems(entry: object) -> list[str]:
-    """Everything wrong with one curated entry; [] means it may be published."""
+def problems(entry: object, s: dict | None = None) -> list[str]:
+    """Everything wrong with one curated entry; [] means it may be published.
+    `s` is settings() (config.yaml); DEFAULTS when not given."""
+    s = s or DEFAULTS
     if not isinstance(entry, dict):
         return ["entry is not an object"]
     out = []
@@ -212,10 +237,10 @@ def problems(entry: object) -> list[str]:
     bar = entry.get("bar")
     if not isinstance(bar, list) or any(b not in REACH for b in bar):
         out.append(f"{tag}: bar must list reasons from {', '.join(REACH)}")
-    elif len(set(bar)) < DEFAULTS["min_reach"]:
+    elif len(set(bar)) < s["min_reach"]:
         out.append(
             f"{tag}: clears {len(set(bar))} of the bar's reasons; a hot incident needs "
-            f"{DEFAULTS['min_reach']} ({BAR_NOTE})"
+            f"{s['min_reach']} ({BAR_NOTE})"
         )
     sources = entry.get("sources")
     if not isinstance(sources, list) or any(
@@ -224,19 +249,27 @@ def problems(entry: object) -> list[str]:
     ):
         out.append(f"{tag}: sources must be {{name, url}} with https urls")
     else:
-        hosts = {_host(s["url"]) for s in sources}
-        if len(hosts) < DEFAULTS["min_outlets"]:
-            out.append(f"{tag}: needs at least {DEFAULTS['min_outlets']} independent outlets")
-        if "wide-coverage" in (bar or []) and len(hosts) < DEFAULTS["wide_outlets"]:
+        hosts = {_host(x["url"]) for x in sources} - NOT_OUTLETS
+        if len(hosts) < s["min_outlets"]:
+            out.append(f"{tag}: needs at least {s['min_outlets']} independent outlets")
+        if "wide-coverage" in (bar or []) and len(hosts) < s["wide_outlets"]:
             out.append(f"{tag}: claims wide coverage but cites {len(hosts)} outlet(s)")
     fid = entry.get("finding_id")
     if fid is not None and not (isinstance(fid, str) and re.match(r"^[a-z0-9-]{1,120}$", fid)):
         out.append(f"{tag}: finding_id must be a pool entry id")
+    flag = entry.get("flag")
+    if flag is not None and not (isinstance(flag, str) and re.match(r"^[\w.:-]{1,200}$", flag)):
+        out.append(f"{tag}: flag must be the flagged story's id")
+    if DATE_RE.match(str(entry.get("disclosed") or "")) and DATE_RE.match(
+        str(entry.get("updated") or "")
+    ):
+        if entry["updated"] < entry["disclosed"]:
+            out.append(f"{tag}: updated is before disclosed")
     return out
 
 
-def validate(rows: list[dict]) -> list[str]:
-    out = [p for row in rows for p in problems(row)]
+def validate(rows: list[dict], s: dict | None = None) -> list[str]:
+    out = [p for row in rows for p in problems(row, s)]
     ids = [str(r.get("id")) for r in rows]
     out += [f"duplicate id {i}" for i in sorted({i for i in ids if ids.count(i) > 1})]
     return out
@@ -335,24 +368,71 @@ def scan_flags() -> list[dict]:
     return [f for f in data if isinstance(f, dict)] if isinstance(data, list) else []
 
 
-def add_problems(entry: dict, rows: list[dict], flags: list[dict]) -> list[str]:
-    """`add` is the scan session's only way in (containment denies editing the file), so
-    a NEW entry must name the fast-path flag it summarizes (`flag`: the flagged
-    candidate id) and claim no reason the code did not find. Updating an entry that is
-    already published needs no flag. Hand-curated entries arrive by reviewed PR."""
-    if any(r.get("id") == entry.get("id") for r in rows):
-        return []
+def covered(titles: list[str], ids: set[str], rows: list[dict]) -> bool:
+    """data/hot_incidents.json already calls this story out: a shared CVE, or an
+    incident's name in one of the copies' headlines."""
+    for inc in rows:
+        if ids & {str(x).lower() for x in inc.get("cves") or []}:
+            return True
+        name = str(inc.get("name") or "")
+        pattern = r"(?<![A-Za-z0-9])" + re.escape(name) + r"(?![A-Za-z0-9])"
+        if name and any(re.search(pattern, t or "", re.I) for t in titles):
+            return True
+    return False
+
+
+def _flag_urls(flag: dict) -> set[str]:
+    return {_canon(u) for u in [flag.get("url"), *(flag.get("coverage") or [])] if u}
+
+
+def _canon(url: object) -> str:
+    parsed = urlparse(str(url or ""))
+    host = (parsed.hostname or "").lower().removeprefix("www.")
+    return f"{host}{parsed.path.rstrip('/')}"
+
+
+def add_problems(entry: dict, rows: list[dict], flags: list[dict], today: str) -> list[str]:
+    """`add` is the scan session's only way in (containment denies editing the file).
+
+    A NEW entry must name the fast-path flag it summarizes (`flag`: the flagged story's
+    id in data/_scan_hot.json), cite at least one of the flagged story's own URLs, claim
+    no reason the code did not find, and use a flag no other entry used.
+
+    An UPDATE (same id) keeps its CVEs and disclosure date, and may add a bar reason only
+    when a current flag for the same story found it. `updated` is never after today, so
+    an entry cannot hold the top of the section by moving its date forward.
+    Hand-curated entries arrive by reviewed PR, not through `add`."""
+    tag = str(entry.get("id"))
+    out = []
+    if str(entry.get("updated") or "") > today:
+        out.append(f"{tag}: updated is after today ({today})")
     by_id = {str(f.get("id")): f for f in flags}
     flag = by_id.get(str(entry.get("flag") or ""))
+    old = next((r for r in rows if r.get("id") == entry.get("id")), None)
+    if old is not None:
+        if sorted(entry.get("cves") or []) != sorted(old.get("cves") or []) and not flag:
+            out.append(f"{tag}: an update keeps the published CVEs unless a current flag backs it")
+        if entry.get("disclosed") != old.get("disclosed"):
+            out.append(f"{tag}: an update keeps the disclosure date")
+        allowed = set(old.get("bar") or []) | set((flag or {}).get("reasons") or [])
+        extra = set(entry.get("bar") or []) - allowed
+        if extra:
+            out.append(f"{tag}: bar adds {sorted(extra)}, which no current flag found")
+        return out
     if flag is None:
-        return [
-            f"{entry.get('id')}: a new entry needs `flag` set to a story id in "
-            "data/_scan_hot.json; the fast path did not flag this one"
+        return out + [
+            f"{tag}: a new entry needs `flag` set to a story id in data/_scan_hot.json; "
+            "the fast path did not flag this one"
         ]
+    if any(r.get("flag") == flag.get("id") for r in rows):
+        out.append(f"{tag}: flag {flag.get('id')} already backs another entry")
+    cited = {_canon(x.get("url")) for x in entry.get("sources") or [] if isinstance(x, dict)}
+    if not cited & _flag_urls(flag):
+        out.append(f"{tag}: cite at least one of the flagged story's own URLs")
     extra = set(entry.get("bar") or []) - set(flag.get("reasons") or [])
     if extra:
-        return [f"{entry.get('id')}: bar claims {sorted(extra)}, which the flag did not find"]
-    return []
+        out.append(f"{tag}: bar claims {sorted(extra)}, which the flag did not find")
+    return out
 
 
 # --- CLI ---------------------------------------------------------------------------
@@ -366,18 +446,19 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     rows = load()
     if args.cmd == "validate":
-        errs = validate(rows)
+        errs = validate(rows, settings(c.load_config()))
         for e in errs:
             print(f"  - {e}")
         print(f"hot incidents: {len(rows)} entries, {len(errs)} problems")
         return 1 if errs else 0
     if args.cmd == "add":
         entry = json.loads(Path(args.file).read_text(encoding="utf-8"))
-        errs = problems(entry) or add_problems(entry, rows, scan_flags())
+        s = settings(c.load_config())
+        today = c.utcnow().strftime("%Y-%m-%d")
+        errs = problems(entry, s) or add_problems(entry, rows, scan_flags(), today)
         if errs:
             print("refused:\n" + "\n".join(f"  - {e}" for e in errs))
             return 1
-        entry.pop("flag", None)
         rows = [r for r in rows if r.get("id") != entry["id"]] + [entry]
         save(rows)
         print(f"hot incidents: upserted {entry['id']} ({len(rows)} entries)")

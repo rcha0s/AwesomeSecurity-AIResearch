@@ -601,10 +601,9 @@ def story_lane(
         lead = group_signal(sigs, group)
         worthy = lane_worthy(pool[group[0]], lead, conf)
         is_hot = bool(why_hot[i]) and hot_taken < hot_max and len(lane) < size
-        if is_hot:
+        if is_hot:  # a hot head does not use up its source's per_source share
             head = by_trust[0]
             hot_taken += 1
-            used[source_key(pool[head])] += 1
             row = with_story(pool[head], lead, [pool[k] for k in group if k != head])
             lane.append({**row, "batch_hot": why_hot[i]})
         elif len(lane) - hot_taken < limit and open_heads and worthy:
@@ -620,22 +619,31 @@ def story_lane(
 
 def hot_reasons(pool: list[dict], sigs: list, group: list[int], conf: c.Config) -> list[str]:
     """Why a staged story group clears the hot bar (hot_incidents.bar_reasons), or [].
-    Outlets are distinct publishers outside GitHub/HN; exploited is a CISA KEV copy or
-    an exploited marker; ubiquitous is a configured very-common-software name in any
-    copy's title or excerpt. A story the ledger already holds is never hot here."""
-    if any(sigs[k] is None or sigs[k].known for k in group):
+    Outlets are distinct publishers outside GitHub/HN, never a roundup or recap copy
+    (hot_incidents.ROUNDUP, whose markers do not count either); exploited is a CISA KEV
+    copy or an exploited marker; ubiquitous is a configured very-common-software name in
+    a copy's headline. A story the ledger already holds can still turn hot (NGINX2Root's
+    pattern: covered quietly, then everywhere) unless data/hot_incidents.json already
+    calls it out."""
+    if any(sigs[k] is None for k in group):
         return []
-    copies = [pool[k] for k in group]
-    if not any(recent(x, int(setting(conf, "batch_story_days"))) for x in copies):
+    keep = [k for k in group if not hot.ROUNDUP.search(str(pool[k].get("title") or ""))]
+    copies = [pool[k] for k in keep]
+    if not copies or not any(recent(x, int(setting(conf, "batch_story_days"))) for x in copies):
         return []
-    marks = frozenset().union(*(sigs[k].markers for k in group))
+    marks = frozenset().union(*(sigs[k].markers for k in keep))
     kevs = [x for x in copies if str(x.get("source_id") or "").startswith("kev_json")]
     # CISA's catalog is the exploited signal, not an outlet covering the story.
     outlets = {nw.publisher(x) for x in copies if x not in kevs}
     outlets -= set(nw.NON_INDEPENDENT) | {""}
     s = hot.settings(conf)
-    common = any(hot.ubiquitous_hit(nw._text(x), s["ubiquitous"]) for x in copies)
-    return hot.bar_reasons(marks, len(outlets), bool(kevs), common, s)
+    common = any(hot.ubiquitous_hit(str(x.get("title") or ""), s["ubiquitous"]) for x in copies)
+    reasons = hot.bar_reasons(marks, len(outlets), bool(kevs), common, s)
+    if reasons and any(sigs[k].known for k in group):
+        ids = set().union(*(sigs[k].ids for k in group))
+        if hot.covered([str(x.get("title") or "") for x in copies], ids, hot.load()):
+            return []
+    return reasons
 
 
 def hot_flags(batch: list[dict]) -> list[dict]:

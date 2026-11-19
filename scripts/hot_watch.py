@@ -12,14 +12,18 @@ the hot bar (hot_incidents.bar_reasons), and drops anything data/hot_incidents.j
 already covers (a shared CVE, or the incident's name in a headline).
 
 What is left is new and hot. With --alert, each one opens a GitHub issue labelled
-`hot-incident` in this repo (one per incident: the issue body carries a key, and an
-issue already holding that key, open or closed, is never opened again), so Rohan gets
-a GitHub notification within the hour. The next scan's hot fast path writes the summary
+`hot-incident` in this repo, so Rohan gets a GitHub notification within the hour. One
+issue per incident: the body carries a key for each CVE and each copy's URL, and an
+incident sharing ANY key with an issue already opened (open or closed) is the same
+incident, so a CVE assigned later or a new outlet never opens a second issue. The next scan's hot fast path writes the summary
 (research-scan skill, hot-incident step). Nothing is written to the pools or the site.
 
 The issue is public, so it carries only what the feeds already published: each copy's
 headline (plain text, no markup, no @mentions), its link (https only) and the CVE ids.
-Never log text, never model output.
+The job log prints those public headlines and nothing else; no model runs here.
+
+If no watched source returns anything (all feeds down, or every id in watch_sources
+wrong), the job exits non-zero so the failure shows in Actions instead of a quiet 0.
 
 Usage:
     python scripts/hot_watch.py                # print what is new and hot
@@ -47,7 +51,7 @@ import sources_registry as sr
 
 LABEL = "hot-incident"
 WATCH_DAYS = 3  # how far back a copy may be published to count
-KEY_RE = re.compile(r"<!-- hot-key: ([a-f0-9]{16}) -->")
+KEY_RE = re.compile(r"<!-- hot-key: ([a-z0-9-]{1,40}) -->")
 TITLE_MAX = 160
 
 
@@ -55,22 +59,29 @@ def watch_sources(conf: c.Config) -> list[dict]:
     """The registry rows named in `hot_incidents.watch_sources` that are active."""
     wanted = [str(x) for x in (conf.hot.get("watch_sources") or []) if isinstance(x, str)]
     by_id = {s["id"]: s for s in sr.load_sources() if s.get("active", True) is not False}
+    for missing in (i for i in wanted if i not in by_id):
+        print(f"hot watch: watch_sources id {missing} is not an active registry source")
     return [by_id[i] for i in wanted if i in by_id]
 
 
-def fetch(sources: list[dict], days: int = WATCH_DAYS) -> list[dict]:
-    """Recent copies from the watched sources, as staged-candidate-shaped dicts."""
+def fetch(sources: list[dict], days: int = WATCH_DAYS) -> tuple[list[dict], int]:
+    """(recent copies from the watched sources as staged-candidate-shaped dicts, how
+    many sources answered at all). A dead feed is skipped, never fatal."""
     cutoff = c.utcnow() - timedelta(days=days)
     rules = c.load_yaml(c.SOURCES_FILE)["classification"]
     out: list[dict] = []
+    answered = 0
     for source in sources:
         if source.get("type") == "kev_json":
             data = jf.fetch_json(source["handle"])
             if isinstance(data, dict):
+                answered += 1
                 out += jf.kev_candidates(data, source, rules, cutoff)
             continue
         feed = agg.feed_from_source(source)
         parsed = agg.parse_feed(feed["url"])
+        if parsed.entries:
+            answered += 1
         for entry in parsed.entries or []:
             if not c.in_ingest_window(c.entry_datetime(entry), cutoff, None):
                 continue
@@ -91,23 +102,19 @@ def fetch(sources: list[dict], days: int = WATCH_DAYS) -> list[dict]:
                     "source_name": source.get("name", ""),
                 }
             )
+    return out, answered
+
+
+def keys_for(cves: list[str], urls: list[str]) -> list[str]:
+    """Stable identity markers: one per CVE and one per copy URL. Two runs that share
+    any marker are the same incident, however the story grouped or got renamed."""
+    out = [cve.lower() for cve in cves]
+    out += ["url-" + hashlib.sha256(c.normalize_url(u).encode()).hexdigest()[:16] for u in urls]
     return out
 
 
-def covered(group: list[dict], ids: set[str], incidents: list[dict]) -> bool:
-    """data/hot_incidents.json already has this story: a shared CVE, or an incident's
-    name in one of the copies' headlines."""
-    for inc in incidents:
-        if ids & {str(x).lower() for x in inc.get("cves") or []}:
-            return True
-        name = str(inc.get("name") or "")
-        if name and any(re.search(re.escape(name), x.get("title") or "", re.I) for x in group):
-            return True
-    return False
-
-
 def detect(cands: list[dict], conf: c.Config, incidents: list[dict], reference=None) -> list[dict]:
-    """New hot stories among `cands`: [{key, title, reasons, cves, copies}]."""
+    """New hot stories among `cands`: [{keys, title, reasons, cves, copies}]."""
     if not cands:
         return []
     reference = sb.reference_docs() if reference is None else reference
@@ -120,14 +127,15 @@ def detect(cands: list[dict], conf: c.Config, incidents: list[dict], reference=N
             continue
         copies = [cands[k] for k in group]
         ids = set().union(*(sigs[k].ids for k in group))
-        if covered(copies, ids, incidents):
+        if hot.covered([str(x.get("title") or "") for x in copies], ids, incidents):
             continue
         copies.sort(key=lambda x: -(float(x.get("source_rank") or 0)))
         cves = sorted(i.upper() for i in ids if i.startswith("cve-"))
-        anchor = ",".join(cves) or plain(copies[0].get("title")).lower()
         out.append(
             {
-                "key": hashlib.sha256(anchor.encode()).hexdigest()[:16],
+                "keys": keys_for(
+                    cves, [x.get("source_url") or "" for x in copies if x.get("source_url")]
+                ),
                 "title": plain(copies[0].get("title")),
                 "reasons": reasons,
                 "cves": cves,
@@ -163,7 +171,7 @@ def issue_body(item: dict) -> str:
         "The next daily scan writes the summary (root cause, conditions, exploitation, fix) "
         "into data/hot_incidents.json. To get it sooner, run the scan now.",
         "",
-        f"<!-- hot-key: {item['key']} -->",
+        *[f"<!-- hot-key: {k} -->" for k in item["keys"]],
     ]
     return "\n".join(lines)
 
@@ -178,13 +186,22 @@ def _gh(*args: str, body: dict | None = None) -> str:
         check=False,
     )
     if res.returncode != 0:
-        raise RuntimeError(f"gh api {args[0]} failed: {res.stderr.strip()[:200]}")
+        # gh puts the API's error body (e.g. "already_exists") on stdout, not stderr.
+        detail = f"{res.stderr.strip()} {res.stdout.strip()}"[:400]
+        raise RuntimeError(f"gh api {args[0]} failed: {detail}")
     return res.stdout
 
 
 def known_keys(repo: str) -> set[str]:
-    raw = _gh(f"repos/{repo}/issues?state=all&labels={LABEL}&per_page=100")
-    return {m for issue in json.loads(raw or "[]") for m in KEY_RE.findall(issue.get("body") or "")}
+    """Every key in every `hot-incident` issue, open or closed, all pages."""
+    raw = _gh(
+        f"repos/{repo}/issues?state=all&labels={LABEL}&per_page=100",
+        "--paginate",
+        "--jq",
+        ".[].body | @json",
+    )
+    bodies = [json.loads(line) for line in raw.splitlines() if line.strip()]
+    return {m for body in bodies for m in KEY_RE.findall(body or "")}
 
 
 def alert(items: list[dict], repo: str) -> int:
@@ -200,11 +217,12 @@ def alert(items: list[dict], repo: str) -> int:
     seen = known_keys(repo)
     opened = 0
     for item in items:
-        if item["key"] in seen:
+        if seen & set(item["keys"]):
             continue
         title = f"Hot incident: {item['title']}"[:200]
         _gh(f"repos/{repo}/issues", "--method", "POST", "--input", "-",
             body={"title": title, "body": issue_body(item), "labels": [LABEL]})  # fmt: skip
+        seen |= set(item["keys"])  # a second group of the same incident in this run
         opened += 1
     return opened
 
@@ -219,7 +237,11 @@ def main(argv: list[str] | None = None) -> int:
     if not sources:
         print("hot watch: no watch_sources in config.yaml; nothing to do")
         return 0
-    items = detect(fetch(sources), conf, hot.load())
+    cands, answered = fetch(sources)
+    if not answered:
+        print(f"hot watch: none of the {len(sources)} watched sources answered; failing")
+        return 1
+    items = detect(cands, conf, hot.load())
     for item in items:
         print(f"HOT ({', '.join(item['reasons'])}): {item['title']} [{len(item['copies'])} copies]")
     print(f"hot watch: {len(items)} new hot incident(s) from {len(sources)} sources")

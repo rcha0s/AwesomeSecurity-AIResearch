@@ -474,9 +474,9 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   wait in the backlog (`batch_same_story_as`), and stories the ledger already
   holds never qualify. Markers and corroboration also add `batch_marker_bonus`
   and `batch_corroboration_bonus` to the deal's score. A story that clears the
-  hot bar (`scripts/hot_incidents.py`: critical, 2+ independent outlets, and at
+  hot bar (`scripts/hot_incidents.py`: critical, 3+ independent outlets, and at
   least two of exploited/KEV, 4+ outlets, very common software from config
-  `hot_incidents.ubiquitous`) is dealt first and takes one of up to
+  `hot_incidents.ubiquitous` named in a headline) is dealt first and takes one of up to
   `batch_hot_max` slots on top of `batch_story_max`, tagged `batch_hot`; the
   session writes its summary into `data/hot_incidents.json` (skill step 6b).
   Routine advisories never qualify. Then

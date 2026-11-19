@@ -758,13 +758,14 @@ arguments:
 # Hot incidents (scripts/hot_incidents.py). Rohan, 2026-11-18: a section for the incidents
 # that are "really hot and popular", with root cause, conditions and how each is exploited,
 # but "you don't want to do this for every advisory item". THE BAR: critical (CVSS 9+ or
-# vendor critical, pre-auth RCE, or exploited) AND at least `min_reach` of: exploited in
-# the wild (CISA KEV counts), `wide_outlets`+ independent outlets, very common software
+# vendor critical, or pre-auth RCE) AND `min_outlets`+ independent outlets AND at least
+# `min_reach` of: exploited in the wild (CISA KEV counts), `wide_outlets`+ independent
+# outlets, very common software
 # (the list below). Never fewer than `min_outlets` outlets. A KEV entry for a niche product,
 # one vendor's critical CVE, or a two-outlet story stays in the normal lanes.
 hot_incidents:
   wide_outlets: 4
-  min_outlets: 2
+  min_outlets: 3
   min_reach: 2
   watch_sources:          # what the hourly watch reads between scans (scripts/hot_watch.py,
                           # .github/workflows/hot-watch.yml): CISA KEV plus the news outlets
@@ -779,10 +780,13 @@ hot_incidents:
   show_days: 30           # the Briefing and README show an incident this long after its
                           # last update; docs/hot-incidents.md keeps every one
   ubiquitous:             # software on a large share of servers, desktops or phones.
-                          # Whole-word, case-insensitive, in a title or excerpt. Keep it
+                          # Whole-word, case-insensitive, in a copy's headline. Keep it
                           # short: a name here makes every critical story about it
                           # one reason closer to the bar. Ecosystems (npm, PyPI) are left
-                          # out on purpose: a bad package is not a flaw in npm itself
+                          # out on purpose: a bad package is not a flaw in npm itself.
+                          # Edge appliances on CISA KEV most weeks (FortiOS, PAN-OS,
+                          # Ivanti, NetScaler, Cisco IOS, ESXi) are left out too: they
+                          # qualify only when exploited AND widely covered
     - nginx
     - Apache HTTP Server
     - httpd
@@ -819,10 +823,3 @@ hot_incidents:
     - Firefox
     - Safari
     - WebKit
-    - VMware ESXi
-    - vCenter
-    - Cisco IOS
-    - FortiOS
-    - PAN-OS
-    - Citrix NetScaler
-    - Ivanti

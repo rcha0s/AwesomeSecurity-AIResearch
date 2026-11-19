@@ -38,6 +38,7 @@ import content_checks as cc
 import dedupe_stories as ds
 import efficiency_feed
 import hot_incidents as hot
+import newsworthy as nw
 import story_ledger as sl
 import taxonomy
 import verify_citations as vc
@@ -219,13 +220,17 @@ def story_fields(entry: dict, ctx: tuple[dict, dict[str, str]]) -> dict:
     # `corroborating_sources`) count too. Before 2026-11-19 only the story ledger's
     # rows did, so Java4Shell (8 outlets on the entry, 1 ledger row) ranked as a
     # single-outlet story and never reached Biggest this week.
+    # One outlet counts once: an entry source on a domain already counted is skipped.
     seen = {own} | {ds.canonical_url(x["url"]) for x in corr}
+    outlets = {nw.registrable_domain(u) for u in [own, *(x["url"] for x in corr)] if u}
     for s in entry.get("corroborating_sources") or []:
         url = s.get("url", "") if isinstance(s, dict) else ""
         key = ds.canonical_url(url)
-        if not url or key in seen:
+        domain = nw.registrable_domain(url)
+        if not url or key in seen or domain in outlets:
             continue
         seen.add(key)
+        outlets.add(domain)
         corr.append({"url": url, "source_name": str(s.get("name") or ""), "tier": ""})
     keys = ("date", "note", "url", "source_name")
     updates = [{k: u.get(k, "") for k in keys} for u in story.get("updates", [])]
@@ -921,7 +926,7 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
-    hot_errors = hot.validate(hot.load())
+    hot_errors = hot.validate(hot.load(), hot.settings(c.load_config()))
     if hot_errors:
         print(f"data/{hot.FILE_NAME} is invalid - refusing to render ({len(hot_errors)} problems):")
         for error in hot_errors[:20]:
