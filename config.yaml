@@ -266,6 +266,11 @@ limits:
                           # and its best copy ranked 50th of 393; with the new feeds
                           # PHP2Shell, ARTEX, PAN-OS and GitLab fill it. Unused slots
                           # go to the deal
+  batch_hot_max: 3        # hot fast path (scripts/hot_incidents.py): a staged story that
+                          # clears the hot bar is dealt before every other lane and takes
+                          # a slot on top of batch_story_max (Rohan, 2026-11-18, after
+                          # NGINX2Root and Java4Shell: "I need to be called out as soon as
+                          # possible"). The bar is strict, so most days this is 0
   batch_story_min_sources: 2   # ...with a marker (rce, critical, exploited, ...)
   batch_story_any_sources: 4   # ...or this many without one
   batch_story_days: 7     # a lane story was published in the last N days
@@ -749,3 +754,72 @@ arguments:
   x_author_weight: 25
   signal_rows: 40
   signal_days: 14
+
+# Hot incidents (scripts/hot_incidents.py). Rohan, 2026-11-18: a section for the incidents
+# that are "really hot and popular", with root cause, conditions and how each is exploited,
+# but "you don't want to do this for every advisory item". THE BAR: critical (CVSS 9+ or
+# vendor critical, or pre-auth RCE) AND `min_outlets`+ independent outlets AND at least
+# `min_reach` of: exploited in the wild (CISA KEV counts), `wide_outlets`+ independent
+# outlets, very common software
+# (the list below). Never fewer than `min_outlets` outlets. A KEV entry for a niche product,
+# one vendor's critical CVE, or a two-outlet story stays in the normal lanes.
+hot_incidents:
+  wide_outlets: 4
+  min_outlets: 3
+  min_reach: 2
+  watch_sources:          # what the hourly watch reads between scans (scripts/hot_watch.py,
+                          # .github/workflows/hot-watch.yml): CISA KEV plus the news outlets
+                          # that carry big incidents first. Registry ids (data/sources.json)
+    - kev_json:https-www-cisa-gov-sites-default-files-feeds-kno
+    - rss:https-feeds-feedburner-com-thehackersnews
+    - rss:https-www-bleepingcomputer-com-feed
+    - rss:https-www-securityweek-com-feed
+    - rss:https-www-theregister-com-security-headlines-ato
+    - rss:https-www-darkreading-com-rss-xml
+    - rss:https-www-wiz-io-feed-rss-xml
+  show_days: 30           # the Briefing and README show an incident this long after its
+                          # last update; docs/hot-incidents.md keeps every one
+  ubiquitous:             # software on a large share of servers, desktops or phones.
+                          # Whole-word, case-insensitive, in a copy's headline. Keep it
+                          # short: a name here makes every critical story about it
+                          # one reason closer to the bar. Ecosystems (npm, PyPI) are left
+                          # out on purpose: a bad package is not a flaw in npm itself.
+                          # Edge appliances on CISA KEV most weeks (FortiOS, PAN-OS,
+                          # Ivanti, NetScaler, Cisco IOS, ESXi) are left out too: they
+                          # qualify only when exploited AND widely covered
+    - nginx
+    - Apache HTTP Server
+    - httpd
+    - OpenSSL
+    - OpenSSH
+    - Linux kernel
+    - glibc
+    - sudo
+    - systemd
+    - curl
+    - Java
+    - OpenJDK
+    - JDK
+    - JVM
+    - Log4j
+    - Spring Framework
+    - Spring Boot
+    - Node.js
+    - WordPress
+    - Kubernetes
+    - Docker
+    - containerd
+    - PostgreSQL
+    - MySQL
+    - Redis
+    - Windows
+    - Active Directory
+    - Exchange Server
+    - macOS
+    - iOS
+    - Android
+    - Chrome
+    - Chromium
+    - Firefox
+    - Safari
+    - WebKit

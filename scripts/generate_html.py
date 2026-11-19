@@ -37,6 +37,8 @@ import common as c
 import content_checks as cc
 import dedupe_stories as ds
 import efficiency_feed
+import hot_incidents as hot
+import newsworthy as nw
 import story_ledger as sl
 import taxonomy
 import verify_citations as vc
@@ -214,6 +216,22 @@ def story_fields(entry: dict, ctx: tuple[dict, dict[str, str]]) -> dict:
         for s in story.get("sources", [])
         if ds.canonical_url(s.get("url", "")) != own
     ]
+    # The outlets the analyzer found covering the same story (the entry's
+    # `corroborating_sources`) count too. Before 2026-11-19 only the story ledger's
+    # rows did, so Java4Shell (8 outlets on the entry, 1 ledger row) ranked as a
+    # single-outlet story and never reached Biggest this week.
+    # One outlet counts once: an entry source on a domain already counted is skipped.
+    seen = {own} | {ds.canonical_url(x["url"]) for x in corr}
+    outlets = {nw.registrable_domain(u) for u in [own, *(x["url"] for x in corr)] if u}
+    for s in entry.get("corroborating_sources") or []:
+        url = s.get("url", "") if isinstance(s, dict) else ""
+        key = ds.canonical_url(url)
+        domain = nw.registrable_domain(url)
+        if not url or key in seen or domain in outlets:
+            continue
+        seen.add(key)
+        outlets.add(domain)
+        corr.append({"url": url, "source_name": str(s.get("name") or ""), "tier": ""})
     keys = ("date", "note", "url", "source_name")
     updates = [{k: u.get(k, "") for k in keys} for u in story.get("updates", [])]
     return {
@@ -454,6 +472,10 @@ def build_payload(ledger: dict, conf: c.Config, now: str) -> dict:
         "trends": {t: trend_view(_trend_rows(trends.get(t, []))) for t in c.TOPICS},
         "archive": archived,
         "learn": learn_rows(archive, conf, snapshot_days, ctx),
+        "hot_incidents": hot.payload_rows(
+            hot.active(hot.load(), now, hot.settings(conf)["show_days"])
+        ),
+        "hot_bar": hot.BAR_NOTE,
         "arguments": arguments.shown(
             c.load_json(c.DATA_DIR / arguments.ROWS_NAME, []), now, arguments.settings()
         ),
@@ -904,6 +926,13 @@ def main() -> int:
             print(f"  - {error}")
         return 1
 
+    hot_errors = hot.validate(hot.load(), hot.settings(c.load_config()))
+    if hot_errors:
+        print(f"data/{hot.FILE_NAME} is invalid - refusing to render ({len(hot_errors)} problems):")
+        for error in hot_errors[:20]:
+            print(f"  - {error}")
+        return 1
+
     conf = c.load_config()
     now = c.utcnow().strftime("%Y-%m-%d")
     payload = build_payload(ledger, conf, now)
@@ -922,6 +951,10 @@ def main() -> int:
     (docs / efficiency_feed.FEED_NAME).write_text(
         efficiency_feed.render(payload, now, SITE_URL), encoding="utf-8"
     )
+    # Every curated hot incident in full (the Briefing shows the recent ones).
+    every_hot = hot.payload_rows(hot.active(hot.load(), now, 36500))
+    (docs / hot.FEED_NAME).write_text(hot.render_feed(every_hot, now, SITE_URL), encoding="utf-8")
+    (docs / hot.JSON_FEED_NAME).write_text(hot.render_json(every_hot, now), encoding="utf-8")
     # Without this, Pages runs the output through Jekyll and mangles it.
     (docs / ".nojekyll").write_text("", encoding="utf-8")
     detail_pages = _copy_detail_pages(docs, conf)

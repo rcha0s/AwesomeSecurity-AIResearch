@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_12 vetted findings · updated 2026-11-18 · ranked by composite · findings from the latest 31 days · [65 held for review](../REVIEW.md)._
+_10 vetted findings · updated 2026-11-19 · ranked by composite · findings from the latest 31 days · [65 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -133,12 +133,12 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | AI Infrastructure & Incident Response | 3 |
-| Guardrails & Defensive Tooling | 3 |
 | Agent & Harness Security | 2 |
 | Red-Teaming & Threat Modeling | 1 |
 | Prompt Injection & Jailbreaks | 1 |
 | MCP, Tools & Skills | 1 |
 | Memory, RAG & Data Poisoning | 1 |
+| Guardrails & Defensive Tooling | 1 |
 
 ## AI Infrastructure & Incident Response
 
@@ -151,18 +151,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **["Black October" is an X label for a week of disclosures](ai-infra/2026-10-black-october-is-an-x-label-for-a-week-of-disclosures.md)** · composite **52.0** · Oct 23, 2026 · 🔗 +2 sources  
   Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.  
   _[forkast.news](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)_
-
-## Guardrails & Defensive Tooling
-
-- **[Guardrail benchmark scores mostly measure the training labels' definition of unsafe](guardrails/2026-10-guardrail-benchmark-scores-mostly-measure-the-training-label.md)** · composite **51.55** · Oct 18, 2026  
-  Before picking a guardrail classifier by benchmark score, ask which policy its labels encode, whether the benchmark leaked into training, and what the seed-to-seed variance is, or you are comparing…  
-  _[NeurIPS (via arXiv)](http://arxiv.org/abs/2610.25060v1)_
-- **[Guardrail safety benchmarks mostly measure the training label policy](guardrails/2026-10-guardrail-safety-benchmarks-mostly-measure-the-training-labe.md)** · composite **51.37** · Oct 18, 2026  
-  A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail…  
-  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.25060)_
-- **[SCOPE compiles natural-language agent policies into predicate programs run by small models](guardrails/2026-10-scope-compiles-natural-language-agent-policies-into-predicat.md)** · composite **46.0** · Oct 22, 2026  
-  For agent policy enforcement, prefer a compiled program of narrow predicates over one guardrail model or one LLM judge: cheaper, steadier and auditable (authors' claims, abstract only).  
-  _[source](https://arxiv.org/abs/2610.31062)_
 
 ## Agent & Harness Security
 
@@ -196,6 +184,12 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **56.05** · Nov 6, 2026  
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted…  
   _[NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)_
+
+## Guardrails & Defensive Tooling
+
+- **[SCOPE compiles natural-language agent policies into predicate programs run by small models](guardrails/2026-10-scope-compiles-natural-language-agent-policies-into-predicat.md)** · composite **46.0** · Oct 22, 2026  
+  For agent policy enforcement, prefer a compiled program of narrow predicates over one guardrail model or one LLM judge: cheaper, steadier and auditable (authors' claims, abstract only).  
+  _[source](https://arxiv.org/abs/2610.31062)_
 
 ---
 

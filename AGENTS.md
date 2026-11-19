@@ -28,6 +28,7 @@ data/taxonomy_migration.json # one-time label -> ID table (every pre-migration l
 data/taxonomy_proposals.json # verified new-domain proposals (taxonomy_proposals.py)
 data/archive.json         # aged-out findings (preserved, not shown)
 data/sources.json         # ranked source registry (add via add_source.py; reviewed PRs only)
+data/hot_incidents.json   # Hot incidents section: curated summaries held to the hot bar (scripts/hot_incidents.py)
 data/source_stats.json    # per-source hit-rate counts written by scans (overlaid on the registry)
 data/candidates.json      # transient ingest staging (gitignored)
 data/_raw/                # transient fetched article text (gitignored)
@@ -75,6 +76,8 @@ scripts/run_golden_local.sh # weekly golden-set analyzer run; scan_containment.s
 data/evals/               # golden.json (answer key), recall-<week>.json, golden-<date>.json, history.json
 scripts/importance.py     # newsworthiness signal — ranks the REVIEW.md queue (editorial track)
 scripts/newsworthy.py     # pre-analysis big-story signal for batch selection: markers + same-story corroboration
+scripts/hot_incidents.py  # the hot bar, data/hot_incidents.json validation, README/site/feed rendering
+scripts/hot_watch.py      # hourly between-scan watch (.github/workflows/hot-watch.yml): opens a hot-incident issue
 scripts/promote_editorial.py # applies the editorial agent's promotions (integrity floor enforced)
 scripts/merge_guard.py    # auto-merge security boundary: is this PR content-only? (pure)
 scripts/automerge.py      # drives .github/workflows/automerge.yml (REST gh api only)
@@ -470,7 +473,13 @@ failed run opens or comments on the `scan-failure` issue (`scripts/scan_alert.sh
   story. Each story gets one slot, tagged `batch_priority: story`; its other copies
   wait in the backlog (`batch_same_story_as`), and stories the ledger already
   holds never qualify. Markers and corroboration also add `batch_marker_bonus`
-  and `batch_corroboration_bonus` to the deal's score. Then
+  and `batch_corroboration_bonus` to the deal's score. A story that clears the
+  hot bar (`scripts/hot_incidents.py`: critical, 3+ independent outlets, and at
+  least two of exploited/KEV, 4+ outlets, very common software from config
+  `hot_incidents.ubiquitous` named in a headline) is dealt first and takes one of up to
+  `batch_hot_max` slots on top of `batch_story_max`, tagged `batch_hot`; the
+  session writes its summary into `data/hot_incidents.json` (skill step 6b).
+  Routine advisories never qualify. Then
   a must-not-miss lane of up to `batch_priority_max` slots takes new CISA KEV
   entries and the GHSA advisories the keep rule below allows, tagged
   `batch_priority`; the session analyzes those first. Then a standards lane of up to

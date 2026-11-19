@@ -513,6 +513,7 @@ def test_containment_allows_exactly_the_named_scripts():
         "Bash(python scripts/add_claim.py list)", "Bash(python scripts/add_claim.py list *)",
         "Bash(python scripts/add_claim.py evidence *)", "Bash(python scripts/add_claim.py new *)",
         "Bash(python scripts/add_claim.py validate)",
+        "Bash(python scripts/hot_incidents.py add *)", "Bash(python scripts/hot_incidents.py validate)",
     ]  # fmt: skip
     for rule in (t for t in tools if t.startswith("Bash(")):
         assert re.fullmatch(
@@ -521,6 +522,7 @@ def test_containment_allows_exactly_the_named_scripts():
     text = (REPO / "scripts/scan_containment.sh").read_text()
     assert '"Edit(data/_scan*)"' in text  # the tier record is session-proof
     assert '"Edit(data/arguments.json)"' in text  # rows arrive only through arguments.py merge
+    assert '"Edit(data/hot_incidents.json)"' in text  # rows arrive only through hot_incidents.py add
 
 
 def test_post_refuses_more_briefs_than_the_news_cap(scan_repo):

@@ -294,6 +294,17 @@
   .search input:focus { border-color: var(--accent); outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: 0; }
 
   /* ---- Claims ---- */
+  /* ---- Hot incidents (scripts/hot_incidents.py) ---- */
+  .hot { background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--st-refuted);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .hot h3 { margin: 4px 0 6px; font-size: 18px; }
+  .hot .kind { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--st-refuted); }
+  .hot .when { font-size: 12px; color: var(--ink-3); }
+  .hot .hot-meta { font-size: 13px; color: var(--ink-3); margin: 0 0 8px; }
+  .hot dl { margin: 8px 0 0; display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .hot dt { font-weight: 700; font-size: 13px; color: var(--ink-2); }
+  .hot dd { margin: 0 0 4px; line-height: 1.5; }
+  .hot details > summary { cursor: pointer; color: var(--accent); font-size: 14px; margin-top: 8px; }
   .claim { background: var(--card); border: 1px solid var(--rule); border-radius: 10px;
     padding: 16px 18px; margin-bottom: 10px; border-left: 4px solid var(--rule); }
   .claim.st-current { border-left-color: var(--st-current); }
@@ -838,7 +849,7 @@
   function renderWeek() {
     var root = $("#view-week");
     var shown = {};
-    var html = focusHTML(shown) + learningHTML(shown) + biggestHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
+    var html = hotHTML() + focusHTML(shown) + learningHTML(shown) + biggestHTML(shown) + argumentsHTML() + topStoriesHTML(shown) + claimChangesHTML() + efficiencyHTML(shown);
     var newsDays = DATA.news_front_page_days, allNews = arr(DATA.editorial);
     var news = frontNews(allNews, newsDays, DATA.news_front_page_max).filter(function (f) { return !shown[f.id]; });
     if (news.length) {
@@ -1479,6 +1490,48 @@
     if (!shown) return "Nothing in the last " + days + " days cleared all three filters.";
     return "From the last " + days + " days: each has proof (the work itself or a measured " +
       "comparison) and serves one of your goals; more independent sources rank first.";
+  }
+  // Hot incidents: the few critical incidents everyone is talking about, curated in
+  // data/hot_incidents.json against the bar in scripts/hot_incidents.py (BAR_NOTE,
+  // sent as DATA.hot_bar). Each is a summary: root cause, conditions, how it is
+  // exploited, impact, fix. Hidden when none is recent. ?hot=<id> opens that one.
+  var HOT_REASON = { "exploited": "exploited in the wild", "wide-coverage": "widely covered",
+    "ubiquitous": "very common software" };
+  var HOT_FIELDS = [["affected", "Affected"], ["root_cause", "Root cause"],
+    ["conditions", "Conditions to exploit"], ["exploitation", "How it is exploited"],
+    ["impact", "Impact"], ["fix", "Fix or mitigation"]];
+  function hotCardHTML(h, open) {
+    var why = arr(h.bar).map(function (b) { return has(HOT_REASON, b) ? HOT_REASON[b] : ""; })
+      .filter(Boolean).join(", ");
+    var cves = arr(h.cves).map(function (x) { return esc(String(x)); }).join(", ");
+    var srcs = arr(h.sources).filter(function (s) { return s && safeUrl(s.url) !== "#"; })
+      .map(function (s) { return '<a class="link" href="' + hrefOf(s.url) + '">' + txt(s.name) + ' &#8599;</a>'; })
+      .join(" · ");
+    var body = HOT_FIELDS.map(function (f) {
+      return h[f[0]] ? '<dt>' + f[1] + '</dt><dd>' + txt(h[f[0]]) + '</dd>' : ""; }).join("");
+    var full = h.finding_id && findingById(String(h.finding_id))
+      ? ' · <a class="link" href="?finding=' + esc(encodeURIComponent(String(h.finding_id))) + '#week">Full writeup</a>' : "";
+    return '<article class="hot" id="hot-' + esc(String(h.id || "")) + '">' +
+      '<div class="claim-top"><span class="kind">Hot incident</span>' +
+        (why ? '<span class="when">' + esc(why) + '</span>' : '') + '</div>' +
+      '<h3>' + txt(h.name) + ': ' + txt(h.headline) + '</h3>' +
+      '<p class="hot-meta">' + (cves ? cves + ' · ' : '') + 'disclosed ' + esc(fmtDate(h.disclosed)) +
+        ' · updated ' + esc(fmtDate(h.updated)) + '</p>' +
+      '<p><b>Severity.</b> ' + txt(h.severity) + '</p>' +
+      '<p><b>Status.</b> ' + txt(h.status) + '</p>' +
+      '<details' + (open ? ' open' : '') + '><summary>Root cause, conditions, exploitation and fix</summary>' +
+        '<dl>' + body + '</dl></details>' +
+      (srcs ? '<p class="why">Sources: ' + srcs + full + '</p>' : '') +
+      '</article>';
+  }
+  function hotHTML() {
+    var rows = arr(DATA.hot_incidents).filter(function (h) { return h && h.name && h.headline; });
+    if (!rows.length) return "";
+    var want = param("hot");
+    return secHead("Hot incidents", rows.length + " now") +
+      '<p class="sec-lede">' + esc(DATA.hot_bar || "") + ' ' +
+      '<a class="link" href="hot-incidents.md">All summaries</a></p>' +
+      rows.map(function (h) { return hotCardHTML(h, want && want === h.id); }).join("");
   }
   function biggestHTML(shown) {
     var m = rowsById();
@@ -2341,6 +2394,9 @@
   (function initFromParam() {
     try {
       var p = new URLSearchParams(location.search);
+      var hid = p.get('hot');
+      var hot = hid && /^[a-z0-9-]{1,61}$/.test(hid) ? document.getElementById('hot-' + hid) : null;
+      if (hot) hot.scrollIntoView();
       var fid = p.get('finding');
       if (!fid) return;
       var f = findingById(fid);

@@ -4,9 +4,16 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--18-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-34-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--19-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-32-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
+
+## Hot incidents
+
+_Only incidents that are critical, covered by 3+ independent outlets, and clear two of: exploited in the wild (CISA KEV counts), 4+ outlets, very common software. Routine advisories and patch roundups never qualify. [Summaries](https://rcha0s.github.io/AwesomeSecurity-AIResearch/hot-incidents.md)._
+
+1. **[NGINX2Root: Unauthenticated remote code execution in nginx, chainable to root on the host](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?hot=nginx2root#week)** · _widely covered, very common software · CVE-2026-123007, CVE-2026-123633 · updated 2026-11-19_
+2. **[Java4Shell: Heap overflow in Java's Base64 decoder on AVX-512 CPUs, with claimed pre-auth RCE in Jira, Jenkins and Keycloak](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?hot=java4shell#week)** · _widely covered, very common software · CVE-2026-114938 · updated 2026-11-19_
 
 ## Your focus
 
@@ -28,17 +35,17 @@ _From the last 14 days: each has proof (the work itself or a measured comparison
 
 _Most covered in the last 7 days; single-outlet patch notices are left out._
 
-1. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 4 sources_
-2. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 4 sources_
-3. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
+1. **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week)** · _Product Security · Nov 17, 2026 · 8 sources_
+2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 6 sources_
+3. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 4 sources_
 
 ## This week's top stories
 
 _The last 7 days, most covered first._
 
-1. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026 · 2 sources_
-2. **[Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week)** · _Product Security · Nov 12, 2026 · 2 sources_
-3. **[Check Point ships hotfixes for a zero-day exploited for root access](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week)** · _Product Security · Nov 13, 2026 · 2 sources_
+1. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026 · 3 sources_
+2. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
+3. **[Chainguard details wfx stealer that backdoors cloud roles and can forge checks](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainguard-details-wfx-stealer-that-backdoors-cl-f9a367b152#week)** · _Product Security · Nov 12, 2026 · 2 sources_
 
 ## Claim changes
 
@@ -76,4 +83,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-18 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-19 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

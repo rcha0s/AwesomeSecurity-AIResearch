@@ -250,6 +250,25 @@ Run everything from the repo root. X/Twitter is not batch-ingested (#57); ad-hoc
    conservative: a single blog post rarely overturns a standing claim, and `confidence`
    should reflect the strength and independence of the evidence, not your enthusiasm.
 
+6b. **Hot incidents** (`data/_scan_hot.json`, code-owned; `scripts/hot_incidents.py` holds the bar).
+   The batch's hot fast path flags the few stories that are critical, covered by 3+ independent
+   outlets, AND clear two of: exploited in the wild (CISA KEV counts), 4+ outlets, very common
+   software. For each flag
+   (usually none), after its deep analysis, write one summary to a scratch file under
+   `data/_batches/` and add it with `python scripts/hot_incidents.py add <file>`, which refuses
+   anything off the bar or off the schema. Fields (see the module docstring): `id` (short kebab
+   name), `name` (the incident's own name, or its product and CVE), `headline` (one line),
+   `cves`, `disclosed`, `updated` (today), `severity`, `status` (exploited? KEV? public PoC? as of
+   when), `bar` (the flag's reasons), `affected`, `root_cause`, `conditions`, `exploitation`,
+   `impact`, `fix`, `sources` (2+ outlets you read, https, `{name, url}`), `finding_id` (the
+   pool entry) and `flag` (the flag's `id`; `add` refuses a new entry without one, and one
+   of your `sources` must be a URL from the flag's `url` or `coverage`). Every field is grounded in the sources you read and says who claims what when
+   outlets disagree. `exploitation` describes how an attack works at a high level: never a
+   payload, command or code. If the incident is already in `data/hot_incidents.json`, update
+   that entry (same `id`) with what changed in the summary text; keep its `cves`, `disclosed`,
+   `bar` and `flag` as published (`add` refuses changes to those; they change by PR). Rohan, 2026-11-18: "you don't want to do this for
+   every advisory item", so never add an entry the fast path did not flag.
+
 7. **Merge + rerank + render:**
    ```bash
    python scripts/merge_analysis.py       # story verdicts, validate, dedup, route by topic, GROUND excerpts, flag, rerank
