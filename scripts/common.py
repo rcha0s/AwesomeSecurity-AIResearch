@@ -889,6 +889,11 @@ def is_news_curated(
         # merge_analysis.py from data/_scan_tiers.json), not by its source's
         # track: the brief's own integrity floor stands in for it.
         return entry.get("verified") is not False
+    # A story the verifier refuted on a fact never shows as news (2026-11-19: a
+    # Splunk story with a wrong lesson was rendered). Only the explicit label
+    # counts here: an unlabeled or "scoring" verified:false stays as it was.
+    if entry.get("verified") is False and entry.get("verify_reason") == "factual":
+        return False
     sources_by_id = sources_by_id or {}
     track, tier = _source_track_and_tier(entry, sources_by_id)
     if track not in ("news", "both") and not _focus_news(entry, conf, tier):

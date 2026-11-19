@@ -282,6 +282,31 @@ def test_is_news_curated_requires_news_track_source():
     assert c.is_news_curated(entry, conf, news_source)
 
 
+def test_is_news_curated_drops_a_factually_refuted_news_track_entry():
+    """A story the verifier refuted on a fact (verify_reason "factual") stays out of
+    the news lane, as it does for a brief and for a focus match. A scoring
+    disagreement is only a low score, and an unlabeled verified:false keeps the
+    behavior it had (the next test pins it), so both still show."""
+    conf = c.load_config()
+    news_source = {"rss:news": {"track": "news", "tier": "high"}}
+    base = _news_entry(
+        source_id="rss:news",
+        domain="ps.appsec",
+        title="Cache poisoning in a CDN edge",
+        summary="A cache key flaw.",
+        takeaway="Check your cache keys.",
+    )
+    assert c.is_news_curated(base, conf, news_source)
+    assert not c.is_news_curated(
+        {**base, "verified": False, "verify_reason": "factual"}, conf, news_source
+    )
+    assert c.is_news_curated({**base, "verified": False}, conf, news_source)
+    assert c.is_news_curated(
+        {**base, "verified": False, "verify_reason": "scoring"}, conf, news_source
+    )
+    assert c.is_news_curated({**base, "verified": True}, conf, news_source)
+
+
 def test_a_focus_match_reaches_the_news_lane_from_a_research_source():
     """OWASP ACS (2026-09-01) came from a research-track feed and sat archived:
     a focus-area match keeps a story like news. Tier and the deny list still apply."""
