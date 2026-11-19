@@ -25,7 +25,7 @@ On November 17, 2026, two malicious versions (1.26.1 and 1.26.2) of Microsoft's 
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [Wiz Research](https://www.wiz.io/blog/malicious-version-of-microsofts-agent-framework-published-to-pypi)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 37 · Novelty 40.0 · Relevance 82 · Credibility 66 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 35 · Novelty 40.0 · Relevance 82 · Credibility 66 · **Composite 55** _(each 0-100)_  
 **Tags:** `pypi`, `supply-chain`, `pth-file`, `credential-stealer`, `azure`, `oidc`, `agent-framework`, `managed-identity`, `ci-cd`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The LiteLLM 1.107.0 compromise entry in data/ai-security.json (.pth plus sitecustomize.py stealer at interpreter start, Wiz); this adds the Azure managed-identity/ADO/OIDC targeting, the wheel-only no-tag release-shape signal and the repacked second version.
 

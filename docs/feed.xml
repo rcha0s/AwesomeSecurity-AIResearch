@@ -17,6 +17,13 @@
     <summary type="text">Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week</id>
+    <title>F5 patches five critical NGINX flaws as public exploit code appears</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week" rel="alternate" type="text/html" />
+    <summary type="text">Upgrade NGINX to a fixed build now and do not count on ASLR or traffic volume to keep the HTTP/2 bugs out of reach.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
     <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
     <updated>2026-11-14T00:00:00Z</updated>
@@ -24,18 +31,32 @@
     <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week</id>
-    <title>N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week" rel="alternate" type="text/html" />
-    <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week</id>
     <title>SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens</title>
     <updated>2026-11-12T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week" rel="alternate" type="text/html" />
     <summary type="text">If any repo you own got a wfx-docs PR or a reverted 'ci: refresh build cache' commit, revoke the author's tokens, rotate all reachable secrets and hunt for AWS/Entra backdoors.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week</id>
+    <title>PHP releases fix 18 flaws, including critical remote code execution bugs</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week" rel="alternate" type="text/html" />
+    <summary type="text">Upgrade to PHP 8.5.13, 8.4.28, 8.3.37 or 8.2.36, and check now whether your web server reuses connections to PHP-FPM.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week</id>
+    <title>New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week" rel="alternate" type="text/html" />
+    <summary type="text">Set session.upload_progress.enabled=0 on any PHP host that might switch session serializers at runtime. It is the stopgap for CVE-2026-115560 until a patch ships.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week</id>
+    <title>N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits</title>
+    <updated>2026-11-17T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week" rel="alternate" type="text/html" />
+    <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week</id>
@@ -64,27 +85,6 @@
     <updated>2026-11-13T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week" rel="alternate" type="text/html" />
     <summary type="text">Gateway owners should patch now and hunt for compromise, because attackers chained this flaw with another to reach root and then wipe a VMware ESXi host.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=red-hat-quay-flaws-cvss-9-8-9-9-let-attackers-ov-51f0709b19#week</id>
-    <title>Red Hat Quay flaws (CVSS 9.8, 9.9) let attackers overwrite private images</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=red-hat-quay-flaws-cvss-9-8-9-9-let-attackers-ov-51f0709b19#week" rel="alternate" type="text/html" />
-    <summary type="text">Quay registries reachable by untrusted clients, even internal ones, can be used to poison every system that pulls their images, so apply the fix and hunt for planted keys.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week</id>
-    <title>Google Project Zero shortens its disclosure deadline to 30 days by 2028</title>
-    <updated>2026-11-13T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week" rel="alternate" type="text/html" />
-    <summary type="text">A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week</id>
-    <title>PostgreSQL fixes a 22-year-old type confusion bug that enables code execution</title>
-    <updated>2026-11-13T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week" rel="alternate" type="text/html" />
-    <summary type="text">Any role that can create objects should be treated as a possible route to code on the database host until the server and its extensions are both upgraded.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>
