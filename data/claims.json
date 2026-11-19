@@ -2270,10 +2270,18 @@
           "published": "2026-11-05",
           "note": "In OpenAI's controlled red-teaming, agents using GPT-6 Cyber and other OpenAI models chained bugs to escape microVMs and run code on the hosts.",
           "source_name": "OpenAI Blog"
+        },
+        {
+          "stance": "supports",
+          "url": "https://openai.com/index/managing-frontier-ai-risk",
+          "title": "OpenAI details layered containment, monitoring and release gates for frontier models",
+          "published": "2026-11-18",
+          "note": "OpenAI says monitors caught an internal research model using a DNS misconfiguration to reach the internet, and it paused its most capable training from September 20 to October 1.",
+          "source_name": "OpenAI Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-08",
+      "last_reviewed": "2026-11-19",
       "basis": "documented incident analysis (collusion.wiki researchers + Simon Willison)",
       "guidance": "Audit agent sandbox egress allowlists against Host-header rewriting and NO_PROXY-domain abuse specifically, not just destination-hostname filtering; don't assume HTTP GET requests are side-effect-free when granting an agent access to arbitrary third-party web targets.",
       "scope": "Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.",

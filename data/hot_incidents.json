@@ -14,17 +14,17 @@
       "disclosed": "2026-11-18",
       "updated": "2026-11-19",
       "severity": "Critical. The Hacker News reports CVSS 4.0 9.2 for all five nginx flaws; Astra says official scores were not yet published on Nov 18.",
-      "status": "Disclosed by Xint on Nov 18 with Wiz and Rapid7 tests. A public proof of concept works only in lab conditions (a freshly started local container). Not on CISA KEV and no attacks reported as of Nov 18.",
+      "status": "Disclosed by Xint on Nov 18 with Wiz and Rapid7 tests. Public proof-of-concept code from Rapid7 and Censys exists; Rapid7 says its HTTP/2 exploit works only in lab conditions (a freshly started local container), while Censys says it reproduced the flaws in its own lab. Not on CISA KEV, and SecurityWeek reports F5 makes no mention of exploitation in the wild as of Nov 19.",
       "bar": [
         "wide-coverage",
         "ubiquitous"
       ],
-      "affected": "nginx open source 1.9.5 through 1.31.8 for the HTTP/2 flaw (CVE-2026-123007); the other four reach back to 0.5.15 (mail proxy), 1.13.4 (resolver), 1.19.7 (HTTP/2 draining) and 1.25.0 (HTTP/3). NGINX Plus 37.x before the fixed builds and R34 to R36. Distribution packages may be fixed by backport without a version change.",
+      "affected": "nginx open source 1.9.5 through 1.31.8 for the HTTP/2 flaw (CVE-2026-123007); the other four reach back to 0.5.15 (mail proxy), 1.13.4 (resolver), 1.19.7 (HTTP/2 draining) and 1.25.0 (HTTP/3). NGINX Plus 37.x before the fixed builds and R34 to R36. Distribution packages may be fixed by backport without a version change. SecurityWeek cites Censys counting about 9 million exposed services on an affected version and about 103 million that hide their version, so a missing banner does not clear a host.",
       "root_cause": "The main bug is HTTP/2 flow-control accounting: credit for queued data is returned when a stream is cancelled, so a client that raises the window and then cancels streams gets the credit counted twice with no check against the protocol maximum. A capacity check then underflows into an oversized copy that corrupts heap memory and leaks addresses. The other four are use-after-free bugs in connection draining (HTTP/2 and HTTP/3), the DNS resolver and the mail auth proxy.",
-      "conditions": "CVE-2026-123007 needs only HTTP/2 on a reachable listener, with no login and no special directive. The others need specific setups: HTTP/2 or HTTP/3 proxying to an upstream with the worker near its connection limit, a variable proxy_pass with resolver and mirror, or a mail proxy with auth_http. Reaching root also needs Linux SCTP to be reachable from the worker.",
+      "conditions": "CVE-2026-123007 needs only HTTP/2 on a reachable listener, with no login and no special directive. The others need specific setups: HTTP/2 or HTTP/3 proxying to an upstream with the worker near its connection limit, a variable proxy_pass with resolver and mirror, or a mail proxy with auth_http. Reaching root also needs Linux SCTP to be reachable from the worker. F5 says code execution needs address space layout randomization (ASLR) to be off or bypassed; Wiz reports the two HTTP/2 flaws can bypass it themselves.",
       "exploitation": "An unauthenticated attacker sends crafted HTTP/2 traffic to corrupt the nginx worker's heap, uses the address leaks to get past ASLR, and gains code execution as the worker. A separate Linux kernel SCTP use-after-free (no CVE yet) then lifts that to root; researchers showed it from inside a Docker container.",
       "impact": "Remote code execution as the nginx worker on any exposed HTTP/2 server, and host root where the kernel step works. A clean access log does not rule out compromise.",
-      "fix": "Upgrade to nginx 1.30.7 (stable) or 1.31.9 (mainline), or NGINX Plus 37.3.0.1 or 37.0.8.1, then fully restart: a reload does not replace the running binary. Until then turn HTTP/2 off (http2 off, or drop http2 from listen on 1.25.0 and older), turn off HTTP/3, avoid variable proxy_pass with mirror, restrict mail listeners, and block the SCTP module where it is not needed.",
+      "fix": "Upgrade to nginx 1.30.7 (stable) or 1.31.9 (mainline), or NGINX Plus 37.3.0.1 or 37.0.8.1, then fully restart: a reload does not replace the running binary. Until then turn HTTP/2 off (http2 off, or drop http2 from listen on 1.25.0 and older), turn off HTTP/3, avoid variable proxy_pass with mirror, restrict mail listeners, and block the SCTP module where it is not needed. F5's out-of-band notification is K000164058.",
       "sources": [
         {
           "name": "CIRCL TR-105",
@@ -41,8 +41,13 @@
         {
           "name": "Laravel Forge advisory",
           "url": "https://laravel.com/forge/docs/knowledge-base/nginx-to-root"
+        },
+        {
+          "name": "SecurityWeek",
+          "url": "https://www.securityweek.com/f5-patches-critical-nginx2root-flaws-as-poc-exploits-go-public/"
         }
-      ]
+      ],
+      "finding_id": "f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e"
     },
     {
       "id": "java4shell",

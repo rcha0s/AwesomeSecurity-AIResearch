@@ -37026,5 +37026,336 @@
     "previous_slugs": [
       "anthropic-survey-91-of-its-staff-vs-39-of-us-adults-expect-a"
     ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.guardrails",
+    "title": "Guardrail benchmark scores mostly measure the training labels' definition of unsafe",
+    "source_url": "http://arxiv.org/abs/2610.25060v1",
+    "article_url": "http://arxiv.org/abs/2610.25060v1",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-18",
+    "date": "2026-10",
+    "raw_path": "data/_raw/policy-is-not-capability-some-safety-benchmarks-980bc2b4ef.txt",
+    "discovered_via": "rss",
+    "source_id": null,
+    "source_rank": 72.0,
+    "source_topics": [],
+    "source_name": "NeurIPS (via arXiv)",
+    "summary": "An industrial deployment labelled the same ~53k prompts twice, once as 'is this a request for harmful content?' and once as 'would a moderator block this?'. The authors trained ten guardrail arms at two scales with the same architecture, codebase and optimiser family. Two over-refusal benchmarks, JailbreakBench-benign and OR-Bench-hard, were 88% and 82% present in the training pools. After decontamination, the label policy alone moved HarmBench-copyright across 0-100 and OR-Bench-hard over-refusal across 3.4-56.4%, while detection capability stayed unchanged.",
+    "takeaway": "Before picking a guardrail classifier by benchmark score, ask which policy its labels encode, whether the benchmark leaked into training, and what the seed-to-seed variance is, or you are comparing policies, not detection quality.",
+    "lessons": [
+      {
+        "point": "Guardrail training corpora can already contain the over-refusal benchmarks that vendors report to show they don't over-block.",
+        "excerpt": "JailbreakBench-benign is 88% and OR-Bench-hard 82% present in the training pools",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Benchmarks differ in how sensitive they are to the label definition. Some mostly measure policy, others mostly measure the model.",
+        "excerpt": "the range across the ten arms is 0.99 on HarmBench-copyright and 0.043 on WildGuard-benign, a 23x spread",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "A tiny parameter change carrying a different policy can move a benchmark score across its whole range.",
+        "excerpt": "a benchmark score can be moved across its entire range by 0.03% of the parameters",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "In a distilled guardrail, the teacher's soft labels carry the teacher's policy even when every hard label carries the other policy. Released checkpoints do not record which teacher was used.",
+        "excerpt": "so teacher provenance is an unrecorded confound in any released checkpoint",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "guardrail-classifier",
+      "safety-benchmarks",
+      "benchmark-contamination",
+      "over-refusal",
+      "label-policy",
+      "distillation",
+      "eval-validity"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Treat label policy, contamination and seed variance as first-class variables when choosing a guardrail",
+      "detail": "When comparing guardrail models: 1) Ask for or check the operational definition of 'unsafe' behind the training labels and the benchmark labels. 2) Check for overlap between benchmark prompts and the training data. 3) Run several seeds and report the spread. 4) Prefer benchmarks with low sensitivity to policy (WildGuard-benign style) for capability, and grade on your own policy-labelled set for deployment fit."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 75,
+      "newness": 7,
+      "credibility": 72.0,
+      "composite": 51.55,
+      "scored_at": "2026-11-18T06:34:53+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: numbers match the abstract; the title's 'mostly' generalizes from the most policy-sensitive benchmarks and 'unchanged detection capability' is the paper's own design claim. Verifier novelty 55 (closest: Cautious Bench), relevance 40; took the lower novelty.",
+    "prior_art": "Nearest pool entries: DecisionPivot (ai-research), where guardrail and router models with near-equal accuracy diverge on contrast pairs, and the benchmark-contamination entry 'Zero Gap Is Not Restoration' (archive). The delta is a natural experiment with double-labelled data that isolates label policy from capability, plus measured contamination of over-refusal benchmarks inside a guardrail's own training data.",
+    "related_claims": [
+      "benchmark-category-labels-can-mask-conflated-capabilities"
+    ],
+    "threat": "Teams pick or certify a guardrail on scores that reflect contamination and the labelling policy rather than detection ability. The deployed filter then over-blocks or under-blocks against their actual policy.",
+    "conditions": "The guardrail is chosen by public safety or over-refusal benchmark scores, without disclosure of the training label definition, the overlap between benchmarks and training data, or the teacher model behind a distilled checkpoint.",
+    "mitigations": "Require guardrail evaluations to report contamination, a seed floor and the policy they were graded against, and validate on a set labelled under your own policy before deployment.",
+    "id": "guardrail-benchmark-scores-mostly-measure-the-tr-c8818861be",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "policy-is-not-capability-some-safety-benchmarks-d8c6b09c45",
+    "topic": "ai-security",
+    "domain": "ais.guardrails",
+    "title": "Guardrail safety benchmarks mostly measure the training label policy",
+    "source_url": "https://arxiv.org/abs/2610.25060",
+    "summary": "In one industrial deployment, the same ~53k prompts were labelled twice: once for 'is this a request for harmful content?' and once for 'would a moderator block this?'. The authors trained ten guardrail arms on these labels with the same architecture and optimizer family. Two over-refusal benchmarks were already 82-88% present in the training pools. Some benchmarks such as HarmBench-copyright swing 0-100 purely with the label policy, while detection capability stays the same. Validation accuracy tracked agreement with the annotators' policy (rho=+0.74), not detection capability (rho=+0.34). Soft labels from a distilled teacher can carry the teacher's policy even when every hard label carries the other one.",
+    "takeaway": "A guardrail's benchmark numbers are uninterpretable unless you know the 'unsafe' definition it was trained and graded on, its contamination, and its seed variance. Evaluate any vendor guardrail against your own policy.",
+    "lessons": [
+      {
+        "point": "Over-refusal benchmarks that guardrails cite to show they don't over-block were largely already in the training data.",
+        "excerpt": "JailbreakBench-benign is 88% and OR-Bench-hard 82% present in the training pools",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "How much the label definition swings scores differs by benchmark, by about 23x, so some benchmarks mostly measure policy and others capability.",
+        "excerpt": "the range across the ten arms is 0.99 on HarmBench-copyright and 0.043 on WildGuard-benign, a 23x spread",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Distillation leaks policy: soft labels from the teacher override the hard labels, so the policy embedded in a released checkpoint can be undocumented.",
+        "excerpt": "so teacher provenance is an unrecorded confound in any released checkpoint",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Proposed reporting standard for guardrail evaluations.",
+        "excerpt": "We argue that guardrail evaluations should report contamination, a seed floor and the definition they were graded against as first-class variables.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "guardrails",
+      "safety-benchmarks",
+      "label-policy",
+      "benchmark-contamination",
+      "over-refusal",
+      "eval-methodology",
+      "distillation"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Re-grade guardrail candidates against your own policy definition",
+      "detail": "Before adopting a guardrail classifier, write your operational 'unsafe' definition, label a held-out internal set under it, and compare candidates there. Ask vendors for the label policy, teacher model provenance, training-set overlap with HarmBench/OR-Bench/JailbreakBench, and multi-seed variance. Discount public benchmark scores that lack these."
+    },
+    "scores": {
+      "novelty": 62,
+      "relevance": 78,
+      "newness": 7,
+      "credibility": 50.8,
+      "composite": 51.37,
+      "scored_at": "2026-11-18T06:34:53+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported all claims against the abstract (ten arms at two scales; the rho split grades twenty arms). Single industrial deployment, workshop poster. Verifier novelty 62; took 62.",
+    "prior_art": "The pool's closest entries are the WMDP/BBQ IRT entry behind the benchmark-category-labels claim (safety benchmarks track reasoning) and the archive over-safety benchmark entry ('Test guardrails for name-superstition over-refusal', policy-derived labels). This paper adds a controlled natural experiment: same prompts, two label policies, fixed architecture. It shows that policy, contamination, and teacher soft labels drive guardrail benchmark scores while detection capability stays the same.",
+    "related_claims": [
+      "benchmark-category-labels-can-mask-conflated-capabilities"
+    ],
+    "article_url": "https://arxiv.org/abs/2610.25060",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-18",
+    "raw_path": "data/_raw/policy-is-not-capability-some-safety-benchmarks-d8c6b09c45.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 50.8,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Hugging Face Daily Papers",
+    "id": "guardrail-safety-benchmarks-mostly-measure-the-t-72284f787b",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: takeaway_sentences 2 > 1",
+        "mild: summary_sentences 6 > 4"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.ai-infra",
+    "title": "Blogger argues teams should self-host an LLM proxy for per-key request logs",
+    "source_url": "https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/",
+    "article_url": "https://jrdsgl.com/if-you-dont-run-your-own-llm-proxy-how-the-fuck-do-you-even-know-whats-going-on/",
+    "tweet_url": null,
+    "author": "amrrs",
+    "published": "2026-10-18",
+    "date": "2026-10",
+    "raw_path": "data/_raw/if-you-don-t-run-your-own-llm-proxy-how-do-you-k-94bf38aedc.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@amrrs via Hacker News",
+    "summary": "An opinion post argues that provider usage dashboards are not enough for engineering decisions and that teams should run their own LLM proxy. The proxy gives one endpoint for multiple providers, logs of which key called which model from which client and when, and virtual API keys so the main provider key is not spread across agents and harnesses. The author names no product, says they modified their proxy for custom MCP endpoints, and uses it to diagnose cache misses.",
+    "takeaway": "A self-hosted LLM gateway gives per-agent key isolation and an audit trail, but it also concentrates every provider key in one place and has to be hardened accordingly.",
+    "lessons": [
+      {
+        "point": "Virtual keys issued per agent or harness limit the blast radius when one key leaks, compared with reusing a single provider key.",
+        "excerpt": "use virtual api keys to stop littering your single main key over your work, agents, and harnesses",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "A proxy produces the attribution log (key, model, client, time, status) that incident response needs and that provider dashboards do not provide.",
+        "excerpt": "logs of which key called what model with what client at what time and its status",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Request-level logs also serve operations, such as diagnosing prompt cache misses during coding sessions.",
+        "excerpt": "When I see a cache miss during a coding session, I can pinpoint why that happened in 20 seconds by hand.",
+        "confidence": 0.6,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "llm-gateway",
+      "llm-proxy",
+      "observability",
+      "api-keys",
+      "virtual-keys",
+      "logging",
+      "opinion"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Put agents behind a hardened self-hosted LLM gateway",
+      "detail": "Route agent and harness traffic through a gateway you control. Issue one virtual key per agent or tool and keep the provider master key only on the gateway. Log key, model, client, timestamp and status for each request, and forward the logs to your SIEM. Harden the gateway itself: no default master key, admin UI not exposed, pinned versions, egress blocked to the metadata service, and bearer tokens scrubbed from logged bodies."
+    },
+    "scores": {
+      "novelty": 10,
+      "relevance": 40,
+      "newness": 7,
+      "credibility": 55.0,
+      "composite": 25.0,
+      "scored_at": "2026-11-18T06:34:53+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: facts supported; blast-radius, incident-response and hardening framing is the analyst's inference. Verifier novelty 12, relevance 30; kept 10.",
+    "prior_art": "The pool already covers LLM gateways in depth, mostly as attack targets: the Wiz LiteLLM auth-bypass chain, the trojanized LiteLLM 1.107.0 release and Embrace The Red's 'LLM Heist' in the archive. This post adds only the practitioner case for self-hosting for visibility and key isolation, with no new technique and no discussion of the gateway's own risk.",
+    "related_claims": [],
+    "threat": "Without a gateway, provider keys get reused across agents and harnesses with no per-caller audit trail, so a leaked key is hard to scope or attribute. A self-hosted gateway in turn becomes a high-value target that holds every provider key.",
+    "conditions": "Teams running multiple agents, harnesses or providers directly against provider APIs with shared keys and only vendor dashboards for visibility.",
+    "mitigations": "Run a self-hosted LLM gateway with per-agent virtual keys and per-request logging, and harden it with strong admin authentication, pinned versions, restricted egress and log scrubbing of secrets.",
+    "id": "blogger-argues-teams-should-self-host-an-llm-pro-5ae8b2a6b8",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 19 > 18"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.ml-research",
+    "title": "HybridAgent reasons in latent space and calls tools in text",
+    "source_url": "https://arxiv.org/abs/2610.18861",
+    "article_url": "https://arxiv.org/abs/2610.18861",
+    "tweet_url": null,
+    "author": "allinonai",
+    "published": "2026-10-18",
+    "date": "2026-10",
+    "raw_path": "data/_raw/hybrid-reasoning-agents-llm-agents-that-think-in-6c607eab68.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@allinonai via Hacker News",
+    "summary": "HybridAgents switch between hidden-state (latent) reasoning and text-based tool interaction within one generation. A small HybridLink module handles the switch between modes, and a continuous working memory carries the mixed context across turns. Two training stages teach this behavior: HybridSFT (supervised fine-tuning) and HybridRL (reinforcement learning). Across 3 model scales and 11 benchmarks, the authors report a 10.4% performance gain, 35.5%-54.7% fewer tokens, 1.8x-2.6x faster inference and 2.7x-3.7x lower cost.",
+    "takeaway": "This is a model architecture and training change, not a harness technique, so it only matters if you train or serve your own open-weight agent models.",
+    "lessons": [
+      {
+        "point": "Pure latent reasoning has no native tool access and cannot be inspected, which is the gap the hybrid design targets.",
+        "excerpt": "latent reasoning offers an efficient internal medium but lacks native tool access and reasoning transparency",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The RL stage learns when to think internally and when to emit text and actions, rather than using a fixed schedule.",
+        "excerpt": "HybridRL scales reasoning by learning when to think in latent space and when to act through text",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "The reported efficiency gains are large, but they are the authors' own numbers against baselines they chose. Only the abstract was available.",
+        "excerpt": "HybridAgent consistently improves performance by 10.4%, while delivering 35.5%-54.7% token reduction, 1.8x-2.6x faster inference, and 2.7x-3.7x cost savings",
+        "confidence": 0.6,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "latent-reasoning",
+      "post-training",
+      "tool-use",
+      "token-efficiency",
+      "together-ai"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Track latent-reasoning agents as a future cost lever, not a current harness change",
+      "detail": "If you self-host open-weight agent models, check the togethercomputer/HybridAgent release and re-run its token and latency claims on your own agent tasks before adopting it. Harnesses built on closed APIs have nothing to apply."
+    },
+    "scores": {
+      "novelty": 35,
+      "relevance": 25,
+      "newness": 7,
+      "credibility": 55.0,
+      "composite": 28.0,
+      "scored_at": "2026-11-18T06:34:54+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: every fact matches the abstract. Verifier novelty 35 (closest: Coconut-style continuous-thought work), relevance 22; took the lower novelty.",
+    "prior_art": "No close pool entry. Nearby archive items cover latent-space methods for other purposes, such as activation-based fact-checking. The new claim is a single model that mixes latent thoughts with text tool calls and can still inspect those thoughts. It sits in model internals, outside the practitioner harness focus.",
+    "related_claims": [],
+    "id": "hybridagent-post-trains-models-to-reason-in-late-734db6108e",
+    "retrieved_at": "2026-10-25T19:45:56+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "hybridagent-post-trains-models-to-reason-in-latent-space-and"
+    ]
   }
 ]

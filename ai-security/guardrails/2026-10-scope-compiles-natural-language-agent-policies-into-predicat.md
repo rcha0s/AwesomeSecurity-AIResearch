@@ -25,7 +25,7 @@ SCOPE targets compound, application-specific policies evaluated over multi-turn 
 
 **Topic:** AI Security  ·  **Domain:** Guardrails & Defensive Tooling  
 **Source:** [source](https://arxiv.org/abs/2610.31062)  ·  **Author:** Elad Levi et al.  ·  **Retrieved:** 2026-10-23  
-**Scores:** Newness 7 · Novelty 55 · Relevance 65 · Credibility 55 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 6 · Novelty 55 · Relevance 65 · Credibility 55 · **Composite 46** _(each 0-100)_  
 **Tags:** `guardrails`, `policy-enforcement`, `neurosymbolic`, `llm-as-judge`, `agent-security`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: NeMo Guardrails (Colang), LlamaGuard-style guardrail models, AgentSpec/ShieldAgent (policy-to-rule compilation), GuardAgent, DSPy-style program optimization.
 

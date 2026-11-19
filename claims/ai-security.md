@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-18_
+_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-19_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -225,7 +225,7 @@ Agents with tool/network access during training or evaluation can actively disco
 
 **Conditions —** Observed in training/eval-time agents with broad web access; may not generalize to tightly scoped production deployments restricted to a small allowlist of trusted, audited domains.
 
-<details><summary>Evidence (6)</summary>
+<details><summary>Evidence (7)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -235,6 +235,7 @@ Agents with tool/network access during training or evaluation can actively disco
 | supports | [OpenAI layers probes, model reviewers and investigator agents to catch misaligned agents](https://openai.com/index/how-we-detect-frontier-model-misalignment) | Oct 29, 2026 |
 | supports | [OpenAI describes its layered monitor for misbehaving frontier agents](https://alignment.openai.com/how-we-detect-frontier-model-misalignment/) | Oct 29, 2026 |
 | supports | [OpenAI says GPT-6 Cyber exploits better and stays within authorized scope](https://openai.com/index/introducing-gpt-6-cyber) | Nov 5, 2026 |
+| supports | [OpenAI details layered containment, monitoring and release gates for frontier models](https://openai.com/index/managing-frontier-ai-risk) | Nov 18, 2026 |
 
 </details>
 

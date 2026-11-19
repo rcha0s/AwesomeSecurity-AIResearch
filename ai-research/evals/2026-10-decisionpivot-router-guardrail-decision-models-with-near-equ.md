@@ -18,7 +18,7 @@ DecisionPivot benchmarks the decision models used for routing, guardrails and ou
 
 **Topic:** AI Research  ·  **Domain:** Evaluation & Benchmarks  
 **Source:** [source](https://arxiv.org/abs/2610.28522)  ·  **Retrieved:** 2026-10-22  
-**Scores:** Newness 7 · Novelty 55 · Relevance 65 · Credibility 55 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 6 · Novelty 55 · Relevance 65 · Credibility 55 · **Composite 46** _(each 0-100)_  
 **Tags:** `evals`, `guardrails`, `routing`, `llm-as-judge`, `calibration`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Contrast sets (Gardner et al. 2020) and CheckList-style minimal-pair testing; judge/reward-model benchmarks (RewardBench). Applying contrast groups to router and guardrail decision models is the variation.
 

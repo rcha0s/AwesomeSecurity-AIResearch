@@ -19,7 +19,7 @@ Multi-agent teams that improve by revising reusable skills need to know which ag
 
 **Topic:** AI Research  ·  **Domain:** Agents & Harnesses  
 **Source:** [Hugging Face Daily Papers](https://arxiv.org/abs/2610.27227)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 7 · Novelty 58 · Relevance 65 · Credibility 51 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 6 · Novelty 58 · Relevance 65 · Credibility 51 · **Composite 46** _(each 0-100)_  
 **Tags:** `skill-evolution`, `credit-assignment`, `multi-agent`, `self-improving-agents`, `skill-poisoning`, `grpo`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The archive has 'Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?' (per-skill contribution eviction, judge false-pass threshold) and 'Pre-Commit Gating against Skill Contamination' (verifier gatekeeper). GRSE differs by solving multi-agent credit assignment with GRPO-style contrastive reruns instead of judge or verifier gating, and shows it recovers from planted harmful skills. The evidence here is abstract-level only.
 

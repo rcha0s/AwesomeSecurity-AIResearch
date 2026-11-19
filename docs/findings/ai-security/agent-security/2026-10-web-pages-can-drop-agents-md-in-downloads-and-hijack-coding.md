@@ -25,7 +25,7 @@ Forever Security found a malicious AGENTS.md in a customer's ~/Downloads folder,
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [BleepingComputer](https://www.bleepingcomputer.com/news/security/ai-coding-agents-hijacked-using-agentsmd-file-in-downloads-folder/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 7 · Novelty 55 · Relevance 88 · Credibility 60 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 6 · Novelty 55 · Relevance 88 · Credibility 60 · **Composite 53** _(each 0-100)_  
 **Tags:** `agents-md`, `claude-md`, `instruction-files`, `coding-agents`, `indirect-prompt-injection`, `drive-by-download`, `npm`, `oauth-token-theft`, `working-directory`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool already has repo-borne instruction-file injection (TrojanBench-style poisoned repos and the 'rules-file / AGENTS.md backdoors' noted in ai-security.json), the SSMS Copilot CVE where db_owner-written AGENTS.md properties escalate privilege, and harness-config scanners that flag CLAUDE.md as persistent prompt injection. What's new here is the delivery vector: no repo or DB write access is needed, because a browser drive-by download into ~/Downloads is enough. The report also includes an in-the-wild observation, telemetry on how common Downloads-as-cwd is, and a CLAUDE.md API-redirect variant that steals OAuth tokens.
 
