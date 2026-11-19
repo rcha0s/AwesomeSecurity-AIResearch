@@ -215,6 +215,18 @@ classification:
       - "tool use"
       - "claude code"
       - "autonomous agent"
+      # Harness engineering stream (2026-11-18, data/streams.yaml): speed and
+      # reliability of the agent loop, which no class above named.
+      - "agent latency"
+      - "tool latency"
+      - "parallel tool calls"
+      - "prefix caching"
+      - "time to first token"
+      - "agent failures"
+      - "failure taxonomy"
+      - "long-horizon agent"
+      - "agent observability"
+      - "agent tracing"
     "Prompting & Context":
       - "prompt engineering"
       - "context window"

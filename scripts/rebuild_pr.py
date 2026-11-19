@@ -46,7 +46,7 @@ KEYS = ("id", "run_id", "url", "source_url")
 ADDITIVE = {"data/source_stats.json"}
 POOLS = ("data/ai-security.json", "data/product-security.json", "data/ai-research.json")
 RENDERERS = ("generate_site", "generate_claims", "generate_html", "trends",
-             "generate_newsletter", "generate_review")  # fmt: skip
+             "generate_newsletter", "generate_review", "generate_stream")  # fmt: skip
 RENDERED = ("README.md", "NEWSLETTER.md", "TRENDS.md", "REVIEW.md", "ai-security",
             "product-security", "ai-research", "claims", "docs")  # fmt: skip
 MARKER = re.compile(r"^(<<<<<<<|>>>>>>>)( |$)", re.M)
