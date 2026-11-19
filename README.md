@@ -20,32 +20,32 @@ _Only incidents that are critical, covered by 3+ independent outlets, and clear 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
 1. **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-shows-poisoned-fine-tuning-data-and-ch-8d4cff91d3#week)** · _AI Security · Nov 12, 2026_
-2. **[Pretxt raises $5M seed for runtime AI agent supervision that steers agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pretxt-emerges-stealth-with-5m-seed-and-an-ai-su-b33ea39de5#week)** · _AI Security · Nov 17, 2026_
-3. **[Simon Willison and Prime Radiant release external sandboxes for coding agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=simon-willison-and-prime-radiant-release-externa-40b0e5c0ba#week)** · _AI Security · Nov 17, 2026_
+2. **[Google built an isolated 'Mirror Dimension' web to test Chrome agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-built-an-isolated-mirror-dimension-web-to-750955bab0#week)** · _AI Security · Nov 19, 2026_
+3. **[PIPETTE paper trains LLM agents against prompt injection with broader attacks](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pipette-paper-trains-llm-agents-against-prompt-i-25aa421c47#week)** · _AI Security · Nov 19, 2026_
 
 ## What to learn
 
 _From the last 14 days: each has proof (the work itself or a measured comparison) and serves one of your goals; more independent sources rank first._
 
-1. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
-2. **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uc-berkeley-finds-harness-overhead-can-double-ag-49f29b0015#week)** · _AI Research · Nov 9, 2026_
-3. **[York University's FlowPlan cuts Claude Code tokens by planning edits first](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=york-university-s-flowplan-cuts-claude-code-toke-ab96ed416c#week)** · _AI Research · Nov 9, 2026_
+1. **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=mobileprobe-red-teams-mobile-gui-agents-by-placi-63a32851c6#week)** · _AI Security · Nov 12, 2026_
+2. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
+3. **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uc-berkeley-finds-harness-overhead-can-double-ag-49f29b0015#week)** · _AI Research · Nov 9, 2026_
 
 ## Biggest this week
 
 _Most covered in the last 7 days; single-outlet patch notices are left out._
 
 1. **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week)** · _Product Security · Nov 17, 2026 · 8 sources_
-2. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 6 sources_
-3. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 12, 2026 · 4 sources_
+2. **[F5 patches five critical NGINX flaws as public exploit code appears](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week)** · _Product Security · Nov 19, 2026 · 7 sources_
+3. **[Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week)** · _Product Security · Nov 14, 2026 · 7 sources_
 
 ## This week's top stories
 
 _The last 7 days, most covered first._
 
 1. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026 · 3 sources_
-2. **[N-able investigates new N-central exploits that work against hotfixed on-premise servers](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week)** · _Product Security · Nov 13, 2026 · 3 sources_
-3. **[Chainguard details wfx stealer that backdoors cloud roles and can forge checks](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainguard-details-wfx-stealer-that-backdoors-cl-f9a367b152#week)** · _Product Security · Nov 12, 2026 · 2 sources_
+2. **[PHP releases fix 18 flaws, including critical remote code execution bugs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week)** · _Product Security · Nov 19, 2026 · 3 sources_
+3. **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week)** · _Product Security · Nov 19, 2026 · 3 sources_
 
 ## Claim changes
 
