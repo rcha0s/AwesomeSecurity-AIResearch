@@ -49,6 +49,8 @@ def site_params() -> set[str]:
     params = set(re.findall(r'"(\w+)"', body))
     if "p.get('finding')" in TEMPLATE:
         params.add("finding")
+    if "p.get('hot')" in TEMPLATE:
+        params.add("hot")
     return params
 
 
@@ -67,6 +69,7 @@ def site_problems(url: str, payload: dict) -> list[str]:
         "claim": {c["id"] for c in payload["claims"]},
         "topic": set(payload["topics"]),
         "domain": {d["id"] for t in payload["topics"].values() for d in t["domain_ids"]},
+        "hot": {h["id"] for h in payload.get("hot_incidents") or []},
     }
     for key, values in parse_qs(parts.query).items():
         if key not in site_params():
@@ -100,7 +103,8 @@ def test_committed_readme_links_all_resolve():
 
 def test_committed_readme_is_short_and_has_every_big_link():
     md = (REPO / "README.md").read_text(encoding="utf-8")
-    assert len(md.splitlines()) < 80
+    # 90, not 80, since 2026-11-19: the Hot incidents section (Rohan asked for it) leads.
+    assert len(md.splitlines()) < 90
     for label, view in gs.SITE_VIEWS:
         assert f"[{label}]({gh.SITE_URL}#{view})" in md
     assert "Last updated " in md and "## Contribute" in md
@@ -141,7 +145,8 @@ def test_generated_readme_deep_links_resolve(sandbox):
     assert "?finding=" in md and "?claim=a-claim#claims" in md
     assert "Story two \\[x\\]" in md  # markdown-escaped label
     assert link_problems(md, [sandbox, REPO], payload) == []
-    assert len(md.splitlines()) < 80
+    # 90, not 80, since 2026-11-19: the Hot incidents section (Rohan asked for it) leads.
+    assert len(md.splitlines()) < 90
 
 
 def test_link_check_catches_dead_targets(sandbox):

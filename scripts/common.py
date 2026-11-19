@@ -232,6 +232,7 @@ class Config:
     focus: dict = dc_field(default_factory=dict)  # Rohan's focus areas (scripts/focus.py)
     learning: dict = dc_field(default_factory=dict)  # the What to learn lane (scripts/briefing.py)
     claims: dict = dc_field(default_factory=dict)  # claim ordering (scripts/claims.py)
+    hot: dict = dc_field(default_factory=dict)  # the hot-incidents bar (scripts/hot_incidents.py)
 
 
 def load_config(path: Path = CONFIG_FILE) -> Config:
@@ -255,6 +256,7 @@ def load_config(path: Path = CONFIG_FILE) -> Config:
         focus=raw.get("focus") or {},
         learning=raw.get("learning") or {},
         claims=raw.get("claims") or {},
+        hot=raw.get("hot_incidents") or {},
     )
 
 

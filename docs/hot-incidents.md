@@ -1,0 +1,35 @@
+# Hot incidents
+
+_Generated 2026-11-19 from data/hot_incidents.json by scripts/generate_html.py. Generated - do not hand-edit._
+
+Only incidents that are critical and clear at least two of: exploited in the wild (CISA KEV counts), covered by 4+ independent outlets, in very common software. Routine advisories never qualify.
+
+Site: https://rcha0s.github.io/AwesomeSecurity-AIResearch/#week · JSON: https://rcha0s.github.io/AwesomeSecurity-AIResearch/hot-incidents.json
+
+## NGINX2Root: Unauthenticated remote code execution in nginx, chainable to root on the host
+
+CVE-2026-123007, CVE-2026-123633, CVE-2026-121810, CVE-2026-123634, CVE-2026-113425 · disclosed 2026-11-18 · updated 2026-11-19 · why hot: widely covered, very common software
+
+- **Severity:** Critical. The Hacker News reports CVSS 4.0 9.2 for all five nginx flaws; Astra says official scores were not yet published on Nov 18.
+- **Status:** Disclosed by Xint on Nov 18 with Wiz and Rapid7 tests. A public proof of concept works only in lab conditions (a freshly started local container). Not on CISA KEV and no attacks reported as of Nov 18.
+- **Affected:** nginx open source 1.9.5 through 1.31.8 for the HTTP/2 flaw (CVE-2026-123007); the other four reach back to 0.5.15 (mail proxy), 1.13.4 (resolver), 1.19.7 (HTTP/2 draining) and 1.25.0 (HTTP/3). NGINX Plus 37.x before the fixed builds and R34 to R36. Distribution packages may be fixed by backport without a version change.
+- **Root cause:** The main bug is HTTP/2 flow-control accounting: credit for queued data is returned when a stream is cancelled, so a client that raises the window and then cancels streams gets the credit counted twice with no check against the protocol maximum. A capacity check then underflows into an oversized copy that corrupts heap memory and leaks addresses. The other four are use-after-free bugs in connection draining (HTTP/2 and HTTP/3), the DNS resolver and the mail auth proxy.
+- **Conditions to exploit:** CVE-2026-123007 needs only HTTP/2 on a reachable listener, with no login and no special directive. The others need specific setups: HTTP/2 or HTTP/3 proxying to an upstream with the worker near its connection limit, a variable proxy\_pass with resolver and mirror, or a mail proxy with auth\_http. Reaching root also needs Linux SCTP to be reachable from the worker.
+- **How it is exploited:** An unauthenticated attacker sends crafted HTTP/2 traffic to corrupt the nginx worker's heap, uses the address leaks to get past ASLR, and gains code execution as the worker. A separate Linux kernel SCTP use-after-free (no CVE yet) then lifts that to root; researchers showed it from inside a Docker container.
+- **Impact:** Remote code execution as the nginx worker on any exposed HTTP/2 server, and host root where the kernel step works. A clean access log does not rule out compromise.
+- **Fix or mitigation:** Upgrade to nginx 1.30.7 (stable) or 1.31.9 (mainline), or NGINX Plus 37.3.0.1 or 37.0.8.1, then fully restart: a reload does not replace the running binary. Until then turn HTTP/2 off (http2 off, or drop http2 from listen on 1.25.0 and older), turn off HTTP/3, avoid variable proxy\_pass with mirror, restrict mail listeners, and block the SCTP module where it is not needed.
+- **Sources:** [CIRCL TR-105](https://www.circl.lu/pub/tr-105/) · [Astra Security](https://www.getastra.com/blog/security-advisory/nginx2root/) · [The Hacker News](https://thehackernews.com/2026/11/10-year-old-nginx-http2-flaw-lets.html) · [Laravel Forge advisory](https://laravel.com/forge/docs/knowledge-base/nginx-to-root)
+
+## Java4Shell: Heap overflow in Java's Base64 decoder on AVX-512 CPUs, with claimed pre-auth RCE in Jira, Jenkins and Keycloak
+
+CVE-2026-114938 · disclosed 2026-11-17 · updated 2026-11-19 · why hot: widely covered, very common software
+
+- **Severity:** Critical. CVSS 4.0 9.2 from the researchers; Oracle rates it 8.1 under CVSS 3.1 (hard to exploit, no login), Red Hat 9.8 preliminary, Amazon 8.8.
+- **Status:** Disclosed by Calif on Nov 17; Oracle and OpenJDK builds out. Calif claims pre-auth RCE but has not published that code; other labs reproduced crashes and a memory leak, not code execution. Not on CISA KEV and no attacks reported as of Nov 18.
+- **Affected:** Java 17.0.6 and later before the fixed builds, plus Java 21, 25 and 27 per Oracle's tables (Orca calls 18 and later likely but unconfirmed), and the Java 8 Performance Pack build 8u511b33-perf. Oracle, OpenJDK, Corretto, Zulu, Red Hat and GraalVM builds. Only x86-64 CPUs with AVX-512 VBMI (Intel Ice Lake and later, AMD Zen 4 and later); ARM64 is not affected.
+- **Root cause:** The AVX-512 fast path of the standard Base64 decoder mishandles malformed padding: the output count goes negative and a 64-byte masked store writes 62 or 63 bytes past the end of the output array. Java rejects the input, but only after the write. The bytes written are fixed; the attacker controls only where they land.
+- **Conditions to exploit:** An x86-64 host with AVX-512 VBMI, a vulnerable JVM with default flags, and an application that passes attacker-controlled data to the basic or URL Base64 decoder, such as an HTTP Basic header, a SAML artifact or a token. The decoder must be hot enough for the JIT to use the fast path.
+- **How it is exploited:** The attacker sends many malformed Base64 values so the overflow lands next to an array whose length it can grow. That array then gives arbitrary reads and writes on the heap (Calif calls this step JavaBleed), which lead to code execution. Each application needs its own memory grooming, so failed attempts crash the JVM and are retried.
+- **Impact:** Denial of service is easy and memory leaks are reproduced. Calif claims pre-auth RCE in Keycloak, Jira, Confluence, JFrog Artifactory, Jenkins and PingFederate, and post-login RCE in Kafka, Solr, Elasticsearch, Gerrit and Spinnaker. Datadog calls reliable RCE extra per-application work.
+- **Fix or mitigation:** Upgrade to 17.0.21.1, 21.0.13.1, 25.0.5.1 or 27.0.1.1 or the vendor equivalents (Corretto, Zulu, GraalVM), including bundled runtimes and container images, then restart. Until then start the JVM with -XX:-UseBASE64Intrinsics. Find exposed hosts by checking /proc/cpuinfo for avx512vbmi.
+- **Sources:** [Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/) · [The Hacker News](https://thehackernews.com/2026/11/java4shell-cve-2026-114938-enables-pre.html) · [Orca Security](https://orca.security/resources/research/java4shell-critical-openjdk-base64-decoder-flaw-could-allow-unauthenticated-remote-code-execution/) · [SentinelOne](https://www.sentinelone.com/blog/java4shell-vulnerability-in-openjdk-enables-rce-on-avx-512-cpus/)

@@ -15,6 +15,7 @@ ALLOWED_TOOLS=(
   "Bash(python scripts/add_claim.py list)" "Bash(python scripts/add_claim.py list *)"
   "Bash(python scripts/add_claim.py evidence *)" "Bash(python scripts/add_claim.py new *)"
   "Bash(python scripts/add_claim.py validate)"
+  "Bash(python scripts/hot_incidents.py add *)" "Bash(python scripts/hot_incidents.py validate)"
 )
 SETTINGS='{"permissions": {
   "blockReadsOutsideWorkingDirectories": true,
@@ -28,7 +29,7 @@ SETTINGS='{"permissions": {
     "Edit(data/taxonomy_proposals.json)",
     "Edit(data/news_stories.json)", "Edit(data/story_shortlist.json)",
     "Edit(data/_story_outcomes.md)", "Edit(data/_merge_outcomes.json)",
-    "Edit(data/claims.json)", "Edit(data/arguments.json)", "Edit(data/_practitioner_signal.json)",
+    "Edit(data/claims.json)", "Edit(data/arguments.json)", "Edit(data/hot_incidents.json)", "Edit(data/_practitioner_signal.json)",
     "Edit(data/_editorial_outcomes.md)", "Edit(data/_readability_outcomes.md)", "Edit(data/_curator_arxiv.json)",
     "Edit(data/_cross_review*)",
     "Read(~/.ssh/**)", "Read(~/.claude/**)", "Read(~/.config/**)", "Read(~/.aws/**)",

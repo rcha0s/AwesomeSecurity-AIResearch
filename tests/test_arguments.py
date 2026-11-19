@@ -431,5 +431,5 @@ def test_non_integer_counts_are_refused_without_raising(signal, field):
 
 def test_the_week_view_places_the_section_after_biggest_and_before_top_stories():
     src = gh.TEMPLATE.read_text(encoding="utf-8")
-    line = next(ln for ln in src.splitlines() if "var html = focusHTML(shown)" in ln)
+    line = next(ln for ln in src.splitlines() if "focusHTML(shown) + learningHTML" in ln)
     assert line.index("biggestHTML") < line.index("argumentsHTML") < line.index("topStoriesHTML")

@@ -28,6 +28,7 @@ from urllib.parse import urlencode
 import briefing
 import common as c
 import generate_html as gh
+import hot_incidents
 import story_ledger as sl
 
 import claims as cl
@@ -447,7 +448,7 @@ def _teaser(payload: dict) -> list[str]:
         payload["snapshot_days"],
     )
     biggest = [rows[i] for i in payload.get("biggest_stories", [])[:3] if i in rows]
-    out = []
+    out = hot_incidents.readme_lines(payload.get("hot_incidents") or [], SITE_URL)
     focus = [rows[i] for i in payload.get("focus_stories", [])[:3] if i in rows]
     if focus:
         note = briefing.focus_note(
@@ -477,7 +478,7 @@ def _teaser(payload: dict) -> list[str]:
         out += _change_line(i, change, claims)
     picks = [claims[i] for i in payload.get("efficiency_claims", []) if i in claims]
     if picks:
-        # The README stays under 80 lines: the month's findings live on the site and
+        # The README stays under 90 lines: the month's findings live on the site and
         # in the harness feed, which the section's note links.
         note = f"{briefing.efficiency_note()} [Harness feed]({EFFICIENCY_FEED_URL})."
         out += ["", "## Efficiency", "", f"_{note}_", ""]

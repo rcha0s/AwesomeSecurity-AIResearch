@@ -6,9 +6,16 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-18T00:00:00Z</updated>
+  <updated>2026-11-19T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week</id>
+    <title>OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs</title>
+    <updated>2026-11-17T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.</summary>
+  </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
     <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
@@ -24,6 +31,13 @@
     <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week</id>
+    <title>SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens</title>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week" rel="alternate" type="text/html" />
+    <summary type="text">If any repo you own got a wfx-docs PR or a reverted 'ci: refresh build cache' commit, revoke the author's tokens, rotate all reachable secrets and hunt for AWS/Entra backdoors.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week</id>
     <title>N-able investigates new N-central exploits that work against hotfixed on-premise servers</title>
     <updated>2026-11-13T00:00:00Z</updated>
@@ -31,11 +45,11 @@
     <summary type="text">MSP (managed service provider) teams running on-premise N-central should turn off the Legacy API now, as probing for the new root remote code execution exploit has already been observed.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week</id>
-    <title>SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens</title>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainguard-details-wfx-stealer-that-backdoors-cl-f9a367b152#week</id>
+    <title>Chainguard details wfx stealer that backdoors cloud roles and can forge checks</title>
     <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week" rel="alternate" type="text/html" />
-    <summary type="text">If any repo you own got a wfx-docs PR or a reverted 'ci: refresh build cache' commit, revoke the author's tokens, rotate all reachable secrets and hunt for AWS/Entra backdoors.</summary>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainguard-details-wfx-stealer-that-backdoors-cl-f9a367b152#week" rel="alternate" type="text/html" />
+    <summary type="text">With a stolen write token, pinning and pull request review do nothing, so limit what a CI runner holds and audit cloud trust after any wfx hit.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week</id>
@@ -52,11 +66,11 @@
     <summary type="text">Gateway owners should patch now and hunt for compromise, because attackers chained this flaw with another to reach root and then wipe a VMware ESXi host.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week</id>
-    <title>OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs</title>
-    <updated>2026-11-17T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=red-hat-quay-flaws-cvss-9-8-9-9-let-attackers-ov-51f0709b19#week</id>
+    <title>Red Hat Quay flaws (CVSS 9.8, 9.9) let attackers overwrite private images</title>
+    <updated>2026-11-12T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=red-hat-quay-flaws-cvss-9-8-9-9-let-attackers-ov-51f0709b19#week" rel="alternate" type="text/html" />
+    <summary type="text">Quay registries reachable by untrusted clients, even internal ones, can be used to poison every system that pulls their images, so apply the fix and hunt for planted keys.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week</id>
@@ -71,20 +85,6 @@
     <updated>2026-11-13T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week" rel="alternate" type="text/html" />
     <summary type="text">Any role that can create objects should be treated as a possible route to code on the database host until the server and its extensions are both upgraded.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=the-risks-of-device-code-authentication-for-ai-c-5f6eeb061e#week</id>
-    <title>Microsoft shows phished device codes can hijack GitHub Copilot CLI sessions</title>
-    <updated>2026-11-17T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=the-risks-of-device-code-authentication-for-ai-c-5f6eeb061e#week" rel="alternate" type="text/html" />
-    <summary type="text">Treat agent OAuth grants as high-value credentials: restrict remote control, session sync and memory, and teach developers to approve only device codes they started.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week</id>
-    <title>Malicious Microsoft agent-framework PyPI versions steal Azure and CI credentials</title>
-    <updated>2026-11-17T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week" rel="alternate" type="text/html" />
-    <summary type="text">Teams building agents on Python SDKs should pin versions, scan site-packages for unexpected .pth files, and treat any host that ran 1.26.1 or 1.26.2 as having leaked its cloud identities.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>

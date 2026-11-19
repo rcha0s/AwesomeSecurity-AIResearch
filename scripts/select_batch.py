@@ -115,11 +115,13 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import common as c
+import hot_incidents as hot
 import newsworthy as nw
 import prefilter as pf
 import story_ledger as sl
 
 BACKLOG_NAME = "_scan_backlog.json"
+HOT_FLAGS_NAME = "_scan_hot.json"  # code-owned (data/_scan*): the session reads it, never edits
 DEFAULTS = {
     "batch_margin": 4,
     "batch_per_source": 2,
@@ -142,6 +144,7 @@ DEFAULTS = {
     "batch_eff_per_source": 1,
     "batch_std_max": 0,  # off unless config.yaml names a lane size (and hosts / sources)
     "batch_std_per_source": 2,
+    "batch_hot_max": 3,  # hot fast path (hot_incidents.py): slots on top of batch_story_max
 }
 NEWS = "news"  # batch_tier of a news-tier candidate
 CORROBORATION_MAX = 3  # extra sources that earn the corroboration bonus
@@ -577,18 +580,34 @@ def story_lane(
     source. `groups` maps id(head) -> (leader's signal, lane-worthy, the other
     copies) for every story left without a lane slot (the news tier reads it)."""
     limit = min(size, int(setting(conf, "batch_story_max")))
+    hot_max = max(0, int(setting(conf, "batch_hot_max")))
     lane: list[dict] = []
     siblings: dict[int, dict] = {}
     groups: dict[int, tuple] = {}
     used: Counter = Counter()
-    for group in story_groups(pool, sigs, pos):
+    hot_taken = 0
+    found = story_groups(pool, sigs, pos)
+    why_hot = {i: hot_reasons(pool, sigs, g, conf) for i, g in enumerate(found)}
+    # Hot fast path: a story that clears the hot bar is dealt first and takes a slot on
+    # top of batch_story_max, past the per-source cap, so a slow day's lane can never
+    # crowd out the incident everyone is talking about (NGINX2Root, 2026-11-18).
+    order = sorted(range(len(found)), key=lambda i: not why_hot[i])  # stable
+    for i in order:
+        group = found[i]
         by_trust = sorted(
             group, key=lambda k: (-(pool[k].get("source_rank") or 0), pos[id(pool[k])])
         )
         open_heads = [k for k in by_trust if used[source_key(pool[k])] < per_source]
         lead = group_signal(sigs, group)
         worthy = lane_worthy(pool[group[0]], lead, conf)
-        if len(lane) < limit and open_heads and worthy:
+        is_hot = bool(why_hot[i]) and hot_taken < hot_max and len(lane) < size
+        if is_hot:
+            head = by_trust[0]
+            hot_taken += 1
+            used[source_key(pool[head])] += 1
+            row = with_story(pool[head], lead, [pool[k] for k in group if k != head])
+            lane.append({**row, "batch_hot": why_hot[i]})
+        elif len(lane) - hot_taken < limit and open_heads and worthy:
             head = open_heads[0]
             used[source_key(pool[head])] += 1
             lane.append(with_story(pool[head], lead, [pool[k] for k in group if k != head]))
@@ -597,6 +616,41 @@ def story_lane(
             groups[id(pool[head])] = (lead, worthy, [pool[k] for k in group if k != head])
         siblings |= {id(pool[k]): pool[head] for k in group if k != head}
     return lane, siblings, groups
+
+
+def hot_reasons(pool: list[dict], sigs: list, group: list[int], conf: c.Config) -> list[str]:
+    """Why a staged story group clears the hot bar (hot_incidents.bar_reasons), or [].
+    Outlets are distinct publishers outside GitHub/HN; exploited is a CISA KEV copy or
+    an exploited marker; ubiquitous is a configured very-common-software name in any
+    copy's title or excerpt. A story the ledger already holds is never hot here."""
+    if any(sigs[k] is None or sigs[k].known for k in group):
+        return []
+    copies = [pool[k] for k in group]
+    if not any(recent(x, int(setting(conf, "batch_story_days"))) for x in copies):
+        return []
+    marks = frozenset().union(*(sigs[k].markers for k in group))
+    kevs = [x for x in copies if str(x.get("source_id") or "").startswith("kev_json")]
+    # CISA's catalog is the exploited signal, not an outlet covering the story.
+    outlets = {nw.publisher(x) for x in copies if x not in kevs}
+    outlets -= set(nw.NON_INDEPENDENT) | {""}
+    s = hot.settings(conf)
+    common = any(hot.ubiquitous_hit(nw._text(x), s["ubiquitous"]) for x in copies)
+    return hot.bar_reasons(marks, len(outlets), bool(kevs), common, s)
+
+
+def hot_flags(batch: list[dict]) -> list[dict]:
+    """data/_scan_hot.json: the batch's hot stories, for the session's hot-incident step."""
+    return [
+        {
+            "id": x.get("id"),
+            "title": x.get("title") or "",
+            "url": x.get("source_url") or x.get("article_url") or "",
+            "reasons": list(x["batch_hot"]),
+            "coverage": list((x.get("batch_story") or {}).get("coverage") or []),
+        }
+        for x in batch
+        if x.get("batch_hot")
+    ]
 
 
 def group_signal(sigs: list, group: list[int]) -> nw.Signal:
@@ -844,6 +898,8 @@ def main(argv: list[str] | None = None) -> int:
     c.save_candidates(batch + news)
     c.save_json(c.DATA_DIR / c.SCAN_TIERS_SNAPSHOT, tiers_record(batch + news))
     c.save_json(backlog_file(), backlog)
+    flags = hot_flags(batch)
+    c.save_json(c.DATA_DIR / HOT_FLAGS_NAME, flags)
     dropped = sum(1 for b in backlog if "batch_rank" not in b)
     print(
         f"SCAN_BATCH: {len(batch)} of {len(candidates)} candidates selected "
@@ -852,6 +908,8 @@ def main(argv: list[str] | None = None) -> int:
         f"cut and {dropped} prefilter-dropped -> data/{BACKLOG_NAME}"
     )
     print(f"SCAN_BATCH sources: {composition(batch)}")
+    if flags:
+        print(f"SCAN_BATCH hot: {len(flags)} -> data/{HOT_FLAGS_NAME}")
     if news:
         why = Counter(x["batch_news"]["reason"] for x in news)
         print(f"SCAN_BATCH news tier: {', '.join(f'{k} x{n}' for k, n in why.most_common())}")

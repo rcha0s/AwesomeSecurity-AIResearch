@@ -1,0 +1,40 @@
+name: Hot incident watch
+
+# Between daily scans, look for a hot incident the site has not called out yet
+# (scripts/hot_watch.py): CISA KEV + the news feeds in config.yaml
+# hot_incidents.watch_sources, grouped by story, held to the hot bar
+# (scripts/hot_incidents.py). Each new one opens a `hot-incident` issue in this
+# repo, once. No model runs here and nothing is committed; the next scan writes
+# the summary. Rohan, 2026-11-18: "I need to be called out as soon as possible."
+
+on:
+  schedule:
+    - cron: "23 * * * *" # hourly
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: hot-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Watch for hot incidents
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/hot_watch.py --alert
