@@ -2,7 +2,7 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_11 vetted findings · updated 2026-11-19 · ranked by composite · findings from the latest 31 days · [79 held for review](../REVIEW.md)._
+_11 vetted findings · updated 2026-11-19 · ranked by composite · findings from the latest 31 days · [82 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -14,7 +14,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: CISA added unauthenticated REDCap code execution to its exploited list with fixed builds on three release lines and a three-day federal deadline. · cve · active-exploitation · timely_
 - **[F5 patches five critical NGINX flaws as public exploit code appears](https://www.securityweek.com/f5-patches-critical-nginx2root-flaws-as-poc-exploits-go-public/)**
 - **[PHP releases fix 18 flaws, including critical remote code execution bugs](https://www.bleepingcomputer.com/news/security/php-security-updates-fix-18-flaws-including-critical-rce-bugs/)**
-- **[Splunk patches nearly 140 flaws in Enterprise, Enterprise Security and SOAR](https://www.securityweek.com/splunk-patches-nearly-140-flaws-across-three-core-products/)**
 - **[Elastic details five AI attack frameworks seen in real intrusions](https://www.elastic.co/security-labs/threat-command/agentic-offensive-frameworks-detection-artex)**
 - **[Phrack issue 73 ships 23 papers on exploitation, reversing and AI](https://phrack.org/issues/73/introduction_md)**
 - **[Drupal patches critical installer flaw allowing unauthenticated site takeover](https://thehackernews.com/2026/11/drupal-patches-critical-installer-flaw.html)**
@@ -68,7 +67,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Citrix patches 12 NetScaler and Secure Access Client flaws, including authentication bypass](https://thehackernews.com/2026/11/citrix-patches-12-netscaler-and-secure.html)**
 - **[Node.js fixes 16 flaws, including HTTP/2 crashes and memory leaks](https://thehackernews.com/2026/11/nodejs-fixes-16-flaws-including-http2.html)**
 - **[PTC patches critical deserialization remote code execution (RCE) in Windchill and FlexPLM](https://thehackernews.com/2026/11/ptc-patches-critical-windchill-and.html)**
-- **[Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/)**
 - **[Microsoft November 2026 Patch Tuesday fixes 1,095 flaws, one exploited](https://blog.talosintelligence.com/microsoft-patch-tuesday-for-november-2026/)**
 - **[Microsoft FORGE Lab's AI kernel scans yield 59 Linux bug reports](https://www.microsoft.com/en-us/security/blog/2026/11/11/lessons-from-59-linux-kernel-bug-reports/)**
 - **[StepSecurity compares its Secure Registry with GitHub's npm-only package firewall](https://www.stepsecurity.io/blog/github-package-firewall-vs-stepsecurity-secure-registry-protection-beyond-npm)**
@@ -127,7 +125,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Attackers exploit maximum-severity Siemens IoT2050 flaw to plant command backdoors](https://thehackernews.com/2026/11/attackers-exploit-critical-siemens.html)**
 - **[Attackers target unpatched CryptoPayment Gateway WordPress plugin flaw exposing wallet credentials](https://thehackernews.com/2026/11/attackers-target-unpatched.html)**
 - **[cPGuard update channel hijacked to push backdoor to Linux servers](https://thehackernews.com/2026/11/cpguard-update-channel-hijacked-to.html)**
-- **[Imperva tracks StyleSmuggler Magento exploitation dropping the PSK Agent Go RAT](https://www.imperva.com/blog/stylesmuggler-exploitation-deploys-psk-agent-rat-against-magento-stores/)**
 - **[Trail of Bits uses Codex to backport security fixes to stable Linux](https://blog.trailofbits.com/2026/11/02/backporting-security-fixes-at-scale-with-codex/)**
 - **[Google disrupts 1.3 million-device Android botnet, blames TV box maker Videostrong](https://thehackernews.com/2026/11/google-disrupts-13-million-device.html)**
 - **[Criminals exploit maximum-severity Node-RED flaw to deploy a Linux bot](https://www.theregister.com/security/2026/11/02/max-severity-bug-in-widely-used-ot-programming-tool-exploited-to-deliver-linux-malware/5307086)**

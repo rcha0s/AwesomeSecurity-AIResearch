@@ -141,7 +141,7 @@ _Updated 2026-11-19._
 - **[Check Point: infostealer adds collection routines for AI desktop apps](https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/)** · composite 8.25 · _ungrounded excerpt — only 0% of quotes verified against the source_
   AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.
 
-## Product Security (79)
+## Product Security (82)
 
 - **[Researchers brute-force Windows Hello PINs by rolling back firmware TPM lockout counters](http://arxiv.org/abs/2611.18126v1)** · composite 60.05 · _flagged needs_review (low confidence / novelty / relevance)_
   Treat short device PINs as weak against anyone with physical access and lab tools; for high-risk fleets, prefer longer PINs or passphrases over short TPM-guarded ones.
@@ -165,6 +165,8 @@ _Updated 2026-11-19._
   Use the index as a lookup for which agent harnesses to hunt for, but remember it is a single curated list built from other people's reports.
 - **[Argus, an open-source security platform, has AI agents that only propose actions](https://github.com/thomasunise/argus)** · composite 47.75 · _flagged needs_review (low confidence / novelty / relevance)_
   Argus is a concrete reference design for agentic SecOps, with read-only agents, a propose-only path to a policy broker, agent-targeted canaries and autonomy that is reversible and…
+- **[Imperva tracks StyleSmuggler Magento exploitation dropping the PSK Agent Go RAT](https://www.imperva.com/blog/stylesmuggler-exploitation-deploys-psk-agent-rat-against-magento-stores/)** · composite 47.69 · _failed independent verification — Lesson 3 says the FFI webshell survives disable_functions hardening; Imperva only says it is 'potentially preserving command execution'._
+  Patching StyleSmuggler does not evict PSK Agent, so hunt for the dropper, webshell and DNS beacons on any Magento host that was exposed.
 - **[Callix finds 819 access-control flaws at sensitive callsites in Android firmware apps](http://arxiv.org/abs/2611.00594v1)** · composite 47.1 · _flagged needs_review (low confidence / novelty / relevance)_
   Checking that an access check exists in original equipment manufacturer (OEM) firmware apps is not enough; judge whether it is strong enough for the data a generic call operates…
 - **[Perforce Puppet Server flaw lets any agent certificate holder run code](https://nvd.nist.gov/vuln/detail/CVE-2026-115731)** · composite 46.86 · _failed independent verification — Summary claim 'CISA added it to the KEV catalog on 2026-11-17' is not in the raw NVD page._
@@ -193,6 +195,8 @@ _Updated 2026-11-19._
   Any Android device reachable by SMS can be knocked off telephony, emergency calling included, and the vendor treats it as a non-security bug with no fix scheduled.
 - **[A few notes on AWS Nitro Enclaves: KMS integration](https://blog.trailofbits.com/2026/08/05/a-few-notes-on-aws-nitro-enclaves-kms-integration/)** · composite 42.22 · _news story: excerpt not grounded in source_
   Enclave-to-KMS attestation only closes the gap if you also hardcode the CMK ARN, attest the IAM role, and initiate TLS from inside the enclave; without that, active-attacker…
+- **[Attackers host AntiFox pentest platform on Alibaba Cloud to steal AWS secrets](https://www.bleepingcomputer.com/news/security/hackers-use-antifox-ai-agents-in-aws-credential-theft-attacks/)** · composite 41.79 · _failed independent verification — Verifier found lesson 4 (long-term keys in app config as the root exposure) unsupported by the source and deleted it, and softened lesson 2 and the summary wording._
+  Hunt for successful AWS calls hidden in bursts of denials that follow web-tier compromise.
 - **[@_rybaz and @GrahamHelton3 publish their vulnerability-research harness workshop materials](https://x.com/_rybaz/status/2119828361044246643)** · composite 41.75 · _flagged needs_review (low confidence / novelty / relevance)_
   A pointer to public workshop material on building agent harnesses for vulnerability research; the content is unreviewed here, so read it before relying on it.
 - **[Backdoored fragment-api-py release drains users' crypto wallets when the client opens](https://safedep.io/blog/fragment-api-py-pypi-ton-wallet-drainer)** · composite 41.38 · _flagged needs_review (low confidence / novelty / relevance)_
@@ -235,6 +239,8 @@ _Updated 2026-11-19._
   MSSPs without a Defender MTO can hunt across customer Sentinel workspaces from one query with delegated access only.
 - **[Plex CVE-2026-96652 SSRF lets the /player/timeline protocol parameter force server POSTs](https://nvd.nist.gov/vuln/detail/CVE-2026-96652)** · composite 34.44 · _flagged needs_review (low confidence / novelty / relevance)_
   Upgrade Plex to 1.43.3.10861 or later: this endpoint turns the server into a POST relay with almost no authentication, and it is exploited in the wild as part of the plex2shell…
+- **[Splunk patches nearly 140 flaws in Enterprise, Enterprise Security and SOAR](https://www.securityweek.com/splunk-patches-nearly-140-flaws-across-three-core-products/)** · composite 34.22 · _failed independent verification — Lesson 4 says three smaller products were patched, but the source names only two (App for Stream with 3 flaws and AI Assistant with 4)._
+  Move Splunk Enterprise to 10.6.1, 10.4.5, 10.2.9, 10.0.12 or 9.4.17, Enterprise Security to 8.7.0 and SOAR to 8.8.0, and restrict admin roles until then.
 - **[CISA KEV: Plex Media Server file write CVE-2026-96656 exploited in the wild](https://nvd.nist.gov/vuln/detail/CVE-2026-96656)** · composite 33.38 · _failed independent verification — Source text not captured (NVD page empty); lessons rest on the KEV catalog text only._
   Treat the four Plex KEV CVEs as one chain and patch together.
 - **[CISA says a low-severity VMware ESX logging gap is being exploited](https://nvd.nist.gov/vuln/detail/CVE-2026-41709)** · composite 33.0 · _ungrounded excerpt — only 67% of quotes verified against the source_
@@ -501,4 +507,4 @@ _Updated 2026-11-19._
 
 ---
 
-<sub>Generated by scripts/generate_review.py on 2026-11-19. 243 item(s) awaiting review.</sub>
+<sub>Generated by scripts/generate_review.py on 2026-11-19. 246 item(s) awaiting review.</sub>
