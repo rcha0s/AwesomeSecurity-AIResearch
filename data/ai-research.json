@@ -69,10 +69,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 35,
+        "newness": 34,
         "credibility": 73.2,
-        "composite": 61.73,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 61.48,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier confirmed every number; caveat: the objective-framing intervention ran on one model (GPT-6.1 Sol), not all six.",
@@ -182,82 +182,6 @@
       "needs_review": true,
       "grounding_score": 0.0,
       "domain_label": "Agent Harness Design"
-    },
-    {
-      "id": "microsoft-research-focus-edition-98-87946c1829",
-      "topic": "ai-research",
-      "domain": "air.cost-efficiency",
-      "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
-      "source_url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
-      "summary": "This digest's most practitioner-relevant item is a Microsoft study of 13.5 million coding agent sessions: fewer than 8% needed context compaction, yet those sessions made up 44% of total AI processing costs. The researchers released COMPACTIONBENCH to evaluate compaction and APEC, a method that prepares summaries in the background, which cut costs by up to 25.4% and execution time by 9.6%.",
-      "lessons": [
-        {
-          "point": "A small share of long sessions drives a large share of spend, so compaction is a key cost lever.",
-          "excerpt": "A new study looked at 13.5 million coding sessions and found fewer than 8% required context compaction. Yet those sessions accounted for 44% of total AI processing costs.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Building the summary in the background, instead of pausing the agent, improved both cost and speed.",
-          "excerpt": "APEC, a method that prepares summaries in the background instead of interrupting an agent’s work",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The reported gains are modest but concrete.",
-          "excerpt": "APEC improved coding performance while reducing costs by up to 25.4% and execution time by 9.6%",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.",
-      "tags": [
-        "context-compaction",
-        "coding-agents",
-        "cost-efficiency",
-        "benchmark",
-        "harness-design"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Measure compaction cost share and try background summarization",
-        "detail": "Log which sessions trigger compaction and what share of total tokens and cost they use. Then test a background summarizer that builds a running summary while the agent works, and swap it in at the threshold instead of pausing for a synchronous summary. Compare task success, cost and wall-clock time against the current method."
-      },
-      "scores": {
-        "novelty": 55,
-        "relevance": 65,
-        "newness": 35,
-        "credibility": 73.2,
-        "composite": 55.73,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "prior_art": "The pool already covers when to trigger compaction (a model-invoked compaction tool with a fire/hold rubric), encrypted Codex compaction and compaction as an injection path. This adds large-scale cost data and a background, non-blocking compaction method.",
-      "related_claims": [
-        "compact-first-reset-only-if-the-model-needs-it"
-      ],
-      "article_url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-12",
-      "raw_path": "data/_raw/microsoft-research-focus-edition-98-87946c1829.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:https-www-microsoft-com-en-us-research-feed",
-      "source_rank": 73.2,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Microsoft Research Blog",
-      "retrieved_at": "2026-11-14T19:16:13+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -404,6 +328,82 @@
       ]
     },
     {
+      "id": "microsoft-research-focus-edition-98-87946c1829",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "title": "Microsoft finds 8% of coding sessions account for 44% of costs",
+      "source_url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
+      "summary": "This digest's most practitioner-relevant item is a Microsoft study of 13.5 million coding agent sessions: fewer than 8% needed context compaction, yet those sessions made up 44% of total AI processing costs. The researchers released COMPACTIONBENCH to evaluate compaction and APEC, a method that prepares summaries in the background, which cut costs by up to 25.4% and execution time by 9.6%.",
+      "lessons": [
+        {
+          "point": "A small share of long sessions drives a large share of spend, so compaction is a key cost lever.",
+          "excerpt": "A new study looked at 13.5 million coding sessions and found fewer than 8% required context compaction. Yet those sessions accounted for 44% of total AI processing costs.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Building the summary in the background, instead of pausing the agent, improved both cost and speed.",
+          "excerpt": "APEC, a method that prepares summaries in the background instead of interrupting an agent’s work",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The reported gains are modest but concrete.",
+          "excerpt": "APEC improved coding performance while reducing costs by up to 25.4% and execution time by 9.6%",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.",
+      "tags": [
+        "context-compaction",
+        "coding-agents",
+        "cost-efficiency",
+        "benchmark",
+        "harness-design"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Measure compaction cost share and try background summarization",
+        "detail": "Log which sessions trigger compaction and what share of total tokens and cost they use. Then test a background summarizer that builds a running summary while the agent works, and swap it in at the threshold instead of pausing for a synchronous summary. Compare task success, cost and wall-clock time against the current method."
+      },
+      "scores": {
+        "novelty": 55,
+        "relevance": 65,
+        "newness": 34,
+        "credibility": 73.2,
+        "composite": 55.48,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "verified": true,
+      "prior_art": "The pool already covers when to trigger compaction (a model-invoked compaction tool with a fire/hold rubric), encrypted Codex compaction and compaction as an injection path. This adds large-scale cost data and a background, non-blocking compaction method.",
+      "related_claims": [
+        "compact-first-reset-only-if-the-model-needs-it"
+      ],
+      "article_url": "https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-12",
+      "raw_path": "data/_raw/microsoft-research-focus-edition-98-87946c1829.txt",
+      "discovered_via": "rss",
+      "source_id": "rss:https-www-microsoft-com-en-us-research-feed",
+      "source_rank": 73.2,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Microsoft Research Blog",
+      "retrieved_at": "2026-11-14T19:16:13+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "the-components-of-agent-memory-ef2485a576",
       "topic": "ai-research",
       "domain": "air.agents",
@@ -454,10 +454,10 @@
       "scores": {
         "novelty": 33,
         "relevance": 85,
-        "newness": 35,
+        "newness": 34,
         "credibility": 70.8,
-        "composite": 54.77,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 54.52,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -541,10 +541,10 @@
       "scores": {
         "novelty": 40.0,
         "relevance": 85,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 54.5,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 54.25,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Corpus entries on verification loops and separate grader (ai-research.json mentions of verification loops, claim separate-grader-from-generator); the post's novel parts are first-party base-branch rule loading, observe-mode commit gates and reviewing the reviewers, but much of the E2E/property/differential testing advice is generic and the post itself links earlier Anthropic code-review and verification-loop posts.",
       "related_claims": [
@@ -628,10 +628,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 85,
-        "newness": 35,
+        "newness": 34,
         "credibility": 50.0,
-        "composite": 53.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 53.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "The ledger already holds keep-bulk-tool-output-out-of-context and load-tool-definitions-on-demand from vendor posts. This adds a controlled cross-harness measurement showing harness overhead, not the model, sets much of the cost.",
@@ -708,10 +708,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 75,
-        "newness": 35,
+        "newness": 34,
         "credibility": 50.0,
-        "composite": 53.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 53.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "Closest pool items are the stable-prefix and compaction claims; FlowPlan is a new mechanism (graph-delta planning) with SWE-bench measurements.",
@@ -728,79 +728,6 @@
         "passed": true,
         "issues": []
       },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
-      "source_url": "https://arxiv.org/abs/2610.22466",
-      "article_url": "https://arxiv.org/abs/2610.22466",
-      "tweet_url": null,
-      "author": null,
-      "published": "2026-10-19",
-      "date": "2026-10",
-      "source_name": "arXiv cs.AI (Artificial Intelligence)",
-      "raw_path": "data/_raw/harness-delta-attribution-dissecting-gains-from-2006da8a13.txt",
-      "discovered_via": "rss",
-      "source_id": "rss:http-export-arxiv-org-rss-cs-ai",
-      "source_rank": 43.9,
-      "source_topics": [
-        "ai-research"
-      ],
-      "cluster": "B",
-      "related_claims": [
-        "harness-evolution-gains-need-held-out-attribution",
-        "swe-bench-doesnt-generalize-to-production-tasks"
-      ],
-      "summary": "Automatic harness evolution, which optimizes the prompts, skills, tools and orchestration around a fixed model, reports gains on its search set. Harness-Delta Attribution splits those gains into overfitting, test-time scaling and a residual. Across 21 settings with significant gains, overfitting averaged 54% and extra compute 14% of the gain, gains often failed to transfer to held-out tasks, and validation signals did not prevent overfitting.",
-      "lessons": [
-        {
-          "point": "Most of a harness-evolution gain is usually not generalizable improvement: on average 54% is overfitting and 14% is extra inference compute.",
-          "excerpt": "overfitting and test-time scaling account for 54% and 14% of the gain on average; their combined share exceeds 50% in 14 settings",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A better score on the set you optimized against is weak evidence; evolved harnesses often don't transfer to held-out tasks.",
-          "excerpt": "search-set gains often fail to transfer to held-out tasks",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "A validation split alone does not stop harness evolution from overfitting.",
-          "excerpt": "validation-based signals are insufficient to prevent overfitting",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.",
-      "tags": [
-        "harness-evolution",
-        "evals",
-        "overfitting",
-        "test-time-compute",
-        "agents"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Attribution-aware acceptance test for harness changes",
-        "detail": "When a prompt or skill optimizer or a self-improving loop proposes a harness change, score it on a held-out task set the optimizer never saw. Compare at matched token and inference budgets so extra compute isn't counted as improvement. Accept the change only on the held-out delta, not the search-set or validation delta."
-      },
-      "scores": {
-        "novelty": 65,
-        "relevance": 87,
-        "newness": 6,
-        "credibility": 43.9,
-        "composite": 53.68,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
-      "verified": true,
-      "verify_note": "Independent verifier: all lessons supported; novelty 65 (vs 72), relevance 87.",
-      "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
-      "retrieved_at": "2026-10-19T23:35:59+00:00",
-      "needs_review": false,
       "grounding_score": 1.0
     },
     {
@@ -1025,10 +952,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 82,
-        "newness": 35,
+        "newness": 34,
         "credibility": 69.4,
-        "composite": 52.76,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 52.51,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -1061,76 +988,6 @@
         "issues": []
       },
       "grounding_score": 1.0
-    },
-    {
-      "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
-      "scores": {
-        "novelty": 70,
-        "relevance": 65,
-        "newness": 6,
-        "credibility": 55.0,
-        "composite": 50.25,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "POPE yes/no readout uses token IDs the model never emits",
-      "source_url": "https://arxiv.org/abs/2610.25964",
-      "article_url": "https://arxiv.org/abs/2610.25964",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-19",
-      "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 55.0,
-      "source_topics": [
-        "ai-research"
-      ],
-      "related_claims": [],
-      "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
-      "lessons": [
-        {
-          "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
-          "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
-          "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
-          "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
-      "tags": [
-        "evals",
-        "benchmarks",
-        "tokenization",
-        "reproducibility",
-        "vlm"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Assert logit-readout tokens appear in greedy decodes",
-        "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
-      },
-      "retrieved_at": "2026-10-22T01:39:40+00:00",
-      "needs_review": false,
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov"
-      ]
     },
     {
       "id": "1password-s-ai-patching-benchmark-is-misleading-6437abf21b",
@@ -1268,10 +1125,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 60,
-        "newness": 35,
+        "newness": 34,
         "credibility": 68.8,
-        "composite": 49.07,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 48.82,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "Existing entries already treat the LLM judge as a component to test and flag judge prompt sensitivity. This paper adds evidence that judge quality barely tracks MMLU and that frontier models can agree with humans less.",
@@ -1440,10 +1297,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 45,
-        "newness": 35,
+        "newness": 34,
         "credibility": 48.5,
-        "composite": 47.52,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 47.27,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "The verifier confirmed the entry; the summary now says sites that 'do not prohibit' scraping and the takeaway and actionable are labelled as the tracker's recommendation.",
@@ -1703,10 +1560,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 70,
-        "newness": 35,
+        "newness": 34,
         "credibility": 50.0,
-        "composite": 46.25,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 46.0,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "compact-first-reset-only-if-the-model-needs-it and Microsoft's compaction-cost finding cover when to compact; this adds evidence that compacting early and often keeps accuracy.",
@@ -1775,10 +1632,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 68,
-        "newness": 35,
+        "newness": 34,
         "credibility": 69.6,
-        "composite": 46.19,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 45.94,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "Microsoft's synthetic, time-evolving enterprise tenants for Copilot evals (already in ai-research) cover building eval worlds without customer data. Legora adds a practitioner account: domain-expert-built RL environments, per-practice-area heat maps that show model regressions, a fixed failure taxonomy with flagged LLM checks, and a pilot-sample pattern for bulk extraction.",
@@ -1809,181 +1666,6 @@
         "issues": [
           "mild: sentence_words 53 > 45 (In production, Legora sorts failures into 10 to 20 known failure modes, runs cheap LLM checks behind feature flags, atta)"
         ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "GRSE credits multi-agent skills by contrasting repeated runs, not presence",
-      "source_url": "https://arxiv.org/abs/2610.27227",
-      "summary": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
-      "takeaway": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
-      "lessons": [
-        {
-          "point": "Crediting skills by co-occurrence is broken: a skill that hurts can still get rewarded if it shows up in successful runs.",
-          "excerpt": "presence is not responsibility: a harmful skill active in successful runs still earns positive credit",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Mechanism: repeat each question under identical libraries and contrast the outcomes to attribute credit, as in GRPO.",
-          "excerpt": "it executes each question several times under the same skill libraries and contrasts the executions to credit agent--skill pairs",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Contrastive credit makes self-evolution robust to poisoned skill libraries, where presence-based credit gets worse than where it started.",
-          "excerpt": "starting from planted harmful skills, it credits every planted skill with the correct sign and recovers the score of a clean library (+6.3points), whereas MASkills misattributes two and falls below its starting point.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The authors attribute the gains to better-grounded retrieval rather than unsupported answers.",
-          "excerpt": "Its gains rest on better-grounded retrieval rather than answers given without evidence",
-          "confidence": 0.65,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "skill-evolution",
-        "credit-assignment",
-        "multi-agent",
-        "self-improving-agents",
-        "skill-poisoning",
-        "grpo"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Group-relative credit check before promoting or retiring a skill",
-        "detail": "For each candidate skill edit, run the same task batch N times with and without the skill (same seeds and library otherwise). Use the outcome difference as the skill's credit, and require a consistent sign before committing. Include deliberately harmful skills as canaries to confirm the credit signal flags them."
-      },
-      "scores": {
-        "novelty": 58,
-        "relevance": 65,
-        "newness": 6,
-        "credibility": 50.8,
-        "composite": 46.02,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
-      "prior_art": "The archive has 'Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?' (per-skill contribution eviction, judge false-pass threshold) and 'Pre-Commit Gating against Skill Contamination' (verifier gatekeeper). GRSE differs by solving multi-agent credit assignment with GRPO-style contrastive reruns instead of judge or verifier gating, and shows it recovers from planted harmful skills. The evidence here is abstract-level only.",
-      "related_claims": [
-        "harness-evolution-gains-need-held-out-attribution"
-      ],
-      "article_url": "https://arxiv.org/abs/2610.27227",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-19",
-      "raw_path": "data/_raw/which-agent-s-skill-should-change-group-relative-448df04fa1.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 50.8,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Hugging Face Daily Papers",
-      "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
-      "retrieved_at": "2026-10-25T16:45:20+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 5 > 4"
-        ]
-      },
-      "grounding_score": 1.0,
-      "previous_slugs": [
-        "grse-credit-multi-agent-skills-by-contrasting-repeated-runs"
-      ]
-    },
-    {
-      "candidate_id": "deepstress-stress-testing-deep-search-agents-1701712ff3",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "DeepStress finds deep search agents trust low-credibility and wrong evidence",
-      "summary": "DeepStress replaces a search agent's retrieval module with a synthetic environment that generates a document for each query with separately controlled trustworthiness, relevance and factuality, so failures on degraded evidence can be reproduced. It sorts each final answer into one of five outcomes and adds two metrics, RAS and CoPRAS, that reward cautious answers and account for compute cost. Across 12 systems on HotpotQA and BrowseComp-Plus questions, several open-weight agents answered confidently from sources with obvious credibility red flags, and many HotpotQA questions were answered from the model's built-in knowledge even when every returned document was wrong.",
-      "lessons": [
-        {
-          "point": "Controlling evidence quality with synthetic documents lets you reproduce a search agent's failures on poor sources, which real benchmark corpora rarely contain.",
-          "excerpt": "It replaces the retrieval module with a synthetic environment where documents are generated dynamically for each query, under independent control of their trustworthiness, relevance, and factuality.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Some open-weight search agents do not discount sources that are clearly untrustworthy. They answer confidently anyway, which is also a way in for poisoned or low-quality content.",
-          "excerpt": "several open-weight agents answer confidently when sources contain obvious credibility red flags",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Accuracy on older QA sets like HotpotQA can reflect what the model memorized during training rather than retrieval, which makes such benchmarks weak tests of evidence use.",
-          "excerpt": "many HotpotQA questions are answered from parametric knowledge even when all returned documents are factually wrong",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Search agent evals should give credit for appropriate caution and count compute cost, not just score binary accuracy.",
-          "excerpt": "two new reliability-aware metrics, RAS and CoPRAS, which credit cautious behavior and account for computational cost",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Before trusting a search or RAG agent's accuracy score, test it on deliberately degraded evidence and check whether it is answering from memory instead of its sources.",
-      "tags": [
-        "evals",
-        "search-agents",
-        "deep-research",
-        "rag",
-        "robustness",
-        "source-credibility",
-        "parametric-knowledge"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Add a degraded-evidence stress test to search agent evals",
-        "detail": "In your search or RAG agent eval harness, swap the retriever for a stub that returns documents with controlled flaws: low-credibility sources, irrelevant documents and factually wrong documents. Score abstention or hedging as a separate outcome. Flag any correct answer given when all documents were wrong as reliance on memorized knowledge rather than grounding."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 60,
-        "newness": 35,
-        "credibility": 48.3,
-        "composite": 45.99,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "RGB (Chen et al. 2023) noise and counterfactual robustness; knowledge-conflict benchmarks (ClashEval, ConflictBank, FaithEval); SearchAuditor (archive). New: per-query synthetic evidence control for multi-step deep-search agents and cost-aware caution metrics.",
-      "related_claims": [
-        "llm-eval-datasets-leak-into-training-sets",
-        "retrieval-quality-dominates-generation-quality-in-rag"
-      ],
-      "verified": true,
-      "verify_note": "Verifier confirmed all counts and lessons; abstract only. Novelty taken as the verifier's 40.",
-      "source_url": "https://arxiv.org/abs/2607.13920",
-      "article_url": "https://arxiv.org/abs/2607.13920",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-12",
-      "raw_path": "data/_raw/deepstress-stress-testing-deep-search-agents-1701712ff3.txt",
-      "discovered_via": "rss",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 48.3,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Hugging Face Daily Papers",
-      "id": "deepstress-finds-deep-search-agents-trust-low-cr-85677a6dcf",
-      "retrieved_at": "2026-11-13T17:46:34+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -2052,6 +1734,92 @@
       },
       "retrieved_at": "2026-10-22T01:39:40+00:00",
       "needs_review": false,
+      "grounding_score": 1.0
+    },
+    {
+      "candidate_id": "deepstress-stress-testing-deep-search-agents-1701712ff3",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "DeepStress finds deep search agents trust low-credibility and wrong evidence",
+      "summary": "DeepStress replaces a search agent's retrieval module with a synthetic environment that generates a document for each query with separately controlled trustworthiness, relevance and factuality, so failures on degraded evidence can be reproduced. It sorts each final answer into one of five outcomes and adds two metrics, RAS and CoPRAS, that reward cautious answers and account for compute cost. Across 12 systems on HotpotQA and BrowseComp-Plus questions, several open-weight agents answered confidently from sources with obvious credibility red flags, and many HotpotQA questions were answered from the model's built-in knowledge even when every returned document was wrong.",
+      "lessons": [
+        {
+          "point": "Controlling evidence quality with synthetic documents lets you reproduce a search agent's failures on poor sources, which real benchmark corpora rarely contain.",
+          "excerpt": "It replaces the retrieval module with a synthetic environment where documents are generated dynamically for each query, under independent control of their trustworthiness, relevance, and factuality.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Some open-weight search agents do not discount sources that are clearly untrustworthy. They answer confidently anyway, which is also a way in for poisoned or low-quality content.",
+          "excerpt": "several open-weight agents answer confidently when sources contain obvious credibility red flags",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Accuracy on older QA sets like HotpotQA can reflect what the model memorized during training rather than retrieval, which makes such benchmarks weak tests of evidence use.",
+          "excerpt": "many HotpotQA questions are answered from parametric knowledge even when all returned documents are factually wrong",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Search agent evals should give credit for appropriate caution and count compute cost, not just score binary accuracy.",
+          "excerpt": "two new reliability-aware metrics, RAS and CoPRAS, which credit cautious behavior and account for computational cost",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Before trusting a search or RAG agent's accuracy score, test it on deliberately degraded evidence and check whether it is answering from memory instead of its sources.",
+      "tags": [
+        "evals",
+        "search-agents",
+        "deep-research",
+        "rag",
+        "robustness",
+        "source-credibility",
+        "parametric-knowledge"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Add a degraded-evidence stress test to search agent evals",
+        "detail": "In your search or RAG agent eval harness, swap the retriever for a stub that returns documents with controlled flaws: low-credibility sources, irrelevant documents and factually wrong documents. Score abstention or hedging as a separate outcome. Flag any correct answer given when all documents were wrong as reliance on memorized knowledge rather than grounding."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 60,
+        "newness": 34,
+        "credibility": 48.3,
+        "composite": 45.74,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "RGB (Chen et al. 2023) noise and counterfactual robustness; knowledge-conflict benchmarks (ClashEval, ConflictBank, FaithEval); SearchAuditor (archive). New: per-query synthetic evidence control for multi-step deep-search agents and cost-aware caution metrics.",
+      "related_claims": [
+        "llm-eval-datasets-leak-into-training-sets",
+        "retrieval-quality-dominates-generation-quality-in-rag"
+      ],
+      "verified": true,
+      "verify_note": "Verifier confirmed all counts and lessons; abstract only. Novelty taken as the verifier's 40.",
+      "source_url": "https://arxiv.org/abs/2607.13920",
+      "article_url": "https://arxiv.org/abs/2607.13920",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-12",
+      "raw_path": "data/_raw/deepstress-stress-testing-deep-search-agents-1701712ff3.txt",
+      "discovered_via": "rss",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 48.3,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Hugging Face Daily Papers",
+      "id": "deepstress-finds-deep-search-agents-trust-low-cr-85677a6dcf",
+      "retrieved_at": "2026-11-13T17:46:34+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
       "grounding_score": 1.0
     },
     {
@@ -2137,79 +1905,6 @@
       "needs_review": true,
       "grounding_score": 1.0,
       "domain_label": "Red-Teaming Methodology"
-    },
-    {
-      "id": "masta-a-feedback-scheduled-multi-agent-system-fo-f05bd24b45",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "kind": "story",
-      "title": "MASTA multi-agent system turns protocol descriptions into Tamarin formal models",
-      "source_url": "http://arxiv.org/abs/2611.20671v1",
-      "summary": "Tamarin is a tool that formally verifies security protocols, but writing its models by hand takes expert skill. MASTA splits the job across three LLM agents: an Architect models rules, an Auditor models properties, and an Arbiter only dispatches work based on the latest Tamarin verdict. On a new benchmark of 10 protocols with 139 mutation variants, it beats several coding agents despite a weaker base model. Only the abstract was available, so details are thin.",
-      "lessons": [
-        {
-          "point": "A single agent that writes and grades its own work cannot reliably find where errors come from; splitting authoring from evaluation helps.",
-          "excerpt": "a single agent that both authors and self-evaluates cannot reliably localize them",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "A pure dispatcher that holds no authoring duties can route the next step from the verifier's latest result.",
-          "excerpt": "the Arbiter implements a Tamarin-anchored scheduler that dispatches the next agent based on the latest verifier verdict",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "The authors report the dispatcher is essential: removing it collapses property and verification scores to zero in their ablation on five protocols.",
-          "excerpt": "Ablations on five protocols confirm that removing the Arbiter collapses property and verification scores to zero.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "For agent builders, a verifier-driven scheduler with separate author and auditor roles is a concrete pattern for tasks where a tool gives a hard pass or fail signal.",
-      "tags": [
-        "multi-agent",
-        "formal-verification",
-        "tamarin",
-        "orchestration",
-        "verifier-in-the-loop",
-        "arxiv"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Try a verifier-driven dispatcher in multi-agent pipelines",
-        "detail": "Where a tool gives a hard verdict (compiler, prover, test suite), add a dispatcher agent that does no authoring and picks the next agent from the latest verdict, with a tagged modification list and a deduplication check to avoid routing loops. Check the full paper before relying on the reported gains, since only the abstract was read."
-      },
-      "scores": {
-        "novelty": 45.0,
-        "relevance": 40,
-        "newness": 35,
-        "credibility": 72.0,
-        "composite": 45.05,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "Separate-grader-from-generator claim and generic planner/verifier multi-agent orchestration; no Tamarin protocol-modeling agent work in the corpus (only generic 'formal verification' mentions in ai-security.json and product-security.json).",
-      "related_claims": [
-        "separate-grader-from-generator"
-      ],
-      "article_url": "http://arxiv.org/abs/2611.20671v1",
-      "published": "2026-11-16",
-      "raw_path": "data/_raw/masta-a-feedback-scheduled-multi-agent-system-fo-f05bd24b45.txt",
-      "source_id": null,
-      "source_rank": 72.0,
-      "discovered_via": "rss",
-      "source_name": "NeurIPS (via arXiv)",
-      "source_topics": [],
-      "verified": true,
-      "date": "2026-11",
-      "retrieved_at": "2026-11-18T06:34:52+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "candidate_id": "how-ai-agents-shape-experts-judgment-calls-570284eaf9",
@@ -2301,6 +1996,79 @@
       "grounding_score": 1.0
     },
     {
+      "id": "masta-a-feedback-scheduled-multi-agent-system-fo-f05bd24b45",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "kind": "story",
+      "title": "MASTA multi-agent system turns protocol descriptions into Tamarin formal models",
+      "source_url": "http://arxiv.org/abs/2611.20671v1",
+      "summary": "Tamarin is a tool that formally verifies security protocols, but writing its models by hand takes expert skill. MASTA splits the job across three LLM agents: an Architect models rules, an Auditor models properties, and an Arbiter only dispatches work based on the latest Tamarin verdict. On a new benchmark of 10 protocols with 139 mutation variants, it beats several coding agents despite a weaker base model. Only the abstract was available, so details are thin.",
+      "lessons": [
+        {
+          "point": "A single agent that writes and grades its own work cannot reliably find where errors come from; splitting authoring from evaluation helps.",
+          "excerpt": "a single agent that both authors and self-evaluates cannot reliably localize them",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "A pure dispatcher that holds no authoring duties can route the next step from the verifier's latest result.",
+          "excerpt": "the Arbiter implements a Tamarin-anchored scheduler that dispatches the next agent based on the latest verifier verdict",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The authors report the dispatcher is essential: removing it collapses property and verification scores to zero in their ablation on five protocols.",
+          "excerpt": "Ablations on five protocols confirm that removing the Arbiter collapses property and verification scores to zero.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "For agent builders, a verifier-driven scheduler with separate author and auditor roles is a concrete pattern for tasks where a tool gives a hard pass or fail signal.",
+      "tags": [
+        "multi-agent",
+        "formal-verification",
+        "tamarin",
+        "orchestration",
+        "verifier-in-the-loop",
+        "arxiv"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Try a verifier-driven dispatcher in multi-agent pipelines",
+        "detail": "Where a tool gives a hard verdict (compiler, prover, test suite), add a dispatcher agent that does no authoring and picks the next agent from the latest verdict, with a tagged modification list and a deduplication check to avoid routing loops. Check the full paper before relying on the reported gains, since only the abstract was read."
+      },
+      "scores": {
+        "novelty": 45.0,
+        "relevance": 40,
+        "newness": 34,
+        "credibility": 72.0,
+        "composite": 44.8,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "Separate-grader-from-generator claim and generic planner/verifier multi-agent orchestration; no Tamarin protocol-modeling agent work in the corpus (only generic 'formal verification' mentions in ai-security.json and product-security.json).",
+      "related_claims": [
+        "separate-grader-from-generator"
+      ],
+      "article_url": "http://arxiv.org/abs/2611.20671v1",
+      "published": "2026-11-16",
+      "raw_path": "data/_raw/masta-a-feedback-scheduled-multi-agent-system-fo-f05bd24b45.txt",
+      "source_id": null,
+      "source_rank": 72.0,
+      "discovered_via": "rss",
+      "source_name": "NeurIPS (via arXiv)",
+      "source_topics": [],
+      "verified": true,
+      "date": "2026-11",
+      "retrieved_at": "2026-11-18T06:34:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.context",
       "related_claims": [
@@ -2345,10 +2113,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 35,
+        "newness": 34,
         "credibility": 70.8,
-        "composite": 44.87,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 44.62,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported all three lessons; the figures are vendor-reported, best-case, single-dataset (Natural Questions), and learned routing and query adaptation for ANN search have substantial prior art, so novelty takes its lower score.",
@@ -2462,168 +2230,6 @@
       "domain_label": "Agent Verification & Stewardship"
     },
     {
-      "id": "dfkhelper-token-goat-6824893977",
-      "topic": "ai-research",
-      "domain": "air.cost-efficiency",
-      "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
-      "source_url": "https://github.com/DFKHelper/token-goat",
-      "article_url": "https://github.com/DFKHelper/token-goat",
-      "tweet_url": null,
-      "author": "DFKHelper",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/dfkhelper-token-goat-6824893977.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:prompt-injection-llm",
-      "source_rank": 47.2,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "DFKHelper/token-goat",
-      "related_claims": [
-        "keep-bulk-tool-output-out-of-context",
-        "stable-prompt-prefix-keeps-cache-reads-cheap",
-        "compact-first-reset-only-if-the-model-needs-it"
-      ],
-      "summary": "Token-Goat is a hook layer for Claude Code, Codex, Copilot CLI and other agents that answers repeat file reads with a pointer, returns single symbols instead of whole files, strips build and test logs to failures, shrinks screenshots and caches skill loads. It also wraps every fetched page and tool result in an untrusted-content fence. Its savings figures (40 to 90% session cost) are self-reported, not independently benchmarked.",
-      "takeaway": "Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.",
-      "lessons": [
-        {
-          "point": "Large reads keep costing after the turn they land in, because the prompt cache bills them on every later turn.",
-          "excerpt": "Anthropic bills the first cache write at 1.25x the base input price (2x for the one-hour cache), then about 0.1x for every later turn that reads it back, until the session compacts.",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Repeat skill loads can be intercepted and served from a compact cached copy.",
-          "excerpt": "a PreToolUse hook intercepts the second invocation, serves the cached compact (~400 tokens) instead",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "It fences all untrusted content by default, regardless of whether a scan flags it.",
-          "excerpt": "Every fetched page, tool result, and extracted document is wrapped in an untrusted-content fence before hitting the model, whether or not it matched an attack pattern",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The headline savings are the author's own numbers.",
-          "excerpt": "Sessions drop 40–90%+ in cost.",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "token-efficiency",
-        "prompt-caching",
-        "hooks",
-        "claude-code",
-        "context-engineering",
-        "untrusted-content"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Deduplicate repeat reads and trim tool logs in hooks",
-        "detail": "Add PreToolUse and PostToolUse hooks that answer a re-read of an unchanged file with a pointer, strip passing tests and progress bars from build and test output, and downscale screenshots before they reach the model. Measure cost per task before and after rather than trusting the author's savings figures. A third-party hook sees every tool call, so review its code before installing it."
-      },
-      "scores": {
-        "novelty": 35,
-        "relevance": 60,
-        "newness": 35,
-        "credibility": 47.2,
-        "composite": 44.33,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
-      "verified": true,
-      "verify_note": "Verifier found all four lessons supported; savings figures are self-reported. Novelty taken as verifier's 35.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "ioc-project-mas-lab-bd689e3b43",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "Cisco's MAS Lab builds and traces multi-agent systems from YAML specs",
-      "source_url": "https://github.com/ioc-project/mas-lab",
-      "article_url": "https://github.com/ioc-project/mas-lab",
-      "tweet_url": null,
-      "author": "ioc-project",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/ioc-project-mas-lab-bd689e3b43.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 66.7,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "ioc-project/mas-lab",
-      "related_claims": [],
-      "summary": "MAS Lab, an Apache-2.0 project copyrighted by Cisco, defines multi-agent systems as YAML specs for agents, tools, workflows and contracts, enforces those contracts at runtime, and ships OpenTelemetry observability plus tracing, replay and benchmark pipelines. It treats MCP and A2A as swappable infrastructure adapters, so agent logic is tested with local tools first. Its PyPI packages are not published yet.",
-      "takeaway": "Keeping MCP and A2A in an adapter layer lets you test agent logic locally and review protocol security in one place.",
-      "lessons": [
-        {
-          "point": "Agents, tools and workflows are declared in YAML rather than written as glue code.",
-          "excerpt": "MAS Lab builds, runs, and tests multi-agent systems (MAS) from YAML files.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Protocols are treated as deployment adapters, so security review sits at one integration boundary.",
-          "excerpt": "Security review and auditing happen at the integration boundary.",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The project is early: packages are not yet on PyPI.",
-          "excerpt": "the public packages are not uploaded yet",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "multi-agent",
-        "specs",
-        "opentelemetry",
-        "mcp",
-        "a2a",
-        "tracing"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Isolate MCP and A2A behind an adapter layer",
-        "detail": "Structure multi-agent code so agent logic calls local tool and delegation interfaces, with MCP and A2A swapped in as infrastructure adapters. Test reasoning and workflow with local tools, then certify protocol behavior and apply policy, audit and budget overlays once at the adapter boundary."
-      },
-      "scores": {
-        "novelty": 35,
-        "relevance": 50,
-        "newness": 35,
-        "credibility": 66.7,
-        "composite": 44.26,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
-      "verified": true,
-      "verify_note": "Verifier found all lessons supported; flagged that the README does not show replay and benchmarking run on OpenTelemetry traces specifically. Summary reworded. Novelty taken as verifier's 35.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted takeaway, summary",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "id": "an-update-on-independent-evaluators-d4058e7ed4",
       "scores": {
         "novelty": 55,
@@ -2700,6 +2306,168 @@
           "published": null
         }
       ]
+    },
+    {
+      "id": "dfkhelper-token-goat-6824893977",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "title": "Token-Goat hooks coding agents to cut repeat reads and bulky tool output",
+      "source_url": "https://github.com/DFKHelper/token-goat",
+      "article_url": "https://github.com/DFKHelper/token-goat",
+      "tweet_url": null,
+      "author": "DFKHelper",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/dfkhelper-token-goat-6824893977.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 47.2,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "DFKHelper/token-goat",
+      "related_claims": [
+        "keep-bulk-tool-output-out-of-context",
+        "stable-prompt-prefix-keeps-cache-reads-cheap",
+        "compact-first-reset-only-if-the-model-needs-it"
+      ],
+      "summary": "Token-Goat is a hook layer for Claude Code, Codex, Copilot CLI and other agents that answers repeat file reads with a pointer, returns single symbols instead of whole files, strips build and test logs to failures, shrinks screenshots and caches skill loads. It also wraps every fetched page and tool result in an untrusted-content fence. Its savings figures (40 to 90% session cost) are self-reported, not independently benchmarked.",
+      "takeaway": "Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.",
+      "lessons": [
+        {
+          "point": "Large reads keep costing after the turn they land in, because the prompt cache bills them on every later turn.",
+          "excerpt": "Anthropic bills the first cache write at 1.25x the base input price (2x for the one-hour cache), then about 0.1x for every later turn that reads it back, until the session compacts.",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Repeat skill loads can be intercepted and served from a compact cached copy.",
+          "excerpt": "a PreToolUse hook intercepts the second invocation, serves the cached compact (~400 tokens) instead",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "It fences all untrusted content by default, regardless of whether a scan flags it.",
+          "excerpt": "Every fetched page, tool result, and extracted document is wrapped in an untrusted-content fence before hitting the model, whether or not it matched an attack pattern",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The headline savings are the author's own numbers.",
+          "excerpt": "Sessions drop 40–90%+ in cost.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "token-efficiency",
+        "prompt-caching",
+        "hooks",
+        "claude-code",
+        "context-engineering",
+        "untrusted-content"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Deduplicate repeat reads and trim tool logs in hooks",
+        "detail": "Add PreToolUse and PostToolUse hooks that answer a re-read of an unchanged file with a pointer, strip passing tests and progress bars from build and test output, and downscale screenshots before they reach the model. Measure cost per task before and after rather than trusting the author's savings figures. A third-party hook sees every tool call, so review its code before installing it."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 60,
+        "newness": 34,
+        "credibility": 47.2,
+        "composite": 44.08,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
+      "verified": true,
+      "verify_note": "Verifier found all four lessons supported; savings figures are self-reported. Novelty taken as verifier's 35.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "ioc-project-mas-lab-bd689e3b43",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Cisco's MAS Lab builds and traces multi-agent systems from YAML specs",
+      "source_url": "https://github.com/ioc-project/mas-lab",
+      "article_url": "https://github.com/ioc-project/mas-lab",
+      "tweet_url": null,
+      "author": "ioc-project",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/ioc-project-mas-lab-bd689e3b43.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "ioc-project/mas-lab",
+      "related_claims": [],
+      "summary": "MAS Lab, an Apache-2.0 project copyrighted by Cisco, defines multi-agent systems as YAML specs for agents, tools, workflows and contracts, enforces those contracts at runtime, and ships OpenTelemetry observability plus tracing, replay and benchmark pipelines. It treats MCP and A2A as swappable infrastructure adapters, so agent logic is tested with local tools first. Its PyPI packages are not published yet.",
+      "takeaway": "Keeping MCP and A2A in an adapter layer lets you test agent logic locally and review protocol security in one place.",
+      "lessons": [
+        {
+          "point": "Agents, tools and workflows are declared in YAML rather than written as glue code.",
+          "excerpt": "MAS Lab builds, runs, and tests multi-agent systems (MAS) from YAML files.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Protocols are treated as deployment adapters, so security review sits at one integration boundary.",
+          "excerpt": "Security review and auditing happen at the integration boundary.",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The project is early: packages are not yet on PyPI.",
+          "excerpt": "the public packages are not uploaded yet",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "multi-agent",
+        "specs",
+        "opentelemetry",
+        "mcp",
+        "a2a",
+        "tracing"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Isolate MCP and A2A behind an adapter layer",
+        "detail": "Structure multi-agent code so agent logic calls local tool and delegation interfaces, with MCP and A2A swapped in as infrastructure adapters. Test reasoning and workflow with local tools, then certify protocol behavior and apply policy, audit and budget overlays once at the adapter boundary."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 50,
+        "newness": 34,
+        "credibility": 66.7,
+        "composite": 44.01,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
+      "verified": true,
+      "verify_note": "Verifier found all lessons supported; flagged that the README does not show replay and benchmarking run on OpenTelemetry traces specifically. Summary reworded. Novelty taken as verifier's 35.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway, summary",
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
     },
     {
       "id": "fixing-tool-call-accuracy-in-vllm-5470a07021",
@@ -2800,83 +2568,6 @@
       ]
     },
     {
-      "candidate_id": "toyblocks-a-controlled-world-for-robot-learning-9304a45cd2",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "related_claims": [],
-      "title": "Ai2's ToyBlocks shows agent-written skill descriptions beat expert-written ones",
-      "summary": "Ai2 released ToyBlocks, a simulated robot arm and tabletop blocks world that automatically generates tasks, demonstrations and metrics. In one experiment, Claude Opus 5.5 controlled the robot through Model Context Protocol (MCP) tools. It solved or correctly declared infeasible 63% of search-and-spell tasks, and most errors came from misreading letters or their orientation. In a separate experiment, an agent that ran its own tests and rewrote the skill descriptions raised success from 24% with the default descriptions to 63%, compared with 36% for descriptions written by a human expert.",
-      "lessons": [
-        {
-          "point": "Letting the agent test its tools and write its own skill descriptions gave much better results than both the default descriptions and an expert's descriptions.",
-          "excerpt": "These learned descriptions raise success rates from 24% with the default descriptions to 63%, outperforming the 36% achieved with descriptions written by a human expert.",
-          "confidence": 0.65,
-          "grounded": true
-        },
-        {
-          "point": "The frontier agent planned well but failed mostly on perception, such as look-alike letters and wrong letter orientation.",
-          "excerpt": "Errors were mostly caused by the agent confusing letters with look-alike letters (13%) or choosing an incorrect orientation for a letter in a stack (15%).",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "Adding reference oracles (ground-truth checkers) at both the planning and execution levels lets an eval show which layer caused a failure.",
-          "excerpt": "This allows us to isolate whether the high-level planning or low-level execution failed when a model fails at a task.",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Tool and skill descriptions are a major performance lever, and an agent that probes its own tools can write better descriptions than a human expert.",
-      "tags": [
-        "tool-descriptions",
-        "mcp",
-        "robotics",
-        "agent-evals",
-        "simulation"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Have the agent probe each tool and rewrite its description",
-        "detail": "For each tool, run a calibration phase where the agent calls it on small test inputs, notes any surprising behavior, and drafts a revised description. Swap in the revised descriptions and A/B test them against the current hand-written ones on held-out tasks, measuring success rate. Keep the version that wins."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 45,
-        "newness": 35,
-        "credibility": 70.0,
-        "composite": 41.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": false,
-      "verify_reason": "scoring",
-      "verify_note": "Verifier rated novelty 30 vs 55: agent-rewritten tool documentation is established (DRAFT, EasyTool) and the 24%/63% figures come from an under-specified experiment; summary corrected to separate the two experiments.",
-      "prior_art": "DRAFT (dynamic refinement of tool documentation, 2024), EasyTool, Anthropic guidance on agent-optimised tool descriptions; the cited OpenReview work",
-      "source_url": "https://huggingface.co/blog/allenai/toyblocks",
-      "article_url": "https://huggingface.co/blog/allenai/toyblocks",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-06",
-      "discovered_via": "rss",
-      "source_id": "rss:https-huggingface-co-blog-feed-xml",
-      "source_rank": 70.0,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Hugging Face Blog",
-      "raw_path": "data/_raw/toyblocks-a-controlled-world-for-robot-learning-9304a45cd2.txt",
-      "id": "ai2-s-toyblocks-shows-agent-written-skill-descri-2da0dd29ee",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
       "topic": "ai-research",
       "domain": "air.agents",
       "title": "Hugging Face's funes shares agent memory from raw session text, not summaries",
@@ -2946,6 +2637,83 @@
       ]
     },
     {
+      "candidate_id": "toyblocks-a-controlled-world-for-robot-learning-9304a45cd2",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "related_claims": [],
+      "title": "Ai2's ToyBlocks shows agent-written skill descriptions beat expert-written ones",
+      "summary": "Ai2 released ToyBlocks, a simulated robot arm and tabletop blocks world that automatically generates tasks, demonstrations and metrics. In one experiment, Claude Opus 5.5 controlled the robot through Model Context Protocol (MCP) tools. It solved or correctly declared infeasible 63% of search-and-spell tasks, and most errors came from misreading letters or their orientation. In a separate experiment, an agent that ran its own tests and rewrote the skill descriptions raised success from 24% with the default descriptions to 63%, compared with 36% for descriptions written by a human expert.",
+      "lessons": [
+        {
+          "point": "Letting the agent test its tools and write its own skill descriptions gave much better results than both the default descriptions and an expert's descriptions.",
+          "excerpt": "These learned descriptions raise success rates from 24% with the default descriptions to 63%, outperforming the 36% achieved with descriptions written by a human expert.",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "The frontier agent planned well but failed mostly on perception, such as look-alike letters and wrong letter orientation.",
+          "excerpt": "Errors were mostly caused by the agent confusing letters with look-alike letters (13%) or choosing an incorrect orientation for a letter in a stack (15%).",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "Adding reference oracles (ground-truth checkers) at both the planning and execution levels lets an eval show which layer caused a failure.",
+          "excerpt": "This allows us to isolate whether the high-level planning or low-level execution failed when a model fails at a task.",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Tool and skill descriptions are a major performance lever, and an agent that probes its own tools can write better descriptions than a human expert.",
+      "tags": [
+        "tool-descriptions",
+        "mcp",
+        "robotics",
+        "agent-evals",
+        "simulation"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Have the agent probe each tool and rewrite its description",
+        "detail": "For each tool, run a calibration phase where the agent calls it on small test inputs, notes any surprising behavior, and drafts a revised description. Swap in the revised descriptions and A/B test them against the current hand-written ones on held-out tasks, measuring success rate. Keep the version that wins."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 45,
+        "newness": 34,
+        "credibility": 70.0,
+        "composite": 41.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Verifier rated novelty 30 vs 55: agent-rewritten tool documentation is established (DRAFT, EasyTool) and the 24%/63% figures come from an under-specified experiment; summary corrected to separate the two experiments.",
+      "prior_art": "DRAFT (dynamic refinement of tool documentation, 2024), EasyTool, Anthropic guidance on agent-optimised tool descriptions; the cited OpenReview work",
+      "source_url": "https://huggingface.co/blog/allenai/toyblocks",
+      "article_url": "https://huggingface.co/blog/allenai/toyblocks",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-06",
+      "discovered_via": "rss",
+      "source_id": "rss:https-huggingface-co-blog-feed-xml",
+      "source_rank": 70.0,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Hugging Face Blog",
+      "raw_path": "data/_raw/toyblocks-a-controlled-world-for-robot-learning-9304a45cd2.txt",
+      "id": "ai2-s-toyblocks-shows-agent-written-skill-descri-2da0dd29ee",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "maxont-traces-md-0688a4c1b5",
       "topic": "ai-research",
       "domain": "air.tooling",
@@ -2996,10 +2764,10 @@
       "scores": {
         "novelty": 28.0,
         "relevance": 45,
-        "newness": 35,
+        "newness": 34,
         "credibility": 64.9,
-        "composite": 40.39,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 40.14,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "data/archive.json has 'Emit enforcement-ready agent traces with harness-bound provenance' and 'Log full operation traces for autonomous analysis agents'; none covers a plain-text trace format or the PostToolUse vs PostToolUseFailure gotcha, which is the only real delta. The excerpt 'rejects a trace that hides a failure: an `ok` next to a' is a valid substring that ends mid-sentence at a line break.",
       "related_claims": [],
@@ -3179,10 +2947,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 58,
-        "newness": 35,
+        "newness": 34,
         "credibility": 52.5,
-        "composite": 40.02,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 39.77,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3341,10 +3109,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 35,
-        "newness": 35,
+        "newness": 34,
         "credibility": 72.0,
-        "composite": 39.05,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 38.8,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Numbers match the abstract; 'harder to game' is the authors' argument, not a measured reward-hacking test.",
@@ -3414,10 +3182,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 50,
-        "newness": 35,
+        "newness": 34,
         "credibility": 70.8,
-        "composite": 38.87,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 38.62,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "This is the same AI Coding Dictionary series already on file (agent as model plus harness, hallucination types), and existing entries already back AGENTS.md-style context files.",
@@ -3443,98 +3211,6 @@
         "score": 100,
         "passed": true,
         "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do",
-      "summary": "A recent \"Weight Space Programming\" paper reports that GPT-6 Astra can identify which game a small network (about 17k weights) was trained on by reading its weights, and can edit a 0.8B Qwen model's weights to improve its math results. Sean Goedecke argues neither result is superhuman. The game networks have labeled input channels tied to grid cells, so a three-line weight-norm heatmap reveals the game. The Qwen fix removed a loop that set in after 32k tokens, using a steering-style recipe like Heretic abliteration: contrast looping and non-looping texts, rank the weights that drive the difference, and trim them while testing.",
-      "takeaway": "Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than training does.",
-      "tags": [
-        "weight-space-programming",
-        "interpretability",
-        "steering-vectors",
-        "abliteration",
-        "recursive-self-improvement",
-        "capability-claims"
-      ],
-      "lessons": [
-        {
-          "point": "The 'improved at mathematics' result fixed one narrow failure: the Qwen model looped after 32k tokens. It was not a general capability gain.",
-          "excerpt": "It had a specific problem where after 32k tokens it would get stuck in loops, so any mathematical task that needed more than 32k tokens would automatically fail",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "The model's weight edit followed a standard steering recipe: contrast looping and non-looping residuals, then attribute the difference to individual weights.",
-          "excerpt": "calculate the difference between the looping and non-looping residuals, measure how much each weight contributed to that difference",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "Reading the game from the toy networks' weights is easy because the inputs are labeled and map to grid cells, so first-layer weight norms show the layout.",
-          "excerpt": "It’s thus relatively trivial to calculate",
-          "confidence": 0.75,
-          "grounded": true
-        },
-        {
-          "point": "The author's view is that LLMs will help AI research by improving training, not by editing weights directly, much as source code beats patching binaries. This is opinion, not a measured result.",
-          "excerpt": "Likewise, the best way to update the weights of a model is to train it normally.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Ask what baseline a 'superhuman' capability claim beats before acting on it",
-        "detail": "When a capability claim such as 'LLMs can program weights' arrives, check three things. Do this before changing plans: what the task's inputs give away (here, labeled input channels), how narrow the reported improvement is (here, one looping bug past 32k tokens), and whether a known human method (here, steering or abliteration) reproduces it. For harness builders, the practical lesson is that an agent with Python access can run known interpretability recipes on small open-weight models. It is not a reason to replace fine-tuning or training pipelines."
-      },
-      "scores": {
-        "novelty": 45,
-        "relevance": 22,
-        "newness": 35,
-        "credibility": 65.0,
-        "composite": 38.6,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
-      "related_claims": [],
-      "corroborating_sources": [
-        {
-          "name": "Latent Space AINews",
-          "url": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/",
-          "published": "2026-11-03"
-        },
-        {
-          "name": "Simon Willison",
-          "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
-          "published": "2026-11-03"
-        }
-      ],
-      "source_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
-      "article_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
-      "tweet_url": null,
-      "author": "agrm",
-      "date": "2026-11",
-      "published": "2026-11-02",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@agrm via Hacker News",
-      "raw_path": "data/_raw/llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 13 > 12"
-        ]
       },
       "grounding_score": 1.0
     },
@@ -3631,6 +3307,98 @@
       ]
     },
     {
+      "id": "llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Sean Goedecke argues Astra's weight editing matches what a skilled researcher would do",
+      "summary": "A recent \"Weight Space Programming\" paper reports that GPT-6 Astra can identify which game a small network (about 17k weights) was trained on by reading its weights, and can edit a 0.8B Qwen model's weights to improve its math results. Sean Goedecke argues neither result is superhuman. The game networks have labeled input channels tied to grid cells, so a three-line weight-norm heatmap reveals the game. The Qwen fix removed a loop that set in after 32k tokens, using a steering-style recipe like Heretic abliteration: contrast looping and non-looping texts, rank the weights that drive the difference, and trim them while testing.",
+      "takeaway": "Read the weight-space-programming result as an LLM running a known interpretability-and-steering recipe, not as evidence that models can now improve other models better than training does.",
+      "tags": [
+        "weight-space-programming",
+        "interpretability",
+        "steering-vectors",
+        "abliteration",
+        "recursive-self-improvement",
+        "capability-claims"
+      ],
+      "lessons": [
+        {
+          "point": "The 'improved at mathematics' result fixed one narrow failure: the Qwen model looped after 32k tokens. It was not a general capability gain.",
+          "excerpt": "It had a specific problem where after 32k tokens it would get stuck in loops, so any mathematical task that needed more than 32k tokens would automatically fail",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "The model's weight edit followed a standard steering recipe: contrast looping and non-looping residuals, then attribute the difference to individual weights.",
+          "excerpt": "calculate the difference between the looping and non-looping residuals, measure how much each weight contributed to that difference",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "Reading the game from the toy networks' weights is easy because the inputs are labeled and map to grid cells, so first-layer weight norms show the layout.",
+          "excerpt": "It’s thus relatively trivial to calculate",
+          "confidence": 0.75,
+          "grounded": true
+        },
+        {
+          "point": "The author's view is that LLMs will help AI research by improving training, not by editing weights directly, much as source code beats patching binaries. This is opinion, not a measured result.",
+          "excerpt": "Likewise, the best way to update the weights of a model is to train it normally.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Ask what baseline a 'superhuman' capability claim beats before acting on it",
+        "detail": "When a capability claim such as 'LLMs can program weights' arrives, check three things. Do this before changing plans: what the task's inputs give away (here, labeled input channels), how narrow the reported improvement is (here, one looping bug past 32k tokens), and whether a known human method (here, steering or abliteration) reproduces it. For harness builders, the practical lesson is that an agent with Python access can run known interpretability recipes on small open-weight models. It is not a reason to replace fine-tuning or training pipelines."
+      },
+      "scores": {
+        "novelty": 45,
+        "relevance": 22,
+        "newness": 34,
+        "credibility": 65.0,
+        "composite": 38.35,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "verified": true,
+      "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
+      "related_claims": [],
+      "corroborating_sources": [
+        {
+          "name": "Latent Space AINews",
+          "url": "https://latent.space/p/ainews-llms-can-read-write-neural-network-weights-weight-space-programming-cuts-autoresearch-out-of/",
+          "published": "2026-11-03"
+        },
+        {
+          "name": "Simon Willison",
+          "url": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
+          "published": "2026-11-03"
+        }
+      ],
+      "source_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
+      "article_url": "https://www.seangoedecke.com/llms-are-not-superhuman-at-reading-and-writing-neural-network-weights/",
+      "tweet_url": null,
+      "author": "agrm",
+      "date": "2026-11",
+      "published": "2026-11-02",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@agrm via Hacker News",
+      "raw_path": "data/_raw/llms-are-not-superhuman-at-reading-and-writing-n-cb4c28a596.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "what-frontier-labs-buy-a-data-deep-dive-with-han-4e41642e1f",
       "topic": "ai-research",
       "domain": "air.evals",
@@ -3679,10 +3447,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 45,
-        "newness": 35,
+        "newness": 34,
         "credibility": 67.5,
-        "composite": 38.38,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 38.12,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3772,10 +3540,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 38.0,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 37.75,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
       "verified": true,
@@ -3825,10 +3593,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 35,
+        "newness": 34,
         "credibility": 72.0,
-        "composite": 37.55,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 37.3,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported both lessons; closest prior is Deep Partition Aggregation and Finite Aggregation certificates.",
@@ -3909,10 +3677,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 35,
+        "newness": 34,
         "credibility": 66.7,
-        "composite": 36.76,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 36.51,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
       "verified": true,
@@ -3979,10 +3747,10 @@
       "scores": {
         "novelty": 30.0,
         "relevance": 30,
-        "newness": 35,
+        "newness": 34,
         "credibility": 65.9,
-        "composite": 36.63,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 36.38,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "ai-research.json 'Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access' (same concept, same 'no standards yet' point); OpenAI's version adds named assessors and concrete protocols (on-site, attestation, redaction).",
       "related_claims": [],
@@ -4050,10 +3818,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 35,
+        "newness": 34,
         "credibility": 75.0,
-        "composite": 36.5,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 36.25,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported; the title now says hallucinations generally since the source defines hallucination broadly with coding examples.",
@@ -4135,10 +3903,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 45,
-        "newness": 35,
+        "newness": 34,
         "credibility": 50.8,
-        "composite": 36.47,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 36.22,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4215,10 +3983,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 20,
-        "newness": 35,
+        "newness": 34,
         "credibility": 69.9,
-        "composite": 35.73,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 35.48,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4292,10 +4060,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 15,
-        "newness": 35,
+        "newness": 34,
         "credibility": 69.6,
-        "composite": 35.69,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 35.44,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Gao, Schulman and Hilton 2022 reward-model overoptimization scaling laws; Beirami et al. 2024 best-of-n guarantees; Coste et al. 2023 reward-model ensembles. New: exact Jeffreys-divergence characterization replacing the sqrt-KL bound, and a formal proof for ensembling. Abstract-only page.",
       "related_claims": [],
@@ -4374,10 +4142,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 35.6,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 35.35,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Summary corrected on where the benchmark numbers come from; the security and cost claims are vendor assertions.",
@@ -4530,10 +4298,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 35.0,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 34.75,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4605,10 +4373,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 35.0,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 34.75,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported as vendor claims; the single-device wording was dropped and the perplexity figures are noted as coming from one model.",
@@ -4790,90 +4558,6 @@
         "passed": false,
         "issues": [
           "mild: title_words 23 > 18"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "candidate_id": "accenture-embedded-evaluation-908fa9e458",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access",
-      "summary": "Anthropic named Accenture, through its AI unit Faculty, as an embedded evaluator that will red-team models, run alignment assessments, and test safeguards from inside the company with access comparable to an employee's. Each company expects to invest at least $1 billion over five years. Anthropic funds the work directly and says there are no standards yet for evaluator access or reporting.",
-      "lessons": [
-        {
-          "point": "Embedded evaluators get insider-level access, unlike today's external pre-deployment testers.",
-          "excerpt": "embedded evaluators will work inside AI companies, with access comparable to an employee's.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The scale is large: at least $1 billion each over five years.",
-          "excerpt": "Anthropic and Accenture each expect to invest at least $1 billion in building capacity in this area over the next five years.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The evaluated lab pays the evaluator directly.",
-          "excerpt": "Given the importance and urgency of this work, Anthropic will fund Accenture's work directly.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Access and reporting rules do not exist yet.",
-          "excerpt": "There are, as yet, no standards for what information embedded evaluators should have access to, or how they should report what they find.",
-          "confidence": 0.9,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Embedded evaluation is starting with a lab-funded commercial partner and no shared standards, so judge its independence by the access and reporting terms once they are published.",
-      "tags": [
-        "embedded-evaluation",
-        "third-party-evals",
-        "ai-governance",
-        "red-teaming",
-        "anthropic"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Track the access and reporting terms of embedded evaluators",
-        "detail": "When Anthropic or Accenture publish evaluator reports, check what training-time access was granted, who controls redaction, and whether incidents are reported publicly; compare with the METR arrangement before relying on these reports as independent assurance."
-      },
-      "scores": {
-        "novelty": 35,
-        "relevance": 35,
-        "newness": 6,
-        "credibility": 72.5,
-        "composite": 33.38,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
-      "verified": true,
-      "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
-      "related_claims": [],
-      "source_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
-      "article_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-19",
-      "raw_path": "data/_raw/accenture-embedded-evaluation-908fa9e458.txt",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-news",
-      "source_rank": 72.5,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Anthropic News",
-      "id": "anthropic-funds-accenture-s-faculty-as-an-embedd-bbde4cc1be",
-      "retrieved_at": "2026-10-24T08:18:13+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: title_words 19 > 18"
         ]
       },
       "grounding_score": 1.0
@@ -5088,10 +4772,10 @@
       "scores": {
         "novelty": 40.0,
         "relevance": 15,
-        "newness": 35,
+        "newness": 34,
         "credibility": 48.1,
-        "composite": 32.47,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 32.22,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Refusal-direction (Arditi et al.) style work already referenced in ai-security.json and archive.json; this paper extends it to ambiguity and knowledge-limit abstention, with only a loosely related abstention mention in ai-research.json.",
       "related_claims": [],
@@ -5171,10 +4855,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 35,
+        "newness": 34,
         "credibility": 68.1,
-        "composite": 32.46,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 32.21,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Numbers and attributions check out; the long-run finding is for DeepSeek V4.1 Flash only.",
@@ -5253,10 +4937,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 35,
-        "newness": 35,
+        "newness": 34,
         "credibility": 66.2,
-        "composite": 32.18,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 31.93,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported by the source; the guardrails-first point was softened and the human-labeled judge set is marked as the tracker's suggestion.",
@@ -5289,90 +4973,6 @@
         "issues": []
       },
       "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.work-efficiency",
-      "title": "A former Meta engineer argues AI coding makes codebases fragile",
-      "summary": "Evan Merz says he generated at least 90% of his code with AI at Meta, and now 100% at another large company. From personal observation, he argues that agent-written code makes software-as-a-service (SaaS) codebases fragile. He names four causes: shallow tests, overly complex code, falling human understanding, and pull requests arriving faster than they can be reviewed. He lists four symptoms: more incidents, slower recovery, errors only users see, and worse user experience. The piece is an opinion essay with anecdotes and no measured data.",
-      "lessons": [
-        {
-          "point": "Agent-written end-to-end tests tend to mirror cases already covered, leaving gaps that line coverage metrics hide.",
-          "excerpt": "This creates massive gaps in the test coverage that are invisible to developers because they aren't captured by the line level coverage metric.",
-          "confidence": 0.55,
-          "grounded": true
-        },
-        {
-          "point": "The author's core diagnosis is that agents optimize for what fits in the context window and miss long-term structural problems.",
-          "excerpt": "AI tends to solve the problems that can fit within its context window very well, but it's totally oblivious to the long term issues",
-          "confidence": 0.5,
-          "grounded": true
-        },
-        {
-          "point": "Faster pull-request throughput shrinks review time per change, so reviewers skim and miss details.",
-          "excerpt": "Each pull request comes faster than the prior one and has to be reviewed in even less time.",
-          "confidence": 0.5,
-          "grounded": true
-        },
-        {
-          "point": "He claims incidents rose over a year or two of agentic coding, but this is anecdote, not measurement.",
-          "excerpt": "Now, after a year or two of agentic coding, it seems like there's an incident every weekend.",
-          "confidence": 0.35,
-          "grounded": true
-        }
-      ],
-      "takeaway": "One engineer's anecdotal case that AI coding raises incidents; track incident counts and recovery time yourself rather than trusting output volume.",
-      "tags": [
-        "ai-generated-code",
-        "code-quality",
-        "testing",
-        "code-review",
-        "incidents",
-        "opinion"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Check agent-written tests for behavioral coverage, not line coverage",
-        "detail": "In the coding-agent harness, require each new test to cover a named user path or failure case not already exercised. Use mutation testing or a reviewer checklist to enforce this. Flag tests that only touch getters and setters. Track incident count and time-to-mitigate per month alongside AI code share."
-      },
-      "verified": true,
-      "verify_note": "Opinion piece; lessons match the source.",
-      "scores": {
-        "novelty": 10,
-        "relevance": 40,
-        "newness": 35,
-        "credibility": 55.0,
-        "composite": 32.0,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "GitClear AI code-churn reports; DORA 2024 finding on AI adoption and delivery stability.",
-      "related_claims": [
-        "verify-end-to-end-as-a-user"
-      ],
-      "source_url": "https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/",
-      "article_url": "https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/",
-      "tweet_url": null,
-      "author": "plun9",
-      "date": "2026-11",
-      "published": "2026-11-10",
-      "raw_path": "data/_raw/ai-usage-generates-a-fragile-codebase-b404e413f6.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@plun9 via Hacker News",
-      "id": "a-former-meta-engineer-argues-ai-coding-makes-co-34ae9ed902",
-      "retrieved_at": "2026-11-10T18:12:47+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: summary_sentences 5 > 4"
-        ]
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
     },
     {
       "id": "retrieval-as-traversal-value-indexed-memory-for-656e1cf917",
@@ -5451,6 +5051,90 @@
         "issues": []
       },
       "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.work-efficiency",
+      "title": "A former Meta engineer argues AI coding makes codebases fragile",
+      "summary": "Evan Merz says he generated at least 90% of his code with AI at Meta, and now 100% at another large company. From personal observation, he argues that agent-written code makes software-as-a-service (SaaS) codebases fragile. He names four causes: shallow tests, overly complex code, falling human understanding, and pull requests arriving faster than they can be reviewed. He lists four symptoms: more incidents, slower recovery, errors only users see, and worse user experience. The piece is an opinion essay with anecdotes and no measured data.",
+      "lessons": [
+        {
+          "point": "Agent-written end-to-end tests tend to mirror cases already covered, leaving gaps that line coverage metrics hide.",
+          "excerpt": "This creates massive gaps in the test coverage that are invisible to developers because they aren't captured by the line level coverage metric.",
+          "confidence": 0.55,
+          "grounded": true
+        },
+        {
+          "point": "The author's core diagnosis is that agents optimize for what fits in the context window and miss long-term structural problems.",
+          "excerpt": "AI tends to solve the problems that can fit within its context window very well, but it's totally oblivious to the long term issues",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "Faster pull-request throughput shrinks review time per change, so reviewers skim and miss details.",
+          "excerpt": "Each pull request comes faster than the prior one and has to be reviewed in even less time.",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "He claims incidents rose over a year or two of agentic coding, but this is anecdote, not measurement.",
+          "excerpt": "Now, after a year or two of agentic coding, it seems like there's an incident every weekend.",
+          "confidence": 0.35,
+          "grounded": true
+        }
+      ],
+      "takeaway": "One engineer's anecdotal case that AI coding raises incidents; track incident counts and recovery time yourself rather than trusting output volume.",
+      "tags": [
+        "ai-generated-code",
+        "code-quality",
+        "testing",
+        "code-review",
+        "incidents",
+        "opinion"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Check agent-written tests for behavioral coverage, not line coverage",
+        "detail": "In the coding-agent harness, require each new test to cover a named user path or failure case not already exercised. Use mutation testing or a reviewer checklist to enforce this. Flag tests that only touch getters and setters. Track incident count and time-to-mitigate per month alongside AI code share."
+      },
+      "verified": true,
+      "verify_note": "Opinion piece; lessons match the source.",
+      "scores": {
+        "novelty": 10,
+        "relevance": 40,
+        "newness": 34,
+        "credibility": 55.0,
+        "composite": 31.75,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "GitClear AI code-churn reports; DORA 2024 finding on AI adoption and delivery stability.",
+      "related_claims": [
+        "verify-end-to-end-as-a-user"
+      ],
+      "source_url": "https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/",
+      "article_url": "https://evanxmerz.com/post/ai-usage-generates-a-fragile-codebase/",
+      "tweet_url": null,
+      "author": "plun9",
+      "date": "2026-11",
+      "published": "2026-11-10",
+      "raw_path": "data/_raw/ai-usage-generates-a-fragile-codebase-b404e413f6.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@plun9 via Hacker News",
+      "id": "a-former-meta-engineer-argues-ai-coding-makes-co-34ae9ed902",
+      "retrieved_at": "2026-11-10T18:12:47+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: summary_sentences 5 > 4"
+        ]
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
     },
     {
       "id": "coding-from-the-himalayas-with-an-offline-ai-age-f7e77ed474",
@@ -5579,10 +5263,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 35,
+        "newness": 34,
         "credibility": 68.8,
-        "composite": 31.07,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 30.82,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported every detail; it is a secondary roundup of a paper already in the tracker, and the harness figures are DeepSeek's own test.",
@@ -5878,10 +5562,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 10,
-        "newness": 35,
+        "newness": 34,
         "credibility": 72.0,
-        "composite": 29.15,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 28.9,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Abstract-only source; claims match, datasets correct.",
@@ -5908,6 +5592,70 @@
           "mild: jargon_chain 8 > 7 (authors claim consistent robustness gains across several datasets)",
           "mild: summary_sentences 5 > 4"
         ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "title": "Workshop paper proposes retrieval as a local walk through memory",
+      "source_url": "http://arxiv.org/abs/2610.40545v1",
+      "article_url": "http://arxiv.org/abs/2610.40545v1",
+      "source_name": "NeurIPS (via arXiv)",
+      "discovered_via": "rss",
+      "source_id": null,
+      "source_rank": 72.0,
+      "source_topics": [],
+      "published": "2026-10-29",
+      "date": "2026-10",
+      "raw_path": "data/_raw/retrieval-as-traversal-value-indexed-memory-for-656e1cf917.txt",
+      "author": null,
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "A NeurIPS 2026 workshop paper proposes treating memory retrieval as a persistent local traversal through an address space, so an agent reuses overlap between neighbouring retrieval steps instead of searching from scratch. The only experiment is a fixed-geometry toy on MiniGrid Memory, where a traversal head reached 0.95 mean return in 0.59M training steps versus 0.94M and more than 2M for two absolute-addressing baselines. The authors say the full method is untested.",
+      "takeaway": "An interesting idea for stateful agent memory, but a single toy experiment gives a harness builder nothing to use yet.",
+      "lessons": [
+        {
+          "point": "The paper proposes separating what a memory contains from where it sits; whether cheap local moves then reach related memories is untested.",
+          "excerpt": "We propose an alternative in which retrieval is a persistent local traversal through an address space. We separate a memory's content from its address.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The evidence is one small experiment and the authors say it does not test the proposed method in full.",
+          "excerpt": "The experiment does not test learned geometry or repeated retrieval.",
+          "confidence": 0.95,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "agent-memory",
+        "retrieval",
+        "long-context",
+        "workshop-paper"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Track, do not adopt",
+        "detail": "Revisit only if a follow-up shows learned geometry and repeated retrieval working on a real long-context agent task."
+      },
+      "scores": {
+        "novelty": 40,
+        "relevance": 15,
+        "newness": 6,
+        "credibility": 72.0,
+        "composite": 28.8,
+        "scored_at": "2026-11-19T23:00:03+00:00"
+      },
+      "verified": true,
+      "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
+      "id": "workshop-paper-proposes-retrieval-as-a-local-wal-83b74bc74c",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
       },
       "grounding_score": 1.0
     },
@@ -5948,10 +5696,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 12,
-        "newness": 35,
+        "newness": 34,
         "credibility": 70.8,
-        "composite": 28.97,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 28.72,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported the claims; corrected the license (CC BY-NC for the other models) and narrowed the speed claim to the CPU streaming benchmark.",
@@ -6016,10 +5764,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 15,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 28.85,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 28.6,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -6042,70 +5790,6 @@
       ],
       "source_name": "X list",
       "retrieved_at": "2026-11-09T17:53:09+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "title": "Workshop paper proposes retrieval as a local walk through memory",
-      "source_url": "http://arxiv.org/abs/2610.40545v1",
-      "article_url": "http://arxiv.org/abs/2610.40545v1",
-      "source_name": "NeurIPS (via arXiv)",
-      "discovered_via": "rss",
-      "source_id": null,
-      "source_rank": 72.0,
-      "source_topics": [],
-      "published": "2026-10-29",
-      "date": "2026-10",
-      "raw_path": "data/_raw/retrieval-as-traversal-value-indexed-memory-for-656e1cf917.txt",
-      "author": null,
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "A NeurIPS 2026 workshop paper proposes treating memory retrieval as a persistent local traversal through an address space, so an agent reuses overlap between neighbouring retrieval steps instead of searching from scratch. The only experiment is a fixed-geometry toy on MiniGrid Memory, where a traversal head reached 0.95 mean return in 0.59M training steps versus 0.94M and more than 2M for two absolute-addressing baselines. The authors say the full method is untested.",
-      "takeaway": "An interesting idea for stateful agent memory, but a single toy experiment gives a harness builder nothing to use yet.",
-      "lessons": [
-        {
-          "point": "The paper proposes separating what a memory contains from where it sits; whether cheap local moves then reach related memories is untested.",
-          "excerpt": "We propose an alternative in which retrieval is a persistent local traversal through an address space. We separate a memory's content from its address.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The evidence is one small experiment and the authors say it does not test the proposed method in full.",
-          "excerpt": "The experiment does not test learned geometry or repeated retrieval.",
-          "confidence": 0.95,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "agent-memory",
-        "retrieval",
-        "long-context",
-        "workshop-paper"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Track, do not adopt",
-        "detail": "Revisit only if a follow-up shows learned geometry and repeated retrieval working on a real long-context agent task."
-      },
-      "scores": {
-        "novelty": 40,
-        "relevance": 15,
-        "newness": 6,
-        "credibility": 72.0,
-        "composite": 28.8,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
-      "id": "workshop-paper-proposes-retrieval-as-a-local-wal-83b74bc74c",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -6183,82 +5867,6 @@
       "source_name": "arXiv cs.CR (Cryptography and Security)",
       "id": "survey-maps-how-self-improving-ai-systems-can-fa-73b25ce21f",
       "retrieved_at": "2026-10-27T18:41:51+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "cantraj-recovering-vehicle-trajectories-from-can-969f1a3fa0",
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "kind": "story",
-      "kind_reason": "Research dataset and benchmark, not a vendor patch notice.",
-      "title": "CANTraj benchmark shows vehicle CAN signals can rebuild driving routes without GPS",
-      "source_url": "https://arxiv.org/abs/2611.18442",
-      "summary": "Some driving datasets and insurance programs drop GPS records and claim this protects privacy. This paper shows that vehicle signals such as speed and steering, read from the CAN bus (the in-car network), can still be matched to road maps to recover the route. The authors release a dataset and benchmark, and also test an LLM that picks among candidate routes.",
-      "lessons": [
-        {
-          "point": "Removing GPS from a driving log does not remove location information, because other vehicle signals carry it.",
-          "excerpt": "removing GPS coordinates from driving logs does not erase the location information carried by vehicle signals",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Adding steering to speed, plus road-network constraints, gives the biggest gain in route recovery (56% to 87% over five minutes with a known start and heading).",
-          "excerpt": "adding steering to speed raises the online map filter's five-minute route recovery from 56% to 87%",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Because attack methods fail on different windows, the authors also try an LLM harness that chooses among candidate routes. It recovers 79% of routes on the test set.",
-          "excerpt": "we also evaluate an LLM harness that selects among candidate routes on 659 five-minute windows",
-          "confidence": 0.7,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Treat vehicle telemetry such as speed and steering as location data when judging whether a dataset is anonymized.",
-      "tags": [
-        "privacy",
-        "vehicle-telemetry",
-        "route-inference",
-        "can-bus",
-        "benchmark",
-        "llm-harness"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Do not treat GPS removal as anonymization for vehicle data",
-        "detail": "If you share or collect driving logs, assume speed and steering traces plus a road map can recover routes. Review release policies for CAN-derived signals, not just GPS fields."
-      },
-      "scores": {
-        "novelty": 30.0,
-        "relevance": 12,
-        "newness": 35,
-        "credibility": 48.1,
-        "composite": 28.56,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "The paper itself cites earlier CAN/speed/steering route-inference attacks; no equivalent vehicle-telemetry privacy entry in the repo data, and the benchmark is mainly a consolidation with an LLM route-selector add-on.",
-      "related_claims": [],
-      "threat": "An attacker holding GPS-free driving logs (speed, steering, events) reconstructs where a driver went by matching the signals to a road network.",
-      "conditions": "Works best with a known start and heading (87% five-minute route recovery with steering added); offline beam search still recovers 81% of test routes without the heading. Results come from the authors' own benchmark of 776 evaluation drives from 94 unseen drivers.",
-      "article_url": "https://arxiv.org/abs/2611.18442",
-      "published": "2026-11-13",
-      "raw_path": "data/_raw/cantraj-recovering-vehicle-trajectories-from-can-969f1a3fa0.txt",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 48.1,
-      "discovered_via": "rss",
-      "source_name": "Hugging Face Daily Papers",
-      "source_topics": [
-        "ai-research"
-      ],
-      "verified": true,
-      "date": "2026-11",
-      "retrieved_at": "2026-11-18T06:34:52+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -6351,6 +5959,82 @@
       "grounding_score": 1.0
     },
     {
+      "id": "cantraj-recovering-vehicle-trajectories-from-can-969f1a3fa0",
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "kind": "story",
+      "kind_reason": "Research dataset and benchmark, not a vendor patch notice.",
+      "title": "CANTraj benchmark shows vehicle CAN signals can rebuild driving routes without GPS",
+      "source_url": "https://arxiv.org/abs/2611.18442",
+      "summary": "Some driving datasets and insurance programs drop GPS records and claim this protects privacy. This paper shows that vehicle signals such as speed and steering, read from the CAN bus (the in-car network), can still be matched to road maps to recover the route. The authors release a dataset and benchmark, and also test an LLM that picks among candidate routes.",
+      "lessons": [
+        {
+          "point": "Removing GPS from a driving log does not remove location information, because other vehicle signals carry it.",
+          "excerpt": "removing GPS coordinates from driving logs does not erase the location information carried by vehicle signals",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Adding steering to speed, plus road-network constraints, gives the biggest gain in route recovery (56% to 87% over five minutes with a known start and heading).",
+          "excerpt": "adding steering to speed raises the online map filter's five-minute route recovery from 56% to 87%",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Because attack methods fail on different windows, the authors also try an LLM harness that chooses among candidate routes. It recovers 79% of routes on the test set.",
+          "excerpt": "we also evaluate an LLM harness that selects among candidate routes on 659 five-minute windows",
+          "confidence": 0.7,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Treat vehicle telemetry such as speed and steering as location data when judging whether a dataset is anonymized.",
+      "tags": [
+        "privacy",
+        "vehicle-telemetry",
+        "route-inference",
+        "can-bus",
+        "benchmark",
+        "llm-harness"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Do not treat GPS removal as anonymization for vehicle data",
+        "detail": "If you share or collect driving logs, assume speed and steering traces plus a road map can recover routes. Review release policies for CAN-derived signals, not just GPS fields."
+      },
+      "scores": {
+        "novelty": 30.0,
+        "relevance": 12,
+        "newness": 34,
+        "credibility": 48.1,
+        "composite": 28.31,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "The paper itself cites earlier CAN/speed/steering route-inference attacks; no equivalent vehicle-telemetry privacy entry in the repo data, and the benchmark is mainly a consolidation with an LLM route-selector add-on.",
+      "related_claims": [],
+      "threat": "An attacker holding GPS-free driving logs (speed, steering, events) reconstructs where a driver went by matching the signals to a road network.",
+      "conditions": "Works best with a known start and heading (87% five-minute route recovery with steering added); offline beam search still recovers 81% of test routes without the heading. Results come from the authors' own benchmark of 776 evaluation drives from 94 unseen drivers.",
+      "article_url": "https://arxiv.org/abs/2611.18442",
+      "published": "2026-11-13",
+      "raw_path": "data/_raw/cantraj-recovering-vehicle-trajectories-from-can-969f1a3fa0.txt",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 48.1,
+      "discovered_via": "rss",
+      "source_name": "Hugging Face Daily Papers",
+      "source_topics": [
+        "ai-research"
+      ],
+      "verified": true,
+      "date": "2026-11",
+      "retrieved_at": "2026-11-18T06:34:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "matthewberman-give-this-to-your-coding-agent-5b33b1f61c",
       "topic": "ai-research",
       "domain": "air.work-efficiency",
@@ -6379,10 +6063,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 25,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 27.65,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 27.4,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -6668,10 +6352,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 35,
+        "newness": 34,
         "credibility": 72.5,
-        "composite": 27.12,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 26.88,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "TabPFN and TabPFN v2; the original Mitra (2025).",
       "related_claims": [],
@@ -6737,10 +6421,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 20,
-        "newness": 35,
+        "newness": 34,
         "credibility": 75.0,
-        "composite": 26.9,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 26.65,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported; the claim that one model behaves as different agents was removed since the source only gives the same-model-different-harness example.",
@@ -6806,10 +6490,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 22,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 26.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 26.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Teaser-only source; lessons restate the headline.",
@@ -6888,10 +6572,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 18,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 26.75,
-        "scored_at": "2026-11-19T23:00:33+00:00"
+        "composite": 26.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Google ships Gemini 4 Carbon to trusted cyber defenders first (ai-research.json) covers the same model line; this post adds only a vendor claim and an untested reaction.",
       "article_url": null,
@@ -6957,10 +6641,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 5,
-        "newness": 35,
+        "newness": 34,
         "credibility": 49.6,
-        "composite": 26.69,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 26.44,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported the claims as the authors' own; closest prior is DMD/DMD2 and Trajectory Distribution Matching.",
@@ -7062,77 +6746,6 @@
         "passed": false,
         "issues": [
           "mild: sentence_words 49 > 45 (Dark Reading asked vendors how they measure AI models on security work: XBOW builds its own harness and scores exploit-f)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "wolfe-jam-faf-3dd6af4697",
-      "topic": "ai-research",
-      "domain": "air.context",
-      "title": "FAF registers YAML media types for portable AI project context files",
-      "source_url": "https://github.com/Wolfe-Jam/faf",
-      "article_url": "https://github.com/Wolfe-Jam/faf",
-      "tweet_url": null,
-      "author": "Wolfe-Jam",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 66.7,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "Wolfe-Jam/faf",
-      "related_claims": [],
-      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
-      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
-      "lessons": [
-        {
-          "point": "The format aims to be a shared context file across tools and teams.",
-          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
-          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "context-files",
-        "yaml",
-        "agents-md",
-        "marketing"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Stick with AGENTS.md-style context files",
-        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
-      },
-      "scores": {
-        "novelty": 12,
-        "relevance": 12,
-        "newness": 35,
-        "credibility": 66.7,
-        "composite": 25.95,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
-      "verified": false,
-      "verify_reason": "scoring",
-      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
         ]
       },
       "grounding_score": 1.0
@@ -7363,6 +6976,77 @@
       "grounding_score": 1.0
     },
     {
+      "id": "wolfe-jam-faf-3dd6af4697",
+      "topic": "ai-research",
+      "domain": "air.context",
+      "title": "FAF registers YAML media types for portable AI project context files",
+      "source_url": "https://github.com/Wolfe-Jam/faf",
+      "article_url": "https://github.com/Wolfe-Jam/faf",
+      "tweet_url": null,
+      "author": "Wolfe-Jam",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "Wolfe-Jam/faf",
+      "related_claims": [],
+      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
+      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
+      "lessons": [
+        {
+          "point": "The format aims to be a shared context file across tools and teams.",
+          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
+          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "context-files",
+        "yaml",
+        "agents-md",
+        "marketing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Stick with AGENTS.md-style context files",
+        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 12,
+        "newness": 34,
+        "credibility": 66.7,
+        "composite": 25.7,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.tooling",
       "related_claims": [
@@ -7399,10 +7083,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 20,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 25.4,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 25.15,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier: basic educational material, accurately described.",
@@ -7872,10 +7556,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 23.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 23.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Correctly attributed opinion tweet with no evidence.",
@@ -7942,10 +7626,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 12,
-        "newness": 35,
+        "newness": 34,
         "credibility": 50.8,
-        "composite": 22.97,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 22.72,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -7968,208 +7652,6 @@
       "retrieved_at": "2026-11-09T17:53:09+00:00",
       "needs_review": true,
       "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "balancing-exploration-and-exploitation-in-constr-33eb78835a",
-      "verified": true,
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "kind": "story",
-      "kind_reason": "Off-thesis optimization research result, kept for the record.",
-      "related_claims": [],
-      "title": "A tensor-train method solves constrained combinatorial optimization with symmetric tensors",
-      "source_url": "http://arxiv.org/abs/2611.22557v1",
-      "article_url": "http://arxiv.org/abs/2611.22557v1",
-      "published": "2026-11-17",
-      "date": "2026-11",
-      "raw_path": "data/_raw/balancing-exploration-and-exploitation-in-constr-33eb78835a.txt",
-      "source_id": null,
-      "source_rank": 72.0,
-      "discovered_via": "rss",
-      "source_name": "ICML (via arXiv)",
-      "summary": "The paper builds a tensor-train (TT) optimizer that handles hard linear constraints using U(1)-symmetric tensor networks, plus a graph-based diversity measure for picking training samples. It reports better mean solution quality on assignment benchmarks and speedups over ConstrainTNet and PROTES. This is general optimization theory with no security or LLM-agent content.",
-      "lessons": [
-        {
-          "point": "Hard linear constraints are the weak spot of existing tensor-train optimizers when feasible points are rare.",
-          "excerpt": "incorporating hard linear constraints into TT-based optimization remains challenging, as existing interpolation and sampling approaches often fail when feasible points are rare",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The gain over simulated annealing depends on the problem and the compute budget, so it is not a general win.",
-          "excerpt": "comparisons with simulated annealing depend on constraint information and computational budget",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Off-thesis optimization paper: nothing here for AI security, product security or agent builders.",
-      "tags": [
-        "optimization",
-        "tensor-networks",
-        "off-thesis"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "No action for security or agent work",
-        "detail": "Skip unless you work on combinatorial optimization with tensor networks. Nothing in the abstract applies to securing AI systems or building LLM harnesses."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 3,
-        "newness": 35,
-        "credibility": 72.0,
-        "composite": 22.85,
-        "scored_at": "2026-11-19T23:00:33+00:00"
-      },
-      "prior_art": "No equivalent in the pools; the nearest entries are general ML-research items under air.ml-research (for example deep learning theory notes), and none concern combinatorial optimization or tensor trains.",
-      "retrieved_at": "2026-11-19T23:00:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
-    },
-    {
-      "id": "unreasonable-confidence-from-simulator-misspecif-de7cebd576",
-      "verified": true,
-      "topic": "ai-research",
-      "domain": "air.ml-research",
-      "kind": "story",
-      "kind_reason": "Off-thesis vision research result on sim-to-real transfer.",
-      "related_claims": [],
-      "title": "A spacecraft pose study finds calibrated confidence fails on real images",
-      "source_url": "https://arxiv.org/abs/2611.20321",
-      "article_url": "https://arxiv.org/abs/2611.20321",
-      "published": "2026-11-15",
-      "date": "2026-11",
-      "raw_path": "data/_raw/unreasonable-confidence-from-simulator-misspecif-de7cebd576.txt",
-      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
-      "source_rank": 47.7,
-      "discovered_via": "rss",
-      "source_name": "Hugging Face Daily Papers",
-      "summary": "A monocular satellite pose estimator trained on simulator images was tested on real hardware images of the SPEED+ benchmark. Confidence regions calibrated to 90% on synthetic data covered only 9-15% of rotation errors on one real domain and 21-38% on the other. Adapting the backbone's last stage carried most of the synthetic gain to real data. The topic is spacecraft vision, not security or LLM agents.",
-      "lessons": [
-        {
-          "point": "A calibrated uncertainty claim made on simulated data does not hold on real data, so a wrong output looks as confident as a right one.",
-          "excerpt": "regions conformally calibrated to 90% on synthetic data cover only 9-15% of rotation errors on sunlamp and 21-38% on lightbox",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "Adapting the last backbone stage carried most of the extra synthetic gain to both real test domains.",
-          "excerpt": "adapting the backbone's last stage carried 63-83% of its extra synthetic gain to both real domains",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Off-thesis vision result: the one portable idea is to check calibration on real data, never only on the simulator.",
-      "tags": [
-        "calibration",
-        "sim-to-real",
-        "distribution-shift",
-        "off-thesis"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Check confidence calibration on held-out real data",
-        "detail": "If a detector or agent reports confidence trained on synthetic or simulated cases, measure its coverage on real cases before trusting the score. Coverage can collapse under distribution shift even while accuracy on synthetic data improves."
-      },
-      "scores": {
-        "novelty": 15,
-        "relevance": 8,
-        "newness": 35,
-        "credibility": 47.7,
-        "composite": 22.8,
-        "scored_at": "2026-11-19T23:00:33+00:00"
-      },
-      "prior_art": "Closest: 'agent-safety-evals-can-misread-production-behavior' and the benchmark-vs-production entries under air.evals, which share the lab-versus-real gap idea; none cover calibration under simulator misspecification or vision.",
-      "retrieved_at": "2026-11-19T23:00:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0,
-      "corroborating_sources": []
-    },
-    {
-      "candidate_id": "datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea",
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "related_claims": [],
-      "title": "Datasette stops sending Firefox rel=next link headers that trigger prefetches",
-      "summary": "Simon Willison noticed that Firefox prefetches the next page of a Datasette table because Datasette sends an HTTP link header marked rel=next. Very few visitors click through to the next page, so the browser downloads data it does not need and the server renders a whole page that is thrown away. Datasette issue #3046 stops sending this header to Firefox for HTML pages. The Firefox bug about this behavior has been open for 24 years.",
-      "lessons": [
-        {
-          "point": "Willison spotted the waste in the Firefox network panel.",
-          "excerpt": "I was looking at the Firefox network panel today when I noticed that requests to a Datasette table page were triggering an",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "A pagination hint in a response header can make the server render a whole page that nobody reads.",
-          "excerpt": "the Datasette server is having to render an entire page that then gets thrown away",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "This Firefox behavior is long-standing and still unresolved, so servers have to work around it.",
-          "excerpt": "has been open for 24 years about this behavior",
-          "confidence": 0.75,
-          "grounded": true
-        }
-      ],
-      "takeaway": "If your app sends rel=next link headers on costly paginated HTML pages, Firefox may be making your server render pages nobody looks at.",
-      "tags": [
-        "datasette",
-        "http-headers",
-        "prefetch",
-        "firefox",
-        "web-performance"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Audit rel=next link headers on expensive paginated pages",
-        "detail": "Load a paginated page in the Firefox network panel and look for prefetch requests to the next page. If you see them, stop sending the HTTP link rel=next header on HTML responses (keep it for JSON API clients if they need it), or make next-page renders cheap."
-      },
-      "scores": {
-        "novelty": 6,
-        "relevance": 15,
-        "newness": 35,
-        "credibility": 51.2,
-        "composite": 22.73,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "verify_note": "Two overstated lesson points (server metrics, doubled work) were corrected to what the post says; off-topic web performance note for this audience.",
-      "prior_art": "Mozilla bug on rel=next link prefetching (open since 2002); the author's own 2002 post on Mozilla prefetching; MDN link prefetch docs",
-      "source_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
-      "article_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-07",
-      "discovered_via": "rss",
-      "source_id": "rss:https-simonwillison-net-atom-everything",
-      "source_rank": 51.2,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Simon Willison's Weblog",
-      "raw_path": "data/_raw/datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea.txt",
-      "id": "datasette-stops-sending-firefox-rel-next-link-he-3825a1d7e0",
-      "retrieved_at": "2026-11-08T17:53:16+00:00",
-      "needs_review": true,
       "readability": {
         "score": 100,
         "passed": true,
@@ -8254,6 +7736,133 @@
       ]
     },
     {
+      "id": "balancing-exploration-and-exploitation-in-constr-33eb78835a",
+      "verified": true,
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "kind": "story",
+      "kind_reason": "Off-thesis optimization research result, kept for the record.",
+      "related_claims": [],
+      "title": "A tensor-train method solves constrained combinatorial optimization with symmetric tensors",
+      "source_url": "http://arxiv.org/abs/2611.22557v1",
+      "article_url": "http://arxiv.org/abs/2611.22557v1",
+      "published": "2026-11-17",
+      "date": "2026-11",
+      "raw_path": "data/_raw/balancing-exploration-and-exploitation-in-constr-33eb78835a.txt",
+      "source_id": null,
+      "source_rank": 72.0,
+      "discovered_via": "rss",
+      "source_name": "ICML (via arXiv)",
+      "summary": "The paper builds a tensor-train (TT) optimizer that handles hard linear constraints using U(1)-symmetric tensor networks, plus a graph-based diversity measure for picking training samples. It reports better mean solution quality on assignment benchmarks and speedups over ConstrainTNet and PROTES. This is general optimization theory with no security or LLM-agent content.",
+      "lessons": [
+        {
+          "point": "Hard linear constraints are the weak spot of existing tensor-train optimizers when feasible points are rare.",
+          "excerpt": "incorporating hard linear constraints into TT-based optimization remains challenging, as existing interpolation and sampling approaches often fail when feasible points are rare",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The gain over simulated annealing depends on the problem and the compute budget, so it is not a general win.",
+          "excerpt": "comparisons with simulated annealing depend on constraint information and computational budget",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Off-thesis optimization paper: nothing here for AI security, product security or agent builders.",
+      "tags": [
+        "optimization",
+        "tensor-networks",
+        "off-thesis"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action for security or agent work",
+        "detail": "Skip unless you work on combinatorial optimization with tensor networks. Nothing in the abstract applies to securing AI systems or building LLM harnesses."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 3,
+        "newness": 34,
+        "credibility": 72.0,
+        "composite": 22.6,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "No equivalent in the pools; the nearest entries are general ML-research items under air.ml-research (for example deep learning theory notes), and none concern combinatorial optimization or tensor trains.",
+      "retrieved_at": "2026-11-19T23:00:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
+    },
+    {
+      "id": "unreasonable-confidence-from-simulator-misspecif-de7cebd576",
+      "verified": true,
+      "topic": "ai-research",
+      "domain": "air.ml-research",
+      "kind": "story",
+      "kind_reason": "Off-thesis vision research result on sim-to-real transfer.",
+      "related_claims": [],
+      "title": "A spacecraft pose study finds calibrated confidence fails on real images",
+      "source_url": "https://arxiv.org/abs/2611.20321",
+      "article_url": "https://arxiv.org/abs/2611.20321",
+      "published": "2026-11-15",
+      "date": "2026-11",
+      "raw_path": "data/_raw/unreasonable-confidence-from-simulator-misspecif-de7cebd576.txt",
+      "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+      "source_rank": 47.7,
+      "discovered_via": "rss",
+      "source_name": "Hugging Face Daily Papers",
+      "summary": "A monocular satellite pose estimator trained on simulator images was tested on real hardware images of the SPEED+ benchmark. Confidence regions calibrated to 90% on synthetic data covered only 9-15% of rotation errors on one real domain and 21-38% on the other. Adapting the backbone's last stage carried most of the synthetic gain to real data. The topic is spacecraft vision, not security or LLM agents.",
+      "lessons": [
+        {
+          "point": "A calibrated uncertainty claim made on simulated data does not hold on real data, so a wrong output looks as confident as a right one.",
+          "excerpt": "regions conformally calibrated to 90% on synthetic data cover only 9-15% of rotation errors on sunlamp and 21-38% on lightbox",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "Adapting the last backbone stage carried most of the extra synthetic gain to both real test domains.",
+          "excerpt": "adapting the backbone's last stage carried 63-83% of its extra synthetic gain to both real domains",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Off-thesis vision result: the one portable idea is to check calibration on real data, never only on the simulator.",
+      "tags": [
+        "calibration",
+        "sim-to-real",
+        "distribution-shift",
+        "off-thesis"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Check confidence calibration on held-out real data",
+        "detail": "If a detector or agent reports confidence trained on synthetic or simulated cases, measure its coverage on real cases before trusting the score. Coverage can collapse under distribution shift even while accuracy on synthetic data improves."
+      },
+      "scores": {
+        "novelty": 15,
+        "relevance": 8,
+        "newness": 34,
+        "credibility": 47.7,
+        "composite": 22.55,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "prior_art": "Closest: 'agent-safety-evals-can-misread-production-behavior' and the benchmark-vs-production entries under air.evals, which share the lab-versus-real gap idea; none cover calibration under simulator misspecification or vision.",
+      "retrieved_at": "2026-11-19T23:00:33+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0,
+      "corroborating_sources": []
+    },
+    {
       "id": "askalphaxiv-we-trained-a-4b-decision-model-on-ov-e83a96a016",
       "topic": "ai-research",
       "domain": "air.models",
@@ -8324,6 +7933,81 @@
       "grounding_score": 1.0
     },
     {
+      "candidate_id": "datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "related_claims": [],
+      "title": "Datasette stops sending Firefox rel=next link headers that trigger prefetches",
+      "summary": "Simon Willison noticed that Firefox prefetches the next page of a Datasette table because Datasette sends an HTTP link header marked rel=next. Very few visitors click through to the next page, so the browser downloads data it does not need and the server renders a whole page that is thrown away. Datasette issue #3046 stops sending this header to Firefox for HTML pages. The Firefox bug about this behavior has been open for 24 years.",
+      "lessons": [
+        {
+          "point": "Willison spotted the waste in the Firefox network panel.",
+          "excerpt": "I was looking at the Firefox network panel today when I noticed that requests to a Datasette table page were triggering an",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "A pagination hint in a response header can make the server render a whole page that nobody reads.",
+          "excerpt": "the Datasette server is having to render an entire page that then gets thrown away",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "This Firefox behavior is long-standing and still unresolved, so servers have to work around it.",
+          "excerpt": "has been open for 24 years about this behavior",
+          "confidence": 0.75,
+          "grounded": true
+        }
+      ],
+      "takeaway": "If your app sends rel=next link headers on costly paginated HTML pages, Firefox may be making your server render pages nobody looks at.",
+      "tags": [
+        "datasette",
+        "http-headers",
+        "prefetch",
+        "firefox",
+        "web-performance"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Audit rel=next link headers on expensive paginated pages",
+        "detail": "Load a paginated page in the Firefox network panel and look for prefetch requests to the next page. If you see them, stop sending the HTTP link rel=next header on HTML responses (keep it for JSON API clients if they need it), or make next-page renders cheap."
+      },
+      "scores": {
+        "novelty": 6,
+        "relevance": 15,
+        "newness": 34,
+        "credibility": 51.2,
+        "composite": 22.48,
+        "scored_at": "2026-11-20T04:04:11+00:00"
+      },
+      "verified": true,
+      "verify_note": "Two overstated lesson points (server metrics, doubled work) were corrected to what the post says; off-topic web performance note for this audience.",
+      "prior_art": "Mozilla bug on rel=next link prefetching (open since 2002); the author's own 2002 post on Mozilla prefetching; MDN link prefetch docs",
+      "source_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
+      "article_url": "https://simonwillison.net/2026/Nov/7/link-rel-next/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-07",
+      "discovered_via": "rss",
+      "source_id": "rss:https-simonwillison-net-atom-everything",
+      "source_rank": 51.2,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Simon Willison's Weblog",
+      "raw_path": "data/_raw/datasette-3046-don-t-serve-link-rel-next-http-he-0eb97c64ea.txt",
+      "id": "datasette-stops-sending-firefox-rel-next-link-he-3825a1d7e0",
+      "retrieved_at": "2026-11-08T17:53:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "the-magic-of-partial-evaluation-7a4d6c3899",
       "verified": false,
       "verify_reason": "scoring",
@@ -8376,10 +8060,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 6,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 22.4,
-        "scored_at": "2026-11-19T23:00:33+00:00"
+        "composite": 22.15,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "No close entry in the pools; the nearest is GitLab's regex-compiler RCE (product-security.json), which shares only the word compiler.",
       "article_url": "https://jimmyhmiller.com/magic-of-partial-evaluation",
@@ -8440,10 +8124,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 21.5,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 21.25,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "Routine provider status incidents, including earlier Anthropic authentication incidents.",
       "related_claims": [],
@@ -8506,10 +8190,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 21.05,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 20.8,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "prior_art": "Generic startup advice; no technical prior art applies.",
@@ -8577,10 +8261,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 5,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 20.75,
-        "scored_at": "2026-11-19T23:00:33+00:00"
+        "composite": 20.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "No equivalent entry; nearest in subject is generic Claude Code tooling coverage in ai-research.json, none about themes.",
       "article_url": "https://afterglow-themes.vercel.app/",
@@ -8637,10 +8321,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 5,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 20.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 20.5,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "The lesson is supported; 'far ahead' was replaced with the plain counts from the post.",
@@ -8848,10 +8532,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 3,
-        "newness": 35,
+        "newness": 34,
         "credibility": 55.0,
-        "composite": 19.4,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 19.15,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported the lesson; off-topic.",
@@ -8989,10 +8673,10 @@
       "scores": {
         "novelty": 2,
         "relevance": 1,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 18.65,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 18.4,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "None; off-topic personal gadget opinion with no security or AI content.",
       "related_claims": [],
@@ -9049,10 +8733,10 @@
       "scores": {
         "novelty": 0,
         "relevance": 3,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 18.65,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 18.4,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier: one sarcastic line with no technical content.",
@@ -9111,10 +8795,10 @@
       "scores": {
         "novelty": 0,
         "relevance": 1,
-        "newness": 35,
+        "newness": 34,
         "credibility": 60.0,
-        "composite": 18.05,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 17.8,
+        "scored_at": "2026-11-20T04:04:11+00:00"
       },
       "prior_art": "None. The post is not technical.",
       "related_claims": [],
