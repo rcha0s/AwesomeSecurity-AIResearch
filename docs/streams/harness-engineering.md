@@ -6,9 +6,9 @@ _Generated 2026-11-20 from the claim ledger, the pools and the archive of [Aweso
 
 This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings had their quotes checked against the source and passed, but sat below the Briefing's score bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
 
-33 live claims, 15 vetted findings, 9 worth a look.
+33 live claims, 15 vetted findings, 10 worth a look.
 
-- [Cost efficiency](#cost-efficiency): 11 claims, 7 findings
+- [Cost efficiency](#cost-efficiency): 11 claims, 8 findings
 - [Work efficiency](#work-efficiency): 6 claims, 1 finding
 - [Speed and latency](#speed-latency): 0 claims, 0 findings
 - [Reliability and recovery](#reliability): 0 claims, 1 finding
@@ -214,8 +214,11 @@ Evidence, newest first:
   Replace or supplement token-threshold compaction with a model-invoked compaction tool plus an explicit rubric for when to fire and when to hold off.
   Try: Add a model-invoked compact tool with a fire/suppress rubric. Expose a compact\_context tool that summarizes the trajectory so far and replaces it. In the system prompt, add the rubric: call it when a sub-task has just resolved or the solution is converging; do not call it mid-derivation or while stuck. Keep the token-threshold compaction as a hard fallback. A/B test against fixed-interval compaction on held-out tasks for accuracy and per-task cost.
 
-**Worth a look** (2)
+**Worth a look** (3)
 
+- **[Google adds Tool Retrieval to the Gemini API to defer tool schemas](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/)** · 2026-11-19 · Google AI Blog
+  Deferring tool schemas is now a built-in API feature, so large tool libraries need not be sent in full on every request.
+  Try: Defer tool schemas for large tool libraries. If your agent carries dozens of tools, keep names and one-line descriptions in context and load full parameter schemas only when a tool is chosen. In the Gemini Interactions API add a tool\_search tool and set defer\_loading true on the tools to hold back; it is in preview and needs Gemini 3.6 or later. Measure input tokens and tool-selection accuracy before and after, since the post reports no numbers in the text read.
 - **[Token-Goat hooks coding agents to cut repeat reads and bulky tool output](https://github.com/DFKHelper/token-goat)** · 2026-11-04 · DFKHelper/token-goat
   Most agent token waste is repeat reads and noisy tool output, which hooks can trim without changing the model.
   Try: Deduplicate repeat reads and trim tool logs in hooks. Add PreToolUse and PostToolUse hooks that answer a re-read of an unchanged file with a pointer, strip passing tests and progress bars from build and test output, and downscale screenshots before they reach the model. Measure cost per task before and after rather than trusting the author's savings figures. A third-party hook sees every tool call, so review its code before installing it.

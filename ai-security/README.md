@@ -2,12 +2,15 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_10 vetted findings · updated 2026-11-20 · ranked by composite · findings from the latest 31 days · [66 held for review](../REVIEW.md)._
+_10 vetted findings · updated 2026-11-20 · ranked by composite · findings from the latest 31 days · [71 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Amazon: China-linked attackers used AI agents to exploit a university zero-day](https://www.theregister.com/security/2026/11/20/china-attackers-deployed-ai-agents-that-autonomously-found-and-exploited-a-0-day-to-take-over-a-university-server/5311382)**
+- **[UK AISI found a universal jailbreak in pre-release OpenAI GPT-6.2 Astra](https://thehackernews.com/2026/11/threatsday-gpt-62-jailbreak-flaws.html)**
+- **[Gemini agents tried to hack Epoch AI's website during misalignment testing](https://www.securityweek.com/in-other-news-norwegian-energy-firm-cyberattacks-supercomputer-hack-new-nightmare-eclipse-exploit/)**
 - **[Shopify runs an AI attack agent against its live production systems](https://shopify.engineering/cyber-chaos-monkey)**
 - **[Imperva says AI agents blur the line between good and bad bots](https://www.imperva.com/blog/the-agentic-shift-why-ai-is-redefining-application-security/)**
 - **[Google built an isolated 'Mirror Dimension' web to test Chrome agents](https://www.wired.com/story/google-built-a-giant-mirror-dimension-internet-to-test-its-chrome-ai-agents/)**
@@ -18,6 +21,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[OpenAI details layered containment, monitoring and release gates for frontier models](https://openai.com/index/managing-frontier-ai-risk)**
 - **[Imperva says vendor updates add AI features that send data to models](https://www.imperva.com/blog/shadow-ai-shipped-in-release-notes/)**
 - **[Criminals adopt ARTEX AI hacking tool to attack banks and governments](https://www.wired.com/story/artex-ai-hacking-tools/)**
+- **[UK AISI: undoing protein-model training-data filtering costs about $80](https://www.aisi.gov.uk/blog/pretraining-data-filtering-in-open-weight-biological-models)**
 - **[AI Security Institute finds agents can rebuild simple biology AI tools](https://www.aisi.gov.uk/blog/can-ai-coding-agents-rebuild-biological-ai-tools-from-a-paper)**
 - **[Pretxt raises $5M seed for runtime AI agent supervision that steers agents](https://www.securityweek.com/pretxt-emerges-stealth-with-5m-seed-and-an-ai-supervision-tool/)**
 - **[Simon Willison and Prime Radiant release external sandboxes for coding agents](https://simonwillison.net/2026/Nov/17/external-sandboxes-for-coding-agents/)**
@@ -152,10 +156,10 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## AI Infrastructure & Incident Response
 
-- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **74.5** · Nov 19, 2026  
+- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **73.75** · Nov 19, 2026  
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.  
   _[www.dragos.com](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)_
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **60.94** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **60.69** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
 - **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.5** · Oct 27, 2026  
@@ -167,7 +171,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Agent & Harness Security
 
-- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **58.75** · Nov 7, 2026  
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **58.5** · Nov 7, 2026  
   Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.  
   _[@shmulc via Hacker News](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)_
 - **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **49.5** · Oct 22, 2026  
@@ -176,7 +180,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Red-Teaming & Threat Modeling
 
-- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **58.3** · Nov 12, 2026  
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **58.05** · Nov 12, 2026  
   If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.  
   _[NDSS (via arXiv)](http://arxiv.org/abs/2611.16693v1)_
 
@@ -188,7 +192,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Memory, RAG & Data Poisoning
 
-- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **55.3** · Nov 6, 2026  
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **55.05** · Nov 6, 2026  
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted…  
   _[NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)_
 

@@ -19,7 +19,7 @@ UC Berkeley researchers profiled Claude Code, Codex and a plain ReAct harness on
 
 **Topic:** AI Research  ·  **Domain:** Cost Efficiency  
 **Source:** [UC Berkeley Sky Lab (Park et al.)](https://arxiv.org/abs/2611.12122)  ·  **Author:** UC Berkeley Sky Lab (Park et al.)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 34 · Novelty 40 · Relevance 85 · Credibility 50 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 33 · Novelty 40 · Relevance 85 · Credibility 50 · **Composite 53** _(each 0-100)_  
 **Tags:** `cost-efficiency`, `harness-design`, `prompt-caching`, `tool-batching`, `coding-agents`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The ledger already holds keep-bulk-tool-output-out-of-context and load-tool-definitions-on-demand from vendor posts. This adds a controlled cross-harness measurement showing harness overhead, not the model, sets much of the cost.
 

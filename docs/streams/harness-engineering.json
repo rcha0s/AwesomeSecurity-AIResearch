@@ -58,7 +58,7 @@
     ],
     "watch_min_relevance": 60.0,
     "counts": {
-      "cost-efficiency": 7,
+      "cost-efficiency": 8,
       "work-efficiency": 1,
       "speed-latency": 0,
       "reliability": 1,
@@ -435,6 +435,41 @@
     ]
   },
   "items": [
+    {
+      "id": "google-adds-tool-retrieval-to-the-gemini-api-to-48f3fb2f9e",
+      "title": "Google adds Tool Retrieval to the Gemini API to defer tool schemas",
+      "summary": "Deferring tool schemas is now a built-in API feature, so large tool libraries need not be sent in full on every request.",
+      "content_text": "Google launched Tool Retrieval in preview in the Gemini Interactions API. You add a tool_search tool and mark tools with defer_loading set to true. The model still sees each deferred tool's name and description, but the full parameter schemas load only when the model asks for them. Google says this cuts input tokens and latency and helps tool selection stay accurate as the tool list grows, and that it works with Gemini 3.6 and later models.",
+      "date_published": "2026-11-19T00:00:00Z",
+      "tags": [
+        "Cost efficiency",
+        "gemini-api",
+        "tool-search",
+        "defer-loading",
+        "token-cost",
+        "tool-schemas",
+        "agent-harness"
+      ],
+      "_stream": {
+        "subcategory": "cost-efficiency",
+        "tier": "watch",
+        "domain": "air.cost-efficiency",
+        "source": "Google AI Blog",
+        "takeaway": "Deferring tool schemas is now a built-in API feature, so large tool libraries need not be sent in full on every request.",
+        "action": {
+          "type": "harness",
+          "title": "Defer tool schemas for large tool libraries",
+          "detail": "If your agent carries dozens of tools, keep names and one-line descriptions in context and load full parameter schemas only when a tool is chosen. In the Gemini Interactions API add a tool_search tool and set defer_loading true on the tools to hold back; it is in preview and needs Gemini 3.6 or later. Measure input tokens and tool-selection accuracy before and after, since the post reports no numbers in the text read."
+        },
+        "related_claims": [
+          "tool-count-degrades-agent-performance",
+          "few-distinct-tools-beat-many"
+        ],
+        "detail": null,
+        "on_site": false
+      },
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/"
+    },
     {
       "id": "how-the-claude-code-team-thinks-about-verificati-6c752ae9b8",
       "title": "Claude Code team explains how it verifies agent-written code at scale",

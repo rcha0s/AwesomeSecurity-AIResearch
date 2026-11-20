@@ -26,7 +26,7 @@ This NeurIPS workshop paper studies text-space Skill optimization (SkillOpt), wh
 
 **Topic:** AI Security  ·  **Domain:** Memory, RAG & Data Poisoning  
 **Source:** [NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)  ·  **Retrieved:** 2026-11-09  
-**Scores:** Newness 34 · Novelty 55 · Relevance 65 · Credibility 72 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 33 · Novelty 55 · Relevance 65 · Credibility 72 · **Composite 55** _(each 0-100)_  
 **Tags:** `agent-skills`, `skill-optimization`, `backdoor`, `data-poisoning`, `feedback-poisoning`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Instruction-backdoor work on customized coding LLMs (ARIA-style red teaming) and the archive's external-evidence step for self-evolving skill libraries; this paper moves the poisoning point to optimizer feedback
 

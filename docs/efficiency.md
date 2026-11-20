@@ -272,8 +272,11 @@ Evidence, newest first:
 - supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would."
 - supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "That catches the kind of problem that tests and typechecks miss."
 
-## New research, last 30 days (5)
+## New research, last 30 days (6)
 
+- **[Google adds Tool Retrieval to the Gemini API to defer tool schemas](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/)** · 2026-11-19 · Google AI Blog
+  Deferring tool schemas is now a built-in API feature, so large tool libraries need not be sent in full on every request.
+  Try: Defer tool schemas for large tool libraries. If your agent carries dozens of tools, keep names and one-line descriptions in context and load full parameter schemas only when a tool is chosen. In the Gemini Interactions API add a tool\_search tool and set defer\_loading true on the tools to hold back; it is in preview and needs Gemini 3.6 or later. Measure input tokens and tool-selection accuracy before and after, since the post reports no numbers in the text read.
 - **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · 2026-11-17 · @craigmart via Hacker News
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.
   Try: Add a verify skill and an observe-mode commit gate. Create a .claude/skills/verify skill next to the code that boots the app and drives it (browser, simulator or local service). Load review rules (such as REVIEW.md) from the default branch only. Add a commit gate with off, observe and enforce modes, stamp each commit with how it was verified (including 'none'), and let a commit through after two blocks so the agent is not stuck.
