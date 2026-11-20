@@ -31,6 +31,6 @@
 | 2026-11-17 | local | `local-20261117T234454Z-61492` | 0 | $0.00 | dead run, typical cost (not measured) | no |
 | 2026-11-18 | local | `local-20261118T012052Z-71274` | 24 + 10 news | $5.95 | measured | yes |
 | 2026-11-19 | local | `local-20261119T174629Z-56089` | 23 + 19 news | $14.50 | measured | yes |
-| 2026-11-20 | local | `local-20261120T173006Z-98013` | 22 + 8 news | $6.43 | measured | no |
+| 2026-11-20 | local | `local-20261120T173006Z-98013` | 22 + 8 news | $6.43 | measured | yes |
 
 **Backfill 2026-09-09..2026-10-18:** $72.35 charged of $200.00, 6 of 6 runs started. Finished windows: 2026-09-09..2026-09-16, 2026-09-17..2026-09-24, 2026-09-25..2026-10-02, 2026-10-03..2026-10-10, 2026-10-11..2026-10-18.
