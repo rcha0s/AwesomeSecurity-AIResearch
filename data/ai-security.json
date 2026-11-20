@@ -102,10 +102,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 85,
-        "newness": 91,
+        "newness": 90,
         "credibility": 50.0,
-        "composite": 73.75,
-        "scored_at": "2026-11-20T18:11:52+00:00"
+        "composite": 73.5,
+        "scored_at": "2026-11-20T22:53:21+00:00"
       },
       "verified": true,
       "verify_note": "Independent Sonnet pass found lesson 8 inferred a marketplace-seller attribution from a figure caption and lesson 6 omitted the July-October window; both reworded to the source text and re-checked on disk. All other lessons supported.",

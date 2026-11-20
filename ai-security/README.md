@@ -156,7 +156,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## AI Infrastructure & Incident Response
 
-- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **73.75** · Nov 19, 2026  
+- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **73.5** · Nov 19, 2026  
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.  
   _[www.dragos.com](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)_
 - **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **60.69** · Nov 2, 2026  
