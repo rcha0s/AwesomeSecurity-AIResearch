@@ -25,7 +25,7 @@ Microsoft's FORGE Lab reports memory-safety bugs in Rust's core and standard (st
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)  ·  **Retrieved:** 2026-11-12  
-**Scores:** Newness 35 · Novelty 55 · Relevance 66 · Credibility 70 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 34 · Novelty 55 · Relevance 66 · Credibility 70 · **Composite 55** _(each 0-100)_  
 **Tags:** `rust`, `memory-safety`, `unsafe-code`, `ai-vulnerability-research`, `soundness`, `panic-safety`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Rudra (2021) and CVE-2020-36323 by the same team covered Rust ecosystem and std soundness bugs; the tracker has no prior entry on AI-assisted std-library soundness findings (nearest: 'Google brings Rust (memory safety) to the Pixel baseband', archive.json). New here is the three-pattern taxonomy with fresh 2026 std bugs and the claim that agents make OS-boundary unsafe bugs searchable. Verifier's closest: OpenAI pipeline for Linux kernel root bugs; the team's earlier Rudra work.
 

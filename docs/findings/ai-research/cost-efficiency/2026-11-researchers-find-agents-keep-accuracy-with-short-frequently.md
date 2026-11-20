@@ -19,7 +19,7 @@ This paper argues that generating later tokens in a long context costs more than
 
 **Topic:** AI Research  ·  **Domain:** Cost Efficiency  
 **Source:** [Belcak et al.](https://arxiv.org/abs/2611.05306)  ·  **Author:** Belcak et al.  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 35 · Novelty 30 · Relevance 70 · Credibility 50 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 34 · Novelty 30 · Relevance 70 · Credibility 50 · **Composite 46** _(each 0-100)_  
 **Tags:** `cost-efficiency`, `context-compaction`, `long-context`, `harness-design`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: compact-first-reset-only-if-the-model-needs-it and Microsoft's compaction-cost finding cover when to compact; this adds evidence that compacting early and often keeps accuracy.
 

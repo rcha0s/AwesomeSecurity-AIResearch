@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-19T00:00:00Z</updated>
+  <updated>2026-11-20T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -29,13 +29,6 @@
     <updated>2026-11-14T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week" rel="alternate" type="text/html" />
     <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week</id>
-    <title>SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week" rel="alternate" type="text/html" />
-    <summary type="text">If any repo you own got a wfx-docs PR or a reverted 'ci: refresh build cache' commit, revoke the author's tokens, rotate all reachable secrets and hunt for AWS/Entra backdoors.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week</id>
@@ -66,25 +59,32 @@
     <summary type="text">MSP (managed service provider) teams running on-premise N-central should turn off the Legacy API now, as probing for the new root remote code execution exploit has already been observed.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainguard-details-wfx-stealer-that-backdoors-cl-f9a367b152#week</id>
-    <title>Chainguard details wfx stealer that backdoors cloud roles and can forge checks</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=chainguard-details-wfx-stealer-that-backdoors-cl-f9a367b152#week" rel="alternate" type="text/html" />
-    <summary type="text">With a stolen write token, pinning and pull request review do nothing, so limit what a CI runner holds and audit cloud trust after any wfx hit.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week</id>
-    <title>Researcher releases SignDrop Windows zero-day exploit granting SYSTEM privileges</title>
-    <updated>2026-11-12T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researcher-releases-signdrop-windows-zero-day-ex-4dea8a1318#week" rel="alternate" type="text/html" />
-    <summary type="text">Defenders relying on antimalware self-protection should know this public exploit can reportedly be used to turn off any antivirus or endpoint detection and response (EDR) product, with no patch yet.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week</id>
     <title>Check Point ships hotfixes for a zero-day exploited for root access</title>
     <updated>2026-11-13T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week" rel="alternate" type="text/html" />
     <summary type="text">Gateway owners should patch now and hunt for compromise, because attackers chained this flaw with another to reach root and then wipe a VMware ESXi host.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
+    <title>Dragos canary prompts found three AI hosting providers breached</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week" rel="alternate" type="text/html" />
+    <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week</id>
+    <title>Google Project Zero shortens its disclosure deadline to 30 days by 2028</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week" rel="alternate" type="text/html" />
+    <summary type="text">A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week</id>
+    <title>PostgreSQL fixes a 22-year-old type confusion bug that enables code execution</title>
+    <updated>2026-11-13T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week" rel="alternate" type="text/html" />
+    <summary type="text">Any role that can create objects should be treated as a possible route to code on the database host until the server and its extensions are both upgraded.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>

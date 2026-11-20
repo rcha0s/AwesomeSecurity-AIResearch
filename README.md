@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--19-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-32-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--20-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-28-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -19,9 +19,9 @@ _Only incidents that are critical, covered by 3+ independent outlets, and clear 
 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
-1. **[Microsoft shows poisoned fine-tuning data and checkpoints hijack coding agents' tools](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-shows-poisoned-fine-tuning-data-and-ch-8d4cff91d3#week)** · _AI Security · Nov 12, 2026_
-2. **[Google built an isolated 'Mirror Dimension' web to test Chrome agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-built-an-isolated-mirror-dimension-web-to-750955bab0#week)** · _AI Security · Nov 19, 2026_
-3. **[PIPETTE paper trains LLM agents against prompt injection with broader attacks](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pipette-paper-trains-llm-agents-against-prompt-i-25aa421c47#week)** · _AI Security · Nov 19, 2026_
+1. **[Google built an isolated 'Mirror Dimension' web to test Chrome agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-built-an-isolated-mirror-dimension-web-to-750955bab0#week)** · _AI Security · Nov 19, 2026_
+2. **[PIPETTE paper trains LLM agents against prompt injection with broader attacks](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pipette-paper-trains-llm-agents-against-prompt-i-25aa421c47#week)** · _AI Security · Nov 19, 2026_
+3. **[CISA adds LiteLLM remote code execution flaw to its exploited list](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=cisa-adds-litellm-remote-code-execution-flaw-to-6d716d3778#week)** · _AI Security · Nov 18, 2026_
 
 ## What to learn
 
@@ -43,9 +43,9 @@ _Most covered in the last 7 days; single-outlet patch notices are left out._
 
 _The last 7 days, most covered first._
 
-1. **[SafeDep tracks wfx stealer pushed into 8,093+ repos, likely via stolen tokens](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=safedep-tracks-wfx-stealer-pushed-into-8-093-rep-cf9a2f8a82#week)** · _Product Security · Nov 12, 2026 · 3 sources_
-2. **[PHP releases fix 18 flaws, including critical remote code execution bugs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week)** · _Product Security · Nov 19, 2026 · 3 sources_
-3. **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week)** · _Product Security · Nov 19, 2026 · 3 sources_
+1. **[PHP releases fix 18 flaws, including critical remote code execution bugs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week)** · _Product Security · Nov 19, 2026 · 3 sources_
+2. **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week)** · _Product Security · Nov 19, 2026 · 3 sources_
+3. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 17, 2026 · 5 sources_
 
 ## Claim changes
 
@@ -83,4 +83,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-19 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-20 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

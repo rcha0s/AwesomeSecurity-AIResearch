@@ -2,20 +2,20 @@
 
 _How to build agent and coding harnesses that cost less, run faster, fail less and get more correct work done: measured results from papers, lab and practitioner engineering blogs, with the standing claims they support._
 
-_Generated 2026-11-19 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
+_Generated 2026-11-20 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings had their quotes checked against the source and passed, but sat below the Briefing's score bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
 
-33 live claims, 16 vetted findings, 10 worth a look.
+33 live claims, 15 vetted findings, 9 worth a look.
 
 - [Cost efficiency](#cost-efficiency): 11 claims, 7 findings
 - [Work efficiency](#work-efficiency): 6 claims, 1 finding
 - [Speed and latency](#speed-latency): 0 claims, 0 findings
 - [Reliability and recovery](#reliability): 0 claims, 1 finding
-- [Context and memory](#context-memory): 5 claims, 2 findings
+- [Context and memory](#context-memory): 5 claims, 1 finding
 - [Tools and interfaces](#tools-interfaces): 3 claims, 3 findings
 - [Orchestration and multi-agent](#orchestration): 0 claims, 2 findings
-- [Evaluating harnesses](#harness-evals): 2 claims, 5 findings
+- [Evaluating harnesses](#harness-evals): 2 claims, 4 findings
 - [Harness design](#harness-design): 6 claims, 5 findings
 
 <a id="cost-efficiency"></a>
@@ -416,11 +416,6 @@ Few-shot prompting accuracy is highly sensitive to example ordering, whitespace,
 Evidence, newest first:
 - supports: [Calibrate Before Use](https://arxiv.org/abs/2102.09690) (2021-02)
 
-**New research** (1)
-
-- **[Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)](https://github.com/algal/pi-openai-server-compaction)** · 2026-07-22 · @kunchenguid
-  If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction\_trigger + previous\_response\_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.
-
 **Worth a look** (1)
 
 - **[OpenAI launches the Agents API in public beta, a hosted Codex harness](https://openai.com/index/introducing-the-agents-api)** · 2026-09-10 · OpenAI Blog
@@ -554,13 +549,11 @@ Evidence, newest first:
   Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.
   Try: Red-team the harness, not just the model. Adopt an evolving-skill red-team loop that profiles which jailbreak tools actually decide success (tool attribution), distills wins into concise reusable skills, and gates updates behind a validation ratchet; evaluate transfer across multiple target harnesses and attacker models to estimate real-world risk.
 
-**Worth a look** (2)
+**Worth a look** (1)
 
 - **[Explicit Edit Benchmark offers 226 byte-exact file-editing tasks for comparing coding agents](https://github.com/alexshpunt/explicit-edit-benchmark)** · 2026-09-11 · alexshpunt/explicit-edit-benchmark
   If you build or tune an edit tool for a coding agent, test it on exact-match edit tasks, since this benchmark isolates that skill from reasoning.
   Try: Benchmark your agent's edit tool on explicit-edit-benchmark. Clone the repository, install the command-line interface (CLI) for your harness (adapters exist for Pi, Codex CLI, OpenCode, Oh My Pi, GitHub Copilot CLI and DeepSeek Harness), run the benchmark with --local and the --harness and --model flags, and compare your edit-tool variant against the baseline-agent (bash only) result on the public leaderboard.
-- **[Rogue agents are not unprecedented, ~20% of ProjectDiscovery's CTF solves were unintended](https://projectdiscovery.io/blog/oh-my-rogue-agent)** · 2026-07-22 · ProjectDiscovery Blog
-  Agents drift toward whatever is reachable; the eval harness's own infrastructure is usually the most reachable thing in the room.
 
 
 <a id="harness-design"></a>

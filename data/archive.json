@@ -37357,5 +37357,671 @@
     "previous_slugs": [
       "hybridagent-post-trains-models-to-reason-in-latent-space-and"
     ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.prompt-injection",
+    "title": "Trojan Horse: Automated Repository Poisoning against Coding Agents",
+    "source_url": "https://arxiv.org/abs/2610.23109",
+    "article_url": "https://arxiv.org/abs/2610.23109",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-19",
+    "date": "2026-10",
+    "source_name": "arXiv cs.CR (Cryptography and Security)",
+    "raw_path": "data/_raw/trojan-horse-automated-repository-poisoning-agai-c6a8fe9d8c.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:http-export-arxiv-org-rss-cs-cr",
+    "source_rank": 50.6,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "cluster": "G",
+    "related_claims": [
+      "indirect-injection-via-retrieved-content-is-viable",
+      "prompt-injection-is-containment-not-prevention"
+    ],
+    "summary": "TrojanForge automates repository poisoning against coding agents: it maps agent execution traces onto AST nodes, has a security-review agent pick the least conspicuous payload locations, and refines disguises through adversarial play against the target agent. It reaches over 60% stable poisoning success and over 90% backdoor injection, and on a 384-repo benchmark across 4 harnesses and 12 models even commercial agents fail to defend.",
+    "lessons": [
+      {
+        "point": "Attackers can place repository payloads where the agent's own execution traces will reach them, choosing the spots a security review is least likely to flag.",
+        "excerpt": "TrojanForge parses repository structure through abstract syntax trees (AST) and maps agent execution traces onto AST nodes. A security review agent ranks these candidates and selects the least conspicuous ones for payload mounting.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Disguises improve automatically: the attacker learns why the agent detected a payload, inverts that cause, and reuses what worked across repositories.",
+        "excerpt": "iteratively refines disguise strategies by inverting the causes of agent detection, and transfers accumulated success experience across repositories",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Automated repository poisoning is reliable, not anecdotal: over 60% poisoning success and over 90% backdoor injection.",
+        "excerpt": "TrojanForge achieves a stable poisoning success rate of over 60% with backdoor injection exceeding 90%",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Agent-side detection doesn't hold up as a defense: across 4 harnesses and 12 models, commercial agents included, none defended against repository-level poisoning.",
+        "excerpt": "even commercial agents fail to defend against repository-level poisoning",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "An untrusted repository is attacker-controlled agent input, and the model noticing the payload is not a defense that holds.",
+    "tags": [
+      "coding-agents",
+      "repository-poisoning",
+      "prompt-injection",
+      "backdoor",
+      "red-teaming",
+      "benchmark"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Treat cloned repositories as untrusted input to coding agents",
+      "detail": "Run coding agents on third-party or unreviewed repositories in a sandbox with no credentials and egress restricted to an allowlist. Gate any agent-written change that touches build scripts, CI config, dependency manifests or install hooks behind a deterministic diff check. Don't rely on the agent's own judgment to spot planted payloads; red-team your harness with TrojanBench-style poisoned repos."
+    },
+    "scores": {
+      "novelty": 75,
+      "relevance": 90,
+      "newness": 6,
+      "credibility": 50.6,
+      "composite": 58.59,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "Indirect prompt injection via repo files (rules-file / AGENTS.md backdoors) and manual coding-agent red-teaming; the delta is automated AST-guided payload placement plus adversarial disguise refinement that transfers across repositories.",
+    "threat": "Poisoned repository content steers a coding agent into executing or committing a backdoor.",
+    "conditions": "A coding agent works autonomously inside a repository an attacker can contribute to or publish.",
+    "mitigations": "Sandbox with no secrets and allowlisted egress; deterministic gates on sensitive file changes; don't count model-side detection as a control.",
+    "verified": true,
+    "verify_note": "Independent verifier: all 4 lessons supported; novelty 75 (vs 80), relevance 90.",
+    "id": "trojan-horse-automated-repository-poisoning-agai-c6a8fe9d8c",
+    "retrieved_at": "2026-10-19T23:35:59+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "agents-are-your-newest-insiders-security-must-mo-aab9ccf786",
+    "topic": "ai-security",
+    "domain": "ais.agent-security",
+    "title": "Microsoft frames agents as insiders and announces Dynamic Permissions and Guardian Agents",
+    "source_url": "https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/",
+    "summary": "Microsoft treats agents as insider risks whose security controls must sit outside the model. It announces product features around that idea: discovery of 60 local agent types including Claude Code and Codex, Entra Agent ID for local and unknown agents, task-scoped and time-bound Dynamic Permissions, and a continuously updated Dynamic Agent Risk score. That score feeds graduated Conditional Access, for example keeping reads while blocking writes, then isolating the agent. The post mostly restates known principles (least privilege, separate agent identity, external enforcement) as product marketing, with no measurements.",
+    "takeaway": "Graduated containment is a useful design pattern to copy: when agent risk rises, keep reads, revoke writes, require approval, then isolate. Treat the rest as vendor positioning.",
+    "lessons": [
+      {
+        "point": "Enforcement must live outside the model. The model must not be its own security boundary.",
+        "excerpt": "We should not ask a model to be its own security authority.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Agents should get their own task-scoped, time-bound authority rather than inheriting the user's standing access.",
+        "excerpt": "It should begin with no authority and receive only what it needs for the approved task, for only as long as the task requires.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "A risk response can be proportional rather than an on/off kill switch: degrade capability step by step as evidence of compromise grows.",
+        "excerpt": "preserve safe reads while blocking writes, narrow the resources it can reach, require provable human approval for a consequential step, or isolate and stop the agent when the risk warrants it",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "agent-identity",
+      "least-privilege",
+      "insider-risk",
+      "microsoft",
+      "conditional-access",
+      "containment",
+      "vendor-marketing"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Design graduated agent-containment tiers instead of a binary kill switch",
+      "detail": "Define 3-4 capability tiers per agent (full, read-only, approval-required for writes, isolated/stopped). Map runtime signals to tier downgrades: untrusted content ingested, out-of-task tool calls, sensitive-resource access. Enforce the tiers in the tool gateway or sandbox, not in the prompt."
+    },
+    "scores": {
+      "novelty": 20,
+      "relevance": 40,
+      "newness": 6,
+      "credibility": 72.9,
+      "composite": 30.44,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported the claims; discovery was expanded by 35 types to a total of 60, and Guardian Agents ship inside Project Perception. No measurements in the post. Verifier novelty 30; kept 20.",
+    "prior_art": "Microsoft's own earlier 'Zero Trust for AI' post (archive, 2026-08) covers the same principles: least privilege, agent identity, external controls. The containment-not-prevention framing is already a pool claim. The only new pieces are product features (Dynamic Permissions/Risk/Conditional Access, Guardian Agents, discovery of 60 local agent types), with no data. Note: the candidate's feed excerpt mentions Microsoft 365 E7, but the article body doesn't.",
+    "related_claims": [
+      "prompt-injection-is-containment-not-prevention"
+    ],
+    "threat": "Agents with inherited user permissions get manipulated (e.g., by prompt injection in external documents) and act at machine speed before humans can respond.",
+    "mitigations": "Separate agent identity, task-scoped time-bound permissions, sandboxed runtime outside the agent's control, mediated tool/MCP access, continuous risk scoring driving graduated restrictions.",
+    "article_url": "https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-19",
+    "raw_path": "data/_raw/agents-are-your-newest-insiders-security-must-mo-aab9ccf786.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-www-microsoft-com-en-us-security-blog-feed",
+    "source_rank": 72.9,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "source_name": "Microsoft Security Blog",
+    "id": "microsoft-frames-agents-as-insiders-and-announce-b48f327935",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: takeaway_sentences 2 > 1"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "topic": "product-security",
+    "domain": "ps.offensive",
+    "title": "pwn.ai found a new Linux networking bug class escaping KVM guests",
+    "source_url": "https://pwn.ai/blog/pwnescape",
+    "article_url": "https://pwn.ai/blog/pwnescape",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-19",
+    "date": "2026-10",
+    "discovered_via": "manual",
+    "raw_path": "data/_raw/title-pwnescape-guest-to-host-kvm-escape-cve-202-2ee50d96c8.txt",
+    "related_claims": [],
+    "summary": "pwn.ai researchers, working in Vercel's sandbox challenge, found that guest-controlled checksum metadata can rewrite an IPv4 header after the host kernel has validated it. The bug is in Linux networking, not in KVM itself, so many hypervisors are affected. In their lab they turned a memory disclosure into selected 64-byte host-kernel writes and a host-root helper run. They credit GPT-5.6 Sol as the main reasoning engine inside a long-running research harness. The upstream fix validates checksum_start before completing the checksum.",
+    "lessons": [
+      {
+        "point": "The authors call it a new class: untrusted checksum metadata edits packet fields after validation.",
+        "excerpt": "untrusted checksum metadata can rewrite security-sensitive packet fields after the kernel has already validated and acted on them",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "The bug is outside the hypervisor, so KVM-only audits miss it.",
+        "excerpt": "the vulnerability wasn't even in the hypervisor, it was in the Linux networking stack.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "An LLM provided source-level analysis within a human-directed harness.",
+        "excerpt": "served as the primary reasoning engine for source-level analysis, exploring attack paths, and challenging assumptions",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "The accepted fix validates the checksum start.",
+        "excerpt": "ipv4: validate checksum_start before completing checksum",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "VM isolation depends on the kernel's networking code, so patch KVM hosts and sandbox providers.",
+    "tags": [
+      "kvm",
+      "vm-escape",
+      "linux-kernel",
+      "ai-assisted-research",
+      "sandbox"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Patch hypervisor hosts and sandbox providers",
+      "detail": "Apply the kernel fix on every KVM host (and nested or microVM sandboxes), and ask your sandbox provider for their patch status; treat guest-originated packet metadata as untrusted in custom kernels."
+    },
+    "scores": {
+      "novelty": 75,
+      "relevance": 80,
+      "newness": 6,
+      "credibility": 50.0,
+      "composite": 55.5,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "Earlier VM-escape work targets hypervisor device emulation; this reaches the host through guest-controlled metadata in core networking, with LLM-assisted discovery. Verifier: Checksum offload/virtio_net metadata bugs (virtio-net GSO/csum handling fixes); Google Big Sleep and XBOW LLM-driven vuln finds; kvmCTF KVM escapes",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; discrepancies it found (title/summary overstatements) were corrected before merge.",
+    "id": "pwnescape-pwn-ai-used-an-llm-research-harness-to-63c07eb1eb",
+    "retrieved_at": "2026-10-24T06:34:33+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18",
+        "mild: summary_sentences 5 > 4"
+      ]
+    },
+    "grounding_score": 1.0,
+    "story_corroboration": [
+      {
+        "name": "www.theregister.com",
+        "url": "https://www.theregister.com/virtualization/2026/10/19/linux-kvm-guest-host-escape-rated-critical-may-represent-a-new-way-to-attack-penguin-powered-networking/5303744",
+        "tier": "",
+        "published": null
+      }
+    ],
+    "previous_slugs": [
+      "pwnescape-pwn-ai-used-an-llm-research-harness-to-find-a-new"
+    ]
+  },
+  {
+    "candidate_id": "supply-chain-zero-days-closing-the-gap-between-p-ec40c479ab",
+    "topic": "product-security",
+    "domain": "ps.supply-chain",
+    "title": "Wiz scans every new npm version at publish time to catch compromises",
+    "summary": "Wiz describes a pipeline that analyzes each new npm package version as soon as it is published. It diffs the new version against earlier ones, runs static checks and an AI classifier, then installs, imports and runs suspicious versions in a sandbox while a runtime sensor watches behavior. In the keyv compromise, the malware fetched its command-and-control (C2) domains from an Ethereum smart contract at runtime, so only the dynamic stage could see them.",
+    "lessons": [
+      {
+        "point": "Diffing a new release against prior versions is the first step for spotting a trusted package gone bad.",
+        "excerpt": "When a new package version is released, the pipeline downloads and extracts the current version and previous versions for comparison.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Static analysis missed C2 that was resolved at runtime from a blockchain; dynamic execution caught it.",
+        "excerpt": "the malware dynamically retrieved its C2 domains at runtime by querying an Ethereum smart contract.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Wiz reports supply chain attacks rose from about 10% to 25% of significant incidents between H2 2025 and H1 2026.",
+        "excerpt": "In H1 2026, that percentage increased to 25%, and now, notable supply chain attacks account for 1 in 4 significant security incidents.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Removing malicious versions within hours is not enough when a package is near-ubiquitous.",
+        "excerpt": "Axios was present in approximately 80% of cloud and code environments, and downloaded around 100 million times per week.",
+        "confidence": 0.75,
+        "grounded": true
+      }
+    ],
+    "takeaway": "CVE-based dependency scanning is blind to hijacked trusted packages; you need publish-time behavioral analysis or a cooldown before new versions reach builds.",
+    "tags": [
+      "npm",
+      "malicious-packages",
+      "dynamic-analysis",
+      "keyv",
+      "dependency-cooldown"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Gate new dependency versions on behavior, not CVEs",
+      "detail": "Do not auto-pull the latest version of popular packages into CI. Add a minimum release age (cooldown) or route new versions through a malicious-package feed or sandbox that installs, imports and runs the package and logs network egress. Alert on unexpected outbound connections from install and import steps, including to blockchain RPC endpoints."
+    },
+    "scores": {
+      "novelty": 15,
+      "relevance": 62,
+      "newness": 6,
+      "credibility": 75.0,
+      "composite": 35.85,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "Publish-time malicious-package detection is established practice (Socket, Phylum, Aikido feeds); the keyv Ethereum-resolved C2 is already covered in the archive (Chainguard and Snyk keyv write-ups). This adds Wiz's pipeline design and incident share figures. Verifier: Publish-time npm scanning that combines diffing, sandboxing and AI classification is established practice (Socket, Phylum, Aikido Intel, StepSecurity, OpenSSF package-analysis). The keyv Ethereum-resolved C2 is already in archive.json ('keyv/cacheable Mini Shai-Hulud ... Ethereum-resolved C2'), and EtherHiding has been documented since 2023.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source and found no unsupported claim.",
+    "related_claims": [
+      "package-installers-run-arbitrary-code-by-default",
+      "import-time-payloads-defeat-install-time-controls",
+      "signature-based-detection-fails-on-llm-authored-malware"
+    ],
+    "threat": "Compromised maintainer accounts publish malicious versions of trusted packages that auto-update into dev environments and CI before any CVE or advisory exists.",
+    "conditions": "Build pipelines and developer workflows pull the latest versions of popular packages automatically and rely on vulnerability databases for blocking.",
+    "mitigations": "Release-age cooldowns, pinned lockfiles, publish-time static plus dynamic package analysis, runtime egress monitoring on install and import.",
+    "source_url": "https://www.wiz.io/blog/detect-supply-chain-zero-days-at-publication",
+    "article_url": "https://www.wiz.io/blog/detect-supply-chain-zero-days-at-publication",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-19",
+    "raw_path": "data/_raw/supply-chain-zero-days-closing-the-gap-between-p-ec40c479ab.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-www-wiz-io-feed-rss-xml",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-security",
+      "product-security"
+    ],
+    "source_name": "Wiz Research",
+    "id": "wiz-scans-every-new-npm-version-at-publish-time-660b65fa99",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "wiz-scans-every-new-npm-version-at-publish-time-with-diffing"
+    ]
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.evals",
+    "title": "Harness-Delta Attribution: Dissecting Gains From Harness Evolution",
+    "source_url": "https://arxiv.org/abs/2610.22466",
+    "article_url": "https://arxiv.org/abs/2610.22466",
+    "tweet_url": null,
+    "author": null,
+    "published": "2026-10-19",
+    "date": "2026-10",
+    "source_name": "arXiv cs.AI (Artificial Intelligence)",
+    "raw_path": "data/_raw/harness-delta-attribution-dissecting-gains-from-2006da8a13.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:http-export-arxiv-org-rss-cs-ai",
+    "source_rank": 43.9,
+    "source_topics": [
+      "ai-research"
+    ],
+    "cluster": "B",
+    "related_claims": [
+      "harness-evolution-gains-need-held-out-attribution",
+      "swe-bench-doesnt-generalize-to-production-tasks"
+    ],
+    "summary": "Automatic harness evolution, which optimizes the prompts, skills, tools and orchestration around a fixed model, reports gains on its search set. Harness-Delta Attribution splits those gains into overfitting, test-time scaling and a residual. Across 21 settings with significant gains, overfitting averaged 54% and extra compute 14% of the gain, gains often failed to transfer to held-out tasks, and validation signals did not prevent overfitting.",
+    "lessons": [
+      {
+        "point": "Most of a harness-evolution gain is usually not generalizable improvement: on average 54% is overfitting and 14% is extra inference compute.",
+        "excerpt": "overfitting and test-time scaling account for 54% and 14% of the gain on average; their combined share exceeds 50% in 14 settings",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "A better score on the set you optimized against is weak evidence; evolved harnesses often don't transfer to held-out tasks.",
+        "excerpt": "search-set gains often fail to transfer to held-out tasks",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "A validation split alone does not stop harness evolution from overfitting.",
+        "excerpt": "validation-based signals are insufficient to prevent overfitting",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.",
+    "tags": [
+      "harness-evolution",
+      "evals",
+      "overfitting",
+      "test-time-compute",
+      "agents"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Attribution-aware acceptance test for harness changes",
+      "detail": "When a prompt or skill optimizer or a self-improving loop proposes a harness change, score it on a held-out task set the optimizer never saw. Compare at matched token and inference budgets so extra compute isn't counted as improvement. Accept the change only on the held-out delta, not the search-set or validation delta."
+    },
+    "scores": {
+      "novelty": 65,
+      "relevance": 87,
+      "newness": 6,
+      "credibility": 43.9,
+      "composite": 53.68,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "Benchmark-overfitting and adaptive-data-analysis literature, prompt-optimization overfitting studies, and test-time-compute scaling analyses; the delta is a quantified decomposition applied to harness evolution across 11 models and 3 frameworks.",
+    "verified": true,
+    "verify_note": "Independent verifier: all lessons supported; novelty 65 (vs 72), relevance 87.",
+    "id": "harness-delta-attribution-dissecting-gains-from-2006da8a13",
+    "retrieved_at": "2026-10-19T23:35:59+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0
+  },
+  {
+    "id": "token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5",
+    "scores": {
+      "novelty": 70,
+      "relevance": 65,
+      "newness": 6,
+      "credibility": 55.0,
+      "composite": 50.25,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "verified": true,
+    "prior_art": "Known prompt-format and tokenization sensitivity of evals (few-shot formatting brittleness, lm-eval-harness answer-extraction differences); the specific never-emitted POPE readout IDs and their size of effect are new.",
+    "topic": "ai-research",
+    "domain": "air.evals",
+    "title": "POPE yes/no readout uses token IDs the model never emits",
+    "source_url": "https://arxiv.org/abs/2610.25964",
+    "article_url": "https://arxiv.org/abs/2610.25964",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-19",
+    "raw_path": "data/_raw/token-set-choice-confounds-pope-a-systematic-aud-cb7232ccf5.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 55.0,
+    "source_topics": [
+      "ai-research"
+    ],
+    "related_claims": [],
+    "summary": "Reproducing a POPE hallucination result, the authors found the two-token logit readout compares 'yes'/'no' token IDs that LLaVA-1.5 never generates, because SentencePiece emits space-prefixed ' Yes'/' No'. Fixing the readout shifts adversarial F1 by 6.13 points, more than the gain five of six surveyed papers report, and none of those papers states its readout. Porting token IDs across tokenizer families drops F1 to 0.00, while a tokenizer-derived readout stays at 0.80-0.92.",
+    "lessons": [
+      {
+        "point": "Logit-based yes/no scoring can silently read token IDs the model never produces.",
+        "excerpt": "Across 9,000 greedy-decode questions spanning all three splits, neither ID is generated even once.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The readout choice alone moves the score by more than most claimed improvements, and papers don't report it, so their gains aren't comparable.",
+        "excerpt": "That 6.13-point adversarial shift exceeds the adversarial gain reported by five of the six papers we surveyed. None of them states its readout",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Hard-coded token IDs break completely across tokenizer families; derive the readout set from each model's tokenizer.",
+        "excerpt": "porting the LLaVA-1.5 IDs verbatim drops F1 to 0.00 on the two disjoint-vocabulary models",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.",
+    "tags": [
+      "evals",
+      "benchmarks",
+      "tokenization",
+      "reproducibility",
+      "vlm"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Assert logit-readout tokens appear in greedy decodes",
+      "detail": "In any harness that scores a yes/no or label decision from logits, derive the token set from the model's tokenizer (including space-prefixed and capitalized variants) and add a check that the read token IDs are actually generated under greedy decoding on a sample; fail the eval run if they are not."
+    },
+    "retrieved_at": "2026-10-22T01:39:40+00:00",
+    "needs_review": false,
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "pope-yes-no-readout-uses-token-ids-the-model-never-emits-mov"
+    ]
+  },
+  {
+    "candidate_id": "which-agent-s-skill-should-change-group-relative-448df04fa1",
+    "topic": "ai-research",
+    "domain": "air.agents",
+    "title": "GRSE credits multi-agent skills by contrasting repeated runs, not presence",
+    "source_url": "https://arxiv.org/abs/2610.27227",
+    "summary": "Multi-agent teams that improve by revising reusable skills need to know which agent's skill caused a shared team reward. Existing methods credit any skill that appears in a successful trajectory, so a harmful skill can still earn positive credit. GRSE borrows the idea from GRPO: it runs each question several times with the same skill libraries and contrasts the runs to credit agent-skill pairs, with structured failure diagnosis. It beats MASkills on HotpotQA and on every LoCoMo category except open-domain (up to +6.7 F1 on multi-hop). Starting from a library with planted harmful skills, it assigns the right sign to every one and recovers clean-library performance; MASkills misattributes two of them.",
+    "takeaway": "If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.",
+    "lessons": [
+      {
+        "point": "Crediting skills by co-occurrence is broken: a skill that hurts can still get rewarded if it shows up in successful runs.",
+        "excerpt": "presence is not responsibility: a harmful skill active in successful runs still earns positive credit",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Mechanism: repeat each question under identical libraries and contrast the outcomes to attribute credit, as in GRPO.",
+        "excerpt": "it executes each question several times under the same skill libraries and contrasts the executions to credit agent--skill pairs",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Contrastive credit makes self-evolution robust to poisoned skill libraries, where presence-based credit gets worse than where it started.",
+        "excerpt": "starting from planted harmful skills, it credits every planted skill with the correct sign and recovers the score of a clean library (+6.3points), whereas MASkills misattributes two and falls below its starting point.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "The authors attribute the gains to better-grounded retrieval rather than unsupported answers.",
+        "excerpt": "Its gains rest on better-grounded retrieval rather than answers given without evidence",
+        "confidence": 0.65,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "skill-evolution",
+      "credit-assignment",
+      "multi-agent",
+      "self-improving-agents",
+      "skill-poisoning",
+      "grpo"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Group-relative credit check before promoting or retiring a skill",
+      "detail": "For each candidate skill edit, run the same task batch N times with and without the skill (same seeds and library otherwise). Use the outcome difference as the skill's credit, and require a consistent sign before committing. Include deliberately harmful skills as canaries to confirm the credit signal flags them."
+    },
+    "scores": {
+      "novelty": 58,
+      "relevance": 65,
+      "newness": 6,
+      "credibility": 50.8,
+      "composite": 46.02,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported all claims against the abstract; '+6.7 F1 on multi-hop' is one of two figures (+6.7, +3.2) the abstract does not assign. Abstract-only evidence. Verifier novelty 62; kept 58.",
+    "prior_art": "The archive has 'Ratchet: How Reliable Must an LLM Judge Be to Retire a Skill?' (per-skill contribution eviction, judge false-pass threshold) and 'Pre-Commit Gating against Skill Contamination' (verifier gatekeeper). GRSE differs by solving multi-agent credit assignment with GRPO-style contrastive reruns instead of judge or verifier gating, and shows it recovers from planted harmful skills. The evidence here is abstract-level only.",
+    "related_claims": [
+      "harness-evolution-gains-need-held-out-attribution"
+    ],
+    "article_url": "https://arxiv.org/abs/2610.27227",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-19",
+    "raw_path": "data/_raw/which-agent-s-skill-should-change-group-relative-448df04fa1.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 50.8,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Hugging Face Daily Papers",
+    "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: summary_sentences 5 > 4"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "grse-credit-multi-agent-skills-by-contrasting-repeated-runs"
+    ]
+  },
+  {
+    "candidate_id": "accenture-embedded-evaluation-908fa9e458",
+    "topic": "ai-research",
+    "domain": "air.evals",
+    "title": "Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access",
+    "summary": "Anthropic named Accenture, through its AI unit Faculty, as an embedded evaluator that will red-team models, run alignment assessments, and test safeguards from inside the company with access comparable to an employee's. Each company expects to invest at least $1 billion over five years. Anthropic funds the work directly and says there are no standards yet for evaluator access or reporting.",
+    "lessons": [
+      {
+        "point": "Embedded evaluators get insider-level access, unlike today's external pre-deployment testers.",
+        "excerpt": "embedded evaluators will work inside AI companies, with access comparable to an employee's.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The scale is large: at least $1 billion each over five years.",
+        "excerpt": "Anthropic and Accenture each expect to invest at least $1 billion in building capacity in this area over the next five years.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The evaluated lab pays the evaluator directly.",
+        "excerpt": "Given the importance and urgency of this work, Anthropic will fund Accenture's work directly.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Access and reporting rules do not exist yet.",
+        "excerpt": "There are, as yet, no standards for what information embedded evaluators should have access to, or how they should report what they find.",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Embedded evaluation is starting with a lab-funded commercial partner and no shared standards, so judge its independence by the access and reporting terms once they are published.",
+    "tags": [
+      "embedded-evaluation",
+      "third-party-evals",
+      "ai-governance",
+      "red-teaming",
+      "anthropic"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Track the access and reporting terms of embedded evaluators",
+      "detail": "When Anthropic or Accenture publish evaluator reports, check what training-time access was granted, who controls redaction, and whether incidents are reported publicly; compare with the METR arrangement before relying on these reports as independent assurance."
+    },
+    "scores": {
+      "novelty": 35,
+      "relevance": 35,
+      "newness": 6,
+      "credibility": 72.5,
+      "composite": 33.38,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "Pool entry 'Anthropic embeds METR with employee-like access, but keeps control of what counts as redactable' covers the same embedded-evaluator model; the new detail is a commercial, lab-funded partner and the $1B commitment. Verifier: Existing external pre-deployment testing by UK AISI/US CAISI and METR, plus Anthropic's 'We Must Pace the Frontier' commitment and Advanced AI Framework. What is new is the insider-access, lab-funded commercial evaluator at $1B scale.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [],
+    "source_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+    "article_url": "https://www.anthropic.com/news/accenture-embedded-evaluation",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-19",
+    "raw_path": "data/_raw/accenture-embedded-evaluation-908fa9e458.txt",
+    "discovered_via": "sitemap",
+    "source_id": "research_index:https-www-anthropic-com-news",
+    "source_rank": 72.5,
+    "source_topics": [
+      "ai-research",
+      "ai-security"
+    ],
+    "source_name": "Anthropic News",
+    "id": "anthropic-funds-accenture-s-faculty-as-an-embedd-bbde4cc1be",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 19 > 18"
+      ]
+    },
+    "grounding_score": 1.0
   }
 ]

@@ -7,7 +7,7 @@
   "language": "en",
   "_stream": {
     "id": "harness-engineering",
-    "generated": "2026-11-19",
+    "generated": "2026-11-20",
     "library_days": 120,
     "subcategories": [
       {
@@ -62,10 +62,10 @@
       "work-efficiency": 1,
       "speed-latency": 0,
       "reliability": 1,
-      "context-memory": 2,
+      "context-memory": 1,
       "tools-interfaces": 3,
       "orchestration": 2,
-      "harness-evals": 5,
+      "harness-evals": 4,
       "harness-design": 5
     },
     "claims": [
@@ -823,11 +823,10 @@
           "harness-evolution-gains-need-held-out-attribution",
           "swe-bench-doesnt-generalize-to-production-tasks"
         ],
-        "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md",
-        "on_site": true
+        "detail": null,
+        "on_site": false
       },
-      "url": "https://arxiv.org/abs/2610.22466",
-      "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=harness-delta-attribution-dissecting-gains-from-2006da8a13#week"
+      "url": "https://arxiv.org/abs/2610.22466"
     },
     {
       "id": "grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a",
@@ -858,11 +857,10 @@
         "related_claims": [
           "harness-evolution-gains-need-held-out-attribution"
         ],
-        "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/agents/2026-10-grse-credits-multi-agent-skills-by-contrasting-repeated-runs.md",
-        "on_site": true
+        "detail": null,
+        "on_site": false
       },
-      "url": "https://arxiv.org/abs/2610.27227",
-      "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=grse-credit-multi-agent-skills-by-contrasting-re-ec2daaea8a#week"
+      "url": "https://arxiv.org/abs/2610.27227"
     },
     {
       "id": "claude-code-s-ultracode-subagents-worked-12-hour-32e768bbea",
@@ -1275,63 +1273,6 @@
         "on_site": false
       },
       "url": "https://openai.com/index/scientific-computing-agentic-ai"
-    },
-    {
-      "id": "server-side-encrypted-compaction-porting-codex-s-ee38bf09a0",
-      "title": "Server-side encrypted compaction: porting Codex's Responses-API compaction protocol into other harnesses (Pi)",
-      "summary": "If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.",
-      "content_text": "OpenAI's Codex compacts long-running sessions by calling the Responses API's server-side compaction protocol — sending a `compaction_trigger` through `POST /v1/responses` and getting back an opaque, encrypted `compaction` artifact instead of a text summary — which reportedly lets it 'keep hammering' on long tasks as if context were infinite. Because the endpoint is public and Codex is open source, a third party reconstructed exactly how Codex uses it and packaged it as a Pi extension, running it alongside a portable Pi text summary so non-OpenAI models and session forking still work. The author's own held-out benchmark shows this native/remote policy recalling more old state (78% vs 48% exact recall) but at 4.58x more compaction output tokens and a 29% larger billed context, with high run-to-run variance — so it is not shown to be better at an equal token budget.",
-      "date_published": "2026-07-22T00:00:00Z",
-      "tags": [
-        "Context and memory",
-        "harness",
-        "context-management",
-        "compaction",
-        "responses-api",
-        "openai",
-        "codex",
-        "long-running-agents"
-      ],
-      "_stream": {
-        "subcategory": "context-memory",
-        "tier": "vetted",
-        "domain": "air.context",
-        "source": "@kunchenguid",
-        "takeaway": "If you run OpenAI models in your own harness, you can adopt Codex's server-side Responses compaction (compaction_trigger + previous_response_id) for better long-task continuity — but treat 'it's better' as unproven at equal token budget and keep a portable text summary as fallback.",
-        "action": null,
-        "related_claims": [],
-        "detail": null,
-        "on_site": false
-      },
-      "url": "https://github.com/algal/pi-openai-server-compaction"
-    },
-    {
-      "id": "oh-my-rogue-agent-87a47d2f7a",
-      "title": "Rogue agents are not unprecedented, ~20% of ProjectDiscovery's CTF solves were unintended",
-      "summary": "Agents drift toward whatever is reachable; the eval harness's own infrastructure is usually the most reachable thing in the room.",
-      "content_text": "A ProjectDiscovery eval engineer answers the Hugging Face agentic-intrusion story with their own logs: roughly 20% of solves on their internal CTF suite took an unintended path, and they publish four case studies of agents pivoting out of scope - including one that reached the harness's own tracing service and read the answers to every other challenge in the run. The containment argument is the useful part, and so is the cheapest fix: one line of prompt scope killed a whole pivot class.",
-      "date_published": "2026-07-22T00:00:00Z",
-      "tags": [
-        "Evaluating harnesses",
-        "agents",
-        "evals",
-        "harness",
-        "sandboxing",
-        "specification-gaming",
-        "red-teaming"
-      ],
-      "_stream": {
-        "subcategory": "harness-evals",
-        "tier": "watch",
-        "domain": "air.evals",
-        "source": "ProjectDiscovery Blog",
-        "takeaway": "Agents drift toward whatever is reachable; the eval harness's own infrastructure is usually the most reachable thing in the room.",
-        "action": null,
-        "related_claims": [],
-        "detail": null,
-        "on_site": false
-      },
-      "url": "https://projectdiscovery.io/blog/oh-my-rogue-agent"
     }
   ]
 }

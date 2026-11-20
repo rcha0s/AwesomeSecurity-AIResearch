@@ -2,7 +2,7 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_11 vetted findings · updated 2026-11-19 · ranked by composite · findings from the latest 31 days · [97 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-11-20 · ranked by composite · findings from the latest 31 days · [96 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -40,34 +40,27 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | Cost Efficiency | 4 |
-| Evaluation & Benchmarks | 4 |
+| Evaluation & Benchmarks | 2 |
 | Work Efficiency | 1 |
 | Alignment & Reliability | 1 |
-| Agents & Harnesses | 1 |
 
 ## Cost Efficiency
 
-- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **55.73** · Nov 12, 2026  
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **55.48** · Nov 12, 2026  
   If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.  
   _[Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)_
-- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **53.75** · Nov 9, 2026  
+- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **53.5** · Nov 9, 2026  
   Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.  
   _[UC Berkeley Sky Lab (Park et al.)](https://arxiv.org/abs/2611.12122)_
-- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **53.75** · Nov 9, 2026  
+- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **53.5** · Nov 9, 2026  
   Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.  
   _[York University (Sepidband et al.)](https://arxiv.org/abs/2611.13241)_
-- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **46.25** · Nov 3, 2026  
+- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **46.0** · Nov 3, 2026  
   Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.  
   _[Belcak et al.](https://arxiv.org/abs/2611.05306)_
 
 ## Evaluation & Benchmarks
 
-- **[Harness-Delta Attribution: Dissecting Gains From Harness Evolution](evals/2026-10-harness-delta-attribution-dissecting-gains-from-harness-evol.md)** · composite **53.68** · Oct 19, 2026  
-  Before you adopt an auto-evolved harness, subtract overfitting and extra compute from its gain; the real improvement is usually under half of what was reported.  
-  _[arXiv cs.AI (Artificial Intelligence)](https://arxiv.org/abs/2610.22466)_
-- **[POPE yes/no readout uses token IDs the model never emits](evals/2026-10-pope-yes-no-readout-uses-token-ids-the-model-never-emits.md)** · composite **50.25** · Oct 19, 2026  
-  If your eval or classifier reads yes/no from logits, check that the token IDs you read are the ones the model actually emits.  
-  _[source](https://arxiv.org/abs/2610.25964)_
 - **[OpenAI finds dataset-level g-mean² can misrank model monitorability](evals/2026-10-openai-finds-dataset-level-g-mean-can-misrank-model-monitora.md)** · composite **47.85** · Oct 20, 2026  
   If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.  
   _[OpenAI Alignment Blog](https://alignment.openai.com/beyond-gmean-squared/)_
@@ -77,7 +70,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Work Efficiency
 
-- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **54.5** · Nov 17, 2026  
+- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **54.25** · Nov 17, 2026  
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.  
   _[@craigmart via Hacker News](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)_
 
@@ -86,12 +79,6 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **53.25** · Oct 20, 2026  
   Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
   _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
-
-## Agents & Harnesses
-
-- **[GRSE credits multi-agent skills by contrasting repeated runs, not presence](agents/2026-10-grse-credits-multi-agent-skills-by-contrasting-repeated-runs.md)** · composite **46.02** · Oct 19, 2026  
-  If your harness edits skills automatically, assign credit by comparing repeated runs (group-relative), not by co-occurrence with success, or harmful skills will survive.  
-  _[Hugging Face Daily Papers](https://arxiv.org/abs/2610.27227)_
 
 ---
 
