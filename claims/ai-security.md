@@ -300,7 +300,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 
 **Conditions —** Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.
 
-<details><summary>Evidence (5)</summary>
+<details><summary>Evidence (6)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -309,6 +309,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 | supports | [Wiz lists the fingerprints that mark an intrusion as agent-driven](https://www.wiz.io/blog/the-rise-of-agentic-attacks) | Oct 29, 2026 |
 | supports | [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) | Nov 5, 2026 |
 | supports | [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) | Nov 5, 2026 |
+| supports | [Amazon says China-linked attackers used AI agents to exploit a university zero-day](https://www.theregister.com/security/2026/11/20/china-attackers-deployed-ai-agents-that-autonomously-found-and-exploited-a-0-day-to-take-over-a-university-server/5311382) | Nov 20, 2026 |
 
 </details>
 
@@ -399,12 +400,13 @@ A coding agent's local HTTP server is reachable from any webpage the user visits
 
 **Conditions —** Local servers started by agents or IDE tooling; shown on OpenCode (GHSA-632h-h47v-g4x4). Does not cover servers bound to non-loopback interfaces, which need ordinary network access control.
 
-<details><summary>Evidence (2)</summary>
+<details><summary>Evidence (3)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
 | supports | [Discovering and exploiting a remote code execution vulnerability in OpenCode (GHSA-632h-h47v-g4x4)](https://securitylabs.datadoghq.com/articles/opencode-upgrade-remote-code-execution/) | Sep 24, 2026 |
 | supports | [Microsoft DevLabs DebugMCP 1.1.4: drive-by RCE via DNS rebinding to an unauthenticated, stateless localhost MCP server](https://www.imperva.com/blog/from-debugging-to-code-execution-rce-in-microsoft-devlabs-debugmcp/) | Sep 25, 2026 |
+| supports | [Todoist MCP HTTP server lets websites edit Todoist data via DNS rebinding](https://github.com/advisories/GHSA-833v-v58w-294h) | Nov 19, 2026 |
 
 </details>
 

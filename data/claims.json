@@ -1401,10 +1401,18 @@
           "published": "2026-11-12",
           "note": "The wfx campaign ran its credential stealer through an npm postinstall hook in 771 repositories.",
           "source_name": "SafeDep"
+        },
+        {
+          "stance": "supports",
+          "url": "https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor",
+          "title": "Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor",
+          "published": "2026-11-19",
+          "note": "A malicious npm package runs its backdoor installer when the package is installed.",
+          "source_name": "SafeDep"
         }
       ],
       "first_seen": "2016-06-08",
-      "last_reviewed": "2026-11-12",
+      "last_reviewed": "2026-11-20",
       "guidance": "Do first-touch installs in a sandbox. Skipping install scripts (--ignore-scripts) is not enough on its own: a payload that runs at import time gets past it (see import-time-payloads-defeat-install-time-controls), so also pin and review dependency updates and run the first import in a sandbox.",
       "tags": [
         "npm",
@@ -2334,10 +2342,18 @@
           "published": "2026-11-05",
           "note": "Microsoft saw an agent go from scanning GitHub for secrets to exfiltrating Azure Key Vault data in five minutes.",
           "source_name": "Microsoft Security Blog"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.theregister.com/security/2026/11/20/china-attackers-deployed-ai-agents-that-autonomously-found-and-exploited-a-0-day-to-take-over-a-university-server/5311382",
+          "title": "Amazon says China-linked attackers used AI agents to exploit a university zero-day",
+          "published": "2026-11-20",
+          "note": "Amazon reports attackers using AI agents to find and exploit a zero-day and take over a university server.",
+          "source_name": "The Register — Security"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-08",
+      "last_reviewed": "2026-11-20",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",
@@ -2573,10 +2589,18 @@
           "published": "2026-09-25",
           "note": "DNS rebinding plus a stateless, unauthenticated MCP transport let one browser request reach a loopback-bound MCP server's start_debugging tool and run code, so loopback binding was no boundary.",
           "source_name": "Imperva Threat Research"
+        },
+        {
+          "stance": "supports",
+          "url": "https://github.com/advisories/GHSA-833v-v58w-294h",
+          "title": "Todoist MCP HTTP server lets websites edit Todoist data via DNS rebinding",
+          "published": "2026-11-19",
+          "note": "A second local MCP server (Todoist) lacks Host checks, so any webpage can reach it through DNS rebinding.",
+          "source_name": "GitHub Advisory Database"
         }
       ],
       "first_seen": "2026-10-25",
-      "last_reviewed": "2026-10-27",
+      "last_reviewed": "2026-11-20",
       "added_on": "2026-10-25",
       "changed_on": "2026-10-25",
       "guidance": "Require authentication on local agent servers, reject requests without a JSON Content-Type, check the Origin header, and allowlist any input that reaches a shell or package manager.",

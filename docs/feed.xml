@@ -10,6 +10,13 @@
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week</id>
+    <title>PHP releases fix 18 flaws, including critical remote code execution bugs</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week" rel="alternate" type="text/html" />
+    <summary type="text">Upgrade to PHP 8.5.13, 8.4.28, 8.3.37 or 8.2.36, and check now whether your web server reuses connections to PHP-FPM.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week</id>
     <title>OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs</title>
     <updated>2026-11-17T00:00:00Z</updated>
@@ -29,13 +36,6 @@
     <updated>2026-11-14T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week" rel="alternate" type="text/html" />
     <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week</id>
-    <title>PHP releases fix 18 flaws, including critical remote code execution bugs</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week" rel="alternate" type="text/html" />
-    <summary type="text">Upgrade to PHP 8.5.13, 8.4.28, 8.3.37 or 8.2.36, and check now whether your web server reuses connections to PHP-FPM.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week</id>
@@ -80,11 +80,11 @@
     <summary type="text">A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week</id>
-    <title>PostgreSQL fixes a 22-year-old type confusion bug that enables code execution</title>
-    <updated>2026-11-13T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=postgresql-patches-52-flaws-including-22-year-ol-8ac53b1e91#week" rel="alternate" type="text/html" />
-    <summary type="text">Any role that can create objects should be treated as a possible route to code on the database host until the server and its extensions are both upgraded.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=masato-kinugawa-solves-portswigger-s-impossible-6bf77cec60#week</id>
+    <title>Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element</title>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=masato-kinugawa-solves-portswigger-s-impossible-6bf77cec60#week" rel="alternate" type="text/html" />
+    <summary type="text">New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>

@@ -25,7 +25,7 @@ When a user picks "Yes, and don't ask again", Claude Code saves the exact approv
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [@shmulc via Hacker News](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)  ·  **Author:** shmulc  ·  **Retrieved:** 2026-11-08  
-**Scores:** Newness 34 · Novelty 55 · Relevance 85 · Credibility 55 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 33 · Novelty 55 · Relevance 85 · Credibility 55 · **Composite 58** _(each 0-100)_  
 **Tags:** `claude-code`, `secret-leakage`, `permission-allowlist`, `secret-scanning`, `coding-agents`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Claude Code GitHub issues (#5544 and others) on the mechanism; ironPeak's 100-repo sample; Lakera's credentials in npm packages; tracked Shai-Hulud and StepSecurity agent-config entries
 
