@@ -25,7 +25,7 @@ Microsoft researchers ran a lab simulation where a victim approved an attacker-s
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 33 · Novelty 50.0 · Relevance 78 · Credibility 69 · **Composite 57** _(each 0-100)_  
+**Scores:** Newness 31 · Novelty 50.0 · Relevance 78 · Credibility 69 · **Composite 56** _(each 0-100)_  
 **Tags:** `device-code-phishing`, `oauth`, `coding-agents`, `github-copilot-cli`, `agent-memory`, `remote-control`, `identity`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Unit 42 'Four stacked evasion techniques hide device-code phishing' and the Skyw4lker device-code campaign entry cover the phishing side; no prior entry covers device-code abuse of a coding-agent CLI with remote steering and memory planting.
 

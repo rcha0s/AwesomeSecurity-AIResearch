@@ -2,12 +2,14 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_12 vetted findings · updated 2026-11-20 · ranked by composite · findings from the latest 31 days · [85 held for review](../REVIEW.md)._
+_11 vetted findings · updated 2026-11-21 · ranked by composite · findings from the latest 31 days · [80 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[BADBOX 3.0 botnet peaked at 40 billion daily ad requests](https://www.bleepingcomputer.com/news/security/badbox-30-botnet-returns-with-record-breaking-40-billion-daily-ad-requests/)**
+- **[Bell Canada says an agentic threat actor stole enterprise customer data](https://www.bleepingcomputer.com/news/security/bell-canada-says-agentic-hacker-stole-enterprise-customer-data/)**
 - **[VMware and KVM disclose critical vCenter bypass and guest-to-host memory flaws](https://www.theregister.com/security/2026/11/20/flaws-in-vmware-and-kvm-need-attention-if-you-have-time-while-fixing-java-php-and-everything-else/5311193)**
 - **[SonicWall will not patch Gen 6 firewalls and urges immediate retirement](https://thehackernews.com/2026/11/sonicwall-warns-gen-6-firewalls-wont.html)**
 - **[Attackers exploit critical Cisco Expressway flaw to breach a Russian organization](https://thehackernews.com/2026/11/hackers-exploit-critical-cisco.html)**
@@ -22,8 +24,8 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[PHP releases fix 18 flaws, including critical remote code execution bugs](https://www.bleepingcomputer.com/news/security/php-security-updates-fix-18-flaws-including-critical-rce-bugs/)**
 - **[Elastic details five AI attack frameworks seen in real intrusions](https://www.elastic.co/security-labs/threat-command/agentic-offensive-frameworks-detection-artex)**
 - **[Phrack issue 73 ships 23 papers on exploitation, reversing and AI](https://phrack.org/issues/73/introduction_md)**
-- **[Drupal patches critical installer flaw allowing unauthenticated site takeover](https://thehackernews.com/2026/11/drupal-patches-critical-installer-flaw.html)**
 - **[Broadcom patches critical vCenter authentication bypass and lists no workaround](https://thehackernews.com/2026/11/critical-vmware-vcenter-flaw-cvss-98.html)**
+- **[Drupal patches critical installer flaw allowing unauthenticated site takeover](https://thehackernews.com/2026/11/drupal-patches-critical-installer-flaw.html)**
 - **[Depthfirst researcher shows low-privilege accounts can run code on databases](https://thehackernews.com/2026/11/researcher-demonstrates-database-rce.html)**
 - **[PHP fixes phpAfterShell session flaw that can lead to code execution](https://thehackernews.com/2026/11/phpaftershell-explained-how-hackers.html)**
 - **[ASUS fixes a hard-coded key flaw in Control Center Express](https://www.bleepingcomputer.com/news/security/asus-warns-of-critical-hard-coded-key-flaw-in-control-center-express/)**
@@ -37,15 +39,16 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
   _Why now: Reported outage of a classified US national-security network after patching, with no sign of attack, amid attack speculation; the teachable point is to stage and canary emergency patches and keep tested fallbacks. · newsworthy · widely-reported · timely_
 - **[Apache Roller unauthenticated deserialization flaw is under active exploitation](https://thehackernews.com/2026/11/critical-apache-roller-rce-flaw-under.html)**
 - **[NebuSec claims two Telegram Android widget exploits bypass new security filter](https://thehackernews.com/2026/11/researchers-claim-two-rce-exploits-that.html)**
+- **[Researchers using AI find critical NGINX HTTP/2 code execution flaws](https://www.theregister.com/security/2026/11/18/ai-found-more-critical-bugs-in-another-widely-used-technology-running-225m-websites/5310887)**
 - **[Infinidat sponsored post pitches immutable snapshots for recovery after AI-driven attacks](https://www.theregister.com/security/2026/11/18/sponsored-ai-powered-cyber-threats-are-changing-the-rules-of-enterprise-recovery/5310515)**
 - **[Microsoft's Python agent-framework on PyPI hijacked to steal developer credentials](https://www.theregister.com/security/2026/11/18/microsofts-official-python-agent-framework-hijacked-to-distribute-malware/5310858)**
-- **[Researchers using AI find critical NGINX HTTP/2 code execution flaws](https://www.theregister.com/security/2026/11/18/ai-found-more-critical-bugs-in-another-widely-used-technology-running-225m-websites/5310887)**
 - **[F5 warns six critical BIG-IP flaws can crash traffic handling](https://thehackernews.com/2026/11/f5-warns-6-critical-big-ip-flaws-can.html)**
 - **[OpenAI says NATO and European cyber agencies use Daybreak to find and fix vulnerabilities](https://openai.com/index/strengthening-nato-allied-cyber-defences-ai)**
 - **[Midnight Blue researcher finds six Danfoss refrigeration controller zero-days in under an hour](https://www.theregister.com/security/2026/11/17/not-rocket-surgery-claims-researcher-who-found-six-danfoss-fridge-controller-zero-days-in-under-an-hour/5310197)**
 - **[Sponsored Hacker News webinar promo on GitHub Actions SHA pinning gaps](https://thehackernews.com/2026/11/hackers-found-way-around-github-sha.html)**
 - **[Operation ShadowCloud uses GitDoor and GraphDoor backdoors with GitHub and SharePoint C2](https://thehackernews.com/2026/11/new-gitdoor-and-graphdoor-backdoors.html)**
 - **[Trigram campaign impersonates about 50 AI and blockchain brands to infect developers](https://thehackernews.com/2026/11/trigram-campaign-impersonates-about-50.html)**
+- **[Nine countries join a US pledge to secure AI supply chains](https://www.theregister.com/systems/2026/11/16/us-allies-deepen-deal-to-guard-ai-supply-chains-against-hostile-actors-cough-china-cough/5310094)**
 - **[Uber says compromised credentials at a provider exposed driver data](https://www.insurancejournal.com/news/national/2026/11/16/892717.htm)**
 - **[CodeRabbit partner post says AI agents make code flaws easier to exploit](https://www.theregister.com/security/2026/11/16/partner-content-has-ais-black-october-changed-the-way-you-secure-your-code/5309775)**
 - **[Wired says low-skill attackers use AI tools to run ransomware](https://www.wired.com/story/beware-the-new-ai-fueled-ransomware-boom/)**
@@ -296,22 +299,22 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | --- | --- |
 | Application Security | 5 |
 | Vulnerability Research & Red Teaming | 3 |
-| Detection, Response & Threat Intel | 2 |
 | Software Supply Chain | 1 |
 | AI in the SDLC | 1 |
+| Detection, Response & Threat Intel | 1 |
 
 ## Application Security
 
-- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **69.47** · Nov 17, 2026 · 🔗 +7 sources  
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **68.97** · Nov 17, 2026 · 🔗 +7 sources  
   Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.  
   _[Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)_
-- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](appsec/2026-11-masato-kinugawa-solves-portswigger-s-impossible-innerhtml-wi.md)** · composite **65.79** · Nov 18, 2026  
+- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](appsec/2026-11-masato-kinugawa-solves-portswigger-s-impossible-innerhtml-wi.md)** · composite **65.29** · Nov 18, 2026  
   New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.  
   _[PortSwigger Research](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)_
-- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **57.15** · Nov 3, 2026  
+- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **56.65** · Nov 3, 2026  
   If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.  
   _[IEEE S&P (via arXiv)](http://arxiv.org/abs/2611.04291v1)_
-- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **54.99** · Nov 9, 2026  
+- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **54.49** · Nov 9, 2026  
   Even Rust's standard library has soundness bugs of the three kinds the post names, and the authors say agents make the environment-dependent OS-boundary area practical to search.  
   _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)_
 - **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **53.38** · Oct 27, 2026  
@@ -320,28 +323,19 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **68.1** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **67.6** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **66.0** · Nov 13, 2026  
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **65.5** · Nov 13, 2026  
   A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
   _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
 - **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **60.64** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
 
-## Detection, Response & Threat Intel
-
-- **[VOLTA infostealer uses an LLM to rank victims' assets by value](detection-response/2026-10-volta-infostealer-uses-an-llm-to-rank-victims-assets-by-valu.md)** · composite **47.4** · Oct 31, 2026  
-  Crimeware now uses LLMs as the analyst who decides which victims to work first, and is built to route around refusals.  
-  _[@khalidkhair via Hacker News](https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/)_
-- **[333 Tor exit relays hijacked with the Ebury backdoor to intercept SSH](detection-response/2026-10-333-tor-exit-relays-hijacked-with-the-ebury-backdoor-to-inte.md)** · composite **44.25** · Oct 20, 2026  
-  Never accept a changed SSH host key over Tor or any untrusted path; use key auth, and expect backdoored infrastructure hosts to be turned into traffic interceptors.  
-  _[source](https://kaba.cx/posts/20261020_Tor/)_
-
 ## Software Supply Chain
 
-- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](supply-chain/2026-11-malicious-npm-package-installs-hermes-agent-as-a-telegram-co.md)** · composite **58.76** · Nov 19, 2026  
+- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](supply-chain/2026-11-malicious-npm-package-installs-hermes-agent-as-a-telegram-co.md)** · composite **58.26** · Nov 19, 2026  
   A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.  
   _[SafeDep](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)_
 
@@ -350,6 +344,12 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 - **[Claude wrote machine-checked no-crash proofs for 239 OSS-Fuzz entry points](ai-code/2026-10-claude-wrote-machine-checked-no-crash-proofs-for-239-oss-fuz.md)** · composite **54.75** · Oct 22, 2026  
   If you maintain C/C++ with fuzz harnesses, those harnesses are now candidate proof specs: an LLM plus a proof checker can turn 'fuzzed a lot' into 'proved no crash' for the covered scope.  
   _[source](https://www.anthropic.com/research/formal-verification)_
+
+## Detection, Response & Threat Intel
+
+- **[VOLTA infostealer uses an LLM to rank victims' assets by value](detection-response/2026-10-volta-infostealer-uses-an-llm-to-rank-victims-assets-by-valu.md)** · composite **47.4** · Oct 31, 2026  
+  Crimeware now uses LLMs as the analyst who decides which victims to work first, and is built to route around refusals.  
+  _[@khalidkhair via Hacker News](https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/)_
 
 ---
 

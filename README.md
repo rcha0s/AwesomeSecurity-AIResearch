@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--20-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-30-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--21-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-26-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -20,8 +20,8 @@ _Only incidents that are critical, covered by 3+ independent outlets, and clear 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
 1. **[UK AISI found a universal jailbreak in pre-release OpenAI GPT-6.2 Astra](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uk-aisi-found-a-universal-jailbreak-in-pre-relea-25f6e68c00#week)** · _AI Security · Nov 20, 2026_
-2. **[Google built an isolated 'Mirror Dimension' web to test Chrome agents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-built-an-isolated-mirror-dimension-web-to-750955bab0#week)** · _AI Security · Nov 19, 2026_
-3. **[PIPETTE paper trains LLM agents against prompt injection with broader attacks](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=pipette-paper-trains-llm-agents-against-prompt-i-25aa421c47#week)** · _AI Security · Nov 19, 2026_
+2. **[Google explains how Duplex phone-calling moved from narrow models to Gemini](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=how-google-duplex-evolved-to-also-call-businesse-31274c5de7#week)** · _AI Research · Nov 20, 2026_
+3. **[Todoist MCP HTTP server lets websites edit Todoist data via DNS rebinding](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=todoist-mcp-http-server-lets-websites-edit-todoi-a684989b8b#week)** · _AI Security · Nov 19, 2026_
 
 ## What to learn
 
@@ -83,4 +83,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-20 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-21 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
