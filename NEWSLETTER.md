@@ -1,8 +1,8 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-11-20)
+# 📰 Security & AI Research — Daily Snapshot (2026-11-21)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
-30 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
+26 vetted findings in window · [← home](README.md) · [full trends](TRENDS.md)
 
 ---
 
@@ -12,23 +12,26 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[Dragos canary prompts found three AI hosting providers breached](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)** · _www.dragos.com_ · composite 73.75
+- **[Dragos canary prompts found three AI hosting providers breached](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)** · _www.dragos.com_ · composite 72.25
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 60.69
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 60.19
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.
-- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)** · _@shmulc via Hacker News_ · composite 58.5
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)** · _@shmulc via Hacker News_ · composite 58.0
   Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.
-- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](http://arxiv.org/abs/2611.16693v1)** · _NDSS (via arXiv)_ · composite 58.05
-  If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.
 - **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)** · _github.com_ · composite 57.75
   Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.
-- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1)** · _NeurIPS (via arXiv)_ · composite 55.05
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](http://arxiv.org/abs/2611.16693v1)** · _NDSS (via arXiv)_ · composite 57.55
+  If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1)** · _NeurIPS (via arXiv)_ · composite 54.55
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted input.
 
 **📈 Trending & In the News**
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[Todoist MCP HTTP server lets websites edit Todoist data via DNS rebinding](https://github.com/advisories/GHSA-833v-v58w-294h)**
+  Binding an MCP server to loopback is not authentication: HTTP-mode MCP servers need Host and Origin validation plus a per-run caller secret.
+  _Why now: Second critical MCP HTTP-mode DNS-rebinding bug: loopback binding is not authentication, so a caller secret is needed. · trending · cve · high-relevance_
 - **[Microsoft shows phished device codes can hijack GitHub Copilot CLI sessions](https://www.microsoft.com/en-us/security/blog/2026/11/17/the-risks-of-device-code-authentication-for-ai-coding-agents/)**
   Treat agent OAuth grants as high-value credentials: restrict remote control, session sync and memory, and teach developers to approve only device codes they started.
   _Why now: Microsoft shows phished OAuth device codes can hijack GitHub Copilot CLI sessions; the lesson is to treat agent OAuth grants as high-value credentials. · trending · newsworthy · timely · high-relevance_
@@ -41,9 +44,6 @@ _Not new ideas, but what the field is watching right now — held back by the no
 - **[GPUStack treated spoofable loopback requests as admin, and attackers exploited it](https://nvd.nist.gov/vuln/detail/CVE-2026-102895)**
   Upgrade GPUStack to 2.2.0 now and treat any AI serving control plane that trusts loopback or a client IP header as unauthenticated.
   _Why now: CISA lists GPUStack's loopback-trust auth bypass as exploited in the wild; anyone running AI model-serving control planes should patch to 2.2.0 and stop trusting loopback or client real-IP headers as authentication. · active-exploitation · cve · timely · high-relevance_
-- **[Fireworks AI discloses second breach reached through a third-party cloud provider](https://www.bleepingcomputer.com/news/security/fireworks-ai-discloses-new-breach-after-cloud-provider-hack/)**
-  Fireworks AI's second breach in weeks came through a third-party cloud host, and exposed customer data and incomplete model weights.
-  _Why now: An AI inference provider's second breach in weeks came through a third-party cloud host; a live incident with a teachable third-party-host lesson for AI infrastructure teams. · newsworthy · incident-response · timely_
 
 **📈 Emerging trends**
 
@@ -61,17 +61,17 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)** · _Datadog Security Labs_ · composite 69.47
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)** · _Datadog Security Labs_ · composite 68.97
   Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 68.1
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 67.6
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result…
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://projectzero.google/2026/11/disclosure-policy.html)** · _Google Project Zero_ · composite 66.0
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://projectzero.google/2026/11/disclosure-policy.html)** · _Google Project Zero_ · composite 65.5
   A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.
-- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)** · _PortSwigger Research_ · composite 65.79
+- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)** · _PortSwigger Research_ · composite 65.29
   New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.
 - **[Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)** · _Anthropic Research_ · composite 60.64
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.
-- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)** · _SafeDep_ · composite 58.76
+- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)** · _SafeDep_ · composite 58.26
   A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.
 
 **📈 Trending & In the News**
@@ -96,9 +96,9 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **rce** (🔺 rising) — 25 findings from 17 sources since 2026-06-29.
 - **exploited-in-the-wild** (🔺 rising) — 26 findings from 4 sources since 2026-09-23.
 - **supply-chain** (🔺 rising) — 50 findings from 28 sources since 2026-06-30.
+- **rce** (🔺 rising) — 25 findings from 17 sources since 2026-06-29.
 
 [→ Full Product Security database](product-security/README.md)
 
@@ -110,18 +110,16 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
-- **[Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)** · _Microsoft Research Blog_ · composite 55.23
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)** · _Microsoft Research Blog_ · composite 54.73
   If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.
-- **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · _@craigmart via Hacker News_ · composite 54.0
+- **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · _@craigmart via Hacker News_ · composite 53.5
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)** · _source_ · composite 53.25
-  Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.
-- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122)** · _UC Berkeley Sky Lab (Park et al.)_ · composite 53.25
+- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122)** · _UC Berkeley Sky Lab (Park et al.)_ · composite 52.75
   Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.
-- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241)** · _York University (Sepidband et al.)_ · composite 53.25
+- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241)** · _York University (Sepidband et al.)_ · composite 52.75
   Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.
-- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](https://alignment.openai.com/beyond-gmean-squared/)** · _OpenAI Alignment Blog_ · composite 47.85
-  If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.
+- **[Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306)** · _Belcak et al._ · composite 45.25
+  Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.
 
 **📈 Trending & In the News**
 
@@ -138,7 +136,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 - **coding-agents** (🔺 rising) — 16 findings from 12 sources since 2026-07-21.
 - **evals** (🔺 rising) — 33 findings from 18 sources since 2023-12-07.
-- **opinion** (🔺 rising) — 6 findings from 3 sources since 2026-10-25.
+- **benchmarks** (🔺 rising) — 16 findings from 12 sources since 2026-07-09.
 
 [→ Full AI Research database](ai-research/README.md)
 
@@ -146,4 +144,4 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 _Every finding links its original source. Curated by the AwesomeSecurity-AIResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-11-20.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-11-21.</sub>

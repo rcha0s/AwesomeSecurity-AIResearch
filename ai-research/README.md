@@ -2,13 +2,15 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_8 vetted findings · updated 2026-11-20 · ranked by composite · findings from the latest 31 days · [101 held for review](../REVIEW.md)._
+_5 vetted findings · updated 2026-11-21 · ranked by composite · findings from the latest 31 days · [106 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Google explains how Duplex phone-calling moved from narrow models to Gemini](https://research.google/blog/how-google-duplex-evolved-to-also-call-businesses-for-you-in-gemini/)**
 - **[Google adds Tool Retrieval to the Gemini API to defer tool schemas](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/)**
+- **[OpenAI says its Astra for Law configuration tops legal benchmarks](https://openai.com/index/astra-law-6-2)**
 - **[OpenAI signs Apollo, METR, Transluce and Goodfire for embedded safety assessments](https://openai.com/index/our-first-phase-of-embedded-assessments)**
 - **[JioStar architect says production evals need a validated judge and monitoring](https://openai.com/index/jiostar-vijay-seshadri)**
 - **[Latent Space newsletter covers doubts about an Anthropic initial public offering (IPO)](https://latent.space/p/ainews-anthropic-ipo-whither-now/)**
@@ -41,45 +43,28 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | Cost Efficiency | 4 |
-| Evaluation & Benchmarks | 2 |
 | Work Efficiency | 1 |
-| Alignment & Reliability | 1 |
 
 ## Cost Efficiency
 
-- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **55.23** · Nov 12, 2026  
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **54.73** · Nov 12, 2026  
   If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.  
   _[Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)_
-- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **53.25** · Nov 9, 2026  
+- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **52.75** · Nov 9, 2026  
   Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.  
   _[UC Berkeley Sky Lab (Park et al.)](https://arxiv.org/abs/2611.12122)_
-- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **53.25** · Nov 9, 2026  
+- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **52.75** · Nov 9, 2026  
   Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.  
   _[York University (Sepidband et al.)](https://arxiv.org/abs/2611.13241)_
-- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **45.75** · Nov 3, 2026  
+- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **45.25** · Nov 3, 2026  
   Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.  
   _[Belcak et al.](https://arxiv.org/abs/2611.05306)_
 
-## Evaluation & Benchmarks
-
-- **[OpenAI finds dataset-level g-mean² can misrank model monitorability](evals/2026-10-openai-finds-dataset-level-g-mean-can-misrank-model-monitora.md)** · composite **47.85** · Oct 20, 2026  
-  If you use a monitor as a deployment gate, compare monitors and models on matched instances and measure what still gets through after rejection-and-retry, not raw discrimination alone.  
-  _[OpenAI Alignment Blog](https://alignment.openai.com/beyond-gmean-squared/)_
-- **[DecisionPivot: router/guardrail decision models with near-equal accuracy diverge sharply on contrast pairs](evals/2026-10-decisionpivot-router-guardrail-decision-models-with-near-equ.md)** · composite **45.75** · Oct 20, 2026  
-  Evaluate routers and guardrail judges on paired contrast cases, not only item accuracy.  
-  _[source](https://arxiv.org/abs/2610.28522)_
-
 ## Work Efficiency
 
-- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **54.0** · Nov 17, 2026  
+- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **53.5** · Nov 17, 2026  
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.  
   _[@craigmart via Hacker News](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)_
-
-## Alignment & Reliability
-
-- **[METR: Anthropic's 'low misalignment risk' holds because models are weak, not monitoring](alignment/2026-10-metr-anthropic-s-low-misalignment-risk-holds-because-models.md)** · composite **53.25** · Oct 20, 2026  
-  Test agent monitors end to end against a red team that argues its actions are legitimate; proxy covert-capability benchmarks are not evidence the monitor works.  
-  _[source](https://metr.org/blog/2026-10-20-misalignment-risk-report-august-2026-review/)_
 
 ---
 

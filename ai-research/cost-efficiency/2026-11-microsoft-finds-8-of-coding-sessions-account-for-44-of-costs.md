@@ -18,7 +18,7 @@ This digest's most practitioner-relevant item is a Microsoft study of 13.5 milli
 
 **Topic:** AI Research  ·  **Domain:** Cost Efficiency  
 **Source:** [Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)  ·  **Retrieved:** 2026-11-14  
-**Scores:** Newness 33 · Novelty 55 · Relevance 65 · Credibility 73 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 31 · Novelty 55 · Relevance 65 · Credibility 73 · **Composite 55** _(each 0-100)_  
 **Tags:** `context-compaction`, `coding-agents`, `cost-efficiency`, `benchmark`, `harness-design`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool already covers when to trigger compaction (a model-invoked compaction tool with a fire/hold rubric), encrypted Codex compaction and compaction as an injection path. This adds large-scale cost data and a background, non-blocking compaction method.
 

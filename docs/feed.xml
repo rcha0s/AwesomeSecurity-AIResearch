@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-20T00:00:00Z</updated>
+  <updated>2026-11-21T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -52,18 +52,18 @@
     <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week</id>
-    <title>N-able investigates new N-central exploits that work against hotfixed on-premise servers</title>
-    <updated>2026-11-13T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-investigates-new-n-central-exploits-that-2c3354cb8c#week" rel="alternate" type="text/html" />
-    <summary type="text">MSP (managed service provider) teams running on-premise N-central should turn off the Legacy API now, as probing for the new root remote code execution exploit has already been observed.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week</id>
+    <title>Researchers using AI find critical NGINX HTTP/2 code execution flaws</title>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week" rel="alternate" type="text/html" />
+    <summary type="text">AI-assisted bug hunting is finding old, severe flaws in foundational software faster than defenders can patch, so assume internet-facing systems are vulnerable.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week</id>
-    <title>Check Point ships hotfixes for a zero-day exploited for root access</title>
-    <updated>2026-11-13T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=check-point-ships-hotfixes-for-a-zero-day-exploi-472c742795#week" rel="alternate" type="text/html" />
-    <summary type="text">Gateway owners should patch now and hunt for compromise, because attackers chained this flaw with another to reach root and then wipe a VMware ESXi host.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week</id>
+    <title>Attackers exploit critical Cisco Expressway flaw to breach a Russian organization</title>
+    <updated>2026-11-20T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week" rel="alternate" type="text/html" />
+    <summary type="text">A perimeter appliance with a public exploit can become a foothold into internal systems within weeks of the patch, so patch fast and segment the network.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
@@ -73,18 +73,18 @@
     <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week</id>
-    <title>Google Project Zero shortens its disclosure deadline to 30 days by 2028</title>
-    <updated>2026-11-13T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=google-project-zero-shortens-its-disclosure-dead-d17af9292c#week" rel="alternate" type="text/html" />
-    <summary type="text">A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=masato-kinugawa-solves-portswigger-s-impossible-6bf77cec60#week</id>
     <title>Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element</title>
     <updated>2026-11-18T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=masato-kinugawa-solves-portswigger-s-impossible-6bf77cec60#week" rel="alternate" type="text/html" />
     <summary type="text">New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-npm-package-installs-hermes-agent-as-a-95c0c42f3a#week</id>
+    <title>Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-npm-package-installs-hermes-agent-as-a-95c0c42f3a#week" rel="alternate" type="text/html" />
+    <summary type="text">A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>

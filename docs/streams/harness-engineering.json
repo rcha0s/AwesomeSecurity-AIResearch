@@ -7,7 +7,7 @@
   "language": "en",
   "_stream": {
     "id": "harness-engineering",
-    "generated": "2026-11-20",
+    "generated": "2026-11-21",
     "library_days": 120,
     "subcategories": [
       {
@@ -65,7 +65,7 @@
       "context-memory": 1,
       "tools-interfaces": 3,
       "orchestration": 2,
-      "harness-evals": 4,
+      "harness-evals": 6,
       "harness-design": 5
     },
     "claims": [
@@ -469,6 +469,77 @@
         "on_site": false
       },
       "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/"
+    },
+    {
+      "id": "how-public-evals-work-and-fail-and-what-should-c-d9503b4e3c",
+      "title": "Eugene Yan finds graders failed valid work in eight of twelve evals",
+      "summary": "Read a benchmark score as a model-plus-harness-plus-grader result, and audit the grader before trusting the ranking.",
+      "content_text": "Eugene Yan tears down twelve public agent benchmarks. In eight of them, audits or issue reports found graders rejecting valid work, and some passed wrong work. He argues for reliability metrics such as pass^k, for human attention over dollar cost, and for testing models in your own harness.",
+      "date_published": "2026-11-19T00:00:00Z",
+      "tags": [
+        "Evaluating harnesses",
+        "benchmarks",
+        "grader-quality",
+        "pass-at-k",
+        "false-negatives",
+        "model-harness-pair",
+        "eval-design"
+      ],
+      "_stream": {
+        "subcategory": "harness-evals",
+        "tier": "watch",
+        "domain": "air.evals",
+        "source": "Eugene Yan",
+        "takeaway": "Read a benchmark score as a model-plus-harness-plus-grader result, and audit the grader before trusting the ranking.",
+        "action": {
+          "type": "harness",
+          "title": "Audit your eval graders and report pass^k",
+          "detail": "Add a do-nothing agent and an adversarial agent as negative tests, review tasks that several strong models fail the same way, run each task k times and report pass^k next to average pass rate, and score models inside your own harness."
+        },
+        "related_claims": [
+          "swe-bench-doesnt-generalize-to-production-tasks",
+          "separate-grader-from-generator",
+          "retest-harness-scaffolding-on-model-change"
+        ],
+        "detail": null,
+        "on_site": false
+      },
+      "url": "https://eugeneyan.com/writing/public-evals"
+    },
+    {
+      "id": "transect-making-large-scale-agentic-evaluations-86e1e74d3f",
+      "title": "UK AISI releases Transect to review long agent evaluation transcripts",
+      "summary": "When you review agent eval runs, keep judge labels linked to transcript evidence and look at where judges disagree.",
+      "content_text": "A final eval score hides what agents tried, where they got stuck and how the setup shaped their work. Transect is an open-source package built on Inspect Scout. It uses LLM judges to label stretches of a transcript and shows labels, token use and events on one timeline linked back to the source passages.",
+      "date_published": "2026-11-17T00:00:00Z",
+      "tags": [
+        "Evaluating harnesses",
+        "agent-evals",
+        "transcript-analysis",
+        "llm-as-judge",
+        "inspect-scout",
+        "multi-agent",
+        "oversight"
+      ],
+      "_stream": {
+        "subcategory": "harness-evals",
+        "tier": "watch",
+        "domain": "air.evals",
+        "source": "UK AI Security Institute Blog",
+        "takeaway": "When you review agent eval runs, keep judge labels linked to transcript evidence and look at where judges disagree.",
+        "action": {
+          "type": "tool",
+          "title": "Try Transect on your long agent eval transcripts",
+          "detail": "Supply a transcript, the task context and your own activity categories (for example experiment design, coding, analysis). Use repeated or multiple judge models, check disagreements first, and export the tables for further analysis."
+        },
+        "related_claims": [
+          "monitor-agent-evals-not-just-deployment",
+          "agent-safety-evals-can-misread-production-behavior"
+        ],
+        "detail": null,
+        "on_site": false
+      },
+      "url": "https://www.aisi.gov.uk/blog/transect-making-large-scale-agentic-evaluations-easier-to-understand"
     },
     {
       "id": "how-the-claude-code-team-thinks-about-verificati-6c752ae9b8",

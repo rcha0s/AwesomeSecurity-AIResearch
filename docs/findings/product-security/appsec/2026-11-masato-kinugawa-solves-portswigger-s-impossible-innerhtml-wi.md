@@ -25,7 +25,7 @@ The new HTML selectedcontent element clones the selected option's children into 
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [PortSwigger Research](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)  ·  **Retrieved:** 2026-11-20  
-**Scores:** Newness 33 · Novelty 78 · Relevance 78 · Credibility 72 · **Composite 66** _(each 0-100)_  
+**Scores:** Newness 31 · Novelty 78 · Relevance 78 · Credibility 72 · **Composite 65** _(each 0-100)_  
 **Tags:** `xss`, `innerhtml`, `selectedcontent`, `svg`, `browser-quirks`, `safari`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Kabir Acharya's May 2026 DOMPurify selectedcontent bypass (DOMPurify wiki, Engine Deferred Mutation) and Gareth Heyes's 2020 impossible-labs list; the new part is script execution via SVG script cloning under innerHTML and the no-whitespace, slash or equals vector.
 

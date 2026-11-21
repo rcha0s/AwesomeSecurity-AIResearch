@@ -40,7 +40,7 @@
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
-    "ingested": 3,
+    "ingested": 4,
     "curated": 1
   },
   "research_index:https-www-anthropic-com-news": {
@@ -64,7 +64,7 @@
     "curated": 0
   },
   "rss:https-arstechnica-com-security-feed": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 1
   },
   "rss:https-blog-google-technology-ai-rss": {
@@ -91,8 +91,12 @@
     "curated": 2,
     "ingested": 4
   },
+  "rss:https-eugeneyan-com-rss": {
+    "ingested": 1,
+    "curated": 0
+  },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 16,
+    "ingested": 17,
     "curated": 1
   },
   "rss:https-genai-owasp-org-feed": {
@@ -119,12 +123,16 @@
     "ingested": 5,
     "curated": 0
   },
+  "rss:https-martinfowler-com-feed-atom": {
+    "ingested": 1,
+    "curated": 0
+  },
   "rss:https-metr-org-feed-xml": {
-    "curated": 2,
-    "ingested": 5
+    "ingested": 7,
+    "curated": 2
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 21,
+    "ingested": 22,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -136,8 +144,8 @@
     "curated": 1
   },
   "rss:https-research-google-blog-rss": {
-    "curated": 0,
-    "ingested": 1
+    "ingested": 2,
+    "curated": 0
   },
   "rss:https-safedep-io-rss-xml": {
     "ingested": 9,
@@ -180,7 +188,7 @@
     "curated": 0
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 11,
+    "ingested": 13,
     "curated": 0
   },
   "rss:https-www-carriermanagement-com-feed": {
@@ -220,7 +228,7 @@
     "curated": 0
   },
   "rss:https-www-theregister-com-security-headlines-ato": {
-    "ingested": 14,
+    "ingested": 15,
     "curated": 1
   },
   "rss:https-www-wired-com-feed-category-security-lates": {
