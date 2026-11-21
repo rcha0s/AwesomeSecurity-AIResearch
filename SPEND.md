@@ -1,6 +1,6 @@
 # Scan spend, 2026-11
 
-**$205.87 charged of $600.00.** Local runs are charged their measured `total_cost_usd`; a local run that died with no result is charged a typical run's cost when `dead_run_charge` is `typical` (else its ceiling); cloud runs can't read their cost, so they are charged their reserved ceiling.
+**$172.89 charged of $600.00.** Local runs are charged their measured `total_cost_usd`; a local run that died with no result is charged a typical run's cost when `dead_run_charge` is `typical` (else its ceiling); cloud runs can't read their cost, so they are charged their reserved ceiling.
 
 | Date | Runner | Run | Stories | Charged | Basis | Finished |
 |---|---|---|---|---|---|---|
@@ -32,6 +32,6 @@
 | 2026-11-18 | local | `local-20261118T012052Z-71274` | 24 + 10 news | $5.95 | measured | yes |
 | 2026-11-19 | local | `local-20261119T174629Z-56089` | 23 + 19 news | $14.50 | measured | yes |
 | 2026-11-20 | local | `local-20261120T173006Z-98013` | 22 + 8 news | $6.43 | measured | yes |
-| 2026-11-21 | local | `local-20261121T173152Z-91694` | 0 | $37.13 | reserved ceiling | no |
+| 2026-11-21 | local | `local-20261121T173152Z-91694` | 15 | $4.15 | measured | no |
 
 **Backfill 2026-09-09..2026-10-18:** $72.35 charged of $200.00, 6 of 6 runs started. Finished windows: 2026-09-09..2026-09-16, 2026-09-17..2026-09-24, 2026-09-25..2026-10-02, 2026-10-03..2026-10-10, 2026-10-11..2026-10-18.
