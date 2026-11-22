@@ -19,7 +19,7 @@ The Claude Code team says about 90% of its code is written and reviewed by Claud
 
 **Topic:** AI Research  ·  **Domain:** Work Efficiency  
 **Source:** [@craigmart via Hacker News](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 31 · Novelty 40.0 · Relevance 85 · Credibility 55 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 30 · Novelty 40.0 · Relevance 85 · Credibility 55 · **Composite 53** _(each 0-100)_  
 **Tags:** `verification-loops`, `claude-code`, `agent-harness`, `code-review`, `testing`, `evals`, `vendor-blog`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Corpus entries on verification loops and separate grader (ai-research.json mentions of verification loops, claim separate-grader-from-generator); the post's novel parts are first-party base-branch rule loading, observe-mode commit gates and reviewing the reviewers, but much of the E2E/property/differential testing advice is generic and the post itself links earlier Anthropic code-review and verification-loop posts.
 

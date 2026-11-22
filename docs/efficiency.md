@@ -1,6 +1,6 @@
 # Agent efficiency: what to change in your harness
 
-_Generated 2026-11-21 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
+_Generated 2026-11-22 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Contested claims have evidence on both sides; weigh them before acting. New research lists the last month of findings that have not necessarily changed a claim yet.
 

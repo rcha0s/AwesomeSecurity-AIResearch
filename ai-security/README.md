@@ -2,7 +2,7 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_10 vetted findings · updated 2026-11-21 · ranked by composite · findings from the latest 31 days · [70 held for review](../REVIEW.md)._
+_9 vetted findings · updated 2026-11-22 · ranked by composite · findings from the latest 31 days · [69 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
@@ -153,56 +153,49 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | --- | --- |
 | AI Infrastructure & Incident Response | 4 |
 | Agent & Harness Security | 2 |
-| MCP, Tools & Skills | 1 |
 | Red-Teaming & Threat Modeling | 1 |
 | Memory, RAG & Data Poisoning | 1 |
 | Guardrails & Defensive Tooling | 1 |
 
 ## AI Infrastructure & Incident Response
 
-- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **72.25** · Nov 19, 2026  
+- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **71.25** · Nov 19, 2026  
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.  
   _[www.dragos.com](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)_
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **60.19** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **59.94** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
-- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.5** · Oct 27, 2026  
+- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.25** · Oct 27, 2026  
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.  
   _[docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)_
-- **["Black October" is an X label for a week of disclosures](ai-infra/2026-10-black-october-is-an-x-label-for-a-week-of-disclosures.md)** · composite **51.75** · Oct 23, 2026 · 🔗 +2 sources  
+- **["Black October" is an X label for a week of disclosures](ai-infra/2026-10-black-october-is-an-x-label-for-a-week-of-disclosures.md)** · composite **51.5** · Oct 23, 2026 · 🔗 +2 sources  
   Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.  
   _[forkast.news](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)_
 
 ## Agent & Harness Security
 
-- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **58.0** · Nov 7, 2026  
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **57.75** · Nov 7, 2026  
   Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.  
   _[@shmulc via Hacker News](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)_
-- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **49.5** · Oct 22, 2026  
+- **[Major US banks are blocking customers' third-party AI agents](agent-security/2026-10-major-us-banks-are-blocking-customers-third-party-ai-agents.md)** · composite **49.25** · Oct 22, 2026  
   Banks cannot tell an authorized agent from a rogue one acting with a customer's credentials, so they are blocking agents.  
   _[motherjones.com](https://www.motherjones.com/politics/2026/10/banks-ai-axios-agents-rogue-financial-decisions-security/)_
 
-## MCP, Tools & Skills
-
-- **[MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3](mcp-tools/2026-10-mcp-inspector-fixes-two-critical-one-click-rce-flaws-in-vers.md)** · composite **57.75** · Oct 21, 2026 · 🔗 +1 sources  
-  Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.  
-  _[github.com](https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86)_
-
 ## Red-Teaming & Threat Modeling
 
-- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **57.55** · Nov 12, 2026  
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **57.3** · Nov 12, 2026  
   If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.  
   _[NDSS (via arXiv)](http://arxiv.org/abs/2611.16693v1)_
 
 ## Memory, RAG & Data Poisoning
 
-- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **54.55** · Nov 6, 2026  
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **54.3** · Nov 6, 2026  
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted…  
   _[NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)_
 
 ## Guardrails & Defensive Tooling
 
-- **[SCOPE compiles natural-language agent policies into predicate programs run by small models](guardrails/2026-10-scope-compiles-natural-language-agent-policies-into-predicat.md)** · composite **45.75** · Oct 22, 2026  
+- **[SCOPE compiles natural-language agent policies into predicate programs run by small models](guardrails/2026-10-scope-compiles-natural-language-agent-policies-into-predicat.md)** · composite **45.5** · Oct 22, 2026  
   For agent policy enforcement, prefer a compiled program of narrow predicates over one guardrail model or one LLM judge: cheaper, steadier and auditable (authors' claims, abstract only).  
   _[source](https://arxiv.org/abs/2610.31062)_
 

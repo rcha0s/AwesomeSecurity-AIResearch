@@ -25,7 +25,7 @@ An IEEE S&P 2027 paper shows that a non-privileged malicious app on the user's m
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [IEEE S&P (via arXiv)](http://arxiv.org/abs/2611.04291v1)  ·  **Retrieved:** 2026-11-04  
-**Scores:** Newness 31 · Novelty 55 · Relevance 72 · Credibility 72 · **Composite 57** _(each 0-100)_  
+**Scores:** Newness 30 · Novelty 55 · Relevance 72 · Credibility 72 · **Composite 56** _(each 0-100)_  
 **Tags:** `browser-extensions`, `native-messaging`, `confused-deputy`, `password-managers`, `eid`, `local-attacker`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Prior work studied malicious webpages and extensions attacking privileged browser APIs, and password-manager extension attacks; local-IPC impersonation and confused-deputy attacks on desktop apps are well known. The paper says NativeMessaging itself had not been examined.
 

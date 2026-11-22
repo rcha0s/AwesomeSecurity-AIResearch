@@ -19,7 +19,7 @@ FlowPlan has a coding agent localize the fault, state its intended change as a d
 
 **Topic:** AI Research  ·  **Domain:** Cost Efficiency  
 **Source:** [York University (Sepidband et al.)](https://arxiv.org/abs/2611.13241)  ·  **Author:** York University (Sepidband et al.)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 31 · Novelty 50 · Relevance 75 · Credibility 50 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 30 · Novelty 50 · Relevance 75 · Credibility 50 · **Composite 52** _(each 0-100)_  
 **Tags:** `cost-efficiency`, `coding-agents`, `planning`, `verification`, `prompt-caching`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Closest pool items are the stable-prefix and compaction claims; FlowPlan is a new mechanism (graph-delta planning) with SWE-bench measurements.
 
