@@ -38915,5 +38915,312 @@
     "previous_slugs": [
       "robocasa-shift-equal-success-rate-drops-in-a-vla-robot-polic"
     ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "MCP Inspector fixes two critical one-click RCE flaws in version 1.0.3",
+    "source_url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86",
+    "article_url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-4fc4-wcmh-4g86",
+    "source_id": null,
+    "discovered_via": "manual",
+    "source_name": "github.com",
+    "published": "2026-10-21",
+    "raw_path": "data/_raw/title-malicious-mcp-oauth-callback-can-switch-tr-1790033a52.txt",
+    "related_claims": [],
+    "summary": "On 2026-10-21 the MCP project published two critical advisories (CVSS 9.6 each, no CVE id yet) for MCP Inspector, the debugging tool many developers run against untrusted MCP servers. GHSA-4fc4-wcmh-4g86: a malicious remote server redirects the OAuth callback with transport=stdio and serverCommand parameters, and Inspector runs that command locally. GHSA-6x67-4w4w-9f3w: a malicious MCP App steals the proxy auth token through a same-origin sandbox and then calls the stdio endpoint. Both affect versions up to 1.0.2 and are fixed in 1.0.3.",
+    "takeaway": "Treat MCP debugging tools as code-execution surfaces: update Inspector to 1.0.3 and never point it at servers you do not trust.",
+    "lessons": [
+      {
+        "point": "The OAuth callback trusted configuration read from its own URL, so an attacker-controlled authorization server could switch the transport to a local command.",
+        "excerpt": "The OAuth callback must not read any Inspector configuration from the callback URL.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Connecting to a hostile MCP server was enough: no tool call and no further click was needed for command execution.",
+        "excerpt": "Connecting to an unknown MCP can immediately trigger RCE without any futher interaction with tools.",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "mcp",
+      "mcp-inspector",
+      "rce",
+      "oauth",
+      "ghsa",
+      "developer-tools"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Upgrade MCP Inspector to 1.0.3 and run it only against trusted servers",
+      "detail": "Check npx and global installs of @modelcontextprotocol/inspector for versions up to 1.0.2 and update to 1.0.3. Keep the proxy auth token out of shared browser sessions, and treat any tool that spawns stdio servers on behalf of a remote page as a code-execution boundary."
+    },
+    "scores": {
+      "novelty": 70,
+      "relevance": 90,
+      "newness": 6,
+      "credibility": 55.0,
+      "composite": 57.75,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "CVE-2025-49596 (proxy without authentication) and CVE-2025-58444 (XSS to command execution) hit the same tool earlier; these two are new attack paths (OAuth callback parameters, MCP App sandbox token theft).",
+    "verified": true,
+    "verify_note": "Both advisories and their 9.6 scores read through the GitHub security-advisories API on 2026-10-29; neither carries a CVE id yet.",
+    "corroborating_sources": [
+      {
+        "name": "GitHub advisory GHSA-6x67-4w4w-9f3w",
+        "url": "https://github.com/modelcontextprotocol/inspector/security/advisories/GHSA-6x67-4w4w-9f3w",
+        "published": "2026-10-21"
+      }
+    ],
+    "id": "mcp-inspector-fixes-two-critical-one-click-rce-f-59c5ba7eb8",
+    "retrieved_at": "2026-10-29T07:29:02+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "date": "2026-10"
+  },
+  {
+    "candidate_id": "data-void-exploits-in-web-searching-llms-c6d19c606f",
+    "topic": "ai-security",
+    "domain": "ais.data-poisoning",
+    "title": "Data-void exploits put attacker content in 31% of web-searching LLM answers",
+    "summary": "A data void is a topic with little reliable content online. Attackers can fill one with their own narrative and wait for a web-searching LLM to retrieve and cite it. Testing ChatGPT, Gemini, and Sonar Pro, the authors (NDSS 2027) found attacker content in 31% of responses across all conditions, and one page could be enough. Skeptical prompts helped only slightly, and model choice made no large difference.",
+    "lessons": [
+      {
+        "point": "A single attacker-controlled page can be enough to get into the answer.",
+        "excerpt": "We find that data-void exploits can succeed with only a single attacker controlled page.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Across all tested attacker setups, models, and prompt tones, attacker content showed up in about a third of responses.",
+        "excerpt": "Across all conditions, attacker-content appears in LLM responses 31% of the time.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The authors found no evidence of large effects from a skeptical prompt tone or from switching models.",
+        "excerpt": "we find no evidence of large effects of prompt tone or model choice on success rates",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Synthesized answers remove the ranking and competing-result cues that warn users of thin evidence in classic search.",
+        "excerpt": "LLMs can obscure when an answer relies on sparse, unverified, or adversarial sources.",
+        "confidence": 0.75,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Web-search grounding is an input channel attackers can write to, especially on niche topics, so answers on such topics need signals about how thin or reliable the sources are.",
+    "tags": [
+      "data-voids",
+      "search-poisoning",
+      "web-search-llm",
+      "disinformation",
+      "retrieval"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Flag thin-source answers in search-grounded LLM features",
+      "detail": "In a search-augmented assistant, count distinct independent domains behind each claim, and weight sources by domain age and reputation. When an answer rests on one or two low-reputation pages, show an explicit thin-evidence warning or decline. Add data-void probes (niche queries seeded with your own test page) to your red-team eval set."
+    },
+    "scores": {
+      "novelty": 45,
+      "relevance": 70,
+      "newness": 6,
+      "credibility": 72.0,
+      "composite": 46.8,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "Data voids in classic search (Golebiewski and boyd, 2018), RAG and indirect-injection poisoning work, and generative engine optimization (GEO) studies such as SAGEO Arena in the archive; this paper measures the data-void attack against production web-searching LLMs. Verifier: Data voids in classic search (Golebiewski and boyd 2018), 'LLM grooming' by the Pravda network (NewsGuard/ASP 2025), PoisonedRAG-style corpus poisoning, and GEO work such as SAGEO Arena in the archive.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [
+      "indirect-injection-via-retrieved-content-is-viable",
+      "retrieval-quality-dominates-generation-quality-in-rag"
+    ],
+    "threat": "Disinformation planted in low-competition search spaces is retrieved and cited by web-searching LLMs.",
+    "conditions": "User query targets a topic with little reliable content; attacker page is indexed by the LLM's search backend.",
+    "mitigations": "Source-diversity and reputation checks before citing; thin-evidence warnings; red-team evals with seeded data-void pages.",
+    "source_url": "http://arxiv.org/abs/2610.30365v1",
+    "article_url": "http://arxiv.org/abs/2610.30365v1",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-21",
+    "raw_path": "data/_raw/data-void-exploits-in-web-searching-llms-c6d19c606f.txt",
+    "discovered_via": "rss",
+    "source_id": null,
+    "source_rank": 72.0,
+    "source_topics": [],
+    "source_name": "NDSS (via arXiv)",
+    "id": "data-void-exploits-attacker-content-showed-up-in-7c6941ba8e",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "data-void-exploits-attacker-content-showed-up-in-31-of-web-s"
+    ]
+  },
+  {
+    "candidate_id": "agent-mosaic-recognizing-confidentiality-leaks-i-f6765ba57a",
+    "topic": "ai-security",
+    "domain": "ais.agent-security",
+    "title": "Agent Mosaic: LLM agents combine allowed documents into forbidden conclusions",
+    "summary": "The mosaic effect is when an agent reads several documents it may access and reveals a sensitive conclusion that only appears when they are combined. On 30 synthetic cybersecurity, medical, and military cases, the best model, GPT-5.6-Sol, disclosed forbidden conclusions in 7.08% of answers to benign one-document queries, and live harnesses did worse. Classification headers and aggregation rules helped, but 32.37% of simulated answers across all intents still leaked. Refusals sometimes revealed the forbidden conclusion anyway.",
+    "lessons": [
+      {
+        "point": "Agents leak aggregated conclusions even when users ask benign questions.",
+        "excerpt": "Even under benign queries designed to be answerable from one document, GPT-5.6-Sol, the best performing model tested, discloses forbidden composites in 7.08% of answers",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Labeling and aggregation rules in the prompt reduce leaks but do not stop them.",
+        "excerpt": "unsafe disclosures persist in 32.37% of simulated answers (95% CI: 28.33-36.19%) across all intents despite these safeguards.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "A refusal is not proof of confidentiality, because refusals can reveal the conclusion.",
+        "excerpt": "increased refusals do not guarantee confidentiality, since significant refusals reveal the prohibited conclusion regardless.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Document-level access control is not enough for agents serving users with mixed clearances, because the model can derive restricted conclusions from documents each user may read.",
+    "tags": [
+      "mosaic-effect",
+      "confidentiality",
+      "information-flow",
+      "agent-security",
+      "access-control"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Control what agents may infer, not just what they may read",
+      "detail": "For agents over classified or regulated data, limit retrieval to the clearance of the requesting user and restrict how many sensitive sources one answer may combine. Add an output check for known forbidden composite conclusions, including inside refusals. Test with mosaic-style cases where each document is permitted but the combination is not."
+    },
+    "scores": {
+      "novelty": 45,
+      "relevance": 70,
+      "newness": 6,
+      "credibility": 53.2,
+      "composite": 43.98,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "prior_art": "The mosaic or aggregation problem in classified-information policy and statistical-disclosure control, plus contextual-integrity privacy benchmarks for LLM agents (for example ConfAIde and PrivacyLens); this work measures composite-inference leakage in agentic retrieval with live harnesses. Verifier: The mosaic/aggregation problem in classified-information policy and statistical disclosure control, plus LLM inference-privacy work (Staab et al. 'Beyond Memorization' 2023) and contextual-integrity benchmarks such as ConfAIde and PrivacyLens (in archive).",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source and found no unsupported claim.",
+    "related_claims": [
+      "model-internal-refusal-is-not-a-security-boundary"
+    ],
+    "threat": "An agent assembles a restricted conclusion from several documents the user may access, then discloses it.",
+    "conditions": "Agent retrieves across confidential corpora for users with mixed clearances; controls are prompt-level labels or rules.",
+    "mitigations": "Retrieval scoped to user clearance; limits on cross-source aggregation; output filtering for forbidden composites, including in refusals.",
+    "source_url": "https://arxiv.org/abs/2610.30418",
+    "article_url": "https://arxiv.org/abs/2610.30418",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-21",
+    "raw_path": "data/_raw/agent-mosaic-recognizing-confidentiality-leaks-i-f6765ba57a.txt",
+    "discovered_via": "rss",
+    "source_id": "hf_papers:https-huggingface-co-api-daily-papers",
+    "source_rank": 53.2,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Hugging Face Daily Papers",
+    "id": "agent-mosaic-llm-agents-combine-individually-all-b59b5b7fd1",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: hedges 3 > 1"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "agent-mosaic-llm-agents-combine-individually-allowed-documen"
+    ]
+  },
+  {
+    "id": "a-unified-evaluation-framework-of-physical-adver-e3a6871758",
+    "scores": {
+      "novelty": 55,
+      "relevance": 40,
+      "newness": 6,
+      "credibility": 72.0,
+      "composite": 40.8,
+      "scored_at": "2026-11-19T23:00:03+00:00"
+    },
+    "verified": true,
+    "prior_art": "Adversarial wearable patches against person detectors (Thys et al. 2019, adversarial T-shirts); extending the evaluation to grounding VLMs with a failure-type split is the delta.",
+    "topic": "ai-security",
+    "domain": "ais.red-teaming",
+    "title": "Edge grounding VLMs fall to wearable adversarial patches like detectors",
+    "source_url": "http://arxiv.org/abs/2610.29196v1",
+    "article_url": "http://arxiv.org/abs/2610.29196v1",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-21",
+    "raw_path": "data/_raw/a-unified-evaluation-framework-of-physical-adver-e3a6871758.txt",
+    "discovered_via": "rss",
+    "source_id": null,
+    "source_rank": 72.0,
+    "source_topics": [],
+    "related_claims": [],
+    "summary": "A NeurIPS workshop paper compares compact grounding VLMs and object detectors on whether a worn adversarial patch evades person detection, using a conditional attack success rate and splitting failures into omission, substitution and displacement. VLMs can be as vulnerable as detectors, the failure type tracks output format more than architecture, and only omission is visible downstream; substitution and displacement return confident, well-formed boxes. Under distribution shift VLMs move toward those less visible failures.",
+    "lessons": [
+      {
+        "point": "Swapping an object detector for a compact grounding VLM does not buy physical adversarial robustness.",
+        "excerpt": "find that the VLMs can be as vulnerable as the detectors",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Substitution and displacement failures return confident, well-formed output, so downstream checks for missing detections won't catch them.",
+        "excerpt": "displacement and substitution return confident, well-formed boxes, making them potentially more dangerous failures",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Under distribution shift VLMs shift toward the less visible failure modes.",
+        "excerpt": "VLMs that primarily failed by omission instead shift to failing more by displacement/substitution",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "When red-teaming vision models in safety-critical systems, score where the box lands, not just whether one exists.",
+    "tags": [
+      "adversarial-ml",
+      "vlm",
+      "physical-attacks",
+      "red-teaming"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Classify vision-model failures by type in red-team evals",
+      "detail": "When testing a VLM- or detector-based perception component against adversarial patches, record omission vs substitution vs displacement separately; treat the confident-but-wrong classes as higher severity since downstream logic cannot see them."
+    },
+    "retrieved_at": "2026-10-22T01:39:40+00:00",
+    "needs_review": true,
+    "grounding_score": 1.0
   }
 ]

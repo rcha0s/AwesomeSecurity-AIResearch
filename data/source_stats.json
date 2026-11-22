@@ -60,7 +60,7 @@
     "curated": 2
   },
   "rss:https-ampcode-com-news-rss": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "rss:https-arstechnica-com-security-feed": {
@@ -68,7 +68,7 @@
     "curated": 1
   },
   "rss:https-blog-google-technology-ai-rss": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "rss:https-blog-talosintelligence-com-rss": {
@@ -84,7 +84,7 @@
     "curated": 0
   },
   "rss:https-danielmiessler-com-feed-rss": {
-    "ingested": 2,
+    "ingested": 3,
     "curated": 0
   },
   "rss:https-embracethered-com-blog-index-xml": {
@@ -96,7 +96,7 @@
     "curated": 0
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 17,
+    "ingested": 18,
     "curated": 1
   },
   "rss:https-genai-owasp-org-feed": {
@@ -132,7 +132,7 @@
     "curated": 2
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 22,
+    "ingested": 23,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -152,7 +152,7 @@
     "curated": 1
   },
   "rss:https-securitylabs-datadoghq-com-rss-feed-xml": {
-    "ingested": 6,
+    "ingested": 7,
     "curated": 1
   },
   "rss:https-semgrep-dev-blog-rss": {
@@ -188,7 +188,7 @@
     "curated": 0
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 13,
+    "ingested": 14,
     "curated": 0
   },
   "rss:https-www-carriermanagement-com-feed": {
@@ -196,7 +196,7 @@
     "curated": 0
   },
   "rss:https-www-chainguard-dev-unchained-rss-xml": {
-    "ingested": 11,
+    "ingested": 12,
     "curated": 1
   },
   "rss:https-www-darkreading-com-rss-xml": {
@@ -218,6 +218,10 @@
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
     "ingested": 29,
     "curated": 6
+  },
+  "rss:https-www-seangoedecke-com-rss-xml": {
+    "ingested": 1,
+    "curated": 0
   },
   "rss:https-www-securityweek-com-feed": {
     "ingested": 13,

@@ -69,10 +69,10 @@
       "scores": {
         "novelty": 68,
         "relevance": 72,
-        "newness": 31,
+        "newness": 30,
         "credibility": 73.2,
-        "composite": 60.73,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 60.48,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier confirmed every number; caveat: the objective-framing intervention ran on one model (GPT-6.1 Sol), not all six.",
@@ -377,10 +377,10 @@
       "scores": {
         "novelty": 62,
         "relevance": 58,
-        "newness": 31,
+        "newness": 30,
         "credibility": 73.6,
-        "composite": 54.79,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 54.54,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported (result is an average of three runs on a small METR-built set); novelty 62 vs 62.",
@@ -454,10 +454,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 65,
-        "newness": 31,
+        "newness": 30,
         "credibility": 73.2,
-        "composite": 54.73,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 54.48,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "The pool already covers when to trigger compaction (a model-invoked compaction tool with a fire/hold rubric), encrypted Codex compaction and compaction as an injection path. This adds large-scale cost data and a background, non-blocking compaction method.",
@@ -538,10 +538,10 @@
       "scores": {
         "novelty": 33,
         "relevance": 85,
-        "newness": 31,
+        "newness": 30,
         "credibility": 70.8,
-        "composite": 53.77,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 53.52,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -625,10 +625,10 @@
       "scores": {
         "novelty": 40.0,
         "relevance": 85,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 53.5,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 53.25,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Corpus entries on verification loops and separate grader (ai-research.json mentions of verification loops, claim separate-grader-from-generator); the post's novel parts are first-party base-branch rule loading, observe-mode commit gates and reviewing the reviewers, but much of the E2E/property/differential testing advice is generic and the post itself links earlier Anthropic code-review and verification-loop posts.",
       "related_claims": [
@@ -716,10 +716,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 80,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 53.25,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 53.0,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "First verifier refuted the title pinning the 30-70% cost cut to fixed-interval summarization (the abstract ties it to the no-summarization comparison); title and lesson rewritten, and a fresh verifier found them supported. Verifier novelty 55, relevance 82; took the lower novelty.",
@@ -809,10 +809,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 85,
-        "newness": 31,
+        "newness": 30,
         "credibility": 50.0,
-        "composite": 52.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 52.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "The ledger already holds keep-bulk-tool-output-out-of-context and load-tool-definitions-on-demand from vendor posts. This adds a controlled cross-harness measurement showing harness overhead, not the model, sets much of the cost.",
@@ -889,10 +889,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 75,
-        "newness": 31,
+        "newness": 30,
         "credibility": 50.0,
-        "composite": 52.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 52.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "Closest pool items are the stable-prefix and compaction claims; FlowPlan is a new mechanism (graph-delta planning) with SWE-bench measurements.",
@@ -968,10 +968,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 85,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 52.0,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 51.75,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported (the 17% figure is the author's computed illustration); novelty 35 vs 50, kept the lower.",
@@ -1055,10 +1055,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 82,
-        "newness": 31,
+        "newness": 30,
         "credibility": 69.4,
-        "composite": 51.76,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 51.51,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -1142,10 +1142,10 @@
       "scores": {
         "novelty": 55,
         "relevance": 50,
-        "newness": 31,
+        "newness": 30,
         "credibility": 73.6,
-        "composite": 50.29,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 50.04,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported (doubling time and cost penalty are approximate in the post); novelty 55 vs 60, kept the lower; relevance 42 vs 55, took 50.",
@@ -1321,10 +1321,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 60,
-        "newness": 31,
+        "newness": 30,
         "credibility": 73.2,
-        "composite": 48.73,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 48.48,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported; novelty 45 vs 40, kept the lower.",
@@ -1400,10 +1400,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 60,
-        "newness": 31,
+        "newness": 30,
         "credibility": 68.8,
-        "composite": 48.07,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 47.82,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "Existing entries already treat the LLM judge as a component to test and flag judge prompt sensitivity. This paper adds evidence that judge quality barely tracks MMLU and that frontier models can agree with humans less.",
@@ -1569,10 +1569,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 80,
-        "newness": 6,
+        "newness": 5,
         "credibility": 71.9,
-        "composite": 46.78,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 46.53,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_note": "Novelty disagreement: verifier rated 35 against my 60, citing Si et al. 2024 and earlier LLM-judge prompt-sensitivity work. It also flagged that the headline drop is best-case for one model, the prompt change reframes the task, and labels are weak.",
@@ -1651,10 +1651,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 75,
-        "newness": 31,
+        "newness": 30,
         "credibility": 80.0,
-        "composite": 46.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 46.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Anthropic Tool Search and Cursor's deferred MCP tool loading, already captured in data/claims.json (loading tool definitions only when needed) and an ai-research.json tool-search entry.",
       "related_claims": [
@@ -1733,10 +1733,10 @@
       "scores": {
         "novelty": 60,
         "relevance": 45,
-        "newness": 31,
+        "newness": 30,
         "credibility": 48.5,
-        "composite": 46.52,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 46.27,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "The verifier confirmed the entry; the summary now says sites that 'do not prohibit' scraping and the takeaway and actionable are labelled as the tracker's recommendation.",
@@ -1764,171 +1764,6 @@
         "passed": false,
         "issues": [
           "mild: sentence_words 54 > 45 (Tracker recommendation, not a finding of the paper: add a deterministic robots.txt check (and a per-domain allow/deny li)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "article_url": "https://arxiv.org/abs/2611.05306",
-      "tweet_url": null,
-      "author": "Belcak et al.",
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "raw_path": "data/_raw/you-don-t-need-long-context-9ed82b38dd.txt",
-      "discovered_via": "manual",
-      "source_name": "Belcak et al.",
-      "source_url": "https://arxiv.org/abs/2611.05306",
-      "topic": "ai-research",
-      "domain": "air.cost-efficiency",
-      "kind": "story",
-      "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
-      "summary": "This paper argues that generating later tokens in a long context costs more than earlier ones, by up to 7x on frontier open-weight models, and tests whether agents need long context at all. With Claude Opus 4.5 and GPT 5.6 Sol, frequent compaction and reading long inputs selectively as stored documents kept task accuracy largely intact on long-horizon and long-input tasks. It also proposes semantic state space models, which would need a trained model.",
-      "lessons": [
-        {
-          "point": "Keeping contexts short costs little accuracy on frontier models.",
-          "excerpt": "frontier language models sacrifice little to no task accuracy when maintaining short contexts.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "Frequent compaction kept contexts short while broadly holding accuracy.",
-          "excerpt": "Frequent compaction keeps the context short while broadly maintaining task accuracy.",
-          "confidence": 0.65,
-          "grounded": true
-        },
-        {
-          "point": "Store long inputs as documents the agent reads on demand instead of pasting them into context.",
-          "excerpt": "We enable selective input reading by storing each long input as one or more documents",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "On frontier open-weight models the cost gap between short and long contexts can reach 7x.",
-          "excerpt": "On frontier open weight models, the disparity in cost may rise to as much as 7x.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.",
-      "tags": [
-        "cost-efficiency",
-        "context-compaction",
-        "long-context",
-        "harness-design"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Test frequent compaction against your cache savings",
-        "detail": "Run the same task set with compaction at the context limit, at a lower threshold, and with long inputs moved to files the agent reads on demand. Compare accuracy and total cost including cache writes, since each compaction rewrites the prefix and loses cache hits."
-      },
-      "scores": {
-        "novelty": 30,
-        "relevance": 70,
-        "newness": 31,
-        "credibility": 50.0,
-        "composite": 45.25,
-        "scored_at": "2026-11-21T19:42:05+00:00"
-      },
-      "verified": true,
-      "prior_art": "compact-first-reset-only-if-the-model-needs-it and Microsoft's compaction-cost finding cover when to compact; this adds evidence that compacting early and often keeps accuracy.",
-      "related_claims": [
-        "compact-first-reset-only-if-the-model-needs-it",
-        "keep-bulk-tool-output-out-of-context"
-      ],
-      "verify_note": "Verifier upheld the excerpts; dropped an unconfirmed affiliation and the self-hosted framing. Novelty taken as verifier's 30.",
-      "id": "researchers-find-agents-keep-accuracy-with-short-ee04e9e827",
-      "retrieved_at": "2026-11-18T22:40:22+00:00",
-      "needs_review": false,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "building-ai-for-lawyers-jacob-lauritzen-cto-of-l-1ed6155fe8",
-      "topic": "ai-research",
-      "domain": "air.evals",
-      "title": "Legora evaluates legal agent on simulated work because it cannot read traces",
-      "summary": "Legora's CTO Jacob Lauritzen says customer documents are confidential, so the team cannot improve its legal agent by reading production traces. Instead, three engineers and three lawyers build RL environments that recreate customer work, such as a 10,000-file data room for due diligence, and plot results by practice area and task. They find that new models often improve on some legal work and regress on others. In production, Legora sorts failures into 10 to 20 known failure modes, runs cheap LLM checks behind feature flags, attaches a source citation with a highlighted bounding box to everything the agent writes, and has Tabular Review start on 10 rows so users can fix prompts before running up to a million cells.",
-      "takeaway": "When you cannot read customer traces, build simulated task worlds with domain experts and track results per task type, because a new model can regress on some tasks while improving overall.",
-      "tags": [
-        "evals",
-        "privacy-constrained-evals",
-        "rl-environments",
-        "legal-ai",
-        "citations",
-        "model-routing",
-        "failure-taxonomy"
-      ],
-      "lessons": [
-        {
-          "point": "Confidential customer data rules out the usual trace-reading improvement loop, so the team has to build eval data from scratch.",
-          "excerpt": "Most teams improve their agents by reading traces. Legora can't read any.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Mixed teams of engineers and domain experts build RL environments that recreate customer tasks, in place of real customer data.",
-          "excerpt": "Three engineers and three lawyers build RL environments to simulate the work their customers do.",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "Production monitoring relies on a small, fixed set of failure modes checked by cheap LLM classifiers that can be switched on and off with feature flags.",
-          "excerpt": "In production, Legora classifies failures into 10 to 20 known failure modes and runs cheap LLM-based checks behind feature flags.",
-          "confidence": 0.85,
-          "grounded": true
-        },
-        {
-          "point": "For bulk extraction, running a small sample first lets users fix prompts cheaply before scaling to the full job.",
-          "excerpt": "It supports up to a million cells, but starts with just 10 rows so you can fix your prompts before running the rest.",
-          "confidence": 0.8,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Track evals per task type and pilot bulk runs on a small sample",
-        "detail": "If production traces are off-limits, have domain experts build a few realistic simulated environments, such as a seeded document room with planted issues, and score each task type separately in a per-task heat map so a model swap that regresses one area is visible. Write down a fixed list of 10 to 20 failure modes and run a cheap LLM check for each behind a feature flag. For any fan-out extraction job, run the first 10 or so items and review them before launching the rest."
-      },
-      "scores": {
-        "novelty": 22,
-        "relevance": 68,
-        "newness": 31,
-        "credibility": 69.6,
-        "composite": 45.19,
-        "scored_at": "2026-11-21T19:42:05+00:00"
-      },
-      "verified": true,
-      "prior_art": "Microsoft's synthetic, time-evolving enterprise tenants for Copilot evals (already in ai-research) cover building eval worlds without customer data. Legora adds a practitioner account: domain-expert-built RL environments, per-practice-area heat maps that show model regressions, a fixed failure taxonomy with flagged LLM checks, and a pilot-sample pattern for bulk extraction.",
-      "related_claims": [
-        "newer-model-is-always-an-upgrade",
-        "retest-harness-scaffolding-on-model-change",
-        "score-evals-on-groundedness-not-headline-f1"
-      ],
-      "source_url": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/",
-      "article_url": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-11",
-      "published": "2026-11-02",
-      "discovered_via": "rss",
-      "source_id": "newsletter:https-www-latent-space-feed",
-      "source_rank": 69.6,
-      "source_topics": [
-        "ai-research"
-      ],
-      "source_name": "Latent Space",
-      "raw_path": "data/_raw/building-ai-for-lawyers-jacob-lauritzen-cto-of-l-1ed6155fe8.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: sentence_words 53 > 45 (In production, Legora sorts failures into 10 to 20 known failure modes, runs cheap LLM checks behind feature flags, atta)"
         ]
       },
       "grounding_score": 1.0
@@ -2018,6 +1853,171 @@
       "domain_label": "Red-Teaming Methodology"
     },
     {
+      "article_url": "https://arxiv.org/abs/2611.05306",
+      "tweet_url": null,
+      "author": "Belcak et al.",
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "raw_path": "data/_raw/you-don-t-need-long-context-9ed82b38dd.txt",
+      "discovered_via": "manual",
+      "source_name": "Belcak et al.",
+      "source_url": "https://arxiv.org/abs/2611.05306",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "kind": "story",
+      "title": "Researchers find agents keep accuracy with short, frequently compacted contexts",
+      "summary": "This paper argues that generating later tokens in a long context costs more than earlier ones, by up to 7x on frontier open-weight models, and tests whether agents need long context at all. With Claude Opus 4.5 and GPT 5.6 Sol, frequent compaction and reading long inputs selectively as stored documents kept task accuracy largely intact on long-horizon and long-input tasks. It also proposes semantic state space models, which would need a trained model.",
+      "lessons": [
+        {
+          "point": "Keeping contexts short costs little accuracy on frontier models.",
+          "excerpt": "frontier language models sacrifice little to no task accuracy when maintaining short contexts.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "Frequent compaction kept contexts short while broadly holding accuracy.",
+          "excerpt": "Frequent compaction keeps the context short while broadly maintaining task accuracy.",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Store long inputs as documents the agent reads on demand instead of pasting them into context.",
+          "excerpt": "We enable selective input reading by storing each long input as one or more documents",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "On frontier open-weight models the cost gap between short and long contexts can reach 7x.",
+          "excerpt": "On frontier open weight models, the disparity in cost may rise to as much as 7x.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.",
+      "tags": [
+        "cost-efficiency",
+        "context-compaction",
+        "long-context",
+        "harness-design"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Test frequent compaction against your cache savings",
+        "detail": "Run the same task set with compaction at the context limit, at a lower threshold, and with long inputs moved to files the agent reads on demand. Compare accuracy and total cost including cache writes, since each compaction rewrites the prefix and loses cache hits."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 70,
+        "newness": 30,
+        "credibility": 50.0,
+        "composite": 45.0,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "compact-first-reset-only-if-the-model-needs-it and Microsoft's compaction-cost finding cover when to compact; this adds evidence that compacting early and often keeps accuracy.",
+      "related_claims": [
+        "compact-first-reset-only-if-the-model-needs-it",
+        "keep-bulk-tool-output-out-of-context"
+      ],
+      "verify_note": "Verifier upheld the excerpts; dropped an unconfirmed affiliation and the self-hosted framing. Novelty taken as verifier's 30.",
+      "id": "researchers-find-agents-keep-accuracy-with-short-ee04e9e827",
+      "retrieved_at": "2026-11-18T22:40:22+00:00",
+      "needs_review": false,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "building-ai-for-lawyers-jacob-lauritzen-cto-of-l-1ed6155fe8",
+      "topic": "ai-research",
+      "domain": "air.evals",
+      "title": "Legora evaluates legal agent on simulated work because it cannot read traces",
+      "summary": "Legora's CTO Jacob Lauritzen says customer documents are confidential, so the team cannot improve its legal agent by reading production traces. Instead, three engineers and three lawyers build RL environments that recreate customer work, such as a 10,000-file data room for due diligence, and plot results by practice area and task. They find that new models often improve on some legal work and regress on others. In production, Legora sorts failures into 10 to 20 known failure modes, runs cheap LLM checks behind feature flags, attaches a source citation with a highlighted bounding box to everything the agent writes, and has Tabular Review start on 10 rows so users can fix prompts before running up to a million cells.",
+      "takeaway": "When you cannot read customer traces, build simulated task worlds with domain experts and track results per task type, because a new model can regress on some tasks while improving overall.",
+      "tags": [
+        "evals",
+        "privacy-constrained-evals",
+        "rl-environments",
+        "legal-ai",
+        "citations",
+        "model-routing",
+        "failure-taxonomy"
+      ],
+      "lessons": [
+        {
+          "point": "Confidential customer data rules out the usual trace-reading improvement loop, so the team has to build eval data from scratch.",
+          "excerpt": "Most teams improve their agents by reading traces. Legora can't read any.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Mixed teams of engineers and domain experts build RL environments that recreate customer tasks, in place of real customer data.",
+          "excerpt": "Three engineers and three lawyers build RL environments to simulate the work their customers do.",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "Production monitoring relies on a small, fixed set of failure modes checked by cheap LLM classifiers that can be switched on and off with feature flags.",
+          "excerpt": "In production, Legora classifies failures into 10 to 20 known failure modes and runs cheap LLM-based checks behind feature flags.",
+          "confidence": 0.85,
+          "grounded": true
+        },
+        {
+          "point": "For bulk extraction, running a small sample first lets users fix prompts cheaply before scaling to the full job.",
+          "excerpt": "It supports up to a million cells, but starts with just 10 rows so you can fix your prompts before running the rest.",
+          "confidence": 0.8,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Track evals per task type and pilot bulk runs on a small sample",
+        "detail": "If production traces are off-limits, have domain experts build a few realistic simulated environments, such as a seeded document room with planted issues, and score each task type separately in a per-task heat map so a model swap that regresses one area is visible. Write down a fixed list of 10 to 20 failure modes and run a cheap LLM check for each behind a feature flag. For any fan-out extraction job, run the first 10 or so items and review them before launching the rest."
+      },
+      "scores": {
+        "novelty": 22,
+        "relevance": 68,
+        "newness": 30,
+        "credibility": 69.6,
+        "composite": 44.94,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Microsoft's synthetic, time-evolving enterprise tenants for Copilot evals (already in ai-research) cover building eval worlds without customer data. Legora adds a practitioner account: domain-expert-built RL environments, per-practice-area heat maps that show model regressions, a fixed failure taxonomy with flagged LLM checks, and a pilot-sample pattern for bulk extraction.",
+      "related_claims": [
+        "newer-model-is-always-an-upgrade",
+        "retest-harness-scaffolding-on-model-change",
+        "score-evals-on-groundedness-not-headline-f1"
+      ],
+      "source_url": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/",
+      "article_url": "https://latent.space/p/building-ai-for-lawyers-jacob-lauritzen-cto-of-legora/",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-11",
+      "published": "2026-11-02",
+      "discovered_via": "rss",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 69.6,
+      "source_topics": [
+        "ai-research"
+      ],
+      "source_name": "Latent Space",
+      "raw_path": "data/_raw/building-ai-for-lawyers-jacob-lauritzen-cto-of-l-1ed6155fe8.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: sentence_words 53 > 45 (In production, Legora sorts failures into 10 to 20 known failure modes, runs cheap LLM checks behind feature flags, atta)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "how-ai-agents-shape-experts-judgment-calls-570284eaf9",
       "topic": "ai-research",
       "domain": "air.agents",
@@ -2070,10 +2070,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 70,
-        "newness": 6,
+        "newness": 5,
         "credibility": 70.2,
-        "composite": 45.03,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 44.78,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 2 and 4; lesson 3 overstated the source and was reworded to what it reports (novelty 40 vs 70, lower kept).",
@@ -2156,10 +2156,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 60,
-        "newness": 31,
+        "newness": 30,
         "credibility": 48.3,
-        "composite": 44.99,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 44.74,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "RGB (Chen et al. 2023) noise and counterfactual robustness; knowledge-conflict benchmarks (ClashEval, ConflictBank, FaithEval); SearchAuditor (archive). New: per-query synthetic evidence control for multi-step deep-search agents and cost-aware caution metrics.",
       "related_claims": [
@@ -2321,10 +2321,10 @@
       "scores": {
         "novelty": 45.0,
         "relevance": 40,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.0,
-        "composite": 44.05,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 43.8,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Separate-grader-from-generator claim and generic planner/verifier multi-agent orchestration; no Tamarin protocol-modeling agent work in the corpus (only generic 'formal verification' mentions in ai-security.json and product-security.json).",
       "related_claims": [
@@ -2394,10 +2394,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 45,
-        "newness": 31,
+        "newness": 30,
         "credibility": 70.8,
-        "composite": 43.87,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 43.62,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported all three lessons; the figures are vendor-reported, best-case, single-dataset (Natural Questions), and learned routing and query adaptation for ANN search have substantial prior art, so novelty takes its lower score.",
@@ -2494,10 +2494,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 60,
-        "newness": 31,
+        "newness": 30,
         "credibility": 47.2,
-        "composite": 43.33,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 43.08,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Anthropic's guidance on keeping bulk tool output out of context and on prompt caching (already claims in the ledger); output-trimming tools such as rtk and context-mode hooks.",
       "verified": true,
@@ -2570,10 +2570,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 50,
-        "newness": 31,
+        "newness": 30,
         "credibility": 66.7,
-        "composite": 43.26,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 43.01,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Declarative agent frameworks such as CrewAI YAML configs, LangGraph and AutoGen; OpenTelemetry GenAI semantic conventions for agent tracing.",
       "verified": true,
@@ -2642,10 +2642,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 80,
-        "newness": 6,
+        "newness": 5,
         "credibility": 55.0,
-        "composite": 42.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 42.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Ledger claims constrained-decoding-for-structured-output (a format benchmark on one-shot generation) and match-tool-schemas-to-the-target-model (newer models invent fields in non-native tool schemas). New here: a production measurement of tool-call schema accuracy with and without constrained decoding on a common engine, and the default-off regression.",
       "verified": true,
@@ -2685,92 +2685,6 @@
       "previous_slugs": [
         "kimi-k2-6-on-vllm-0-28-returned-valid-tool-calls-92-of-the-t"
       ]
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.models",
-      "kind": "story",
-      "kind_reason": "Frontier model launch with cost benchmarks and harness-relevant data points; news lane material.",
-      "title": "OpenAI ships cheaper GPT-6.2 Astra and Sol to mixed early reviews",
-      "source_url": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol/",
-      "summary": "OpenAI released GPT-6.2 Astra and Sol on November 17, 2026. Artificial Analysis, an independent benchmark site, says Sol ties the earlier Astra at about 15% of the cost per task, and the new Astra scores 62 on its Intelligence Index, behind Fable 5.2 at 65. Early testers disagree sharply: one called the models essentially unusable, another blamed the harness for his early problems. The newsletter also lists harness findings, such as a 4.4x cost spread across 22 harnesses.",
-      "takeaway": "A cheaper new model is not automatically a better fit for your harness; re-measure cost per passing task and rerun your harness before switching.",
-      "lessons": [
-        {
-          "point": "Early reviews of a new model can be contradictory, and some failures come from the harness rather than the model, so test the model inside your own harness.",
-          "excerpt": "attributed many of his early issues to the harness.",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "Harness choice moves cost per solved task a lot: one vendor measured up to 4.4x spread across 22 harnesses on the same open models.",
-          "excerpt": "Baseten measured up to a 4.4× spread in cost per passing task across its benchmark of 22 harnesses and five open models.",
-          "confidence": 0.65,
-          "grounded": true
-        },
-        {
-          "point": "A harness tuned by automatic search on one model may transfer poorly to another model, so retune after a model swap.",
-          "excerpt": "A harness it evolved on Opus scored 68.41 on Gemini, versus 73.89 for the starting harness.",
-          "confidence": 0.55,
-          "grounded": true
-        },
-        {
-          "point": "A small share of uncached requests can drive a large share of spend, so watch cache misses in agent billing.",
-          "excerpt": "SemiAnalysis reports that 1.8% of uncached requests accounted for roughly 15% of spend in its sample.",
-          "confidence": 0.5,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "gpt-6.2",
-        "astra",
-        "sol",
-        "model-release",
-        "cost-per-task",
-        "harness-cost",
-        "benchmarks",
-        "multi-agent"
-      ],
-      "actionable": {
-        "type": "harness",
-        "title": "Re-baseline cost per passing task when swapping models",
-        "detail": "Before moving a harness to GPT-6.2 Astra or Sol, run your own task set on both the old and new model and record cost per passing task, cache hit rate and tool-call counts, instead of relying on vendor or influencer reports. Keep the old harness config as a baseline and retest tool schemas and subagent prompts on the new model."
-      },
-      "scores": {
-        "novelty": 25,
-        "relevance": 55,
-        "newness": 31,
-        "credibility": 67.0,
-        "composite": 41.8,
-        "scored_at": "2026-11-21T19:42:05+00:00"
-      },
-      "prior_art": "data/ai-research.json has several GPT-6 Astra entries (preliminary evals, safety-research underperformance, GPT-6 Cyber) and claims on harness cost and model-swap retesting; this is a newsletter recap of the 6.2 release, adding price and cost-per-task figures but mostly third-party numbers.",
-      "related_claims": [
-        "newer-model-is-always-an-upgrade",
-        "retest-harness-scaffolding-on-model-change",
-        "harness-overhead-sets-agent-cost"
-      ],
-      "verified": true,
-      "article_url": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol/",
-      "published": "2026-11-18",
-      "raw_path": "data/_raw/ainews-gpt-6-2-astra-the-2-frontier-model-is-bet-ecc1fcbc5a.txt",
-      "source_id": "newsletter:https-www-latent-space-feed",
-      "source_rank": 67.0,
-      "discovered_via": "rss",
-      "source_name": "Latent Space",
-      "date": "2026-11",
-      "source_topics": [
-        "ai-research"
-      ],
-      "id": "openai-ships-cheaper-gpt-6-2-astra-and-sol-to-mi-40ca766a70",
-      "retrieved_at": "2026-11-20T18:11:52+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
     },
     {
       "topic": "ai-research",
@@ -2842,6 +2756,92 @@
       ]
     },
     {
+      "topic": "ai-research",
+      "domain": "air.models",
+      "kind": "story",
+      "kind_reason": "Frontier model launch with cost benchmarks and harness-relevant data points; news lane material.",
+      "title": "OpenAI ships cheaper GPT-6.2 Astra and Sol to mixed early reviews",
+      "source_url": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol/",
+      "summary": "OpenAI released GPT-6.2 Astra and Sol on November 17, 2026. Artificial Analysis, an independent benchmark site, says Sol ties the earlier Astra at about 15% of the cost per task, and the new Astra scores 62 on its Intelligence Index, behind Fable 5.2 at 65. Early testers disagree sharply: one called the models essentially unusable, another blamed the harness for his early problems. The newsletter also lists harness findings, such as a 4.4x cost spread across 22 harnesses.",
+      "takeaway": "A cheaper new model is not automatically a better fit for your harness; re-measure cost per passing task and rerun your harness before switching.",
+      "lessons": [
+        {
+          "point": "Early reviews of a new model can be contradictory, and some failures come from the harness rather than the model, so test the model inside your own harness.",
+          "excerpt": "attributed many of his early issues to the harness.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Harness choice moves cost per solved task a lot: one vendor measured up to 4.4x spread across 22 harnesses on the same open models.",
+          "excerpt": "Baseten measured up to a 4.4× spread in cost per passing task across its benchmark of 22 harnesses and five open models.",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "A harness tuned by automatic search on one model may transfer poorly to another model, so retune after a model swap.",
+          "excerpt": "A harness it evolved on Opus scored 68.41 on Gemini, versus 73.89 for the starting harness.",
+          "confidence": 0.55,
+          "grounded": true
+        },
+        {
+          "point": "A small share of uncached requests can drive a large share of spend, so watch cache misses in agent billing.",
+          "excerpt": "SemiAnalysis reports that 1.8% of uncached requests accounted for roughly 15% of spend in its sample.",
+          "confidence": 0.5,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "gpt-6.2",
+        "astra",
+        "sol",
+        "model-release",
+        "cost-per-task",
+        "harness-cost",
+        "benchmarks",
+        "multi-agent"
+      ],
+      "actionable": {
+        "type": "harness",
+        "title": "Re-baseline cost per passing task when swapping models",
+        "detail": "Before moving a harness to GPT-6.2 Astra or Sol, run your own task set on both the old and new model and record cost per passing task, cache hit rate and tool-call counts, instead of relying on vendor or influencer reports. Keep the old harness config as a baseline and retest tool schemas and subagent prompts on the new model."
+      },
+      "scores": {
+        "novelty": 25,
+        "relevance": 55,
+        "newness": 30,
+        "credibility": 67.0,
+        "composite": 41.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "prior_art": "data/ai-research.json has several GPT-6 Astra entries (preliminary evals, safety-research underperformance, GPT-6 Cyber) and claims on harness cost and model-swap retesting; this is a newsletter recap of the 6.2 release, adding price and cost-per-task figures but mostly third-party numbers.",
+      "related_claims": [
+        "newer-model-is-always-an-upgrade",
+        "retest-harness-scaffolding-on-model-change",
+        "harness-overhead-sets-agent-cost"
+      ],
+      "verified": true,
+      "article_url": "https://latent.space/p/ainews-gpt-6-2-astra-the-2-frontier-model-is-better-and-20-600-cheaper-but-has-mixed-reviews-6-2-sol/",
+      "published": "2026-11-18",
+      "raw_path": "data/_raw/ainews-gpt-6-2-astra-the-2-frontier-model-is-bet-ecc1fcbc5a.txt",
+      "source_id": "newsletter:https-www-latent-space-feed",
+      "source_rank": 67.0,
+      "discovered_via": "rss",
+      "source_name": "Latent Space",
+      "date": "2026-11",
+      "source_topics": [
+        "ai-research"
+      ],
+      "id": "openai-ships-cheaper-gpt-6-2-astra-and-sol-to-mi-40ca766a70",
+      "retrieved_at": "2026-11-20T18:11:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "toyblocks-a-controlled-world-for-robot-learning-9304a45cd2",
       "topic": "ai-research",
       "domain": "air.agents",
@@ -2884,10 +2884,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 31,
+        "newness": 30,
         "credibility": 70.0,
-        "composite": 40.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 40.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_reason": "scoring",
@@ -2970,10 +2970,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 55,
-        "newness": 6,
+        "newness": 5,
         "credibility": 87.5,
-        "composite": 40.12,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 39.88,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld all four lessons; novelty agreed at 30 (gated trusted-defender access is established prior art).",
@@ -3073,10 +3073,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 55,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 39.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 39.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are what the post states; the 39% gain, $100,000 savings and identical regeneration are Microsoft's unsupported self-reports, and no Copilot results are given.",
@@ -3157,10 +3157,10 @@
       "scores": {
         "novelty": 28.0,
         "relevance": 45,
-        "newness": 31,
+        "newness": 30,
         "credibility": 64.9,
-        "composite": 39.39,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 39.14,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "data/archive.json has 'Emit enforcement-ready agent traces with harness-bound provenance' and 'Log full operation traces for autonomous analysis agents'; none covers a plain-text trace format or the PostToolUse vs PostToolUseFailure gotcha, which is the only real delta. The excerpt 'rejects a trace that hides a failure: an `ok` next to a' is a valid substring that ends mid-sentence at a line break.",
       "related_claims": [],
@@ -3234,10 +3234,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 58,
-        "newness": 31,
+        "newness": 30,
         "credibility": 52.5,
-        "composite": 39.02,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 38.77,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3406,10 +3406,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 35,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.0,
-        "composite": 38.05,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 37.8,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Numbers match the abstract; 'harder to game' is the authors' argument, not a measured reward-hacking test.",
@@ -3479,10 +3479,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 50,
-        "newness": 31,
+        "newness": 30,
         "credibility": 70.8,
-        "composite": 37.87,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 37.62,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "This is the same AI Coding Dictionary series already on file (agent as model plus harness, hallucination types), and existing entries already back AGENTS.md-style context files.",
@@ -3560,10 +3560,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 22,
-        "newness": 31,
+        "newness": 30,
         "credibility": 65.0,
-        "composite": 37.6,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 37.35,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "The underlying claim comes from the 'Weight Space Programming' paper (rikiyat.github.io), covered by Latent Space AINews and Simon Willison. The critique ties it to known prior work: steering vectors, Heretic abliteration, and hand-built neural networks (AdderBoard, handmade transformers). No existing tracker entry covers LLMs editing weights directly.",
@@ -3652,10 +3652,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 45,
-        "newness": 31,
+        "newness": 30,
         "credibility": 67.5,
-        "composite": 37.38,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 37.12,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -3739,10 +3739,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.5,
-        "composite": 37.23,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 36.98,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported; novelty 22 vs 35, kept the lower; relevance 22 vs 50, took the midpoint-ish 40.",
@@ -3828,10 +3828,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 37.0,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 36.75,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Hardware and driver reviews of DGX Spark and Windows-on-ARM laptops; firmware-locked power management on laptops is a known Linux issue, but this specific encrypted power-table cause is newly reported.",
       "verified": true,
@@ -3881,10 +3881,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.0,
-        "composite": 36.55,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 36.3,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported both lessons; closest prior is Deep Partition Aggregation and Finite Aggregation certificates.",
@@ -3964,10 +3964,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 35,
-        "newness": 31,
+        "newness": 30,
         "credibility": 75.0,
-        "composite": 36.1,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 35.85,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported (the post never says the 22 to 35% is a cost; that comes from the linked post's title); novelty 22 vs 40, kept the lower; relevance 30 vs 45, took 35.",
@@ -4047,10 +4047,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 66.7,
-        "composite": 35.76,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 35.51,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Standard Webhooks with HMAC signatures, CloudEvents, WebSub and ActivityPub cover signed push delivery.",
       "verified": true,
@@ -4117,10 +4117,10 @@
       "scores": {
         "novelty": 30.0,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 65.9,
-        "composite": 35.63,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 35.38,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "ai-research.json 'Anthropic funds Accenture's Faculty as an embedded evaluator with employee-level access' (same concept, same 'no standards yet' point); OpenAI's version adds named assessors and concrete protocols (on-site, attestation, redaction).",
       "related_claims": [],
@@ -4143,6 +4143,77 @@
         "score": 100,
         "passed": true,
         "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "why-output-caching-doesn-t-work-296fa609be",
+      "topic": "ai-research",
+      "domain": "air.cost-efficiency",
+      "kind": "story",
+      "title": "Output caching saves little because most output tokens are invisible, says Goedecke",
+      "summary": "Goedecke considers caching or referencing repeated output (for example emitting file:line references instead of re-quoting code) and concludes it only optimizes user-visible output. From his own agent histories, visible output is about 6% of output tokens, with 50% reasoning and 44% tool calls, so Amdahl's law caps savings at roughly 4% even under an optimistic estimate. He argues the real lever is model intelligence: pricier models can need far fewer tokens and end up cheaper overall.",
+      "takeaway": "To cut output-token cost, reduce reasoning and tool-call tokens (smarter model, better harness) rather than deduplicating visible output.",
+      "tags": [
+        "token-cost",
+        "output-tokens",
+        "caching",
+        "amdahls-law",
+        "agent-harness"
+      ],
+      "lessons": [
+        {
+          "point": "Visible output is a small share of output tokens in the author's agent histories, so optimizing repetition there has a low ceiling.",
+          "excerpt": "50% of output tokens are reasoning tokens, and the remaining 44% are tool calls",
+          "confidence": 0.65,
+          "grounded": true
+        },
+        {
+          "point": "Output caching only helps the visible slice of output, which is the core argument against it.",
+          "excerpt": "it only optimizes visible output",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "A more expensive but smarter model can cost less per task because it needs fewer reasoning and tool-call tokens (illustrative 5x price vs 6x fewer tokens).",
+          "excerpt": "they might be 5x more expensive per-token, but they can get to the right answer with 6x fewer tokens, so the overall cost is less.",
+          "confidence": 0.55,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Measure your own output-token breakdown before optimizing",
+        "detail": "Split agent-run output tokens into reasoning, tool calls, and visible text; target the dominant bucket, and compare cost per solved task across models rather than price per token."
+      },
+      "scores": {
+        "novelty": 35,
+        "relevance": 55,
+        "newness": 0,
+        "credibility": 55.0,
+        "composite": 35.25,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Existing claim stable-prompt-prefix-keeps-cache-reads-cheap covers input (prefix) caching economics; this post is its output-side counterpart. Related: speculative and prompt-lookup decoding, and cost-per-task comparisons. The 6/50/44 split is one author's anecdote.",
+      "related_claims": [],
+      "article_url": "https://seangoedecke.com/why-output-caching-doesnt-work/",
+      "published": "2026-11-21",
+      "raw_path": "data/_raw/why-output-caching-doesn-t-work-296fa609be.txt",
+      "source_id": "rss:https-www-seangoedecke-com-rss-xml",
+      "source_rank": 55.0,
+      "discovered_via": "rss",
+      "source_name": "Sean Goedecke",
+      "source_url": "https://seangoedecke.com/why-output-caching-doesnt-work/",
+      "retrieved_at": "2026-11-22T17:42:14+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: jargon_chain 8 > 7 (compare cost per solved task across models rather)"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -4188,10 +4259,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 31,
+        "newness": 30,
         "credibility": 75.0,
-        "composite": 35.5,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 35.25,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported; the title now says hallucinations generally since the source defines hallucination broadly with coding examples.",
@@ -4273,10 +4344,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 45,
-        "newness": 31,
+        "newness": 30,
         "credibility": 50.8,
-        "composite": 35.47,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 35.22,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4356,10 +4427,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 55,
-        "newness": 6,
+        "newness": 5,
         "credibility": 70.8,
-        "composite": 35.22,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 34.97,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Plan-then-execute and code-to-policy patterns such as CaMeL; durable-execution agents and persistent agent memory (Letta); Anthropic's guidance on progress files for long-running agents.",
       "verified": true,
@@ -4435,10 +4506,10 @@
       "scores": {
         "novelty": 35,
         "relevance": 20,
-        "newness": 31,
+        "newness": 30,
         "credibility": 69.9,
-        "composite": 34.73,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 34.48,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4512,10 +4583,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 15,
-        "newness": 31,
+        "newness": 30,
         "credibility": 69.6,
-        "composite": 34.69,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 34.44,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Gao, Schulman and Hilton 2022 reward-model overoptimization scaling laws; Beirami et al. 2024 best-of-n guarantees; Coste et al. 2023 reward-model ensembles. New: exact Jeffreys-divergence characterization replacing the sqrt-KL bound, and a formal proof for ensembling. Abstract-only page.",
       "related_claims": [],
@@ -4594,10 +4665,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 34.6,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 34.35,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Summary corrected on where the benchmark numbers come from; the security and cost claims are vendor assertions.",
@@ -4676,10 +4747,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 45,
-        "newness": 6,
+        "newness": 5,
         "credibility": 67.0,
-        "composite": 34.05,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 33.8,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "Policy-as-code (OPA/Rego), schema validation, and harness hooks that block tool calls; spec-driven development tools such as Kiro and spec-kit.",
@@ -4735,10 +4806,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 34.0,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 33.75,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -4810,10 +4881,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 34.0,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 33.75,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported as vendor claims; the single-device wording was dropped and the perplexity figures are noted as coming from one model.",
@@ -4897,10 +4968,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 35,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 34.0,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 33.75,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported; novelty 30 vs 25, kept the lower.",
@@ -5142,10 +5213,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 58,
-        "newness": 6,
+        "newness": 5,
         "credibility": 50.8,
-        "composite": 33.12,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 32.87,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
       "verified": false,
@@ -5227,10 +5298,10 @@
       "scores": {
         "novelty": 50,
         "relevance": 15,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.0,
-        "composite": 31.8,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 31.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the paper; it is a single-task proof of principle, which the entry already says.",
@@ -5301,10 +5372,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 31.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 31.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported; novelty 30 vs 20, kept the lower. Source is a truncated social post.",
@@ -5385,10 +5456,10 @@
       "scores": {
         "novelty": 18,
         "relevance": 45,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 31.65,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 31.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "Apple's MLX entry ('Serve a large open model locally for a coding agent with MLX', ai-research), which points OpenCode at a local OpenAI-compatible server; OpenCode localhost-endpoint RCE entries (ai-security).",
@@ -5472,10 +5543,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 68.1,
-        "composite": 31.46,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 31.21,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Numbers and attributions check out; the long-run finding is for DeepSeek V4.1 Flash only.",
@@ -5550,10 +5621,10 @@
       "scores": {
         "novelty": 40.0,
         "relevance": 15,
-        "newness": 31,
+        "newness": 30,
         "credibility": 48.1,
-        "composite": 31.46,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 31.21,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Refusal-direction (Arditi et al.) style work already referenced in ai-security.json and archive.json; this paper extends it to ambiguity and knowledge-limit abstention, with only a loosely related abstention mention in ai-research.json.",
       "related_claims": [],
@@ -5628,10 +5699,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 35,
-        "newness": 31,
+        "newness": 30,
         "credibility": 66.2,
-        "composite": 31.18,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 30.93,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported by the source; the guardrails-first point was softened and the human-labeled judge set is marked as the tracker's suggestion.",
@@ -5715,10 +5786,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 65.5,
-        "composite": 31.07,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 30.82,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported (vendor-reported numbers); novelty 15 vs 15.",
@@ -5798,10 +5869,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 40,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 31.0,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 30.75,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "GitClear AI code-churn reports; DORA 2024 finding on AI adoption and delivery stability.",
       "related_claims": [
@@ -5874,10 +5945,10 @@
       "scores": {
         "novelty": 45,
         "relevance": 15,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.0,
-        "composite": 30.3,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 30.05,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons match the abstract (no tables in the source); the summary's 'matches or beats full AT' was corrected to the abstract's 'approaches or surpasses'.",
@@ -5947,10 +6018,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 25,
-        "newness": 31,
+        "newness": 30,
         "credibility": 68.8,
-        "composite": 30.07,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 29.82,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported every detail; it is a secondary roundup of a paper already in the tracker, and the harness figures are DeepSeek's own test.",
@@ -6022,10 +6093,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 40,
-        "newness": 6,
+        "newness": 5,
         "credibility": 75.0,
-        "composite": 29.25,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 29.0,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
@@ -6087,10 +6158,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 20,
-        "newness": 31,
+        "newness": 30,
         "credibility": 70.8,
-        "composite": 28.87,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 28.62,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "data/product-security.json already has a Lean 4 entry where native_decide 'proved' Fermat's Last Theorem through a bug and an axiom-audit action, which shows checker trust limits; data/ai-security.json has LeanGuard (Lean4-verified tool-call policy). This post is mathematics-oriented marketing-style research blog with no recoverable detail.",
       "related_claims": [],
@@ -6168,10 +6239,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 15,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.0,
-        "composite": 28.8,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 28.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "Neural Turing Machine and differentiable neural computer addressing, and recurrent memory compression; the claimed delta is a cost-regularised local traversal objective.",
@@ -6230,10 +6301,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 30,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 28.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 28.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "No pstack entry found in data/ai-research.json by keyword search. Panel review and per-role model routing are common harness patterns; this post only reports a version bump with no evidence.",
       "related_claims": [],
@@ -6306,10 +6377,10 @@
       "scores": {
         "novelty": 25,
         "relevance": 40,
-        "newness": 6,
+        "newness": 5,
         "credibility": 50.6,
-        "composite": 28.59,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 28.34,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Mostly faithful; theme list corrected to the abstract's wording, and 'no new experiments' is inferred from it being a survey.",
@@ -6393,10 +6464,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 40,
-        "newness": 6,
+        "newness": 5,
         "credibility": 55.0,
-        "composite": 28.35,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 28.1,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons 1, 3 and 4; lesson 2's agent-migration framing was our inference and was reworded to the recipe the source gives (novelty 22 vs 30, lower kept).",
@@ -6468,10 +6539,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 10,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.0,
-        "composite": 28.15,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 27.9,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Abstract-only source; claims match, datasets correct.",
@@ -6538,10 +6609,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 12,
-        "newness": 31,
+        "newness": 30,
         "credibility": 70.8,
-        "composite": 27.97,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 27.72,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported the claims; corrected the license (CC BY-NC for the other models) and narrowed the speed claim to the CPU streaming benchmark.",
@@ -6606,10 +6677,10 @@
       "scores": {
         "novelty": 22,
         "relevance": 15,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 27.85,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 27.6,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -6686,10 +6757,10 @@
       "scores": {
         "novelty": 30.0,
         "relevance": 12,
-        "newness": 31,
+        "newness": 30,
         "credibility": 48.1,
-        "composite": 27.56,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 27.31,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "The paper itself cites earlier CAN/speed/steering route-inference attacks; no equivalent vehicle-telemetry privacy entry in the repo data, and the benchmark is mainly a consolidation with an LLM route-selector add-on.",
       "related_claims": [],
@@ -6759,10 +6830,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 35,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.5,
-        "composite": 27.38,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 27.12,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons supported by the essay; it is opinion without experiments.",
@@ -6834,10 +6905,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 30,
-        "newness": 6,
+        "newness": 5,
         "credibility": 52.0,
-        "composite": 27.3,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 27.05,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
@@ -6913,10 +6984,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 10,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.0,
-        "composite": 27.3,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 27.05,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "LoRA-based adversarial fine-tuning and sparse fine-tuning methods such as lottery-ticket and saliency-based parameter selection.",
@@ -6959,10 +7030,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 25,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 26.65,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 26.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -7034,10 +7105,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.5,
-        "composite": 26.12,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 25.88,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "TabPFN and TabPFN v2; the original Mitra (2025).",
       "related_claims": [],
@@ -7110,10 +7181,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 50,
-        "newness": 6,
+        "newness": 5,
         "credibility": 40.0,
-        "composite": 26.1,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 25.85,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_note": "Verifier refuted 'interviewees agree public rankings only shortlist candidates' (one Sonar quote) and 'harness matters as much as the model' (Dream's view alone); Sonar's leaderboard measures quality and security, not secure generation only.",
@@ -7180,10 +7251,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 20,
-        "newness": 31,
+        "newness": 30,
         "credibility": 75.0,
-        "composite": 25.9,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 25.65,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Lessons are supported; the claim that one model behaves as different agents was removed since the source only gives the same-model-different-harness example.",
@@ -7254,10 +7325,10 @@
       "scores": {
         "novelty": 40,
         "relevance": 5,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.0,
-        "composite": 25.8,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 25.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Builds directly on the DPICT and CTC trit-plane progressive codecs it benchmarks against; no related entry exists in the tracker. Verifier: DPICT (Lee et al., CVPR 2022) and CTC (Jeon et al., CVPR 2023) trit-plane progressive codecs, which BLI directly extends by treating decoded trits as interval bounds.",
       "verified": true,
@@ -7328,10 +7399,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 15,
-        "newness": 6,
+        "newness": 5,
         "credibility": 72.0,
-        "composite": 25.8,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 25.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "No close entries; eval entries such as DecisionPivot (accuracy-matched routers diverge) share the theme that one headline metric hides reliability gaps.",
@@ -7394,10 +7465,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 22,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 25.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 25.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Teaser-only source; lessons restate the headline.",
@@ -7476,10 +7547,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 18,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 25.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 25.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Google ships Gemini 4 Carbon to trusted cyber defenders first (ai-research.json) covers the same model line; this post adds only a vendor claim and an untested reaction.",
       "article_url": null,
@@ -7556,10 +7627,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 35,
-        "newness": 6,
+        "newness": 5,
         "credibility": 51.6,
-        "composite": 25.74,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 25.49,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: lessons are accurately attributed to Willison and Moonshot; the open-weights date is a promise and the price comparisons are Willison's, not independently checked.",
@@ -7625,10 +7696,10 @@
       "scores": {
         "novelty": 30,
         "relevance": 5,
-        "newness": 31,
+        "newness": 30,
         "credibility": 49.6,
-        "composite": 25.69,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 25.44,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier supported the claims as the authors' own; closest prior is DMD/DMD2 and Trajectory Distribution Matching.",
@@ -7649,156 +7720,6 @@
       "source_name": "Hugging Face Daily Papers",
       "id": "researchers-va-tdm-method-improves-four-step-ima-a7561ea491",
       "retrieved_at": "2026-11-05T17:48:33+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "wolfe-jam-faf-3dd6af4697",
-      "topic": "ai-research",
-      "domain": "air.context",
-      "title": "FAF registers YAML media types for portable AI project context files",
-      "source_url": "https://github.com/Wolfe-Jam/faf",
-      "article_url": "https://github.com/Wolfe-Jam/faf",
-      "tweet_url": null,
-      "author": "Wolfe-Jam",
-      "published": "2026-11-04",
-      "date": "2026-11",
-      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
-      "discovered_via": "github",
-      "source_id": "github_query:mcp-protocol-or-mcp-specification",
-      "source_rank": 66.7,
-      "source_topics": [
-        "ai-security"
-      ],
-      "source_name": "Wolfe-Jam/faf",
-      "related_claims": [],
-      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
-      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
-      "lessons": [
-        {
-          "point": "The format aims to be a shared context file across tools and teams.",
-          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
-          "confidence": 0.7,
-          "grounded": true
-        },
-        {
-          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
-          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
-          "confidence": 0.6,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "context-files",
-        "yaml",
-        "agents-md",
-        "marketing"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Stick with AGENTS.md-style context files",
-        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
-      },
-      "scores": {
-        "novelty": 12,
-        "relevance": 12,
-        "newness": 31,
-        "credibility": 66.7,
-        "composite": 24.95,
-        "scored_at": "2026-11-21T19:42:05+00:00"
-      },
-      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
-      "verified": false,
-      "verify_reason": "scoring",
-      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
-      "retrieved_at": "2026-11-04T20:09:57+00:00",
-      "needs_review": true,
-      "readability_rewrite": "reverted summary",
-      "readability": {
-        "score": 92,
-        "passed": false,
-        "issues": [
-          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
-        ]
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "ask-hn-are-you-tired-too-in-this-ai-era-dd954b7a02",
-      "topic": "ai-research",
-      "domain": "air.work-efficiency",
-      "title": "Hacker News developers describe fatigue from AI-era coding and agent review",
-      "summary": "In an Ask HN thread, developers describe fatigue in the AI era, including from running several agent workstreams at once and reviewing large amounts of generated code. Many say generated tests and pull requests go unreviewed, and AI code-review bots post comments too hard to verify. Coping tactics include agreeing intent and design up front, letting agents verify their own changes, mutation testing, and working in short single-stream loops.",
-      "lessons": [
-        {
-          "point": "Running four or five agent workstreams at once causes constant context switching and anxiety, even when output rises.",
-          "excerpt": "I work on multple features (generally 4-5 work streams) concurrently, so am constantly context switching.",
-          "confidence": 0.5,
-          "grounded": true
-        },
-        {
-          "point": "One commenter suggests mutation testing to find AI-written tests that cannot fail.",
-          "excerpt": "Mutation testing (Stryker, mutmut, PIT) is how you find out which tests can’t fail.",
-          "confidence": 0.5,
-          "grounded": true
-        },
-        {
-          "point": "Agreeing intent and design with the agent first cuts the workarounds that create review load.",
-          "excerpt": "spending more time upfront working with agent on intent of the change, then design, so agent does not try to work around issues",
-          "confidence": 0.4,
-          "grounded": true
-        },
-        {
-          "point": "Large AI-generated pull requests can ship without any human understanding them.",
-          "excerpt": "So it ships having not had a single person understand what it does or was even for.",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "takeaway": "Human review capacity, not agent output, is now the bottleneck, so harnesses should cut what humans must read and prove that tests actually test something.",
-      "tags": [
-        "developer-fatigue",
-        "code-review",
-        "agentic-coding",
-        "context-switching",
-        "mutation-testing",
-        "opinion-thread"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Gate AI-written tests with mutation testing",
-        "detail": "Run a mutation tester (Stryker, mutmut or PIT) in CI on agent-generated tests. Reject test suites that leave mutants alive, so tests no one reviews still have to be able to fail."
-      },
-      "scores": {
-        "novelty": 20,
-        "relevance": 30,
-        "newness": 6,
-        "credibility": 55.0,
-        "composite": 24.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "verify_note": "Verifier: quotes supported; the title overstated parallel-agent review as the cause (commenters give varied reasons), retitled.",
-      "prior_art": "No close pool entry on developer fatigue. The tips repeat familiar advice on spec-first agent work and verification loops found across ai-research harness entries.",
-      "related_claims": [],
-      "source_url": "https://news.ycombinator.com/item?id=50301479",
-      "article_url": "https://news.ycombinator.com/item?id=50301479",
-      "tweet_url": null,
-      "author": "mellosty",
-      "date": "2026-10",
-      "published": "2026-10-30",
-      "raw_path": "data/_raw/ask-hn-are-you-tired-too-in-this-ai-era-dd954b7a02.txt",
-      "discovered_via": "hackernews",
-      "source_id": null,
-      "source_rank": 55.0,
-      "source_topics": [],
-      "source_name": "@mellosty via Hacker News",
-      "retrieved_at": "2026-10-30T16:55:16+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -7893,6 +7814,156 @@
       "grounding_score": 1.0
     },
     {
+      "id": "wolfe-jam-faf-3dd6af4697",
+      "topic": "ai-research",
+      "domain": "air.context",
+      "title": "FAF registers YAML media types for portable AI project context files",
+      "source_url": "https://github.com/Wolfe-Jam/faf",
+      "article_url": "https://github.com/Wolfe-Jam/faf",
+      "tweet_url": null,
+      "author": "Wolfe-Jam",
+      "published": "2026-11-04",
+      "date": "2026-11",
+      "raw_path": "data/_raw/wolfe-jam-faf-3dd6af4697.txt",
+      "discovered_via": "github",
+      "source_id": "github_query:mcp-protocol-or-mcp-specification",
+      "source_rank": 66.7,
+      "source_topics": [
+        "ai-security"
+      ],
+      "source_name": "Wolfe-Jam/faf",
+      "related_claims": [],
+      "summary": "FAF is a YAML format for a project's AI context file (project.faf), with vendor media types registered at IANA. The README is mostly promotional and offers no evaluation showing it improves agent results over a plain AGENTS.md or CLAUDE.md.",
+      "takeaway": "A context-file format with marketing but no evidence; existing AGENTS.md-style files do the same job.",
+      "lessons": [
+        {
+          "point": "The format aims to be a shared context file across tools and teams.",
+          "excerpt": "Portable, shareable AI-Context for any AI, human or team, regardless of size, location, languages, stack, setup or documentation.",
+          "confidence": 0.7,
+          "grounded": true
+        },
+        {
+          "point": "The project presents its IANA vendor media-type registration as equal standing with PDF and JSON.",
+          "excerpt": "Same recognition as `application/pdf`, `application/json`, `application/xml`.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "context-files",
+        "yaml",
+        "agents-md",
+        "marketing"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Stick with AGENTS.md-style context files",
+        "detail": "Keep project context in plain AGENTS.md or CLAUDE.md files that your harnesses already read; adopt a new context format only when it shows measured gains."
+      },
+      "scores": {
+        "novelty": 12,
+        "relevance": 12,
+        "newness": 30,
+        "credibility": 66.7,
+        "composite": 24.7,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "prior_art": "AGENTS.md, CLAUDE.md, .cursorrules and llms.txt project-context conventions.",
+      "verified": false,
+      "verify_reason": "scoring",
+      "verify_note": "Not sent to a verifier: a promotional README with no testable finding; low scores, held for review.",
+      "retrieved_at": "2026-11-04T20:09:57+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted summary",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: acronyms 5 > 3 (FAF, AGENTS, IANA, README, CLAUDE)"
+        ]
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "ask-hn-are-you-tired-too-in-this-ai-era-dd954b7a02",
+      "topic": "ai-research",
+      "domain": "air.work-efficiency",
+      "title": "Hacker News developers describe fatigue from AI-era coding and agent review",
+      "summary": "In an Ask HN thread, developers describe fatigue in the AI era, including from running several agent workstreams at once and reviewing large amounts of generated code. Many say generated tests and pull requests go unreviewed, and AI code-review bots post comments too hard to verify. Coping tactics include agreeing intent and design up front, letting agents verify their own changes, mutation testing, and working in short single-stream loops.",
+      "lessons": [
+        {
+          "point": "Running four or five agent workstreams at once causes constant context switching and anxiety, even when output rises.",
+          "excerpt": "I work on multple features (generally 4-5 work streams) concurrently, so am constantly context switching.",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "One commenter suggests mutation testing to find AI-written tests that cannot fail.",
+          "excerpt": "Mutation testing (Stryker, mutmut, PIT) is how you find out which tests can’t fail.",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "Agreeing intent and design with the agent first cuts the workarounds that create review load.",
+          "excerpt": "spending more time upfront working with agent on intent of the change, then design, so agent does not try to work around issues",
+          "confidence": 0.4,
+          "grounded": true
+        },
+        {
+          "point": "Large AI-generated pull requests can ship without any human understanding them.",
+          "excerpt": "So it ships having not had a single person understand what it does or was even for.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "takeaway": "Human review capacity, not agent output, is now the bottleneck, so harnesses should cut what humans must read and prove that tests actually test something.",
+      "tags": [
+        "developer-fatigue",
+        "code-review",
+        "agentic-coding",
+        "context-switching",
+        "mutation-testing",
+        "opinion-thread"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Gate AI-written tests with mutation testing",
+        "detail": "Run a mutation tester (Stryker, mutmut or PIT) in CI on agent-generated tests. Reject test suites that leave mutants alive, so tests no one reviews still have to be able to fail."
+      },
+      "scores": {
+        "novelty": 20,
+        "relevance": 30,
+        "newness": 5,
+        "credibility": 55.0,
+        "composite": 24.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "verify_note": "Verifier: quotes supported; the title overstated parallel-agent review as the cause (commenters give varied reasons), retitled.",
+      "prior_art": "No close pool entry on developer fatigue. The tips repeat familiar advice on spec-first agent work and verification loops found across ai-research harness entries.",
+      "related_claims": [],
+      "source_url": "https://news.ycombinator.com/item?id=50301479",
+      "article_url": "https://news.ycombinator.com/item?id=50301479",
+      "tweet_url": null,
+      "author": "mellosty",
+      "date": "2026-10",
+      "published": "2026-10-30",
+      "raw_path": "data/_raw/ask-hn-are-you-tired-too-in-this-ai-era-dd954b7a02.txt",
+      "discovered_via": "hackernews",
+      "source_id": null,
+      "source_rank": 55.0,
+      "source_topics": [],
+      "source_name": "@mellosty via Hacker News",
+      "retrieved_at": "2026-10-30T16:55:16+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.ml-research",
       "kind": "story",
@@ -7936,10 +8007,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 12,
-        "newness": 31,
+        "newness": 30,
         "credibility": 47.3,
-        "composite": 24.45,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 24.2,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "No fine-tuning or unlearning method entries were found in data/ai-research.json. Related work includes LoRA and prior unlearning methods evaluated on TOFU and MUSE; the paper's delta is curvature-based update parameterization, with gains reported only against its own baselines.",
       "related_claims": [],
@@ -8002,10 +8073,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 20,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 24.4,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 24.15,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier: basic educational material, accurately described.",
@@ -8070,10 +8141,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 35,
-        "newness": 6,
+        "newness": 5,
         "credibility": 57.5,
-        "composite": 24.23,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 23.98,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "No pool entry covers this donation. The earlier MCP donation to AAIF is the precedent; this is a governance announcement with no technical finding.",
       "verified": true,
@@ -8154,10 +8225,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 6,
+        "newness": 5,
         "credibility": 69.3,
-        "composite": 23.89,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 23.64,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "No close entries on drug development or life-sciences agent case studies; off-thesis for this tracker.",
@@ -8184,6 +8255,72 @@
         "score": 100,
         "passed": true,
         "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "show-hn-i-built-a-game-where-you-are-an-llm-s-su-53e3d72cc0",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "kind": "story",
+      "kind_reason": "Open-source project, not a vendor patch notice.",
+      "title": "Show HN game puts you in the role of an LLM manager's subagent",
+      "summary": "Worker 755 is a browser game where a real LLM acts as an orchestrator with a task queue, read-only machine access and a tool that spawns subagents. The human player is the subagent: instructions arrive in a terminal with a 90-second clock, and the manager checks work, sends corrections and writes a performance review. Players can bring an OpenRouter or Vercel AI Gateway key, which the project says is sent only to the game server for the shift.",
+      "takeaway": "A playful way to feel how an orchestrator treats a subagent's output; no research claims or measurements.",
+      "tags": [
+        "subagents",
+        "orchestration",
+        "game",
+        "open-source"
+      ],
+      "lessons": [
+        {
+          "point": "The game casts the human as the subagent of an AI manager, which makes the orchestrator-subagent contract (instruction, report, transcript, review) tangible.",
+          "excerpt": "A browser game where your manager is an AI agent, and it believes you are its subagent.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Bring-your-own-key play sends the user's key to the game server for the shift's duration; the project says it is held in memory and not logged.",
+          "excerpt": "The key is sent only to the game server when a shift starts.",
+          "confidence": 0.6,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Use as a subagent-prompting thought exercise",
+        "detail": "Play a shift to see what instructions a manager agent gives and how it reacts to partial work; use a throwaway API key if bringing your own."
+      },
+      "scores": {
+        "novelty": 30,
+        "relevance": 20,
+        "newness": 0,
+        "credibility": 55.0,
+        "composite": 23.25,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Role-reversal and human-as-the-tool agent demos and prompt-injection CTF games such as PwnGPT.",
+      "related_claims": [],
+      "article_url": "https://github.com/gulivan/worker755",
+      "published": "2026-11-22",
+      "raw_path": "data/_raw/show-hn-i-built-a-game-where-you-are-an-llm-s-su-53e3d72cc0.txt",
+      "source_id": null,
+      "source_rank": 55.0,
+      "discovered_via": "hackernews",
+      "source_name": "@ivantgam via Hacker News",
+      "author": "ivantgam",
+      "source_url": "https://github.com/gulivan/worker755",
+      "retrieved_at": "2026-11-22T17:42:15+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted title",
+      "readability": {
+        "score": 92,
+        "passed": false,
+        "issues": [
+          "mild: title_words 13 > 12"
+        ]
       },
       "grounding_score": 1.0
     },
@@ -8229,10 +8366,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 22.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 22.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Correctly attributed opinion tweet with no evidence.",
@@ -8308,10 +8445,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 35,
-        "newness": 6,
+        "newness": 5,
         "credibility": 55.0,
-        "composite": 22.65,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 22.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
       "verified": true,
@@ -8376,10 +8513,10 @@
       "scores": {
         "novelty": 20,
         "relevance": 20,
-        "newness": 6,
+        "newness": 5,
         "credibility": 60.0,
-        "composite": 22.5,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 22.25,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier: the lessons quote the post accurately, but the post itself gives no benchmark, metric or model details; low confidence reflects that.",
@@ -8445,10 +8582,10 @@
       "scores": {
         "novelty": 10,
         "relevance": 12,
-        "newness": 31,
+        "newness": 30,
         "credibility": 50.8,
-        "composite": 21.97,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 21.72,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier found every lesson supported by the source.",
@@ -8525,10 +8662,10 @@
       "scores": {
         "novelty": 8,
         "relevance": 3,
-        "newness": 31,
+        "newness": 30,
         "credibility": 72.0,
-        "composite": 21.85,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 21.6,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "No equivalent in the pools; the nearest entries are general ML-research items under air.ml-research (for example deep learning theory notes), and none concern combinatorial optimization or tensor trains.",
       "retrieved_at": "2026-11-19T23:00:33+00:00",
@@ -8578,10 +8715,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 12,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 21.85,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 21.6,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier found every claim supported; novelty 8 vs 5, kept the lower.",
@@ -8660,10 +8797,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 8,
-        "newness": 31,
+        "newness": 30,
         "credibility": 47.7,
-        "composite": 21.8,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 21.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Closest: 'agent-safety-evals-can-misread-production-behavior' and the benchmark-vs-production entries under air.evals, which share the lab-versus-real gap idea; none cover calibration under simulator misspecification or vision.",
       "retrieved_at": "2026-11-19T23:00:33+00:00",
@@ -8719,10 +8856,10 @@
       "scores": {
         "novelty": 6,
         "relevance": 15,
-        "newness": 31,
+        "newness": 30,
         "credibility": 51.2,
-        "composite": 21.73,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 21.48,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Two overstated lesson points (server metrics, doubled work) were corrected to what the post says; off-topic web performance note for this audience.",
@@ -8804,10 +8941,10 @@
       "scores": {
         "novelty": 12,
         "relevance": 6,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 21.4,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 21.15,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "No close entry in the pools; the nearest is GitLab's regex-compiler RCE (product-security.json), which shares only the word compiler.",
       "article_url": "https://jimmyhmiller.com/magic-of-partial-evaluation",
@@ -8868,10 +9005,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 20.5,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 20.25,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "Routine provider status incidents, including earlier Anthropic authentication incidents.",
       "related_claims": [],
@@ -8891,213 +9028,6 @@
       "source_name": "@__vivek via Hacker News",
       "id": "anthropic-resolved-a-two-hour-claude-login-outag-16dc6b9eed",
       "retrieved_at": "2026-11-13T17:46:34+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "Framework-free Colab notebooks teach the applied LLM engineering stack",
-      "source_url": "https://github.com/calmrocks/ai-engineer-notebooks",
-      "article_url": "https://github.com/calmrocks/ai-engineer-notebooks",
-      "author": "calmrocks",
-      "source_name": "calmrocks/ai-engineer-notebooks",
-      "discovered_via": "github",
-      "source_id": "github_query:prompt-injection-llm",
-      "source_rank": 47.9,
-      "source_topics": [
-        "ai-security"
-      ],
-      "published": "2026-10-31",
-      "date": "2026-10",
-      "raw_path": "data/_raw/calmrocks-ai-engineer-notebooks-270d32bf4a.txt",
-      "tweet_url": null,
-      "related_claims": [],
-      "summary": "A 720-star set of Colab notebooks teaches the applied LLM stack from raw API calls on the free Groq API: tool calling, RAG, evals, an agent loop from scratch, guardrails, MCP and a prompt-injection module mapped to the OWASP LLM Top 10. It is training material, not new research.",
-      "takeaway": "A reasonable onboarding course for engineers new to LLM apps; no new technique.",
-      "lessons": [
-        {
-          "point": "Learners build the agent loop, RAG and evals from raw API calls before using frameworks.",
-          "excerpt": "You write the agent loop, RAG, and evals from\n  raw API calls first",
-          "confidence": 0.8,
-          "grounded": true
-        },
-        {
-          "point": "The security module demonstrates OWASP LLM Top 10 risks failing live before showing defences.",
-          "excerpt": "The OWASP LLM Top 10 risks, failing live then defended",
-          "confidence": 0.85,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "training",
-        "notebooks",
-        "agents",
-        "prompt-injection",
-        "evals"
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "Use for onboarding, not reference",
-        "detail": "Point new team members at the agent-loop and prompt-injection notebooks as a hands-on introduction."
-      },
-      "scores": {
-        "novelty": 8,
-        "relevance": 30,
-        "newness": 6,
-        "credibility": 47.9,
-        "composite": 20.09,
-        "scored_at": "2026-11-19T23:00:03+00:00"
-      },
-      "verified": true,
-      "prior_art": "Many existing LLM engineering courses and cookbooks (OpenAI Cookbook, Anthropic courses, DeepLearning.AI short courses).",
-      "id": "framework-free-colab-notebooks-teach-the-applied-55934ea9b6",
-      "retrieved_at": "2026-10-31T21:43:19+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "id": "rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a",
-      "topic": "ai-research",
-      "domain": "air.agents",
-      "title": "@_rybaz argues agent solutions alone do not make a good business",
-      "summary": "A short X post reflecting on the [un]prompted conference argues that solving a problem with agents does not by itself make a viable business. It quips that you can even layer agents on agent problems, but the captured text is truncated and offers no data or technique.",
-      "takeaway": "Thin opinion post with no technical content; skip unless tracking conference sentiment.",
-      "tags": [
-        "opinion",
-        "agents",
-        "conference",
-        "x-post"
-      ],
-      "lessons": [
-        {
-          "point": "The author's main claim is that a working agent-based solution is not the same as a business.",
-          "excerpt": "problem + solution != good business",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "The post implies agents are adequate for ordinary technical problems, but gives no evidence.",
-          "excerpt": "You can solve normal, boring, technological problems with agents.",
-          "confidence": 0.4,
-          "grounded": true
-        }
-      ],
-      "actionable": {
-        "type": "takeaway",
-        "title": "No action",
-        "detail": "Opinion only and truncated; nothing to implement or test."
-      },
-      "scores": {
-        "novelty": 3,
-        "relevance": 8,
-        "newness": 31,
-        "credibility": 60.0,
-        "composite": 20.05,
-        "scored_at": "2026-11-21T19:42:05+00:00"
-      },
-      "verified": true,
-      "prior_art": "Generic startup advice; no technical prior art applies.",
-      "related_claims": [],
-      "source_url": "https://x.com/_rybaz/status/2117660118682923408",
-      "article_url": null,
-      "tweet_url": "https://x.com/_rybaz/status/2117660118682923408",
-      "author": "@_rybaz",
-      "date": "2026-11",
-      "published": "2026-11-03",
-      "discovered_via": "x-list",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "source_name": "X list",
-      "raw_path": "data/_raw/rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a.txt",
-      "retrieved_at": "2026-11-03T17:55:41+00:00",
-      "needs_review": true,
-      "readability": {
-        "score": 100,
-        "passed": true,
-        "issues": []
-      },
-      "grounding_score": 1.0
-    },
-    {
-      "topic": "ai-research",
-      "domain": "air.tooling",
-      "kind": "story",
-      "kind_reason": "Thin tweet quoting a GPU-capacity sales pitch; no technique or finding.",
-      "title": "Inference.net advertises spare B200/B300 GPU capacity for hosting open models",
-      "source_url": "https://x.com/MatthewBerman/status/2123594970502414493",
-      "summary": "Matthew Berman remarks that it is unusual to see a provider say it has a lot of free capacity. He quotes Sam Hogan, who says Inference.net has spare B200 and B300 GPU capacity at discounted rates for managed inference with short commitments. The offer is aimed at people hosting post-trained open models such as Kimi, DeepSeek and GLM.",
-      "takeaway": "A sales post with no technical content; at most a weak signal that GPU supply for hosting open models is loosening.",
-      "lessons": [
-        {
-          "point": "A provider is advertising spare high-end GPU capacity for managed inference, which hints at looser supply.",
-          "excerpt": "We have a ton of B200/B300 GPU capacity available at @inference_net",
-          "confidence": 0.3,
-          "grounded": true
-        },
-        {
-          "point": "The target customers are teams serving their own post-trained open-weights models.",
-          "excerpt": "Perfect for hosting your post-trained Kimi, DeepSeek, GLM, and other models",
-          "confidence": 0.25,
-          "grounded": true
-        }
-      ],
-      "tags": [
-        "gpu-capacity",
-        "managed-inference",
-        "open-weights",
-        "marketing"
-      ],
-      "actionable": {
-        "type": "other",
-        "title": "Treat as a pricing lead only",
-        "detail": "If you self-host a post-trained open model, you could ask the provider for current B200/B300 managed-inference pricing and commitment terms; the tweet gives no prices, benchmarks or terms to verify."
-      },
-      "scores": {
-        "novelty": 3,
-        "relevance": 8,
-        "newness": 31,
-        "credibility": 60.0,
-        "composite": 20.05,
-        "scored_at": "2026-11-21T19:42:05+00:00"
-      },
-      "prior_art": "No prior entries on GPU capacity or inference-provider offers were found in the data files; this is a sales announcement with no new claim.",
-      "related_claims": [],
-      "verified": false,
-      "verify_note": "Lesson 1 asserts the ad 'hints at looser supply'; the tweet only says a provider has capacity available. The looser-supply reading is speculation not in the source.",
-      "verify_reason": "factual",
-      "article_url": null,
-      "published": "2026-11-20",
-      "raw_path": "data/_raw/matthewberman-i-don-t-think-i-ve-ever-seen-someo-e6c4ab0c2b.txt",
-      "source_id": "x:list",
-      "source_rank": 60.0,
-      "discovered_via": "x-list",
-      "source_name": "X list",
-      "tweet_url": "https://x.com/MatthewBerman/status/2123594970502414493",
-      "author": "@MatthewBerman",
-      "date": "2026-11",
-      "source_topics": [
-        "ai-security",
-        "product-security",
-        "ai-research"
-      ],
-      "id": "inference-net-advertises-spare-b200-b300-gpu-cap-f2be3ac906",
-      "retrieved_at": "2026-11-20T18:11:52+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -9188,6 +9118,213 @@
       "grounding_score": 1.0
     },
     {
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "Framework-free Colab notebooks teach the applied LLM engineering stack",
+      "source_url": "https://github.com/calmrocks/ai-engineer-notebooks",
+      "article_url": "https://github.com/calmrocks/ai-engineer-notebooks",
+      "author": "calmrocks",
+      "source_name": "calmrocks/ai-engineer-notebooks",
+      "discovered_via": "github",
+      "source_id": "github_query:prompt-injection-llm",
+      "source_rank": 47.9,
+      "source_topics": [
+        "ai-security"
+      ],
+      "published": "2026-10-31",
+      "date": "2026-10",
+      "raw_path": "data/_raw/calmrocks-ai-engineer-notebooks-270d32bf4a.txt",
+      "tweet_url": null,
+      "related_claims": [],
+      "summary": "A 720-star set of Colab notebooks teaches the applied LLM stack from raw API calls on the free Groq API: tool calling, RAG, evals, an agent loop from scratch, guardrails, MCP and a prompt-injection module mapped to the OWASP LLM Top 10. It is training material, not new research.",
+      "takeaway": "A reasonable onboarding course for engineers new to LLM apps; no new technique.",
+      "lessons": [
+        {
+          "point": "Learners build the agent loop, RAG and evals from raw API calls before using frameworks.",
+          "excerpt": "You write the agent loop, RAG, and evals from\n  raw API calls first",
+          "confidence": 0.8,
+          "grounded": true
+        },
+        {
+          "point": "The security module demonstrates OWASP LLM Top 10 risks failing live before showing defences.",
+          "excerpt": "The OWASP LLM Top 10 risks, failing live then defended",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "training",
+        "notebooks",
+        "agents",
+        "prompt-injection",
+        "evals"
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Use for onboarding, not reference",
+        "detail": "Point new team members at the agent-loop and prompt-injection notebooks as a hands-on introduction."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 30,
+        "newness": 5,
+        "credibility": 47.9,
+        "composite": 19.84,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Many existing LLM engineering courses and cookbooks (OpenAI Cookbook, Anthropic courses, DeepLearning.AI short courses).",
+      "id": "framework-free-colab-notebooks-teach-the-applied-55934ea9b6",
+      "retrieved_at": "2026-10-31T21:43:19+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "title": "@_rybaz argues agent solutions alone do not make a good business",
+      "summary": "A short X post reflecting on the [un]prompted conference argues that solving a problem with agents does not by itself make a viable business. It quips that you can even layer agents on agent problems, but the captured text is truncated and offers no data or technique.",
+      "takeaway": "Thin opinion post with no technical content; skip unless tracking conference sentiment.",
+      "tags": [
+        "opinion",
+        "agents",
+        "conference",
+        "x-post"
+      ],
+      "lessons": [
+        {
+          "point": "The author's main claim is that a working agent-based solution is not the same as a business.",
+          "excerpt": "problem + solution != good business",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "The post implies agents are adequate for ordinary technical problems, but gives no evidence.",
+          "excerpt": "You can solve normal, boring, technological problems with agents.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "No action",
+        "detail": "Opinion only and truncated; nothing to implement or test."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 8,
+        "newness": 30,
+        "credibility": 60.0,
+        "composite": 19.8,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Generic startup advice; no technical prior art applies.",
+      "related_claims": [],
+      "source_url": "https://x.com/_rybaz/status/2117660118682923408",
+      "article_url": null,
+      "tweet_url": "https://x.com/_rybaz/status/2117660118682923408",
+      "author": "@_rybaz",
+      "date": "2026-11",
+      "published": "2026-11-03",
+      "discovered_via": "x-list",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "source_name": "X list",
+      "raw_path": "data/_raw/rybaz-the-first-big-lesson-i-took-away-from-5e24c5941a.txt",
+      "retrieved_at": "2026-11-03T17:55:41+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "kind": "story",
+      "kind_reason": "Thin tweet quoting a GPU-capacity sales pitch; no technique or finding.",
+      "title": "Inference.net advertises spare B200/B300 GPU capacity for hosting open models",
+      "source_url": "https://x.com/MatthewBerman/status/2123594970502414493",
+      "summary": "Matthew Berman remarks that it is unusual to see a provider say it has a lot of free capacity. He quotes Sam Hogan, who says Inference.net has spare B200 and B300 GPU capacity at discounted rates for managed inference with short commitments. The offer is aimed at people hosting post-trained open models such as Kimi, DeepSeek and GLM.",
+      "takeaway": "A sales post with no technical content; at most a weak signal that GPU supply for hosting open models is loosening.",
+      "lessons": [
+        {
+          "point": "A provider is advertising spare high-end GPU capacity for managed inference, which hints at looser supply.",
+          "excerpt": "We have a ton of B200/B300 GPU capacity available at @inference_net",
+          "confidence": 0.3,
+          "grounded": true
+        },
+        {
+          "point": "The target customers are teams serving their own post-trained open-weights models.",
+          "excerpt": "Perfect for hosting your post-trained Kimi, DeepSeek, GLM, and other models",
+          "confidence": 0.25,
+          "grounded": true
+        }
+      ],
+      "tags": [
+        "gpu-capacity",
+        "managed-inference",
+        "open-weights",
+        "marketing"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Treat as a pricing lead only",
+        "detail": "If you self-host a post-trained open model, you could ask the provider for current B200/B300 managed-inference pricing and commitment terms; the tweet gives no prices, benchmarks or terms to verify."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 8,
+        "newness": 30,
+        "credibility": 60.0,
+        "composite": 19.8,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "prior_art": "No prior entries on GPU capacity or inference-provider offers were found in the data files; this is a sales announcement with no new claim.",
+      "related_claims": [],
+      "verified": false,
+      "verify_note": "Lesson 1 asserts the ad 'hints at looser supply'; the tweet only says a provider has capacity available. The looser-supply reading is speculation not in the source.",
+      "verify_reason": "factual",
+      "article_url": null,
+      "published": "2026-11-20",
+      "raw_path": "data/_raw/matthewberman-i-don-t-think-i-ve-ever-seen-someo-e6c4ab0c2b.txt",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "discovered_via": "x-list",
+      "source_name": "X list",
+      "tweet_url": "https://x.com/MatthewBerman/status/2123594970502414493",
+      "author": "@MatthewBerman",
+      "date": "2026-11",
+      "source_topics": [
+        "ai-security",
+        "product-security",
+        "ai-research"
+      ],
+      "id": "inference-net-advertises-spare-b200-b300-gpu-cap-f2be3ac906",
+      "retrieved_at": "2026-11-20T18:11:52+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "id": "0xmovez-opus-5-5-fable-5-2-is-insane-for-motion-4808549f33",
       "verified": true,
       "topic": "ai-research",
@@ -9225,10 +9362,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 5,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 19.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 19.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "No equivalent entry; nearest in subject is generic Claude Code tooling coverage in ai-research.json, none about themes.",
       "article_url": "https://afterglow-themes.vercel.app/",
@@ -9285,10 +9422,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 5,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 19.75,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 19.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "The lesson is supported; 'far ahead' was replaced with the plain counts from the post.",
@@ -9362,10 +9499,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 10,
-        "newness": 6,
+        "newness": 5,
         "credibility": 67.5,
-        "composite": 19.12,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 18.88,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier upheld lessons; some credits also go directly to six named projects, not only through partners.",
@@ -9423,10 +9560,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 3,
-        "newness": 31,
+        "newness": 30,
         "credibility": 55.0,
-        "composite": 18.4,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 18.15,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Verifier supported the lesson; off-topic.",
@@ -9445,6 +9582,70 @@
       "id": "hackerbooks-lists-16-543-books-mentioned-in-hack-682019c88f",
       "retrieved_at": "2026-11-01T17:42:30+00:00",
       "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "hebbia-sees-improvements-in-financial-research-w-b38b6098c8",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "kind": "story",
+      "kind_reason": "Vendor customer story with self-reported benchmark numbers",
+      "title": "Hebbia says GPT-6 Astra beat rivals on citations and slides",
+      "summary": "OpenAI's customer story says Hebbia tested a prerelease GPT-6 Astra in August-September 2026 on financial research cases and found it scored 13.6 points above the best alternative on citing required source types, with 99.5% of cited excerpts relevant. It also met 97.9% of applicable presentation requirements, 14.4 points ahead of the best alternative. The numbers are self-reported by the customer and published by the model vendor, without the test set or the competing models named.",
+      "takeaway": "Marketing-grade evidence: useful only as a hint that citation traceability and brief-following are the axes Hebbia grades, not as a verified model comparison.",
+      "tags": [
+        "customer-story",
+        "financial-research",
+        "citations",
+        "model-evaluation",
+        "gpt-6-astra"
+      ],
+      "lessons": [
+        {
+          "point": "Hebbia reports citation coverage and relevance gains for GPT-6 Astra, measured on its own cases with expert-audited criteria.",
+          "excerpt": "It scored 13.6 percentage points above the best alternative tested on citing the required types of sources, while 99.5% of the excerpts it cited were relevant to the question.",
+          "confidence": 0.5,
+          "grounded": true
+        },
+        {
+          "point": "Evaluation setup was a prerelease build graded on identical cases and criteria for each model, but the alternatives are unnamed and results are unverified.",
+          "excerpt": "Hebbia tested a prerelease build in August-September 2026, using the same financial research cases and grading criteria for each model.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "takeaway",
+        "title": "Treat vendor customer-story benchmarks as unverified",
+        "detail": "If evaluating a model for cited document research, build your own test cases and grading criteria (source coverage, citation relevance, brief adherence) rather than relying on figures from a vendor customer story."
+      },
+      "scores": {
+        "novelty": 6,
+        "relevance": 20,
+        "newness": 0,
+        "credibility": 65.4,
+        "composite": 17.61,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Vendor customer stories from OpenAI and others that cite unnamed baselines; no methodology or benchmark is given.",
+      "related_claims": [],
+      "article_url": "https://openai.com/business/customer-stories/hebbia",
+      "published": "2026-11-20",
+      "raw_path": "data/_raw/hebbia-sees-improvements-in-financial-research-w-b38b6098c8.txt",
+      "source_id": "rss:https-openai-com-blog-rss-xml",
+      "source_rank": 65.4,
+      "discovered_via": "rss",
+      "source_name": "OpenAI Blog",
+      "source_url": "https://openai.com/business/customer-stories/hebbia",
+      "retrieved_at": "2026-11-22T17:42:14+00:00",
+      "needs_review": true,
+      "readability_rewrite": "reverted takeaway, summary",
       "readability": {
         "score": 100,
         "passed": true,
@@ -9489,10 +9690,10 @@
       "scores": {
         "novelty": 2,
         "relevance": 1,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 17.65,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 17.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "None; off-topic personal gadget opinion with no security or AI content.",
       "related_claims": [],
@@ -9549,10 +9750,10 @@
       "scores": {
         "novelty": 0,
         "relevance": 3,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 17.65,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 17.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "verify_note": "Independent verifier: one sarcastic line with no technical content.",
@@ -9625,10 +9826,10 @@
       "scores": {
         "novelty": 15,
         "relevance": 12,
-        "newness": 6,
+        "newness": 5,
         "credibility": 50.4,
-        "composite": 17.16,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 16.91,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "It follows its predecessor DefakerOne and other specialist deepfake and tamper detectors. The archive holds a multi-agent MLLM deepfake-video detector built from specialist agents and a judge. The new parts are broader coverage in one model and the training and test-time adaptation methods, which are incremental ML work.",
@@ -9684,10 +9885,10 @@
       "scores": {
         "novelty": 0,
         "relevance": 1,
-        "newness": 31,
+        "newness": 30,
         "credibility": 60.0,
-        "composite": 17.05,
-        "scored_at": "2026-11-21T19:42:05+00:00"
+        "composite": 16.8,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "prior_art": "None. The post is not technical.",
       "related_claims": [],
@@ -9762,10 +9963,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 10,
-        "newness": 6,
+        "newness": 5,
         "credibility": 67.5,
-        "composite": 16.12,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 15.88,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "No technical prior art applies. Closest: the Daybreak customer story 'Cloudflare pairs Daybreak findings with live traffic to draft WAF rules'.",
@@ -9832,10 +10033,10 @@
       "scores": {
         "novelty": 5,
         "relevance": 15,
-        "newness": 6,
+        "newness": 5,
         "credibility": 55.0,
-        "composite": 15.75,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 15.5,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -9868,72 +10069,55 @@
       "grounding_score": 1.0
     },
     {
-      "id": "expanding-our-partnership-with-gsa-to-bring-clau-1a43fc95af",
+      "id": "realwezzard-translated-from-chinese-00c1539cfe",
       "topic": "ai-research",
-      "domain": "air.tooling",
-      "title": "Anthropic expands its GSA deal to discount Claude for governments",
-      "summary": "Anthropic's new agreement with the General Services Administration (GSA) gives a 40% discount on Claude products to federal, state, local, tribal and territorial governments. The post lists self-reported productivity stories, such as a Utah pilot with 34 developers, and compliance status, including FedRAMP High for Claude for Government and on Bedrock and Vertex AI. This is a business announcement with no technical detail.",
+      "domain": "air.alignment",
+      "kind": "story",
+      "kind_reason": "Social post about prompting; not a vendor patch notice.",
+      "title": "X user shares a custom instruction said to curb Gemini sycophancy",
+      "summary": "A translated X post says Gemini is even more of a people-pleaser than GPT and shares a custom instruction the author has used for years to curb GPT's sycophancy. The author says adding it makes Gemini answer with much more criticism. The saved text does not include the instruction itself or any measurement.",
+      "takeaway": "An anecdote only: no prompt text or evaluation is captured, so it cannot be reused or trusted as evidence.",
+      "tags": [
+        "sycophancy",
+        "custom-instructions",
+        "gemini",
+        "prompting"
+      ],
       "lessons": [
         {
-          "point": "The deal is mainly a pricing change covering all Claude product surfaces for government buyers.",
-          "excerpt": "gives government partners a 40% discount on Claude Enterprise, Claude for Government, and the Claude API",
-          "confidence": 0.9,
-          "grounded": true
-        },
-        {
-          "point": "The productivity numbers are self-reported results from small pilots, not controlled measurements.",
-          "excerpt": "Utah gave Claude Code to 34 developers across 10 state agencies.",
-          "confidence": 0.6,
-          "grounded": true
-        },
-        {
-          "point": "Agencies building their own tools can get Claude under FedRAMP High and DoD IL4/IL5 through cloud providers.",
-          "excerpt": "On Bedrock, Claude is authorized for FedRAMP High, with select models authorized for DoD IL4 and IL5 workloads in AWS GovCloud.",
-          "confidence": 0.85,
+          "point": "The author reports using one custom instruction for a long time against sycophancy in GPT and finds Gemini also becomes much more critical with it; this is self-reported with no data.",
+          "excerpt": "I've been using this set of instructions to cure GPT's sycophancy.",
+          "confidence": 0.35,
           "grounded": true
         }
       ],
-      "takeaway": "This procurement news only matters if you buy Claude for a US government organization.",
-      "tags": [
-        "anthropic",
-        "government",
-        "procurement",
-        "fedramp",
-        "vendor-announcement"
-      ],
       "actionable": {
-        "type": "other",
-        "title": "Check the compliance route if you are a government buyer",
-        "detail": "Public-sector teams can buy through GSA's Multiple Award Schedule at the OneGov discount. Choose Claude for Government (FedRAMP High) or Bedrock or Vertex AI depending on whether the workload needs IL4 or IL5."
+        "type": "takeaway",
+        "title": "Test anti-sycophancy instructions on your own prompts",
+        "detail": "If you try a critic-style custom instruction, compare answers with and without it on cases where you know the correct answer, since the post gives no evaluation."
       },
       "scores": {
-        "novelty": 3,
-        "relevance": 8,
-        "newness": 6,
-        "credibility": 68.1,
-        "composite": 15.01,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "novelty": 8,
+        "relevance": 12,
+        "newness": 0,
+        "credibility": 60.0,
+        "composite": 15.0,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
-      "prior_art": "No close entries; no technical claim to compare.",
+      "prior_art": "Widely shared anti-sycophancy custom instructions for ChatGPT, and published sycophancy research such as Anthropic's 'Towards Understanding Sycophancy'.",
       "related_claims": [],
-      "corroborating_sources": [],
-      "source_url": "https://www.anthropic.com/news/expanding-partnership-gsa",
-      "article_url": "https://www.anthropic.com/news/expanding-partnership-gsa",
-      "tweet_url": null,
-      "author": null,
-      "date": "2026-10",
-      "published": "2026-10-27",
-      "raw_path": "data/_raw/expanding-our-partnership-with-gsa-to-bring-clau-1a43fc95af.txt",
-      "discovered_via": "sitemap",
-      "source_id": "research_index:https-www-anthropic-com-news",
-      "source_rank": 68.1,
-      "source_topics": [
-        "ai-research",
-        "ai-security"
-      ],
-      "source_name": "Anthropic News",
-      "retrieved_at": "2026-10-28T16:52:05+00:00",
+      "tweet_url": "https://x.com/realWeZZard/status/2124540611495911631",
+      "author": "@realWeZZard",
+      "article_url": null,
+      "published": "2026-11-22",
+      "raw_path": "data/_raw/realwezzard-translated-from-chinese-00c1539cfe.txt",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "discovered_via": "x-list",
+      "source_name": "X list",
+      "source_url": "https://x.com/realWeZZard/status/2124540611495911631",
+      "retrieved_at": "2026-11-22T17:42:15+00:00",
       "needs_review": true,
       "readability": {
         "score": 100,
@@ -10019,6 +10203,140 @@
       "verify_note": "Not sent to a verifier: a category index page, not an article; held for review."
     },
     {
+      "id": "expanding-our-partnership-with-gsa-to-bring-clau-1a43fc95af",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "title": "Anthropic expands its GSA deal to discount Claude for governments",
+      "summary": "Anthropic's new agreement with the General Services Administration (GSA) gives a 40% discount on Claude products to federal, state, local, tribal and territorial governments. The post lists self-reported productivity stories, such as a Utah pilot with 34 developers, and compliance status, including FedRAMP High for Claude for Government and on Bedrock and Vertex AI. This is a business announcement with no technical detail.",
+      "lessons": [
+        {
+          "point": "The deal is mainly a pricing change covering all Claude product surfaces for government buyers.",
+          "excerpt": "gives government partners a 40% discount on Claude Enterprise, Claude for Government, and the Claude API",
+          "confidence": 0.9,
+          "grounded": true
+        },
+        {
+          "point": "The productivity numbers are self-reported results from small pilots, not controlled measurements.",
+          "excerpt": "Utah gave Claude Code to 34 developers across 10 state agencies.",
+          "confidence": 0.6,
+          "grounded": true
+        },
+        {
+          "point": "Agencies building their own tools can get Claude under FedRAMP High and DoD IL4/IL5 through cloud providers.",
+          "excerpt": "On Bedrock, Claude is authorized for FedRAMP High, with select models authorized for DoD IL4 and IL5 workloads in AWS GovCloud.",
+          "confidence": 0.85,
+          "grounded": true
+        }
+      ],
+      "takeaway": "This procurement news only matters if you buy Claude for a US government organization.",
+      "tags": [
+        "anthropic",
+        "government",
+        "procurement",
+        "fedramp",
+        "vendor-announcement"
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Check the compliance route if you are a government buyer",
+        "detail": "Public-sector teams can buy through GSA's Multiple Award Schedule at the OneGov discount. Choose Claude for Government (FedRAMP High) or Bedrock or Vertex AI depending on whether the workload needs IL4 or IL5."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 8,
+        "newness": 5,
+        "credibility": 68.1,
+        "composite": 14.76,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "No close entries; no technical claim to compare.",
+      "related_claims": [],
+      "corroborating_sources": [],
+      "source_url": "https://www.anthropic.com/news/expanding-partnership-gsa",
+      "article_url": "https://www.anthropic.com/news/expanding-partnership-gsa",
+      "tweet_url": null,
+      "author": null,
+      "date": "2026-10",
+      "published": "2026-10-27",
+      "raw_path": "data/_raw/expanding-our-partnership-with-gsa-to-bring-clau-1a43fc95af.txt",
+      "discovered_via": "sitemap",
+      "source_id": "research_index:https-www-anthropic-com-news",
+      "source_rank": 68.1,
+      "source_topics": [
+        "ai-research",
+        "ai-security"
+      ],
+      "source_name": "Anthropic News",
+      "retrieved_at": "2026-10-28T16:52:05+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
+      "id": "jok3rdb-6-months-ago-i-was-asked-to-replace-pent-73efd6504e",
+      "topic": "ai-research",
+      "domain": "air.agents",
+      "kind": "story",
+      "kind_reason": "Social post about an unverified harness; not a vendor patch notice.",
+      "title": "Post touts an AI pentest harness but links a Windows Bluetooth CVE",
+      "summary": "An X post claims the author built a harness addressing memory, hallucinations, tool use, anchoring, automation bias and loops, and tested it on hard bug bounties including a Windows kernel privilege escalation. The post's link goes to a Microsoft advisory for a Windows Bluetooth Port Driver integer underflow, which does not describe the harness. None of the harness claims can be checked from the saved text.",
+      "takeaway": "Treat the harness claims as unverified: the saved source is only a Microsoft CVE page, so nothing here shows how the harness works or what it found.",
+      "tags": [
+        "pentest-agent",
+        "harness",
+        "unverified-claim",
+        "windows",
+        "bug-bounty"
+      ],
+      "lessons": [
+        {
+          "point": "The only grounded fact is the linked advisory: a Windows Bluetooth Port Driver integer underflow allowing privilege elevation, released Nov 10, 2026; it does not mention any AI harness.",
+          "excerpt": "Integer underflow (wrap or wraparound) in Windows Bluetooth Port Driver allows an authorized attacker to elevate privileges over a network.",
+          "confidence": 0.3,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Wait for a write-up before adopting the harness ideas",
+        "detail": "The post names six failure modes (memory, hallucinations, tool use, anchoring, automation bias, loops) worth checking in your own pentest agents, but offers no method or results to copy."
+      },
+      "scores": {
+        "novelty": 8,
+        "relevance": 10,
+        "newness": 0,
+        "credibility": 60.0,
+        "composite": 14.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Public AI pentest agent work such as XBOW and Google Big Sleep write-ups; none of it appears in the saved source.",
+      "related_claims": [],
+      "tweet_url": "https://x.com/Jok3rDb/status/2124342728767271197",
+      "author": "@Jok3rDb",
+      "article_url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-95996",
+      "published": "2026-11-22",
+      "raw_path": "data/_raw/jok3rdb-6-months-ago-i-was-asked-to-replace-pent-73efd6504e.txt",
+      "source_id": "x:list",
+      "source_rank": 60.0,
+      "discovered_via": "x-list",
+      "source_name": "X list",
+      "source_url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2026-95996",
+      "retrieved_at": "2026-11-22T17:42:15+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.models",
       "title": "Anthropic's Security news page is an index of earlier posts",
@@ -10078,6 +10396,62 @@
       "grounding_score": 1.0
     },
     {
+      "id": "current-stack-a00e132aa4",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "kind": "story",
+      "kind_reason": "Personal tool-list post; not a vendor patch notice.",
+      "title": "Daniel Miessler lists his current software, models, cloud and hardware stack",
+      "summary": "A weekly-updated list of the tools Miessler runs: Claude Code and other software, several frontier and local models, Cloudflare and Tailscale, and a fleet of Macs and GPU machines. The post says an AI assistant designs and renders the card and adds each week's update.",
+      "takeaway": "A lifestyle/tool-list post with no analysis; useful only as a snapshot of one practitioner's setup.",
+      "tags": [
+        "tool-stack",
+        "claude-code",
+        "personal-setup",
+        "local-models"
+      ],
+      "lessons": [
+        {
+          "point": "The stack card is produced and updated weekly with an AI assistant, an example of delegating routine publishing to an agent.",
+          "excerpt": "Daniel listed his stack and asked for a weekly card and a running post of them.",
+          "confidence": 0.4,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Reference only",
+        "detail": "Skim the list for tools of interest (Claude Code, Tailscale, local Qwen/Nemotron models); the post gives no configuration or evaluation detail."
+      },
+      "scores": {
+        "novelty": 4,
+        "relevance": 6,
+        "newness": 0,
+        "credibility": 70.8,
+        "composite": 13.62,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Miessler's own 'Uses' page and Personal AI Infrastructure posts, plus the general '/uses' and 'my stack' post genre.",
+      "related_claims": [],
+      "article_url": "https://danielmiessler.com/blog/current-stack",
+      "published": "2026-11-21",
+      "raw_path": "data/_raw/current-stack-a00e132aa4.txt",
+      "source_id": "rss:https-danielmiessler-com-feed-rss",
+      "source_rank": 70.8,
+      "discovered_via": "rss",
+      "source_name": "Daniel Miessler",
+      "source_url": "https://danielmiessler.com/blog/current-stack",
+      "retrieved_at": "2026-11-22T17:42:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "candidate_id": "goodside-we-ve-known-since-2023-ai-could-not-con-155de79300",
       "topic": "ai-research",
       "domain": "air.models",
@@ -10113,10 +10487,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 8,
-        "newness": 6,
+        "newness": 5,
         "credibility": 60.0,
-        "composite": 13.8,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 13.55,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": false,
       "verify_reason": "factual",
@@ -10183,10 +10557,10 @@
       "scores": {
         "novelty": 3,
         "relevance": 10,
-        "newness": 6,
+        "newness": 5,
         "credibility": 55.0,
-        "composite": 13.65,
-        "scored_at": "2026-11-19T23:00:03+00:00"
+        "composite": 13.4,
+        "scored_at": "2026-11-22T17:42:15+00:00"
       },
       "verified": true,
       "prior_art": "A mobile client launch adds no claim-level content; Amp appears in the pools only via Embrace The Red's Amp Code config-rewrite research.",
@@ -10352,6 +10726,63 @@
       "grounding_score": 1.0
     },
     {
+      "id": "walter-isaacson-on-curiosity-and-creativity-in-t-10821ab965",
+      "topic": "ai-research",
+      "domain": "air.models",
+      "kind": "story",
+      "kind_reason": "Video episode promo; not a vendor patch or bug notice",
+      "title": "Google posts a Kent Walker and Walter Isaacson talk on creativity",
+      "summary": "Google's blog post links a video episode of its Dialogues on Technology and Society series in which Kent Walker talks with biographer Walter Isaacson. The post says they discuss what Leonardo da Vinci, Benjamin Franklin, and Ada Lovelace teach about creativity and why breakthroughs are a team sport. The text contains no technical, security, or practitioner content.",
+      "takeaway": "Lifestyle/opinion promo with no actionable technical content for security or AI practice.",
+      "tags": [
+        "opinion",
+        "creativity",
+        "google",
+        "video",
+        "human-judgment"
+      ],
+      "lessons": [
+        {
+          "point": "The only claim is that curiosity and human judgment matter more when information is readily available; no evidence is given in the post text.",
+          "excerpt": "They look at why curiosity and human judgment matter more than ever when information is right in your pocket.",
+          "confidence": 0.2,
+          "grounded": true
+        }
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "No action",
+        "detail": "Promotional pointer to a 9:39 video; nothing to apply to a security or AI-harness workflow."
+      },
+      "scores": {
+        "novelty": 3,
+        "relevance": 3,
+        "newness": 0,
+        "credibility": 72.5,
+        "composite": 12.68,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Earlier Dialogues on Technology and Society episodes and Isaacson's own talks on innovation and curiosity.",
+      "related_claims": [],
+      "article_url": "https://blog.google/innovation-and-ai/technology/ai/dialogues-walter-isaacson/",
+      "published": "2026-11-19",
+      "raw_path": "data/_raw/walter-isaacson-on-curiosity-and-creativity-in-t-10821ab965.txt",
+      "source_id": "rss:https-blog-google-technology-ai-rss",
+      "source_rank": 72.5,
+      "discovered_via": "rss",
+      "source_name": "Google AI Blog",
+      "source_url": "https://blog.google/innovation-and-ai/technology/ai/dialogues-walter-isaacson/",
+      "retrieved_at": "2026-11-22T17:42:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 1.0
+    },
+    {
       "topic": "ai-research",
       "domain": "air.models",
       "title": "Anthropic's Models index shows Claude Haiku 5.5 as the newest release",
@@ -10411,6 +10842,62 @@
         "issues": []
       },
       "grounding_score": 1.0
+    },
+    {
+      "id": "puck-in-the-car-5ad868c095",
+      "topic": "ai-research",
+      "domain": "air.tooling",
+      "kind": "story",
+      "kind_reason": "Product feature announcement with no security notice; defaulting to story.",
+      "title": "Amp adds a hands-free car mode for talking to its Puck agent",
+      "summary": "Amp announced that its Puck assistant can now be used by voice while driving, with large on-screen text for quick glances. The iPhone and Android apps enter car mode automatically, and other in-car browsers can open a dedicated URL.",
+      "takeaway": "Product announcement only; little transferable insight for security or agent practice.",
+      "tags": [
+        "amp",
+        "voice-interface",
+        "mobile",
+        "product-announcement"
+      ],
+      "lessons": [
+        {
+          "point": "Amp's mobile apps switch to a car mode automatically, signaling voice-first coding-agent access away from the desk; the post offers no technical detail.",
+          "excerpt": "The Amp apps for iPhone and Android will automatically enter car mode if you use them there.",
+          "confidence": 0.3,
+          "grounded": false
+        }
+      ],
+      "actionable": {
+        "type": "other",
+        "title": "Note Amp car mode exists",
+        "detail": "If using Amp, the apps enter car mode automatically and ampcode.com/car works in other in-car browsers; nothing here needs action."
+      },
+      "scores": {
+        "novelty": 5,
+        "relevance": 8,
+        "newness": 0,
+        "credibility": 52.5,
+        "composite": 11.78,
+        "scored_at": "2026-11-22T17:42:15+00:00"
+      },
+      "verified": true,
+      "prior_art": "Voice or car modes in ChatGPT, Gemini and Claude mobile apps, plus CarPlay and Android Auto voice assistants.",
+      "related_claims": [],
+      "article_url": "https://ampcode.com/news/puck-in-the-car",
+      "published": "2026-11-21",
+      "raw_path": "data/_raw/puck-in-the-car-5ad868c095.txt",
+      "source_id": "rss:https-ampcode-com-news-rss",
+      "source_rank": 52.5,
+      "discovered_via": "rss",
+      "source_name": "Amp",
+      "source_url": "https://ampcode.com/news/puck-in-the-car",
+      "retrieved_at": "2026-11-22T17:42:14+00:00",
+      "needs_review": true,
+      "readability": {
+        "score": 100,
+        "passed": true,
+        "issues": []
+      },
+      "grounding_score": 0.0
     },
     {
       "topic": "ai-research",

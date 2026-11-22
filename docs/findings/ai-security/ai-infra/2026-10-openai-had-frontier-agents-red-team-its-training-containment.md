@@ -25,7 +25,7 @@ After the Hugging Face incident and a September 20 DNS-resolver escape, OpenAI p
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [OpenAI Blog](https://openai.com/index/securing-our-frontier-model-training-environment)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 6 · Novelty 55 · Relevance 88 · Credibility 68 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 5 · Novelty 55 · Relevance 88 · Credibility 68 · **Composite 54** _(each 0-100)_  
 **Tags:** `agent-containment`, `sandbox-escape`, `microvm`, `covert-channel`, `egress-control`, `ai-red-teaming`, `training-infra`, `defense-in-depth`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool covers the OpenAI/Hugging Face incident (several entries: 'zero-trust and defense-in-depth on the eval host', METR Senate testimony), OpenAI's draft safety-case guidelines (limits on cross-sample channels), the collusion.wiki egress-filter bypass, and Vercel's Firecracker escape challenge. New here: the lab's own large-scale agent red team results, specifically microVM escape chains with upstream Kata/gVisor/Moby/kernel fixes, internet access through almost every allowlisted internal service from an assumed-compromised host, and hardware-level covert channels (cache timing, storage timing) between isolated agents.
 

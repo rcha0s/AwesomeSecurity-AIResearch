@@ -18,7 +18,7 @@ CNN reports, citing six unnamed sources, that NSANet, the National Security Agen
 
 **Topic:** Product Security  ·  **Domain:** Cloud, Network & Infrastructure  
 **Source:** [X list](https://www.cnn.com/2026/11/17/politics/highly-classified-national-security-communications-network-goes-down)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 31 · Novelty 40.0 · Relevance 40 · Credibility 60 · **Composite 41** _(each 0-100)_  
+**Scores:** Newness 30 · Novelty 40.0 · Relevance 40 · Credibility 60 · **Composite 40** _(each 0-100)_  
 **Tags:** `nsa`, `nsanet`, `outage`, `patch-management`, `php2shell`, `incident-resilience`, `single-source`, `anonymous-sources`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: PHP2Shell patching-scramble items in product-security.json and ai-security.json cover the vulnerability and remediation wave, but none report a patch-induced outage at NSA; the story is single-source anonymous reporting with a generic lesson.
 

@@ -25,7 +25,7 @@ SQLGlot and SQLFluff parse deeply nested or very wide but syntactically valid SQ
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [Imperva Threat Research](https://www.imperva.com/blog/the-hidden-dos-vector-in-sql-parsers/)  ·  **Retrieved:** 2026-10-25  
-**Scores:** Newness 6 · Novelty 55 · Relevance 70 · Credibility 72 · **Composite 50** _(each 0-100)_  
+**Scores:** Newness 5 · Novelty 55 · Relevance 70 · Credibility 72 · **Composite 50** _(each 0-100)_  
 **Tags:** `denial-of-service`, `parser`, `sqlglot`, `sqlfluff`, `apache-superset`, `dify`, `graphql`, `resource-exhaustion`, `cve-2026-46373`, `cve-2026-46374`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Classic algorithmic-complexity and deep-nesting DoS (billion laughs, JSON/YAML nesting bombs, GraphQL depth/complexity limits, Imperva's own graphql-java DoS write-up). New here: CVEs in the two main Python SQL parsers, measured amplification ratios, and concrete cascades into Superset, Dify and Pathway.
 

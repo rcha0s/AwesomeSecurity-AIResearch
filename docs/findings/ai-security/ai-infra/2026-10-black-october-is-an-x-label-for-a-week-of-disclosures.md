@@ -18,7 +18,7 @@
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [forkast.news](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)  ·  **Retrieved:** 2026-10-29  
-**Scores:** Newness 6 · Novelty 55 · Relevance 80 · Credibility 65 · **Composite 52** _(each 0-100)_  
+**Scores:** Newness 5 · Novelty 55 · Relevance 80 · Credibility 65 · **Composite 52** _(each 0-100)_  
 **Tags:** `black-october`, `php2shell`, `litellm`, `disclosure`, `ai-found-vulnerabilities`, `x-discourse`  
 **Also reported by:** [AISafetyMemes on X (the post that named it)](https://x.com/AISafetyMemes/status/2113113711644737835), [Wiz Research: PHP2Shell](https://www.wiz.io/blog/php2shell-php-rce) _(+2 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: The pool already holds the Wiz PHP2Shell disclosure and a Talos PHP2Shell newsletter; this entry adds the cluster framing and the label's origin.

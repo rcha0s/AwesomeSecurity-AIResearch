@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-21T00:00:00Z</updated>
+  <updated>2026-11-22T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -31,13 +31,6 @@
     <summary type="text">Upgrade NGINX to a fixed build now and do not count on ASLR or traffic volume to keep the HTTP/2 bugs out of reach.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week</id>
-    <title>Trojanized Claude Code extension on Cursor Marketplace plants persistent SSH backdoor</title>
-    <updated>2026-11-14T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=backdoor-in-claude-code-for-vs-code-extension-on-66a4e71dfe#week" rel="alternate" type="text/html" />
-    <summary type="text">An AI coding-assistant extension from the official vendor, served by an editor marketplace, ran with full user rights when loaded, so hunt for integrated development environment (IDE) extension hosts writing to ~/.ssh and LaunchAgents and do not treat uninstalling as remediation.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week</id>
     <title>New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell</title>
     <updated>2026-11-19T00:00:00Z</updated>
@@ -50,6 +43,20 @@
     <updated>2026-11-17T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week" rel="alternate" type="text/html" />
     <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week</id>
+    <title>Malicious Microsoft agent-framework PyPI versions steal Azure and CI credentials</title>
+    <updated>2026-11-17T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week" rel="alternate" type="text/html" />
+    <summary type="text">Teams building agents on Python SDKs should pin versions, scan site-packages for unexpected .pth files, and treat any host that ran 1.26.1 or 1.26.2 as having leaked its cloud identities.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week</id>
+    <title>Signal blocks OS AI agents from screenshotting chats, calls fix incomplete</title>
+    <updated>2026-11-21T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week" rel="alternate" type="text/html" />
+    <summary type="text">Apps cannot rely on a screenshot block to keep data from agents that hold broad OS permissions, so permission scope for agents needs its own controls.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week</id>
@@ -66,25 +73,18 @@
     <summary type="text">A perimeter appliance with a public exploit can become a foothold into internal systems within weeks of the patch, so patch fast and segment the network.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week</id>
+    <title>PHP patches seven critical remote code execution flaws</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week" rel="alternate" type="text/html" />
+    <summary type="text">Session handling and PHP-FPM request parsing are now recurring sources of code execution, so patch PHP promptly after the PHP2Shell wave.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
     <title>Dragos canary prompts found three AI hosting providers breached</title>
     <updated>2026-11-19T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week" rel="alternate" type="text/html" />
     <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=masato-kinugawa-solves-portswigger-s-impossible-6bf77cec60#week</id>
-    <title>Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element</title>
-    <updated>2026-11-18T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=masato-kinugawa-solves-portswigger-s-impossible-6bf77cec60#week" rel="alternate" type="text/html" />
-    <summary type="text">New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-npm-package-installs-hermes-agent-as-a-95c0c42f3a#week</id>
-    <title>Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=malicious-npm-package-installs-hermes-agent-as-a-95c0c42f3a#week" rel="alternate" type="text/html" />
-    <summary type="text">A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>
