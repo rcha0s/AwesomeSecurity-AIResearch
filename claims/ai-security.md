@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-22_
+_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-23_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -300,7 +300,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 
 **Conditions —** Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.
 
-<details><summary>Evidence (6)</summary>
+<details><summary>Evidence (7)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -310,6 +310,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 | supports | [Check Point found ARTEX operators letting AI agents run cybercrime campaigns unattended](https://research.checkpoint.com/2026/hacking-on-autopilot-inside-artex-cybercrime-campaigns/) | Nov 5, 2026 |
 | supports | [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) | Nov 5, 2026 |
 | supports | [Amazon says China-linked attackers used AI agents to exploit a university zero-day](https://www.theregister.com/security/2026/11/20/china-attackers-deployed-ai-agents-that-autonomously-found-and-exploited-a-0-day-to-take-over-a-university-server/5311382) | Nov 20, 2026 |
+| supports | [Wiz counts twenty more disclosed incidents since Black October amid agentic attacks](https://www.wiz.io/blog/agentic-attacks-artex-offensive-ai-frameworks) | Nov 23, 2026 |
 
 </details>
 

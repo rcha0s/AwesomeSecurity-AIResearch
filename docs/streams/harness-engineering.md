@@ -2,11 +2,11 @@
 
 _How to build agent and coding harnesses that cost less, run faster, fail less and get more correct work done: measured results from papers, lab and practitioner engineering blogs, with the standing claims they support._
 
-_Generated 2026-11-22 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
+_Generated 2026-11-23 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings had their quotes checked against the source and passed, but sat below the Briefing's score bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
 
-33 live claims, 15 vetted findings, 12 worth a look.
+33 live claims, 15 vetted findings, 13 worth a look.
 
 - [Cost efficiency](#cost-efficiency): 11 claims, 8 findings
 - [Work efficiency](#work-efficiency): 6 claims, 1 finding
@@ -15,7 +15,7 @@ This page is meant to be fetched by an agent harness, like [efficiency.md](https
 - [Context and memory](#context-memory): 5 claims, 1 finding
 - [Tools and interfaces](#tools-interfaces): 3 claims, 3 findings
 - [Orchestration and multi-agent](#orchestration): 0 claims, 2 findings
-- [Evaluating harnesses](#harness-evals): 2 claims, 6 findings
+- [Evaluating harnesses](#harness-evals): 2 claims, 7 findings
 - [Harness design](#harness-design): 6 claims, 5 findings
 
 <a id="cost-efficiency"></a>
@@ -552,8 +552,11 @@ Evidence, newest first:
   Effective automated red-teaming of agent harnesses should evolve reusable, attributable attack skills rather than replay fixed attacks or full trajectories.
   Try: Red-team the harness, not just the model. Adopt an evolving-skill red-team loop that profiles which jailbreak tools actually decide success (tool attribution), distills wins into concise reusable skills, and gates updates behind a validation ratchet; evaluate transfer across multiple target harnesses and attacker models to estimate real-world risk.
 
-**Worth a look** (3)
+**Worth a look** (4)
 
+- **[Hugging Face guide shows how to build and validate an agentic evaluation](https://huggingface.co/blog/agentic-evals)** · 2026-11-23 · Hugging Face Blog
+  Before you trust an agent eval, run a do-nothing agent and a shortcut solution against the grader, and read the traces.
+  Try: Test every grader with a null agent and a shortcut solution. Before running models, confirm the reference solution passes, a do-nothing agent fails, and a script that skips the required work fails; then report pass^k as well as pass@k.
 - **[Eugene Yan finds graders failed valid work in eight of twelve evals](https://eugeneyan.com/writing/public-evals)** · 2026-11-19 · Eugene Yan
   Read a benchmark score as a model-plus-harness-plus-grader result, and audit the grader before trusting the ranking.
   Try: Audit your eval graders and report pass^k. Add a do-nothing agent and an adversarial agent as negative tests, review tasks that several strong models fail the same way, run each task k times and report pass^k next to average pass rate, and score models inside your own harness.
