@@ -24,11 +24,11 @@
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 29,
+    "ingested": 30,
     "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 34,
+    "ingested": 35,
     "curated": 0
   },
   "newsletter:https-newsletter-pragmaticengineer-com-feed": {
@@ -80,7 +80,7 @@
     "ingested": 7
   },
   "rss:https-citizenlab-ca-feed": {
-    "ingested": 3,
+    "ingested": 5,
     "curated": 0
   },
   "rss:https-danielmiessler-com-feed-rss": {
@@ -96,7 +96,7 @@
     "curated": 0
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 18,
+    "ingested": 20,
     "curated": 1
   },
   "rss:https-genai-owasp-org-feed": {
@@ -112,7 +112,7 @@
     "curated": 1
   },
   "rss:https-huggingface-co-blog-feed-xml": {
-    "ingested": 7,
+    "ingested": 8,
     "curated": 1
   },
   "rss:https-labs-watchtowr-com-rss": {
@@ -132,7 +132,7 @@
     "curated": 2
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 23,
+    "ingested": 24,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -160,7 +160,7 @@
     "curated": 0
   },
   "rss:https-simonwillison-net-atom-everything": {
-    "ingested": 22,
+    "ingested": 23,
     "curated": 6
   },
   "rss:https-snyk-io-blog-feed": {
@@ -224,7 +224,7 @@
     "curated": 0
   },
   "rss:https-www-securityweek-com-feed": {
-    "ingested": 13,
+    "ingested": 14,
     "curated": 0
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
@@ -240,7 +240,7 @@
     "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
-    "ingested": 10,
+    "ingested": 11,
     "curated": 0
   },
   "youtube:ucbrp3c757lwg9m-u7tyekxa": {

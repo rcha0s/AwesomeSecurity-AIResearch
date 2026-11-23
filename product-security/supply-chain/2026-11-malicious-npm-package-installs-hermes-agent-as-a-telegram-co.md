@@ -25,7 +25,7 @@ The npm package @leadstack/crm-connect posed as a CRM client and, on install, se
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [SafeDep](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)  ·  **Retrieved:** 2026-11-20  
-**Scores:** Newness 30 · Novelty 60 · Relevance 85 · Credibility 47 · **Composite 58** _(each 0-100)_  
+**Scores:** Newness 28 · Novelty 60 · Relevance 85 · Credibility 47 · **Composite 58** _(each 0-100)_  
 **Tags:** `npm`, `malicious-package`, `hermes-agent`, `ai-agent-implant`, `telegram-c2`, `systemd-persistence`, `postinstall`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: data/product-security.json has the Offsec Harness Index entry listing Hermes Agent as tied to a confirmed breach, and the page cites ThreatDown's September 2026 Carbonato botnet that runs Hermes Agent via exposed Docker APIs. This is the first npm-install delivery SafeDep has seen, with the agent persona fetched at install time so it can change without a new release.
 

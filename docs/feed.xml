@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-22T00:00:00Z</updated>
+  <updated>2026-11-23T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -45,6 +45,20 @@
     <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week</id>
+    <title>Attackers exploit critical Cisco Expressway flaw to breach a Russian organization</title>
+    <updated>2026-11-20T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week" rel="alternate" type="text/html" />
+    <summary type="text">A perimeter appliance with a public exploit can become a foothold into internal systems within weeks of the patch, so patch fast and segment the network.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week</id>
+    <title>PHP patches seven critical remote code execution flaws</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week" rel="alternate" type="text/html" />
+    <summary type="text">Session handling and PHP-FPM request parsing are now recurring sources of code execution, so patch PHP promptly after the PHP2Shell wave.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week</id>
     <title>Malicious Microsoft agent-framework PyPI versions steal Azure and CI credentials</title>
     <updated>2026-11-17T00:00:00Z</updated>
@@ -64,20 +78,6 @@
     <updated>2026-11-18T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week" rel="alternate" type="text/html" />
     <summary type="text">AI-assisted bug hunting is finding old, severe flaws in foundational software faster than defenders can patch, so assume internet-facing systems are vulnerable.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week</id>
-    <title>Attackers exploit critical Cisco Expressway flaw to breach a Russian organization</title>
-    <updated>2026-11-20T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week" rel="alternate" type="text/html" />
-    <summary type="text">A perimeter appliance with a public exploit can become a foothold into internal systems within weeks of the patch, so patch fast and segment the network.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week</id>
-    <title>PHP patches seven critical remote code execution flaws</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week" rel="alternate" type="text/html" />
-    <summary type="text">Session handling and PHP-FPM request parsing are now recurring sources of code execution, so patch PHP promptly after the PHP2Shell wave.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
