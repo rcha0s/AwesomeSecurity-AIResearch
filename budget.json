@@ -1050,6 +1050,15 @@
       "kind": "reserve",
       "stories": 0,
       "cost_usd": 37.1326
+    },
+    {
+      "run_id": "local-20261124T173517Z-6986",
+      "date": "2026-11-24",
+      "runner": "local",
+      "kind": "actual",
+      "stories": 20,
+      "cost_usd": 2.8555279400000018,
+      "news": 1
     }
   ]
 }
