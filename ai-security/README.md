@@ -2,12 +2,15 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_7 vetted findings · updated 2026-11-23 · ranked by composite · findings from the latest 31 days · [69 held for review](../REVIEW.md)._
+_6 vetted findings · updated 2026-11-24 · ranked by composite · findings from the latest 31 days · [69 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Highflame's Ramparts scans MCP servers and agent skills for attack paths](https://github.com/highflame-ai/ramparts)**
+  _Why now: MCP and skill supply-chain scanning is a live theme, and the drift-baseline check against post-approval swaps is something a defender can adopt now. · trending · high-relevance · timely_
+- **[Attacker's OpenCode agent probed a financial firm, then used a decoy key](https://www.theregister.com/security/2026/11/24/an-ai-coding-agent-a-browser-and-a-mac-tool-found-a-financial-firms-access-key-in-under-6-minutes/5311922)**
 - **[Todoist MCP HTTP server lets websites edit Todoist data via DNS rebinding](https://github.com/advisories/GHSA-833v-v58w-294h)**
   _Why now: Second critical MCP HTTP-mode DNS-rebinding bug: loopback binding is not authentication, so a caller secret is needed. · trending · cve · high-relevance_
 - **[Signal blocks OS AI agents from screenshotting chats, calls fix incomplete](https://thehackernews.com/2026/11/signal-blocks-ai-agents-from-reading.html)**
@@ -151,41 +154,38 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| AI Infrastructure & Incident Response | 4 |
+| AI Infrastructure & Incident Response | 3 |
 | Agent & Harness Security | 1 |
 | Red-Teaming & Threat Modeling | 1 |
 | Memory, RAG & Data Poisoning | 1 |
 
 ## AI Infrastructure & Incident Response
 
-- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **70.25** · Nov 19, 2026  
+- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **69.25** · Nov 19, 2026  
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.  
   _[www.dragos.com](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)_
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **59.44** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **59.19** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
 - **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.25** · Oct 27, 2026  
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.  
   _[docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)_
-- **["Black October" is an X label for a week of disclosures](ai-infra/2026-10-black-october-is-an-x-label-for-a-week-of-disclosures.md)** · composite **51.5** · Oct 23, 2026 · 🔗 +2 sources  
-  Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.  
-  _[forkast.news](https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/)_
 
 ## Agent & Harness Security
 
-- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **57.25** · Nov 7, 2026  
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **57.0** · Nov 7, 2026  
   Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.  
   _[@shmulc via Hacker News](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)_
 
 ## Red-Teaming & Threat Modeling
 
-- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **56.8** · Nov 12, 2026  
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **56.55** · Nov 12, 2026  
   If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.  
   _[NDSS (via arXiv)](http://arxiv.org/abs/2611.16693v1)_
 
 ## Memory, RAG & Data Poisoning
 
-- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **53.8** · Nov 6, 2026  
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **53.55** · Nov 6, 2026  
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted…  
   _[NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)_
 

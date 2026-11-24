@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-23T00:00:00Z</updated>
+  <updated>2026-11-24T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -66,25 +66,25 @@
     <summary type="text">Teams building agents on Python SDKs should pin versions, scan site-packages for unexpected .pth files, and treat any host that ran 1.26.1 or 1.26.2 as having leaked its cloud identities.</summary>
   </entry>
   <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=amazon-china-linked-attackers-used-ai-agents-to-f597dd63c0#week</id>
+    <title>Amazon: China-linked attackers used AI agents to exploit a university zero-day</title>
+    <updated>2026-11-20T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=amazon-china-linked-attackers-used-ai-agents-to-f597dd63c0#week" rel="alternate" type="text/html" />
+    <summary type="text">Attacker agents now chain recon, failed attempts and a fresh zero-day over a day with little human input.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week</id>
+    <title>OpenAI and Cisco launch Shirudo, agent-written eBPF shields for unpatched Linux</title>
+    <updated>2026-11-24T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week" rel="alternate" type="text/html" />
+    <summary type="text">Virtual patching by agents is arriving; require operator approval, shadow-mode testing and signing before any machine-written kernel control runs in production.</summary>
+  </entry>
+  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week</id>
     <title>Signal blocks OS AI agents from screenshotting chats, calls fix incomplete</title>
     <updated>2026-11-21T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week" rel="alternate" type="text/html" />
     <summary type="text">Apps cannot rely on a screenshot block to keep data from agents that hold broad OS permissions, so permission scope for agents needs its own controls.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week</id>
-    <title>Researchers using AI find critical NGINX HTTP/2 code execution flaws</title>
-    <updated>2026-11-18T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week" rel="alternate" type="text/html" />
-    <summary type="text">AI-assisted bug hunting is finding old, severe flaws in foundational software faster than defenders can patch, so assume internet-facing systems are vulnerable.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
-    <title>Dragos canary prompts found three AI hosting providers breached</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week" rel="alternate" type="text/html" />
-    <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>
