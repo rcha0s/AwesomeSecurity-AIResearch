@@ -25,7 +25,7 @@ CVE-2026-6460 lets a database user who can create objects change a composite typ
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [The Hacker News](https://thehackernews.com/2026/11/postgresql-patches-52-flaws-including.html)  ·  **Retrieved:** 2026-11-14  
-**Scores:** Newness 27 · Novelty 70 · Relevance 82 · Credibility 46 · **Composite 59** _(each 0-100)_  
+**Scores:** Newness 26 · Novelty 70 · Relevance 82 · Credibility 46 · **Composite 59** _(each 0-100)_  
 **Tags:** `postgresql`, `type-confusion`, `rce`, `database-security`, `managed-databases`, `c-extensions`, `pg-restore`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No PostgreSQL entry is on file. The closest general prior art is earlier database memory-safety and authenticated-RCE bugs.
 

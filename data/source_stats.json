@@ -20,7 +20,7 @@
     "curated": 10
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 20,
+    "ingested": 21,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
@@ -36,7 +36,7 @@
     "curated": 0
   },
   "newsletter:https-www-latent-space-feed": {
-    "ingested": 8,
+    "ingested": 10,
     "curated": 0
   },
   "research_index:https-www-aisi-gov-uk-blog": {
@@ -48,7 +48,7 @@
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 18,
+    "ingested": 19,
     "curated": 3
   },
   "rss:http-export-arxiv-org-rss-cs-cr": {
@@ -80,7 +80,7 @@
     "ingested": 7
   },
   "rss:https-citizenlab-ca-feed": {
-    "ingested": 5,
+    "ingested": 6,
     "curated": 0
   },
   "rss:https-danielmiessler-com-feed-rss": {
@@ -96,7 +96,7 @@
     "curated": 0
   },
   "rss:https-feeds-feedburner-com-thehackersnews": {
-    "ingested": 22,
+    "ingested": 24,
     "curated": 1
   },
   "rss:https-genai-owasp-org-feed": {
@@ -128,11 +128,11 @@
     "curated": 0
   },
   "rss:https-metr-org-feed-xml": {
-    "ingested": 7,
+    "ingested": 8,
     "curated": 2
   },
   "rss:https-openai-com-blog-rss-xml": {
-    "ingested": 24,
+    "ingested": 26,
     "curated": 1
   },
   "rss:https-portswigger-net-research-rss": {
@@ -160,7 +160,7 @@
     "curated": 0
   },
   "rss:https-simonwillison-net-atom-everything": {
-    "ingested": 23,
+    "ingested": 24,
     "curated": 6
   },
   "rss:https-snyk-io-blog-feed": {
@@ -168,7 +168,7 @@
     "curated": 1
   },
   "rss:https-socket-dev-api-blog-feed-atom": {
-    "ingested": 1,
+    "ingested": 2,
     "curated": 0
   },
   "rss:https-specterops-io-blog-category-research-feed": {
@@ -184,11 +184,11 @@
     "curated": 0
   },
   "rss:https-www-amazon-science-index-rss": {
-    "ingested": 3,
+    "ingested": 4,
     "curated": 0
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 15,
+    "ingested": 16,
     "curated": 0
   },
   "rss:https-www-carriermanagement-com-feed": {
@@ -228,7 +228,7 @@
     "curated": 0
   },
   "rss:https-www-securityweek-com-feed": {
-    "ingested": 16,
+    "ingested": 18,
     "curated": 1
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {

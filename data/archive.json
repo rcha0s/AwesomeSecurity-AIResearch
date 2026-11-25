@@ -40500,5 +40500,339 @@
       "issues": []
     },
     "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "harsha-iiiv-openapi-mcp-generator-85d4405155",
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "openapi-mcp-generator 5.0 turns OpenAPI specs into MCP servers",
+    "summary": "openapi-mcp-generator is a command-line tool that turns any OpenAPI 3.x spec into a Model Context Protocol (MCP) server that proxies agent tool calls to an existing REST API. Version 5.0 makes tool calls fail closed when upstream credentials are missing; external $ref fetching is off by default to prevent server-side request forgery (SSRF) while parsing, and arguments are checked against JSON Schema without eval. Inbound auth on HTTP transports still defaults to none, and every exposed API operation becomes an agent tool unless you filter it.",
+    "lessons": [
+      {
+        "point": "Remote $ref resolution is off by default because resolving it while parsing a spec could be used for SSRF.",
+        "excerpt": "Allow resolving external `http(s)` `$ref` references in the spec. Disabled by default to prevent SSRF during parsing.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Missing upstream credentials now block the call instead of sending an unauthenticated request.",
+        "excerpt": "calls fail closed when required credentials are missing.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "HTTP transports have no inbound authentication unless you opt in to a bearer token.",
+        "excerpt": "Inbound auth for HTTP transports: `none` or `bearer`. With `bearer`, clients must send `Authorization: Bearer <token>` (`MCP_AUTH_TOKEN`).",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Tool risk hints come from the HTTP method, not from what the endpoint actually does.",
+        "excerpt": "`PUT` and `DELETE` are destructive and idempotent; `PATCH` is destructive and not idempotent",
+        "confidence": 0.75,
+        "grounded": false
+      }
+    ],
+    "takeaway": "Auto-generated MCP servers expose your whole API to an agent by default, so filter operations and turn on inbound auth before you deploy one.",
+    "tags": [
+      "mcp",
+      "openapi",
+      "code-generation",
+      "secure-defaults",
+      "ssrf"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Generate a narrowed, authenticated MCP server from your OpenAPI spec",
+      "detail": "Run openapi-mcp-generator with --transport=streamable-http --inbound-auth bearer and set MCP_AUTH_TOKEN; use --include-tags or --exclude-operations to drop destructive endpoints; keep --allow-external-refs and --insecure off; do not set MCP_ALLOW_MISSING_CREDENTIALS=true."
+    },
+    "scores": {
+      "novelty": 30,
+      "relevance": 45,
+      "newness": 5,
+      "credibility": 68.8,
+      "composite": 34.07,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "prior_art": "Generic OpenAPI-to-MCP bridges (for example FastMCP's OpenAPI import) and pool entries on MCP server hardening such as the MCP ZAP distroless runtime and BurpMCP-Ultra scope-gate; this is a README for a tool with security-minded defaults, not a new finding. Verifier: Generic OpenAPI-to-MCP bridges (e.g. FastMCP.from_openapi, Speakeasy/Stainless MCP generators) and archive entries on MCP server hardening (ToolHive MCP SSRF, AWS API MCP Server fail-open) already cover auto-generated MCP servers and SSRF and fail-open defaults.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [
+      "ssrf-guards-must-cover-agent-outbound-calls",
+      "few-distinct-tools-beat-many"
+    ],
+    "threat": "An agent, or an unauthenticated network client, can call every API operation the spec exposes through the generated server.",
+    "conditions": "HTTP transports deployed with the default --inbound-auth none, or specs that include destructive operations without tag or operation filtering.",
+    "mitigations": "Enable --inbound-auth bearer, filter operations by tag or operationId, keep external $ref resolution and TLS skipping disabled, and leave credential fail-closed behavior on.",
+    "source_url": "https://github.com/harsha-iiiv/openapi-mcp-generator",
+    "article_url": "https://github.com/harsha-iiiv/openapi-mcp-generator",
+    "tweet_url": null,
+    "author": "harsha-iiiv",
+    "date": "2026-10",
+    "published": "2026-10-24",
+    "raw_path": "data/_raw/harsha-iiiv-openapi-mcp-generator-85d4405155.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:mcp-protocol-or-mcp-specification",
+    "source_rank": 68.8,
+    "source_topics": [
+      "ai-security"
+    ],
+    "source_name": "harsha-iiiv/openapi-mcp-generator",
+    "id": "openapi-mcp-generator-5-0-turns-openapi-specs-in-ed4f9b5acb",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 0.75
+  },
+  {
+    "candidate_id": "lanbaoshen-mcp-jenkins-0f479fb094",
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "mcp-jenkins exposes an arbitrary Groovy execution tool and binds 0.0.0.0 by default",
+    "summary": "mcp-jenkins is a Model Context Protocol (MCP) server that lets AI assistants drive Jenkins: read jobs and logs, trigger and stop builds, approve pipeline inputs, and download artifacts. Its tool list includes run_groovy_script, which runs arbitrary Groovy on Jenkins, which amounts to code execution on Jenkins. Over the streamable-http transport it listens on 0.0.0.0 by default, read-only mode is off by default, and callers can supply the Jenkins URL and credentials in request headers.",
+    "lessons": [
+      {
+        "point": "One exposed tool gives the agent full Groovy code execution on Jenkins.",
+        "excerpt": "Execute an arbitrary Groovy script on Jenkins.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The HTTP transport binds to all interfaces unless you change it.",
+        "excerpt": "Host address for `streamable-http` transport. Default is `0.0.0.0`",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "In HTTP mode the caller chooses the target Jenkins server through a header.",
+        "excerpt": "The URL of the Jenkins server. (Http app can set it via headers `x-jenkins-url`)",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Without credentials, the server's power equals whatever Jenkins grants anonymous users.",
+        "excerpt": "what the server can then do is decided by the anonymous user's permissions in Jenkins.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Treat a Jenkins MCP server as code execution on your CI: give it a token without script rights, enable read-only mode, and keep it off the network.",
+    "tags": [
+      "mcp",
+      "jenkins",
+      "ci-cd",
+      "excessive-agency",
+      "groovy"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Lock down mcp-jenkins before connecting an agent",
+      "detail": "Run with --read-only, bind --host 127.0.0.1 (or use stdio), use a dedicated Jenkins API token whose account lacks Overall/Administer and Script Console rights so run_groovy_script cannot run, and do not expose the HTTP port where untrusted clients can set x-jenkins-* headers."
+    },
+    "scores": {
+      "novelty": 25,
+      "relevance": 45,
+      "newness": 5,
+      "credibility": 68.8,
+      "composite": 32.57,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "prior_art": "Jenkins Script Console abuse is long-known CI attack tradecraft, and the pool already covers overpowered MCP servers (BurpMCP-Ultra scope-gate, AWS API MCP Server fail-open); this README adds a concrete example rather than a new technique. Verifier: Jenkins script console = RCE is long-established (Jenkins docs and pentest lore), and archive entries on powerful MCP servers (BurpMCP-Ultra scope-gate, MCP ZAP distroless) already cover 'dangerous tool exposed via MCP'. This is a specific instance, not a new class.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [
+      "agent-tool-selection-can-be-steered-by-untrusted-context",
+      "prompt-injection-is-containment-not-prevention"
+    ],
+    "threat": "A prompt-injected or misused agent calls run_groovy_script or build tools to execute code on the Jenkins controller, steal secrets, or tamper with builds.",
+    "conditions": "mcp-jenkins connected with credentials that can use the Script Console, read-only mode off, or the HTTP transport reachable on the default 0.0.0.0 bind.",
+    "mitigations": "Enable --read-only, use least-privilege Jenkins credentials without script rights, bind to localhost or use stdio, and require approval for write tools in the MCP client.",
+    "source_url": "https://github.com/lanbaoshen/mcp-jenkins",
+    "article_url": "https://github.com/lanbaoshen/mcp-jenkins",
+    "tweet_url": null,
+    "author": "lanbaoshen",
+    "date": "2026-10",
+    "published": "2026-10-24",
+    "raw_path": "data/_raw/lanbaoshen-mcp-jenkins-0f479fb094.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:mcp-protocol-or-mcp-specification",
+    "source_rank": 68.8,
+    "source_topics": [
+      "ai-security"
+    ],
+    "source_name": "lanbaoshen/mcp-jenkins",
+    "id": "mcp-jenkins-exposes-an-arbitrary-groovy-executio-d0f085c168",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "dmeiser-nextdns-mcp-06bd629168",
+    "topic": "ai-security",
+    "domain": "ais.mcp-tools",
+    "title": "NextDNS MCP server ships unauthenticated HTTP mode with DNS-rebinding protection off",
+    "source_url": "https://github.com/dmeiser/nextdns-mcp",
+    "summary": "A FastMCP server that exposes the NextDNS API through about 8 grouped CRUD tools, with per-profile read/write allowlists and a read-only mode. Its optional streamable-HTTP transport has no built-in authentication and binds to loopback by default. The README itself admits loopback does not stop DNS rebinding from a browser, yet FastMCP's Host/Origin validation is not enabled by default. In that mode a malicious page could reach a tool surface holding a NextDNS API key.",
+    "takeaway": "Mostly a generic MCP wrapper. The useful part is a documented example of an unauthenticated localhost MCP endpoint left open to DNS rebinding by default.",
+    "lessons": [
+      {
+        "point": "Binding to loopback does not stop a malicious web page in the local browser from reaching an unauthenticated MCP endpoint.",
+        "excerpt": "on its own it does not stop a browser on that host from being tricked into reaching it (DNS rebinding)",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "An unauthenticated MCP server exposes its full credential reach to anyone who can connect.",
+        "excerpt": "because it exposes every tool — and the full reachability of your NextDNS API key — to anyone who can reach the port",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Server-side per-resource read/write scoping limits the damage a steered agent can do.",
+        "excerpt": "Fine-grained read/write restrictions per profile, with read-only mode support",
+        "confidence": 0.6,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "mcp-server",
+      "dns-rebinding",
+      "localhost",
+      "fastmcp",
+      "nextdns",
+      "least-privilege"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Use stdio or turn on Host/Origin validation for any localhost HTTP MCP server",
+      "detail": "If you deploy this or any FastMCP server over HTTP, set FASTMCP_HTTP_ALLOWED_HOSTS and FASTMCP_HTTP_HOST_ORIGIN_PROTECTION=auto, or put it behind an authenticating proxy. Default to NEXTDNS_READ_ONLY=true and list only sandbox profiles in NEXTDNS_WRITABLE_PROFILES."
+    },
+    "scores": {
+      "novelty": 18,
+      "relevance": 30,
+      "newness": 5,
+      "credibility": 67.5,
+      "composite": 25.77,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported all claims; the README explains Host/Origin protection is off by default because it would reject the proxy hostname, and the 'every tool' warning is written about non-loopback binds. Verifier novelty 20; kept 18.",
+    "prior_art": "The pool already covers DNS rebinding against unauthenticated localhost MCP servers in depth (DevLabs DebugMCP drive-by RCE, mysql-mcp-server SSE skipping Origin/Host checks), and scoped MCP wrappers (BurpMCP-Ultra, Snyk Evo MCP). This is a restatement in a low-star, generic API wrapper, though one that documents the risk honestly.",
+    "related_claims": [
+      "localhost-agent-servers-are-reachable-from-any-webpage"
+    ],
+    "threat": "DNS rebinding from a malicious web page against the unauthenticated loopback HTTP transport lets an attacker call NextDNS tools (modify denylists or settings, read or clear logs) with the user's API key.",
+    "conditions": "MCP_TRANSPORT=http, FASTMCP_HTTP_HOST_ORIGIN_PROTECTION not enabled (the default), and the user's browser visits an attacker page. The default stdio transport is not affected.",
+    "mitigations": "Use stdio. Otherwise enable Host/Origin protection with an explicit allowed-hosts list, front the server with an authenticating TLS proxy, and use read-only mode or writable-profile allowlists.",
+    "article_url": "https://github.com/dmeiser/nextdns-mcp",
+    "tweet_url": null,
+    "author": "dmeiser",
+    "date": "2026-10",
+    "published": "2026-10-24",
+    "raw_path": "data/_raw/dmeiser-nextdns-mcp-06bd629168.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:mcp-protocol-or-mcp-specification",
+    "source_rank": 67.5,
+    "source_topics": [
+      "ai-security"
+    ],
+    "source_name": "dmeiser/nextdns-mcp",
+    "id": "nextdns-mcp-server-unauthenticated-http-mode-shi-4ef0a0e8a9",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: acronyms 4 > 3 (CRUD, README, FASTMCP, NEXTDNS)",
+        "mild: takeaway_sentences 2 > 1"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "nextdns-mcp-server-unauthenticated-http-mode-ships-with-dns"
+    ]
+  },
+  {
+    "candidate_id": "show-hn-steal-my-bitcoin-acb54aa990",
+    "topic": "product-security",
+    "domain": "ps.offensive",
+    "title": "Public bounty server runs pre-PHP2Shell PHP guarding a bitcoin key",
+    "source_url": "https://stealmybitcoin.com/",
+    "summary": "A Show HN site invites anyone to exploit a server running a PHP version from before the PHP2Shell CVEs were released. A bitcoin key worth about $500 can be read by the PHP user account through a 'print-flag' binary, so code execution as the PHP user is enough to win. The page has a 'hours without a successful hack' counter, which reads as a public, real-world check on whether the PHP2Shell RCE can be weaponized outside a lab.",
+    "takeaway": "This is a public, live test of PHP2Shell exploitability; a non-zero hack counter would be a signal to speed up PHP patching, but the page itself contains no technical detail.",
+    "lessons": [
+      {
+        "point": "The target is deliberately pinned to a PHP version from before the PHP2Shell CVEs, so success would show the published bugs can be exploited outside the original researchers' lab.",
+        "excerpt": "was selected from before the PHP2SHELL CVEs were released",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "The win condition only needs code execution as the PHP user, not privilege escalation, which matches PHP2Shell's RCE impact.",
+        "excerpt": "It is accessible to the PHP user account through the `print-flag` binary.",
+        "confidence": 0.5,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "php2shell",
+      "php",
+      "rce",
+      "bug-bounty-challenge",
+      "exploitability-signal"
+    ],
+    "actionable": {
+      "type": "other",
+      "title": "Watch the counter as a PHP2Shell weaponization signal",
+      "detail": "Revisit stealmybitcoin.com and the HN thread. If the counter resets, look for the write-up and treat it as evidence of a public working exploit, which raises the urgency to upgrade unpatched PHP (especially 8.1 and older, which have no upstream patch)."
+    },
+    "scores": {
+      "novelty": 15,
+      "relevance": 30,
+      "newness": 5,
+      "credibility": 55.0,
+      "composite": 23.0,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported the facts; the 'public check on PHP2Shell exploitability' framing is an inference, and the cached snapshot may not show a live counter. Verifier novelty 30; kept 15.",
+    "prior_art": "The pool covers PHP2Shell itself: the Wiz disclosure (core-PHP memory-safety RCE) and the Talos newsletter (no patch for 8.1 or older). This item adds no technical content, only a live public challenge that tests whether the published bugs can be exploited in practice.",
+    "related_claims": [],
+    "threat": "Possible public demonstration that PHP2Shell can be exploited by people outside the original research team.",
+    "conditions": "PHP runtime from before the PHP2Shell patch.",
+    "mitigations": "Upgrade PHP to the patched release; for 8.1 and older, migrate or apply WAF/CDN PHP2Shell rules as a stopgap.",
+    "article_url": "https://stealmybitcoin.com/",
+    "tweet_url": null,
+    "author": "cloudlandsdev",
+    "date": "2026-10",
+    "published": "2026-10-24",
+    "raw_path": "data/_raw/show-hn-steal-my-bitcoin-acb54aa990.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@cloudlandsdev via Hacker News",
+    "id": "public-bounty-server-runs-pre-php2shell-php-with-b487841f1c",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "public-bounty-server-runs-pre-php2shell-php-with-500-bitcoin"
+    ]
   }
 ]

@@ -1557,10 +1557,18 @@
           "published": "2026-11-05",
           "note": "Leaked long-lived app secrets were used for service principal sign-ins within minutes; Microsoft recommends managed identities and rotation.",
           "source_name": "Microsoft Security Blog"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.bleepingcomputer.com/news/security/radware-discloses-breach-exposing-customer-cloud-access-keys/",
+          "title": "Radware breach exposed customer log-export cloud keys via unauthenticated management API",
+          "published": "2026-11-24",
+          "note": "Radware says customer cloud keys used for log export were potentially accessed, and customers reported AWS alerts; static keys are what a vendor breach exposes.",
+          "source_name": "BleepingComputer"
         }
       ],
       "first_seen": "2021-01",
-      "last_reviewed": "2026-11-08",
+      "last_reviewed": "2026-11-25",
       "guidance": "Migrate CI to OIDC federation. Enforce a max credential age on IAM users.",
       "tags": [
         "aws",
