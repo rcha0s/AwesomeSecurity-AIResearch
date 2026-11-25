@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-24_
+_13 current · 0 contested · 1 superseded · 1 refuted · updated 2026-11-25_
 
 [← Claim index](README.md) · [Product Security findings feed](../product-security/README.md) · [Home](../README.md)
 
@@ -98,7 +98,7 @@ Long-lived static cloud credentials are the most common cause of publicly docume
 
 _Tags: `aws`, `credentials`, `oidc`_
 
-<details><summary>Evidence (7)</summary>
+<details><summary>Evidence (8)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -109,6 +109,7 @@ _Tags: `aws`, `credentials`, `oidc`_
 | supports | ['Gheist' Weaponizes GitHub Tokens to Steal Cloud Secrets](https://www.darkreading.com/cyberattacks-data-breaches/gheist-stolen-github-tokens-cloud-secrets) | Oct 26, 2026 |
 | supports | [Northflank security breach leads to abuse of customers' AI API keys](https://www.bleepingcomputer.com/news/security/northflank-security-breach-leads-to-abuse-of-customers-ai-api-keys/) | Oct 31, 2026 |
 | supports | [Microsoft sees attack agents turn leaked GitHub secrets into Azure breaches](https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/) | Nov 5, 2026 |
+| supports | [Radware breach exposed customer log-export cloud keys via unauthenticated management API](https://www.bleepingcomputer.com/news/security/radware-discloses-breach-exposing-customer-cloud-access-keys/) | Nov 24, 2026 |
 
 </details>
 

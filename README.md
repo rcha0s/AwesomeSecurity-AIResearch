@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--24-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-21-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--25-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-21-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -34,17 +34,17 @@ _From the last 14 days: each has proof (the work itself or a measured comparison
 
 _Most covered in the last 7 days; single-outlet patch notices are left out._
 
-1. **[PHP releases fix 18 flaws, including critical remote code execution bugs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week)** · _Product Security · Nov 19, 2026 · 10 sources_
-2. **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week)** · _Product Security · Nov 17, 2026 · 8 sources_
-3. **[F5 patches five critical NGINX flaws as public exploit code appears](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week)** · _Product Security · Nov 19, 2026 · 7 sources_
+1. **[PHP releases fixes for 17 flaws, seven of them critical](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fixes-for-17-flaws-seven-of-them-cr-9b8fec84ba#week)** · _Product Security · Nov 19, 2026 · 9 sources_
+2. **[F5 patches five critical NGINX flaws as public exploit code appears](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week)** · _Product Security · Nov 19, 2026 · 7 sources_
+3. **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week)** · _Product Security · Nov 19, 2026 · 4 sources_
 
 ## This week's top stories
 
 _The last 7 days, most covered first._
 
-1. **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week)** · _Product Security · Nov 19, 2026 · 4 sources_
-2. **[N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week)** · _Product Security · Nov 17, 2026 · 5 sources_
-3. **[Attackers exploit critical Cisco Expressway flaw to breach a Russian organization](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week)** · _Product Security · Nov 20, 2026 · 3 sources_
+1. **[Attackers exploit critical Cisco Expressway flaw to breach a Russian organization](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week)** · _Product Security · Nov 20, 2026 · 3 sources_
+2. **[PHP patches seven critical remote code execution flaws](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week)** · _Product Security · Nov 19, 2026 · 3 sources_
+3. **[Azure API Management flaw exposed secrets, tied to Norwegian energy firm incidents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=azure-api-management-flaw-exposed-secrets-tied-t-0020ceabf2#week)** · _Product Security · Nov 23, 2026 · 2 sources_
 
 ## Claim changes
 
@@ -82,4 +82,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-24 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-25 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

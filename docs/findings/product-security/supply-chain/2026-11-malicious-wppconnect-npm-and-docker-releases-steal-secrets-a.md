@@ -25,7 +25,7 @@ On November 15-16, 2026, two WPPConnect npm packages were published with a hidde
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [StepSecurity](https://www.stepsecurity.io/blog/wppconnect-compromised-malicious-releases-steal-secrets-and-whatsapp-sessions)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 27 · Novelty 45.0 · Relevance 80 · Credibility 48 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 26 · Novelty 45.0 · Relevance 80 · Credibility 48 · **Composite 51** _(each 0-100)_  
 **Tags:** `npm`, `supply-chain`, `github-actions`, `provenance`, `trusted-publishing`, `credential-theft`, `docker`, `telegram-exfiltration`, `release-cooldown`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Existing product-security entries on import-time payloads, Socket's GitHub Actions hardening/cooldown guidance and release-age delay entries; the valid-SLSA-provenance-on-unreviewed-commit plus tag-rewrite-after-disclosure detail is the new part (minor nit: the lesson says 'attackers with maintainer access' while the source says it did not establish how the account was accessed).
 

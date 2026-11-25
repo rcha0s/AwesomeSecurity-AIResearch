@@ -6,22 +6,15 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-24T00:00:00Z</updated>
+  <updated>2026-11-25T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week</id>
-    <title>PHP releases fix 18 flaws, including critical remote code execution bugs</title>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fixes-for-17-flaws-seven-of-them-cr-9b8fec84ba#week</id>
+    <title>PHP releases fixes for 17 flaws, seven of them critical</title>
     <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fix-18-flaws-including-critical-rem-ea5748b555#week" rel="alternate" type="text/html" />
-    <summary type="text">Upgrade to PHP 8.5.13, 8.4.28, 8.3.37 or 8.2.36, and check now whether your web server reuses connections to PHP-FPM.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week</id>
-    <title>OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs</title>
-    <updated>2026-11-17T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=java4shell-remote-code-execution-in-openjdk-cve-3ce305735b#week" rel="alternate" type="text/html" />
-    <summary type="text">Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.</summary>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fixes-for-17-flaws-seven-of-them-cr-9b8fec84ba#week" rel="alternate" type="text/html" />
+    <summary type="text">October's PHP2Shell fixes do not cover these new remote code execution paths, so teams that already patched once still need to update.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week</id>
@@ -38,13 +31,6 @@
     <summary type="text">Set session.upload_progress.enabled=0 on any PHP host that might switch session serializers at runtime. It is the stopgap for CVE-2026-115560 until a patch ships.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week</id>
-    <title>N-able takes hosted N-central offline after researcher publishes 33 zero-day exploits</title>
-    <updated>2026-11-17T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=n-able-takes-hosted-n-central-offline-after-rese-5b959f2d42#week" rel="alternate" type="text/html" />
-    <summary type="text">Remote management platforms hold admin access to many customer networks, so a public exploit release for one can force an outage and an emergency shutdown.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week</id>
     <title>Attackers exploit critical Cisco Expressway flaw to breach a Russian organization</title>
     <updated>2026-11-20T00:00:00Z</updated>
@@ -59,11 +45,11 @@
     <summary type="text">Session handling and PHP-FPM request parsing are now recurring sources of code execution, so patch PHP promptly after the PHP2Shell wave.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week</id>
-    <title>Malicious Microsoft agent-framework PyPI versions steal Azure and CI credentials</title>
-    <updated>2026-11-17T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-agent-framework-compromised-credential-ecfdd2abfb#week" rel="alternate" type="text/html" />
-    <summary type="text">Teams building agents on Python SDKs should pin versions, scan site-packages for unexpected .pth files, and treat any host that ran 1.26.1 or 1.26.2 as having leaked its cloud identities.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=azure-api-management-flaw-exposed-secrets-tied-t-0020ceabf2#week</id>
+    <title>Azure API Management flaw exposed secrets, tied to Norwegian energy firm incidents</title>
+    <updated>2026-11-23T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=azure-api-management-flaw-exposed-secrets-tied-t-0020ceabf2#week" rel="alternate" type="text/html" />
+    <summary type="text">If you run Azure API Management Classic, rotate every secret and named value stored in it and check access logs.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=amazon-china-linked-attackers-used-ai-agents-to-f597dd63c0#week</id>
@@ -85,6 +71,20 @@
     <updated>2026-11-21T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week" rel="alternate" type="text/html" />
     <summary type="text">Apps cannot rely on a screenshot block to keep data from agents that hold broad OS permissions, so permission scope for agents needs its own controls.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week</id>
+    <title>Researchers using AI find critical NGINX HTTP/2 code execution flaws</title>
+    <updated>2026-11-18T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week" rel="alternate" type="text/html" />
+    <summary type="text">AI-assisted bug hunting is finding old, severe flaws in foundational software faster than defenders can patch, so assume internet-facing systems are vulnerable.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
+    <title>Dragos canary prompts found three AI hosting providers breached</title>
+    <updated>2026-11-19T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week" rel="alternate" type="text/html" />
+    <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>

@@ -18,7 +18,7 @@ Microsoft says a flaw in Azure API Management Classic let an unauthorized party 
 
 **Topic:** Product Security  ·  **Domain:** Cloud, Network & Infrastructure  
 **Source:** [SecurityWeek](https://www.securityweek.com/azure-flaw-exploited-to-target-secrets-at-norwegian-energy-firms/)  ·  **Retrieved:** 2026-11-24  
-**Scores:** Newness 27 · Novelty 55 · Relevance 70 · Credibility 45 · **Composite 51** _(each 0-100)_  
+**Scores:** Newness 26 · Novelty 55 · Relevance 70 · Credibility 50 · **Composite 52** _(each 0-100)_  
 **Tags:** `azure`, `apim`, `secrets`, `energy-sector`, `cloud`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Earlier Azure credential-theft flaws (an August 2026 API credential bug); this adds a named vendor flaw tied to energy-sector incidents, with the link still unconfirmed.
 

@@ -1,4 +1,4 @@
-# 📰 Security & AI Research — Daily Snapshot (2026-11-24)
+# 📰 Security & AI Research — Daily Snapshot (2026-11-25)
 
 > A daily-refreshed digest of the most teachable, **vetted** security and AI research from the last 31 days, curated and source-cited. Three tracks: AI Security, Product Security, AI Research.
 
@@ -12,15 +12,15 @@ _Securing AI systems: harness & agent security, MCP, skill scanning, prompt inje
 
 **🔬 Latest research**
 
-- **[Dragos canary prompts found three AI hosting providers breached](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)** · _www.dragos.com_ · composite 69.25
+- **[Dragos canary prompts found three AI hosting providers breached](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)** · _www.dragos.com_ · composite 68.5
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 59.19
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](https://www.anthropic.com/research/provable-inference)** · _Anthropic Research_ · composite 58.94
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.
-- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)** · _@shmulc via Hacker News_ · composite 57.0
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)** · _@shmulc via Hacker News_ · composite 56.75
   Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.
-- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](http://arxiv.org/abs/2611.16693v1)** · _NDSS (via arXiv)_ · composite 56.55
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](http://arxiv.org/abs/2611.16693v1)** · _NDSS (via arXiv)_ · composite 56.3
   If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.
-- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1)** · _NeurIPS (via arXiv)_ · composite 53.55
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](http://arxiv.org/abs/2611.09348v1)** · _NeurIPS (via arXiv)_ · composite 53.3
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted input.
 - **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](https://docs.nvidia.com/openshell/latest/about/overview.html)** · _docs.nvidia.com_ · composite 52.25
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.
@@ -48,7 +48,7 @@ _Not new ideas, but what the field is watching right now — held back by the no
 **📈 Emerging trends**
 
 - **mcp** (🔺 rising) — 41 findings from 21 sources since 2026-02.
-- **prompt-injection** (🔺 rising) — 49 findings from 25 sources since 2026-02.
+- **prompt-injection** (🔺 rising) — 50 findings from 25 sources since 2026-02.
 - **coding-agents** (🔺 rising) — 23 findings from 16 sources since 2026-08-06.
 
 [→ Full AI Security database](ai-security/README.md)
@@ -61,43 +61,43 @@ _Securing products: application security, supply chain, cloud & infra, identity,
 
 **🔬 Latest research**
 
-- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)** · _Datadog Security Labs_ · composite 67.97
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)** · _Datadog Security Labs_ · composite 67.72
   Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 66.6
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/)** · _tl;dr sec (curator link)_ · composite 66.35
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks on how each result…
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://projectzero.google/2026/11/disclosure-policy.html)** · _Google Project Zero_ · composite 64.5
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](https://projectzero.google/2026/11/disclosure-policy.html)** · _Google Project Zero_ · composite 64.25
   A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.
-- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)** · _PortSwigger Research_ · composite 64.29
+- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)** · _PortSwigger Research_ · composite 64.04
   New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.
 - **[Anthropic's unreleased model built five attack chains against major software](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)** · _Anthropic Research_ · composite 60.39
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.
-- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)** · _SafeDep_ · composite 57.26
+- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)** · _SafeDep_ · composite 57.01
   A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.
 
 **📈 Trending & In the News**
 
 _Not new ideas, but what the field is watching right now — held back by the novelty gate, surfaced by the editorial pass for being timely and teachable._
 
+- **[GreyNoise reports suspected AI-driven campaign against Check Point management servers](https://thehackernews.com/2026/11/hackers-compromise-24-check-point.html)**
+  Treat firewall management servers as crown-jewel assets: patch them, restrict who can reach them, and watch for policy unloads.
+  _Why now: Live campaign against Check Point management servers, with suspected AI-driven tooling; gives concrete hardening and monitoring steps for firewall management planes. · trending · newsworthy · timely · high-relevance_
+- **[WordPress blocks six backdoored WP Connect plugins after suspected developer account compromise](https://thehackernews.com/2026/11/wordpress-blocks-six-backdoored-wp.html)**
+  A hijacked maintainer account can push a backdoor into a trusted registry; release holds and cooldowns are what stopped this one.
+  _Why now: Hijacked maintainer account pushed backdoored plugin releases that a registry release hold caught; shows why release holds and cooldowns matter and gives a concrete check list. · newsworthy · timely · widely-reported_
+- **[Radware breach exposed customer log-export cloud keys via unauthenticated management API](https://www.bleepingcomputer.com/news/security/radware-discloses-breach-exposing-customer-cloud-access-keys/)**
+  Static storage keys held by a vendor become your exposure when the vendor is breached; rotate them and scope them to write-only.
+  _Why now: Vendor breach that exposed customer log-export cloud keys, with customers already reporting AWS alerts; the action is to rotate the keys and review bucket access now. · newsworthy · widely-reported · timely · high-relevance_
 - **[CISA adds Apache Axis 1.x unsafe reflection flaw to exploited vulnerabilities list](https://nvd.nist.gov/vuln/detail/CVE-2026-90436)**
   Find any Axis 1.x in your dependency trees and replace it or patch it yourself, because the vendor will not ship a fix.
   _Why now: CISA says an Apache Axis 1.x flaw is exploited and the project will not ship a fix, so owners must find and replace or patch the library themselves. · cve · active-exploitation · timely_
 - **[CISA adds REDCap unauthenticated code execution flaw to exploited vulnerabilities list](https://nvd.nist.gov/vuln/detail/CVE-2026-90817)**
   If you run REDCap 13.3.0 or later, upgrade to a fixed build now and review who can reach your public survey links.
   _Why now: CISA added unauthenticated REDCap code execution to its exploited list with fixed builds on three release lines and a three-day federal deadline. · cve · active-exploitation · timely_
-- **[Malicious Microsoft agent-framework PyPI versions steal Azure and CI credentials](https://www.wiz.io/blog/malicious-version-of-microsofts-agent-framework-published-to-pypi)**
-  Teams building agents on Python SDKs should pin versions, scan site-packages for unexpected .pth files, and treat any host that ran 1.26.1 or 1.26.2 as having leaked its cloud identities.
-  _Why now: Live supply-chain incident in a widely used agent SDK: malicious PyPI releases 1.26.1 and 1.26.2 steal Azure and CI credentials, with concrete checks (pin versions, scan for unexpected .pth files). · newsworthy · active-exploitation · timely · high-relevance_
-- **[Malicious WPPConnect npm and Docker releases steal secrets and WhatsApp sessions](https://www.stepsecurity.io/blog/wppconnect-compromised-malicious-releases-steal-secrets-and-whatsapp-sessions)**
-  Do not treat a trusted publisher or provenance check as proof of review; add release-age delays, environment approval gates on publish workflows, and egress allowlists in CI.
-  _Why now: Malicious npm and Docker releases from a trusted publisher steal secrets and WhatsApp sessions; trusted provenance did not mean reviewed, so release-age delays and publish approval gates apply. · newsworthy · active-exploitation · timely_
-- **[NSA's classified network goes down after patching, with no sign of attack](https://www.cnn.com/2026/11/17/politics/highly-classified-national-security-communications-network-goes-down)**
-  Stage and canary emergency patches, and keep tested fallback paths, because a rushed fix can take down critical systems as an attack would.
-  _Why now: Reported outage of a classified US national-security network after patching, with no sign of attack, amid attack speculation; the teachable point is to stage and canary emergency patches and keep tested fallbacks. · newsworthy · widely-reported · timely_
 
 **📈 Emerging trends**
 
+- **supply-chain** (🔺 rising) — 52 findings from 28 sources since 2026-06-30.
 - **exploited-in-the-wild** (🔺 rising) — 28 findings from 4 sources since 2026-09-23.
-- **supply-chain** (🔺 rising) — 51 findings from 28 sources since 2026-06-30.
 - **artex** (🔺 rising) — 8 findings from 7 sources since 2026-10-21.
 
 [→ Full Product Security database](product-security/README.md)
@@ -110,15 +110,15 @@ _Practitioner AI: improving your harness, understanding, and architecture for us
 
 **🔬 Latest research**
 
-- **[Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)** · _Microsoft Research Blog_ · composite 53.73
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)** · _Microsoft Research Blog_ · composite 53.48
   If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.
-- **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · _@craigmart via Hacker News_ · composite 52.5
+- **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · _@craigmart via Hacker News_ · composite 52.25
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.
-- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122)** · _UC Berkeley Sky Lab (Park et al.)_ · composite 51.75
+- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](https://arxiv.org/abs/2611.12122)** · _UC Berkeley Sky Lab (Park et al.)_ · composite 51.5
   Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.
-- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241)** · _York University (Sepidband et al.)_ · composite 51.75
+- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](https://arxiv.org/abs/2611.13241)** · _York University (Sepidband et al.)_ · composite 51.5
   Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.
-- **[Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306)** · _Belcak et al._ · composite 44.25
+- **[Researchers find agents keep accuracy with short, frequently compacted contexts](https://arxiv.org/abs/2611.05306)** · _Belcak et al._ · composite 44.0
   Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.
 
 **📈 Trending & In the News**
@@ -134,8 +134,8 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 **📈 Emerging trends**
 
-- **evals** (🔺 rising) — 36 findings from 20 sources since 2023-12-07.
-- **coding-agents** (🔺 rising) — 16 findings from 12 sources since 2026-07-21.
+- **coding-agents** (🔺 rising) — 20 findings from 14 sources since 2026-07-21.
+- **evals** (🔺 rising) — 38 findings from 21 sources since 2023-12-07.
 - **benchmarks** (🔺 rising) — 16 findings from 12 sources since 2026-07-09.
 
 [→ Full AI Research database](ai-research/README.md)
@@ -144,4 +144,4 @@ _Not new ideas, but what the field is watching right now — held back by the no
 
 _Every finding links its original source. Curated by the AwesomeSecurity-AIResearch analyzer; low-confidence or unverified items are held for review and not shown here._
 
-<sub>Generated by scripts/generate_newsletter.py on 2026-11-24.</sub>
+<sub>Generated by scripts/generate_newsletter.py on 2026-11-25.</sub>
