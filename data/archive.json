@@ -40055,5 +40055,450 @@
         "published": "2026-10-22"
       }
     ]
+  },
+  {
+    "topic": "ai-security",
+    "domain": "ais.ai-infra",
+    "title": "\"Black October\" is an X label for a week of disclosures",
+    "source_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+    "article_url": "https://forkast.news/black-october-is-a-disclosure-wave-the-label-hides-the-clock/",
+    "source_id": null,
+    "discovered_via": "manual",
+    "source_name": "forkast.news",
+    "published": "2026-10-23",
+    "raw_path": "data/_raw/title-black-october-is-a-disclosure-wave-the-lab-0f3e6f17e4.txt",
+    "related_claims": [],
+    "summary": "\"Black October\" is the name an X post by the AISafetyMemes account gave on 2026-10-22 to the disclosures of Oct 19 to 22. They include PHP2Shell (CVE-2026-109618 and CVE-2026-109619, found by Wiz with frontier AI models), a GitLab 10.0 flaw, a Node.js Brotli RCE, the eMudhra certificate keys and a poisoned LiteLLM 1.107.0. Forkast's reading is that this was a disclosure wave, not an attack wave: most flaws and intrusions are months or years old, and AI models both found the worst bugs and were the target of the credential theft.",
+    "takeaway": "Read the label as a backlog of old defects being dated, not as one new attack; the AI angle is faster discovery and AI credentials as loot.",
+    "lessons": [
+      {
+        "point": "The label compresses events of very different ages into one week; the disclosure date is not the exposure date.",
+        "excerpt": "This was a disclosure wave, not an attack wave.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Frontier models found several of the week's worst flaws, so patch windows will keep shrinking.",
+        "excerpt": "Models and agents found this week’s worst flaws: PHP2Shell through frontier models, Brotli through OpenAI Codex Security researchers.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Dating exposure from the disclosure week hides how long the weak keys, bugs and intrusions were live.",
+        "excerpt": "The week of Oct 19 to 22 is when the bills were dated, not when they were incurred.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "black-october",
+      "php2shell",
+      "litellm",
+      "disclosure",
+      "ai-found-vulnerabilities",
+      "x-discourse"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Date your exposure from when the flaw shipped, not from the headline",
+      "detail": "For each incident in a cluster like this, record when the weakness entered your estate, when it became public and when you patched. Rotate AI provider keys and coding-tool secrets on any host that installed LiteLLM 1.107.0."
+    },
+    "scores": {
+      "novelty": 55,
+      "relevance": 80,
+      "newness": 5,
+      "credibility": 65.0,
+      "composite": 51.5,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "prior_art": "The pool already holds the Wiz PHP2Shell disclosure and a Talos PHP2Shell newsletter; this entry adds the cluster framing and the label's origin.",
+    "verified": true,
+    "verify_note": "Label origin read from the post itself (x.com/AISafetyMemes/status/2113113711644737835, 2026-10-22 03:42 UTC); PHP2Shell CVE ids and dates confirmed at NVD and the Wiz post. Forkast's LiteLLM timeline is vendor-attributed and not independently confirmed here.",
+    "corroborating_sources": [
+      {
+        "name": "AISafetyMemes on X (the post that named it)",
+        "url": "https://x.com/AISafetyMemes/status/2113113711644737835",
+        "published": "2026-10-22"
+      },
+      {
+        "name": "Wiz Research: PHP2Shell",
+        "url": "https://www.wiz.io/blog/php2shell-php-rce",
+        "published": "2026-10-21"
+      }
+    ],
+    "id": "black-october-is-an-x-label-for-a-week-of-disclo-a8254f47f5",
+    "retrieved_at": "2026-10-29T07:30:02+00:00",
+    "needs_review": false,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "date": "2026-10",
+    "story_corroboration": [
+      {
+        "name": "Wiz Research",
+        "url": "https://www.wiz.io/blog/black-october-for-ai-developer-platforms",
+        "tier": "high",
+        "published": null
+      },
+      {
+        "name": "tl;dr sec (curator link)",
+        "url": "https://scrty.io/black-october",
+        "tier": "",
+        "published": null
+      }
+    ]
+  },
+  {
+    "candidate_id": "praetorian-inc-augustus-c9c523c4b2",
+    "topic": "ai-security",
+    "domain": "ais.red-teaming",
+    "title": "Praetorian's Augustus LLM scanner adds multi-turn attackers including Hydra",
+    "summary": "Augustus is Praetorian's single-binary Go scanner that runs 210+ jailbreak, prompt-injection, and data-extraction probes against 28 LLM providers or any REST endpoint. The README documents four multi-turn strategies (Crescendo, GOAT, Hydra, Mischievous User) that use an attacker model, the target, and a judge model. Hydra rolls back refused turns so the target never sees failed attempts. The tool was already in the pool; the earlier entry did not cover the multi-turn engine.",
+    "lessons": [
+      {
+        "point": "Multi-turn probes exist because models leak over several turns what they refuse in one.",
+        "excerpt": "exploiting the fact that models may disclose information incrementally across turns that they would refuse in a single prompt",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Hydra backtracks so the target never sees earlier refused attempts.",
+        "excerpt": "Hydra's backtracking completely removes refused turns from the target's view.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Backtracking only works where you control conversation history; stateful targets disable it.",
+        "excerpt": "Set `stateful: true` for targets where messages cannot be unsent (disables backtracking)",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "If your LLM app keeps client-controlled chat history, test it with multi-turn and backtracking attacks, not just single-prompt jailbreak lists.",
+    "tags": [
+      "llm-red-teaming",
+      "jailbreak",
+      "multi-turn",
+      "prompt-injection",
+      "scanner"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Run Augustus multi-turn probes against your chat endpoint",
+      "detail": "Point augustus scan rest.Rest at your endpoint with a req_template using $INPUT, configure judge and attacker generators, and run crescendo.Crescendo then hydra.Hydra with a goal such as extracting the system prompt; export --html for review and rerun after guardrail changes."
+    },
+    "scores": {
+      "novelty": 15,
+      "relevance": 60,
+      "newness": 5,
+      "credibility": 50.0,
+      "composite": 31.25,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "prior_art": "Already in the pool as 'Augustus: a production LLM vulnerability scanner (210+ probes)' (archive); garak, promptfoo, and PyRIT cover the same probe families, and Crescendo/GOAT are published attacks. Verifier: Augustus is already in archive.json (2026-02, 210+ probes). The multi-turn strategies reimplement Crescendo (Russinovich 2024), GOAT (Pavlova 2024), and backtracking that PyRIT/promptfoo already offer (PyRIT Crescendo backtracking, promptfoo mischievous-user/GOAT/Hydra strategies).",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [
+      "jailbreak-transfers-across-models",
+      "chain-of-thought-does-not-transfer-to-multi-turn"
+    ],
+    "threat": "Jailbreak and data-extraction attacks that succeed through gradual multi-turn escalation even when single-prompt tests pass.",
+    "conditions": "LLM applications that accept multi-turn conversations, especially where the client supplies the message history.",
+    "mitigations": "Keep conversation state server-side, evaluate safety on the whole conversation rather than per message, and add multi-turn probes to regression testing.",
+    "source_url": "https://github.com/praetorian-inc/augustus",
+    "article_url": "https://github.com/praetorian-inc/augustus",
+    "tweet_url": null,
+    "author": "praetorian-inc",
+    "date": "2026-10",
+    "published": "2026-10-23",
+    "raw_path": "data/_raw/praetorian-inc-augustus-c9c523c4b2.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:prompt-injection-llm",
+    "source_rank": 50.0,
+    "source_topics": [
+      "ai-security"
+    ],
+    "source_name": "praetorian-inc/augustus",
+    "id": "praetorian-s-augustus-llm-scanner-adds-multi-tur-b1aaf233ee",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: acronyms 4 > 3 (REST, README, GOAT, INPUT)"
+      ]
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "infostealer-riding-the-ai-train-094624ecae",
+    "topic": "ai-security",
+    "domain": "ais.ai-infra",
+    "title": "Check Point: infostealer adds collection routines for AI desktop apps",
+    "source_url": "https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/",
+    "takeaway": "AI desktop apps and coding tools now sit next to browsers and wallets on infostealer target lists, so their tokens and data need the same protection.",
+    "summary": "Check Point Research describes an infostealer that adds dedicated routines for AI applications and development tools to the usual browser password, cookie and wallet theft. Named targets include Claude, ChatGPT Desktop, Codex, Cursor and Windsurf.",
+    "lessons": [
+      {
+        "point": "The malware targets AI apps and coding tools alongside classic browser data.",
+        "excerpt": "This malware combines those established capabilities with dedicated collection routines for AI applications and development tools.",
+        "confidence": 0.6,
+        "grounded": false
+      }
+    ],
+    "related_claims": [],
+    "article_url": "https://research.checkpoint.com/2026/infostealer-riding-the-ai-train/",
+    "published": "2026-10-23",
+    "raw_path": "data/_raw/infostealer-riding-the-ai-train-094624ecae.txt",
+    "source_id": "rss:https-research-checkpoint-com-feed",
+    "source_rank": 55.0,
+    "discovered_via": "rss",
+    "source_name": "Check Point Research",
+    "id": "check-point-an-infostealer-adds-collection-routi-1d0f0f3c6d",
+    "retrieved_at": "2026-10-24T08:18:14+00:00",
+    "needs_review": true,
+    "news_brief": {
+      "reason": "marker",
+      "markers": [
+        "compromise"
+      ],
+      "sources": 1,
+      "at": "2026-10-24"
+    },
+    "corroborating_sources": [],
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 0.0,
+    "scores": {
+      "newness": 0,
+      "novelty": 0,
+      "relevance": 0,
+      "credibility": 55.0,
+      "composite": 8.25,
+      "scored_at": "2026-10-24T08:18:14+00:00"
+    },
+    "previous_slugs": [
+      "check-point-an-infostealer-adds-collection-routines-for-clau"
+    ]
+  },
+  {
+    "candidate_id": "evolving-threat-http2shell-is-an-rce-in-node-pyt-3aa6521227",
+    "topic": "product-security",
+    "domain": "ps.appsec",
+    "title": "Aikido claims an 'http2shell' RCE in Node and Python; no details captured",
+    "summary": "A Hacker News submission linked an Aikido Security post titled 'Evolving Threat: http2shell is an RCE in Node, Python, and more'. The captured page is only a Nitter bot-check screen, so the affected versions, root cause and fix cannot be confirmed from this source. Treat it as a pointer to find the primary advisory, not as a finding.",
+    "lessons": [
+      {
+        "point": "The archived source is a bot-check interstitial, not the advisory; nothing beyond the title can be verified.",
+        "excerpt": "To defend Nitter from evil bots, click here to continue.",
+        "confidence": 0.95,
+        "grounded": true
+      }
+    ],
+    "takeaway": "A possible cross-runtime RCE is circulating, but this capture has no details; get the primary Aikido or vendor advisory before acting.",
+    "tags": [
+      "http2shell",
+      "rce",
+      "nodejs",
+      "python",
+      "thin-source"
+    ],
+    "actionable": {
+      "type": "other",
+      "title": "Locate the primary http2shell advisory",
+      "detail": "Search Aikido Security's blog and the Node.js and Python security advisories for 'http2shell' to get affected versions and fixes, then inventory Node and Python services exposed over HTTP/2. Do not patch or block based on this capture alone."
+    },
+    "scores": {
+      "novelty": 10,
+      "relevance": 25,
+      "newness": 5,
+      "credibility": 55.0,
+      "composite": 20.0,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "prior_art": "Pool has PHP2Shell (Wiz, unauthenticated RCE in core PHP) and a Node.js decoder memory-safety PoC; whether http2shell is related cannot be determined from this capture. Verifier: No http2shell entry exists in the tracker data. Note that the tracker already covers PHP2Shell (product-security.json), and the naming suggests this may be a related or derivative cross-runtime claim. The primary advisory is needed to judge it.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [],
+    "source_url": "https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8",
+    "article_url": "https://nitter.click/AikidoSecurity/status/2113759110625906950?__galadriel=lPmlGl9id4oAd5UeBwMhlYKArHyr6lR2IDGujPwB5HV2kQ1aLoPWFd5A9sGuzNcmrp8fUso8qygmHcKTDZ8MNHWqQ3bDJcycV87xp_0VypzQLYj6O_RRHlZuQqj33oASGY2YLSoAiMjeOZN40h7Stf8AG7DPrGZbAPVKUXy36HoMudRbvwF3_r2uYNmfJMhpKzywQDM6Ab8",
+    "tweet_url": null,
+    "author": "cowlevel",
+    "date": "2026-10",
+    "published": "2026-10-23",
+    "raw_path": "data/_raw/evolving-threat-http2shell-is-an-rce-in-node-pyt-3aa6521227.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@cowlevel via Hacker News",
+    "id": "aikido-post-claims-http2shell-rce-affects-node-p-5aa4241130",
+    "retrieved_at": "2026-10-24T08:18:13+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "aikido-post-claims-http2shell-rce-affects-node-python-and-mo"
+    ]
+  },
+  {
+    "candidate_id": "dutch-government-had-hacked-into-jared-kushner-s-63bb02b47f",
+    "topic": "product-security",
+    "domain": "ps.detection-response",
+    "title": "Book claims Dutch government hacked Jared Kushner's phone, which Kushner denies",
+    "summary": "Vanity Fair posted an excerpt from a book by Matthew Cole. It cites one unnamed source who said the Dutch government hacked Jared Kushner's phone and watched him access a Dubai bank account. Kushner says the claim is false and that no supporting evidence was provided. The captured source has no technical detail on how a phone was compromised.",
+    "lessons": [
+      {
+        "point": "The hacking claim rests on one unnamed source quoted in a book excerpt.",
+        "excerpt": "The Dutch government had hacked into Jared Kushner’s phone and monitored him as he accessed a Dubai-based bank account.",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "The subject publicly denies it and says no documentary evidence was offered.",
+        "excerpt": "No bank statements, wire transfer records, account numbers, transaction dates, or other verifiable details were provided to support these extraordinary accusations.",
+        "confidence": 0.9,
+        "grounded": true
+      }
+    ],
+    "takeaway": "This is a disputed political allegation with no technical content; treat it as unconfirmed news, not threat intelligence.",
+    "tags": [
+      "state-surveillance",
+      "mobile-compromise",
+      "unverified-claim",
+      "news"
+    ],
+    "actionable": {
+      "type": "other",
+      "title": "No defensive action; monitor for corroboration",
+      "detail": "Nothing to act on until a forensic report (e.g., spyware indicators or exploit chain) or official confirmation appears. Until then, do not cite it as evidence of state mobile intrusion capability."
+    },
+    "scores": {
+      "novelty": 10,
+      "relevance": 10,
+      "newness": 5,
+      "credibility": 55.0,
+      "composite": 15.5,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "prior_art": "State and mercenary phone surveillance of political figures is well documented with forensic evidence (e.g., Citizen Lab spyware reports such as AdFection/Candiru already in the tracker); this item adds an unverified allegation with no technical detail. Verifier: Earlier reports of state hacking of senior officials' phones, such as the 2020 UN-cited allegation that Saudi Arabia hacked Jeff Bezos's iPhone via WhatsApp; there is no related entry in the tracker data files.",
+    "verified": true,
+    "verify_note": "Independent fresh-context verifier re-read the source; the overstatements it flagged were corrected before merge.",
+    "related_claims": [],
+    "source_url": "https://twitter.com/jaredkushner/status/2113376217415958767",
+    "article_url": "https://twitter.com/jaredkushner/status/2113376217415958767",
+    "tweet_url": null,
+    "author": "teekert",
+    "date": "2026-10",
+    "published": "2026-10-23",
+    "raw_path": "data/_raw/dutch-government-had-hacked-into-jared-kushner-s-63bb02b47f.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@teekert via Hacker News",
+    "id": "unverified-book-claim-that-dutch-government-hack-5a26f873d0",
+    "retrieved_at": "2026-10-24T08:18:14+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "unverified-book-claim-that-dutch-government-hacked-jared-kus"
+    ]
+  },
+  {
+    "id": "introducing-kimi-k3-1-pro-888b09c892",
+    "topic": "ai-research",
+    "domain": "air.models",
+    "title": "Moonshot's Kimi K3.1 Pro nears frontier scores, with open weights promised",
+    "summary": "Moonshot released Kimi K3.1 Pro on its API. It promises open weights by Nov 4, 2026, and offers a \"Highspeed\" tier that runs 2-3x faster at twice the price. Pricing is $2 per million input tokens and $10 per million output tokens. Artificial Analysis scored it 55, behind only Claude Opus 5.5 at 58.",
+    "lessons": [
+      {
+        "point": "The Highspeed tier doubles the price but keeps cache-hit input at the same price, so cache-heavy workloads lose less by choosing speed.",
+        "excerpt": "They're also offering a \"Highspeed\" version that's 2-3x faster, at twice the price (except for input token cache hits, which are priced the same).",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Its list price matches GPT-6.1 Sol and is half that of Claude Opus 5.5.",
+        "excerpt": "$2.00/million tokens for input and $10/million for output - the same as GPT-6.1 Sol and half the price of Claude Opus 5.5.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "Willison says a soon-to-be open-weight model has never before scored this close to the frontier.",
+        "excerpt": "This is the first time a (soon-to-be) open weight model has scored this highly against the frontier.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "Generic OpenAI-compatible endpoint runners may not log outputs, so you have to capture stdout and stderr yourself to keep reasoning traces.",
+        "excerpt": "can run prompts against any OpenAI-compatible endpoint but doesn't log the results, hence the extra options to save stdout and stderr (the reasoning trace).",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "A near-frontier open-weight option at half Opus pricing is worth benchmarking on your own agent tasks once the weights ship.",
+    "tags": [
+      "model-release",
+      "kimi",
+      "open-weights",
+      "pricing",
+      "prompt-caching"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Benchmark Kimi K3.1 Pro on your own harness tasks",
+      "detail": "Run your existing agent eval suite against kimi-k3.1-pro through the OpenAI-compatible Moonshot endpoint at low, medium and max reasoning effort. Compare cost per solved task with your current model, and price the Highspeed tier against your cache-hit ratio. Recheck after the Nov 4 weights release if you plan to self-host."
+    },
+    "scores": {
+      "novelty": 20,
+      "relevance": 35,
+      "newness": 5,
+      "credibility": 51.6,
+      "composite": 25.49,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier: lessons are accurately attributed to Willison and Moonshot; the open-weights date is a promise and the price comparisons are Willison's, not independently checked.",
+    "prior_art": "Archive has Kimi K3: Open Frontier Intelligence (tech report) and the Semgrep Kimi K3 code-security eval. This is an incremental release note with vendor and Artificial Analysis benchmark numbers.",
+    "related_claims": [],
+    "source_url": "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/",
+    "article_url": "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-23",
+    "raw_path": "data/_raw/introducing-kimi-k3-1-pro-888b09c892.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-simonwillison-net-atom-everything",
+    "source_rank": 51.6,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Simon Willison's Weblog",
+    "retrieved_at": "2026-10-30T16:55:16+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0
   }
 ]

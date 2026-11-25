@@ -2,7 +2,7 @@
 
 _How to build agent and coding harnesses that cost less, run faster, fail less and get more correct work done: measured results from papers, lab and practitioner engineering blogs, with the standing claims they support._
 
-_Generated 2026-11-23 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
+_Generated 2026-11-24 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings had their quotes checked against the source and passed, but sat below the Briefing's score bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
 

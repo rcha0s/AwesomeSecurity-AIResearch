@@ -2358,10 +2358,26 @@
           "published": "2026-11-23",
           "note": "Wiz reports a four-day intrusion across two AWS accounts and seven EKS clusters run by an agentic framework, and a 3x rise in its incident-response requests.",
           "source_name": "Wiz Research"
+        },
+        {
+          "stance": "supports",
+          "url": "https://unit42.paloaltonetworks.com/autonomous-ai-agent-threat-campaigns/",
+          "title": "Unit 42 tracks 10+ campaigns where autonomous AI agents ran the attacks",
+          "published": "2026-11-24",
+          "note": "In a subset of attacks, the median gap between commands fell from 23.9 seconds under human operators to 1.4 seconds once an AI agent took over.",
+          "source_name": "Palo Alto Networks Unit 42"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.theregister.com/security/2026/11/24/an-ai-coding-agent-a-browser-and-a-mac-tool-found-a-financial-firms-access-key-in-under-6-minutes/5311922",
+          "title": "Attacker's OpenCode agent probed a financial firm, then used a decoy key",
+          "published": "2026-11-24",
+          "note": "An off-the-shelf coding agent ran a probe-and-try-key loop against a live target in about 5 minutes 44 seconds; single-vendor account, nothing real stolen.",
+          "source_name": "The Register"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-23",
+      "last_reviewed": "2026-11-24",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",

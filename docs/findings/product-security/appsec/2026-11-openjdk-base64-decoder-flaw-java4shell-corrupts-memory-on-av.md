@@ -25,7 +25,7 @@ CVE-2026-114938 is an out-of-bounds write in OpenJDK's optimized Base64 decoder,
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)  ·  **Retrieved:** 2026-11-18  
-**Scores:** Newness 28 · Novelty 75.0 · Relevance 85 · Credibility 88 · **Composite 68** _(each 0-100)_  
+**Scores:** Newness 27 · Novelty 75.0 · Relevance 85 · Credibility 88 · **Composite 68** _(each 0-100)_  
 **Tags:** `openjdk`, `java`, `memory-corruption`, `out-of-bounds-write`, `avx-512`, `base64`, `jvm-intrinsics`, `patch-prioritization`, `cve-2026-114938`  
 **Also reported by:** [bleepingcomputer.com](https://www.bleepingcomputer.com/news/security/critical-java4shell-flaw-allows-rce-attacks-on-major-java-applications/), [chainguard.dev](https://www.chainguard.dev/unchained/java4shell-how-a-malformed-base64-string-breaks-the-jvm-on-avx-512), [semgrep.dev](https://semgrep.dev/blog/2026/java4shell-openjdk-base64-vulnerability), [wiz.io](https://www.wiz.io/blog/cve-2026-114938-rce-java4shell-openjdk), [thehackernews.com](https://thehackernews.com/2026/11/oracle-to-patch-11-java-flaws-today-as.html), [calif.io](https://calif.io/java4shell/), [aikido.dev](https://www.aikido.dev/blog/java-17-rce-vulnerability-cve-2026-114938) _(+7 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No earlier OpenJDK, Base64 or AVX-512 intrinsic bug in tracked data (only unrelated base64 mentions); this is a new vulnerability class with a concrete triage method (CPU flag check, intrinsic-specific flag).
