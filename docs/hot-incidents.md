@@ -1,6 +1,6 @@
 # Hot incidents
 
-_Generated 2026-11-25 from data/hot_incidents.json by scripts/generate_html.py. Generated - do not hand-edit._
+_Generated 2026-11-26 from data/hot_incidents.json by scripts/generate_html.py. Generated - do not hand-edit._
 
 Only incidents that are critical, covered by 3+ independent outlets, and clear two of: exploited in the wild (CISA KEV counts), 4+ outlets, very common software. Routine advisories and patch roundups never qualify.
 

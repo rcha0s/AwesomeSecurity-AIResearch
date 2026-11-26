@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_36 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-25_
+_36 current · 3 contested · 2 superseded · 1 refuted · updated 2026-11-26_
 
 [← Claim index](README.md) · [AI Research findings feed](../ai-research/README.md) · [Home](../README.md)
 
@@ -158,6 +158,32 @@ _Tags: `harness`, `agents`, `prompting`, `evals`_
 | --- | --- | --- |
 | supports | [How the Claude Code team designs its harness](https://simonwillison.net/2026/Jul/21/cat-and-thariq/) | Jul 21, 2026 |
 | supports | [HarnessTax: How Much Does the Harness Matter for Coding Agents?](https://harnesstax.github.io/) | Sep 16, 2026 |
+
+</details>
+
+<a id="claim-verify-end-to-end-as-a-user"></a>
+
+### Verify end-to-end as a user, not only with unit tests
+
+`verify-end-to-end-as-a-user` · confidence **0.70** · Work Efficiency · standing since Nov 26, 2025
+
+A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
+
+**Basis —** Anthropic's long-running harness post and the Claude Code best-practices docs.
+
+**Do this —** Require a browser-driven check or /verify-style step before a task is marked complete.
+
+**Conditions —** For user-facing apps; library code may be fully covered by tests.
+
+_Tags: `efficiency`, `work-efficiency`, `harness`_
+
+<details><summary>Evidence (3)</summary>
+
+| Stance | Source | Published |
+| --- | --- | --- |
+| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
+| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
+| supports | [Anthropic verified its Python-to-Rust API migration against production traffic](https://www.anthropic.com/research/migrating-api-to-rust) | Nov 25, 2026 |
 
 </details>
 
@@ -585,31 +611,6 @@ _Tags: `efficiency`, `work-efficiency`, `harness`_
 | supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
 | supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
 | supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
-
-</details>
-
-<a id="claim-verify-end-to-end-as-a-user"></a>
-
-### Verify end-to-end as a user, not only with unit tests
-
-`verify-end-to-end-as-a-user` · confidence **0.70** · Work Efficiency · standing since Nov 26, 2025
-
-A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
-
-**Basis —** Anthropic's long-running harness post and the Claude Code best-practices docs.
-
-**Do this —** Require a browser-driven check or /verify-style step before a task is marked complete.
-
-**Conditions —** For user-facing apps; library code may be fully covered by tests.
-
-_Tags: `efficiency`, `work-efficiency`, `harness`_
-
-<details><summary>Evidence (2)</summary>
-
-| Stance | Source | Published |
-| --- | --- | --- |
-| supports | [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Nov 26, 2025 |
-| supports | [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) | undated |
 
 </details>
 

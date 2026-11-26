@@ -25,7 +25,7 @@ CISA added REDCap (Research Electronic Data Capture) CVE-2026-90817 to its Known
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [CISA Known Exploited Vulnerabilities](https://nvd.nist.gov/vuln/detail/CVE-2026-90817)  ·  **Retrieved:** 2026-11-19  
-**Scores:** Newness 26 · Novelty 20 · Relevance 40 · Credibility 69 · **Composite 35** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 20 · Relevance 40 · Credibility 69 · **Composite 34** _(each 0-100)_  
 **Tags:** `cisa-kev`, `redcap`, `remote-code-execution`, `code-injection`, `exploited-in-the-wild`  
 **Also reported by:** [The Hacker News](https://thehackernews.com/2026/11/cisa-warns-of-4-exploited-flaws-linked.html) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: No REDCap entry exists in the pools. Closest are this week's other unauthenticated code execution advisories (Apache Roller, Apache Axis); none cover survey routing.

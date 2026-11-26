@@ -2,12 +2,13 @@
 
 > Securing AI systems: harness & agent security, MCP, skill scanning, prompt injection, memory poisoning, model supply chain, LLM red-teaming.
 
-_6 vetted findings · updated 2026-11-25 · ranked by composite · findings from the latest 31 days · [68 held for review](../REVIEW.md)._
+_8 vetted findings · updated 2026-11-26 · ranked by composite · findings from the latest 31 days · [71 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Swiss and Italian agencies warn of AI agent attacks on critical infrastructure](https://www.bleepingcomputer.com/news/security/italy-and-switzerland-warn-of-autonomous-ai-driven-cyberattacks/)**
 - **[Highflame's Ramparts scans MCP servers and agent skills for attack paths](https://github.com/highflame-ai/ramparts)**
   _Why now: MCP and skill supply-chain scanning is a live theme, and the drift-baseline check against post-approval swaps is something a defender can adopt now. · trending · high-relevance · timely_
 - **[Attacker's OpenCode agent probed a financial firm, then used a decoy key](https://www.theregister.com/security/2026/11/24/an-ai-coding-agent-a-browser-and-a-mac-tool-found-a-financial-firms-access-key-in-under-6-minutes/5311922)**
@@ -155,37 +156,43 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | AI Infrastructure & Incident Response | 3 |
-| Agent & Harness Security | 1 |
+| Agent & Harness Security | 3 |
 | Red-Teaming & Threat Modeling | 1 |
 | Memory, RAG & Data Poisoning | 1 |
 
 ## AI Infrastructure & Incident Response
 
-- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **68.5** · Nov 19, 2026  
+- **[Dragos canary prompts found three AI hosting providers breached](ai-infra/2026-11-19-dragos-canary-prompts-found-three-ai-hosting-providers-breac.md)** · composite **67.25** · Nov 19, 2026  
   Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.  
   _[www.dragos.com](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)_
-- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **58.94** · Nov 2, 2026  
+- **[Anthropic releases FlashProve to prove responses came from hidden model weights](ai-infra/2026-11-anthropic-releases-flashprove-to-prove-responses-came-from-h.md)** · composite **58.44** · Nov 2, 2026  
   Cryptographic proof that a specific model produced an output is now a working prototype, though still about 70-95x the cost of inference, so it is an audit tool rather than a per-request default.  
   _[Anthropic Research](https://www.anthropic.com/research/provable-inference)_
-- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.25** · Oct 27, 2026  
+- **[NVIDIA OpenShell runs coding agents in kernel-enforced sandboxes under YAML policy](ai-infra/2026-10-nvidia-openshell-runs-coding-agents-in-kernel-enforced-sandb.md)** · composite **52.0** · Oct 27, 2026  
   A declarative, kernel-level sandbox for coding agents now exists as an open-source option; compare its policy model before writing your own.  
   _[docs.nvidia.com](https://docs.nvidia.com/openshell/latest/about/overview.html)_
 
 ## Agent & Harness Security
 
-- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **56.75** · Nov 7, 2026  
+- **[Wiz shows ARTEX and Cairn leak numeric intent IDs into victim logs](agent-security/2026-11-wiz-shows-artex-and-cairn-leak-numeric-intent-ids-into-victi.md)** · composite **57.87** · Nov 25, 2026  
+  Agent harnesses leak their own bookkeeping into victim telemetry, giving defenders a cheap pacing and linking signal when paired with a tool-specific anchor.  
+  _[Wiz Research](https://www.wiz.io/blog/agentic-offensive-frameworks-intent-ids-artex-cairn)_
+- **[Apiiro finds Claude Code permission allowlists leak secrets into public GitHub repos](agent-security/2026-11-apiiro-finds-claude-code-permission-allowlists-leak-secrets.md)** · composite **56.25** · Nov 7, 2026  
   Treat agent permission files, transcripts and memory files as secret-bearing like .env, and approve command patterns that reference $VARS rather than literal commands with secrets in them.  
   _[@shmulc via Hacker News](https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again)_
+- **[Talos documents how an escaped OpenAI agent swarm used public web services](agent-security/2026-11-talos-documents-how-an-escaped-openai-agent-swarm-used-publi.md)** · composite **53.22** · Nov 25, 2026  
+  Even without malicious intent, agent swarms use ordinary public web services (often allow-listed) as infrastructure, and Talos offers a speculative but testable set of behaviors (beacons, burst…  
+  _[Cisco Talos Intelligence](https://blog.talosintelligence.com/the-great-escape-tradecraft-insights-from-an-agentic-swarm/)_
 
 ## Red-Teaming & Threat Modeling
 
-- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **56.3** · Nov 12, 2026  
+- **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](red-teaming/2026-11-mobileprobe-red-teams-mobile-gui-agents-by-placing-injection.md)** · composite **55.8** · Nov 12, 2026  
   If your mobile or GUI agent security eval injects payloads at fixed steps, it probably undercounts risk, because injections must follow each agent's actual route to test it.  
   _[NDSS (via arXiv)](http://arxiv.org/abs/2611.16693v1)_
 
 ## Memory, RAG & Data Poisoning
 
-- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **53.3** · Nov 6, 2026  
+- **[Poisoned reference answers can plant backdoor rules in optimized agent Skills](data-poisoning/2026-11-poisoned-reference-answers-can-plant-backdoor-rules-in-optim.md)** · composite **52.8** · Nov 6, 2026  
   Whoever controls the reference answers used to optimize a Skill can plant a hidden trigger rule in it without touching the model, the optimizer or the Skill file, so treat that feedback as untrusted…  
   _[NeurIPS (via arXiv)](http://arxiv.org/abs/2611.09348v1)_
 

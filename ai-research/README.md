@@ -2,12 +2,14 @@
 
 > Practitioner AI: improving your harness, understanding, and architecture for using LLMs/agents on real tasks. Not model internals or ML-research.
 
-_5 vetted findings · updated 2026-11-25 · ranked by composite · findings from the latest 31 days · [129 held for review](../REVIEW.md)._
+_6 vetted findings · updated 2026-11-26 · ranked by composite · findings from the latest 31 days · [133 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[Hugging Face starts a series on training small multi-agent swarms](https://huggingface.co/blog/training-swarms)**
+- **[ggml-org launches llama.cpp benchmark dashboard for AMD Ryzen and Radeon](https://huggingface.co/blog/ggml-org/llamacpp-amd-bench)**
 - **[OpenAI says GPT-6 models can design proteins that bind targets in lab](https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities)**
 - **[Hugging Face guide shows how to build and validate an agentic evaluation](https://huggingface.co/blog/agentic-evals)**
 - **[OpenAI proposes perplexity as a shared metric for pacing frontier model development](https://openai.com/index/perplexity-and-intelligence)**
@@ -48,26 +50,29 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 | Domain | Findings |
 | --- | --- |
 | Cost Efficiency | 4 |
-| Work Efficiency | 1 |
+| Work Efficiency | 2 |
 
 ## Cost Efficiency
 
-- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **53.48** · Nov 12, 2026  
+- **[Microsoft finds 8% of coding sessions account for 44% of costs](cost-efficiency/2026-11-microsoft-finds-8-of-coding-sessions-account-for-44-of-costs.md)** · composite **52.98** · Nov 12, 2026  
   If you run long coding agent sessions, measure what compaction costs you and consider building summaries ahead of time in the background.  
   _[Microsoft Research Blog](https://www.microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98/)_
-- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **51.5** · Nov 9, 2026  
+- **[UC Berkeley finds harness overhead can double agent cost at similar accuracy](cost-efficiency/2026-11-uc-berkeley-finds-harness-overhead-can-double-agent-cost-at.md)** · composite **51.0** · Nov 9, 2026  
   Measure how much of your agent spend is context rereads and harness overhead before tuning anything else.  
   _[UC Berkeley Sky Lab (Park et al.)](https://arxiv.org/abs/2611.12122)_
-- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **51.5** · Nov 9, 2026  
+- **[York University's FlowPlan cuts Claude Code tokens by planning edits first](cost-efficiency/2026-11-york-university-s-flowplan-cuts-claude-code-tokens-by-planni.md)** · composite **51.0** · Nov 9, 2026  
   Replacing post-edit re-reading and re-testing with a stated plan cut coding agent tokens with no significant loss in fix rate.  
   _[York University (Sepidband et al.)](https://arxiv.org/abs/2611.13241)_
-- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **44.0** · Nov 3, 2026  
+- **[Researchers find agents keep accuracy with short, frequently compacted contexts](cost-efficiency/2026-11-researchers-find-agents-keep-accuracy-with-short-frequently.md)** · composite **43.5** · Nov 3, 2026  
   Short, frequently compacted contexts kept accuracy here; on hosted APIs, test that against the cache hits each compaction gives up.  
   _[Belcak et al.](https://arxiv.org/abs/2611.05306)_
 
 ## Work Efficiency
 
-- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **52.25** · Nov 17, 2026  
+- **[Anthropic verified its Python-to-Rust API migration against production traffic](work-efficiency/2026-11-anthropic-verified-its-python-to-rust-api-migration-against.md)** · composite **55.19** · Nov 25, 2026  
+  When agents can generate changes faster than you can check them, invest in a production-shaped verifier plus a human gate between the agent sandbox and deployment.  
+  _[Anthropic Research](https://www.anthropic.com/research/migrating-api-to-rust)_
+- **[Claude Code team explains how it verifies agent-written code at scale](work-efficiency/2026-11-claude-code-team-explains-how-it-verifies-agent-written-code.md)** · composite **51.75** · Nov 17, 2026  
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.  
   _[@craigmart via Hacker News](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)_
 

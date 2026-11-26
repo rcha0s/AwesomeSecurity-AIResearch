@@ -7,7 +7,7 @@
   "language": "en",
   "_stream": {
     "id": "harness-engineering",
-    "generated": "2026-11-25",
+    "generated": "2026-11-26",
     "library_days": 120,
     "subcategories": [
       {
@@ -59,12 +59,12 @@
     "watch_min_relevance": 60.0,
     "counts": {
       "cost-efficiency": 8,
-      "work-efficiency": 1,
+      "work-efficiency": 2,
       "speed-latency": 0,
-      "reliability": 1,
+      "reliability": 2,
       "context-memory": 1,
       "tools-interfaces": 3,
-      "orchestration": 2,
+      "orchestration": 1,
       "harness-evals": 7,
       "harness-design": 5
     },
@@ -435,6 +435,78 @@
     ]
   },
   "items": [
+    {
+      "id": "why-i-m-bullish-on-mcp-for-2027-aabf492e4b",
+      "title": "Philipp Schmid says MCP will anchor agent harnesses in 2027",
+      "summary": "MCP is shifting from per-turn tool calls toward code-driven, typed, event-driven use, and each new capability adds untrusted input that harness builders must fence.",
+      "content_text": "Philipp Schmid argues that MCP (Model Context Protocol) has recovered from its early backlash over context bloat. He points to usage figures from Linear, Notion, Atlassian and Neon, and to newer pieces: Code Mode, typed output schemas, skills served over MCP, event subscriptions and interactive apps. He lists observability, discovery and prompt-injection surface as open gaps, and suggests harnesses should expose their own MCP server for multi-agent coordination.",
+      "date_published": "2026-11-26T00:00:00Z",
+      "tags": [
+        "Reliability and recovery",
+        "mcp",
+        "code-mode",
+        "agent-harness",
+        "agent-skills",
+        "mcp-events",
+        "opinion"
+      ],
+      "_stream": {
+        "subcategory": "reliability",
+        "tier": "watch",
+        "domain": "air.agents",
+        "source": "Philipp Schmid",
+        "takeaway": "MCP is shifting from per-turn tool calls toward code-driven, typed, event-driven use, and each new capability adds untrusted input that harness builders must fence.",
+        "action": {
+          "type": "harness",
+          "title": "Expose MCP tools as typed stubs in a sandbox and treat event payloads as untrusted",
+          "detail": "When evaluating MCP servers for your harness, prefer ones that declare outputSchema next to inputSchema so the client can generate typed stubs and let the model chain calls in one script, returning only the joined result to context. If you adopt MCP Events webhooks, verify the signed callback and handle the injected event as untrusted input before it wakes an agent."
+        },
+        "related_claims": [
+          "load-tool-definitions-on-demand",
+          "keep-bulk-tool-output-out-of-context"
+        ],
+        "detail": null,
+        "on_site": false
+      },
+      "url": "https://www.philschmid.de/mcp-2027"
+    },
+    {
+      "id": "migrating-our-messages-api-to-rust-f6d6d4f77d",
+      "title": "Anthropic verified its Python-to-Rust API migration against production traffic",
+      "summary": "When agents can generate changes faster than you can check them, invest in a production-shaped verifier plus a human gate between the agent sandbox and deployment.",
+      "content_text": "Anthropic migrated its Messages API from Python to Rust, with Claude writing a first version of the core request path in about a week, and the result uses about 70% less CPU per request and cuts median time to first token by about 20%. Verification was the bottleneck: the Rust version passed about 98% of tests in April but only about a quarter of inputs matched on production traffic. They shadowed production, ran the model once and replayed its output to Rust, grouped differences by a fingerprint without reading customer text, and had agents fix each group in a sandbox inner loop, a production outer loop and a memory loop. The raw text ends partway through the memory loop section.",
+      "date_published": "2026-11-25T00:00:00Z",
+      "tags": [
+        "Work efficiency",
+        "verification",
+        "migration",
+        "shadow-testing",
+        "agent-loops",
+        "rust",
+        "anthropic"
+      ],
+      "_stream": {
+        "subcategory": "work-efficiency",
+        "tier": "vetted",
+        "domain": "air.work-efficiency",
+        "source": "Anthropic Research",
+        "takeaway": "When agents can generate changes faster than you can check them, invest in a production-shaped verifier plus a human gate between the agent sandbox and deployment.",
+        "action": {
+          "type": "harness",
+          "title": "Build shadow comparison with fingerprints and a sandbox inner loop",
+          "detail": "Run old and new code on the same inputs, compare every stage, and record only the shape of each difference (stage, position, size). Group diffs by fingerprint, dispatch one agent per new fingerprint, give it a sandbox with fast local checks that do not call the model, and require human PR review before any fix reaches the production comparison."
+        },
+        "related_claims": [
+          "separate-grader-from-generator",
+          "verify-end-to-end-as-a-user",
+          "gate-agent-prs-with-automated-checks"
+        ],
+        "detail": "https://github.com/rcha0s/AwesomeSecurity-AIResearch/blob/main/ai-research/work-efficiency/2026-11-anthropic-verified-its-python-to-rust-api-migration-against.md",
+        "on_site": true
+      },
+      "url": "https://www.anthropic.com/research/migrating-api-to-rust",
+      "external_url": "https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=migrating-our-messages-api-to-rust-f6d6d4f77d#week"
+    },
     {
       "id": "hugging-face-guide-shows-how-to-build-and-valida-444c20fd9a",
       "title": "Hugging Face guide shows how to build and validate an agentic evaluation",
@@ -1372,43 +1444,6 @@
         "on_site": false
       },
       "url": "https://embracethered.com/blog/posts/2026/pipewire-flatpak-linux-sandbox-escape-cve-2026-5674/"
-    },
-    {
-      "id": "scientific-computing-in-the-age-of-agentic-ai-c5ee21665e",
-      "title": "Scientific computing in the age of agentic AI",
-      "summary": "Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.",
-      "content_text": "OpenAI's field report on eight agent-assisted scientific-computing projects (five using Codex only, three combining Codex and Claude Code, primarily in life sciences) reports a consistent pattern: agents shift the human's job from implementation to verification and orchestration — defining what to build, specifying how to measure correctness, and deciding when a project ships. The security-relevant lessons are (a) agents express confidence even on clearly wrong output, so groundedness has to come from an external reference (parity with an existing tool, simulated data with known answers, statistical checks), (b) initial implementations are fast but resolving edge cases and numerical differences dominates elapsed time, and (c) lower implementation cost fragments maintainership — today's rewrite is tomorrow's abandoned code without an explicit steward. The transferable claim for agent harness design is that verification-side infra (acceptance tests, reference outputs, iterative benchmarks) is the actual bottleneck once agents are cheap.",
-      "date_published": "2026-07-28T00:00:00Z",
-      "tags": [
-        "Orchestration and multi-agent",
-        "agentic-coding",
-        "verification",
-        "codex",
-        "claude-code",
-        "scientific-computing",
-        "stewardship",
-        "acceptance-tests"
-      ],
-      "_stream": {
-        "subcategory": "orchestration",
-        "tier": "watch",
-        "domain": "air.agents",
-        "source": null,
-        "takeaway": "Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.",
-        "action": {
-          "type": "skill",
-          "title": "Verification-first harness pattern for agent-assisted engineering work",
-          "detail": "Codify the OpenAI field-report pattern for any team standing up an agent-assisted engineering loop: (1) before any agent runs, define an external reference — parity target, simulated dataset with known answers, or bounded statistical property — that will actually decide 'ship or not', (2) break the goal into small feedback-driven iterations with intermediate benchmarks so the agent's confident-but-wrong pattern gets caught early, (3) explicitly assign a human owner for last-mile edge cases (numerical diffs, format oddities) because the field-report data says this dominates elapsed time, and (4) attach a maintenance/stewardship plan at the same moment you commit the rewrite — no rewrite without a named owner and a credible support line, or it becomes future abandoned code."
-        },
-        "related_claims": [
-          "coding-agents-produce-plausible-but-hallucinated-apis",
-          "swe-bench-doesnt-generalize-to-production-tasks",
-          "capability-elicitation-lags-training"
-        ],
-        "detail": null,
-        "on_site": false
-      },
-      "url": "https://openai.com/index/scientific-computing-agentic-ai"
     }
   ]
 }

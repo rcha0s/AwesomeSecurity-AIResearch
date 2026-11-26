@@ -1,6 +1,6 @@
 # Agent efficiency: what to change in your harness
 
-_Generated 2026-11-25 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
+_Generated 2026-11-26 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Contested claims have evidence on both sides; weigh them before acting. New research lists the last month of findings that have not necessarily changed a claim yet.
 
@@ -182,6 +182,21 @@ Evidence, newest first:
 
 ## Work efficiency (6 claims)
 
+### Verify end-to-end as a user, not only with unit tests
+
+`verify-end-to-end-as-a-user` · current · confidence 0.70 · updated 2026-11-25 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=verify-end-to-end-as-a-user#claims)
+
+A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
+
+**Do this:** Require a browser-driven check or /verify-style step before a task is marked complete.
+
+**Conditions:** For user-facing apps; library code may be fully covered by tests.
+
+Evidence, newest first:
+- supports: [Anthropic verified its Python-to-Rust API migration against production traffic](https://www.anthropic.com/research/migrating-api-to-rust) (2026-11-25) About 98% of tests passed in April, yet only about a quarter of inputs matched on production traffic; shadow comparison on live traffic exposed the gaps.
+- supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would."
+- supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "That catches the kind of problem that tests and typechecks miss."
+
 ### Re-test harness scaffolding whenever the model changes
 
 `retest-harness-scaffolding-on-model-change` · current · confidence 0.60 · updated 2026-11-05 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=retest-harness-scaffolding-on-model-change#claims)
@@ -258,22 +273,11 @@ Evidence, newest first:
 - supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "Set up a feature list file: based on the input spec, set up a structured JSON file with a list of end-to-end feature descriptions."
 - supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In our experiments, we found that the best way to elicit this behavior was to ask the model to commit its progress to git with descriptive commit messages and to write summaries of its progress in a progress file."
 
-### Verify end-to-end as a user, not only with unit tests
+## New research, last 30 days (7)
 
-`verify-end-to-end-as-a-user` · current · confidence 0.70 · updated 2026-10-28 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=verify-end-to-end-as-a-user#claims)
-
-A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
-
-**Do this:** Require a browser-driven check or /verify-style step before a task is marked complete.
-
-**Conditions:** For user-facing apps; library code may be fully covered by tests.
-
-Evidence, newest first:
-- supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would."
-- supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "That catches the kind of problem that tests and typechecks miss."
-
-## New research, last 30 days (6)
-
+- **[Anthropic verified its Python-to-Rust API migration against production traffic](https://www.anthropic.com/research/migrating-api-to-rust)** · 2026-11-25 · Anthropic Research
+  When agents can generate changes faster than you can check them, invest in a production-shaped verifier plus a human gate between the agent sandbox and deployment.
+  Try: Build shadow comparison with fingerprints and a sandbox inner loop. Run old and new code on the same inputs, compare every stage, and record only the shape of each difference (stage, position, size). Group diffs by fingerprint, dispatch one agent per new fingerprint, give it a sandbox with fast local checks that do not call the model, and require human PR review before any fix reaches the production comparison.
 - **[Google adds Tool Retrieval to the Gemini API to defer tool schemas](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/)** · 2026-11-19 · Google AI Blog
   Deferring tool schemas is now a built-in API feature, so large tool libraries need not be sent in full on every request.
   Try: Defer tool schemas for large tool libraries. If your agent carries dozens of tools, keep names and one-line descriptions in context and load full parameter schemas only when a tool is chosen. In the Gemini Interactions API add a tool\_search tool and set defer\_loading true on the tools to hold back; it is in preview and needs Gemini 3.6 or later. Measure input tokens and tool-selection accuracy before and after, since the post reports no numbers in the text read.

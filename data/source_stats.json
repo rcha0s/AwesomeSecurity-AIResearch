@@ -12,23 +12,23 @@
     "curated": 0
   },
   "github_query:mcp-protocol-or-mcp-specification": {
-    "ingested": 18,
+    "ingested": 19,
     "curated": 0
   },
   "github_query:mcp-server-security-scanner": {
-    "ingested": 24,
+    "ingested": 25,
     "curated": 10
   },
   "github_query:prompt-injection-llm": {
-    "ingested": 21,
+    "ingested": 23,
     "curated": 1
   },
   "hf_papers:https-huggingface-co-api-daily-papers": {
-    "ingested": 30,
+    "ingested": 32,
     "curated": 4
   },
   "kev_json:https-www-cisa-gov-sites-default-files-feeds-kno": {
-    "ingested": 36,
+    "ingested": 40,
     "curated": 0
   },
   "newsletter:https-newsletter-pragmaticengineer-com-feed": {
@@ -48,8 +48,8 @@
     "curated": 0
   },
   "research_index:https-www-anthropic-com-research": {
-    "ingested": 19,
-    "curated": 3
+    "ingested": 20,
+    "curated": 4
   },
   "rss:http-export-arxiv-org-rss-cs-cr": {
     "ingested": 34,
@@ -72,8 +72,8 @@
     "curated": 0
   },
   "rss:https-blog-talosintelligence-com-rss": {
-    "curated": 0,
-    "ingested": 4
+    "ingested": 5,
+    "curated": 1
   },
   "rss:https-blog-trailofbits-com-feed": {
     "curated": 1,
@@ -112,7 +112,7 @@
     "curated": 1
   },
   "rss:https-huggingface-co-blog-feed-xml": {
-    "ingested": 8,
+    "ingested": 10,
     "curated": 1
   },
   "rss:https-labs-watchtowr-com-rss": {
@@ -188,7 +188,7 @@
     "curated": 0
   },
   "rss:https-www-bleepingcomputer-com-feed": {
-    "ingested": 16,
+    "ingested": 17,
     "curated": 0
   },
   "rss:https-www-carriermanagement-com-feed": {
@@ -220,15 +220,19 @@
     "curated": 1
   },
   "rss:https-www-microsoft-com-en-us-security-blog-feed": {
-    "ingested": 29,
+    "ingested": 30,
     "curated": 6
+  },
+  "rss:https-www-philschmid-de-rss": {
+    "ingested": 2,
+    "curated": 0
   },
   "rss:https-www-seangoedecke-com-rss-xml": {
     "ingested": 1,
     "curated": 0
   },
   "rss:https-www-securityweek-com-feed": {
-    "ingested": 18,
+    "ingested": 20,
     "curated": 1
   },
   "rss:https-www-stepsecurity-io-blog-rss-xml": {
@@ -244,8 +248,8 @@
     "curated": 2
   },
   "rss:https-www-wiz-io-feed-rss-xml": {
-    "ingested": 11,
-    "curated": 0
+    "ingested": 13,
+    "curated": 1
   },
   "rss:https-xbow-com-blog-feed-xml": {
     "ingested": 1,

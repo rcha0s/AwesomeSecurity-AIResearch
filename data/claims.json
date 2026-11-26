@@ -2382,10 +2382,18 @@
           "published": "2026-11-24",
           "note": "An off-the-shelf coding agent ran a probe-and-try-key loop against a live target in about 5 minutes 44 seconds; single-vendor account, nothing real stolen.",
           "source_name": "The Register"
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/",
+          "title": "Microsoft details ARTEX agent architecture and how defenders can spot it",
+          "published": "2026-11-25",
+          "note": "Microsoft reports threat actors used the ARTEX agentic framework to accelerate reconnaissance, credential attacks and web application exploitation.",
+          "source_name": "Microsoft Security Blog"
         }
       ],
       "first_seen": "2026-09-09",
-      "last_reviewed": "2026-11-24",
+      "last_reviewed": "2026-11-26",
       "basis": "single documented incident-response investigation (Unit 42)",
       "guidance": "Build synchronized, automated containment playbooks (simultaneous credential revocation, OAuth session termination, CI/CD pipeline freeze, cloud account isolation across all planes) since human-speed incident response cannot keep pace with an agent-driven attack loop measured in hours.",
       "scope": "Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.",
@@ -3162,10 +3170,18 @@
           "url": "https://code.claude.com/docs/en/best-practices",
           "title": "Claude Code docs: best practices",
           "note": "\"That catches the kind of problem that tests and typechecks miss.\""
+        },
+        {
+          "stance": "supports",
+          "url": "https://www.anthropic.com/research/migrating-api-to-rust",
+          "title": "Anthropic verified its Python-to-Rust API migration against production traffic",
+          "published": "2026-11-25",
+          "note": "About 98% of tests passed in April, yet only about a quarter of inputs matched on production traffic; shadow comparison on live traffic exposed the gaps.",
+          "source_name": "Anthropic Research"
         }
       ],
       "first_seen": "2025-11-26",
-      "last_reviewed": "2026-10-28",
+      "last_reviewed": "2026-11-26",
       "added_on": "2026-10-28",
       "changed_on": "2026-10-28",
       "title": "Verify end-to-end as a user, not only with unit tests",
