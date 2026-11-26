@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--25-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-21-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--26-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-25-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -27,8 +27,9 @@ _Your focus areas, last 7 days: most areas matched first, then newest._
 
 _From the last 14 days: each has proof (the work itself or a measured comparison) and serves one of your goals; more independent sources rank first._
 
-1. **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=mobileprobe-red-teams-mobile-gui-agents-by-placi-63a32851c6#week)** · _AI Security · Nov 12, 2026_
-2. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
+1. **[Anthropic verified its Python-to-Rust API migration against production traffic](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=migrating-our-messages-api-to-rust-f6d6d4f77d#week)** · _AI Research · Nov 25, 2026_
+2. **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=mobileprobe-red-teams-mobile-gui-agents-by-placi-63a32851c6#week)** · _AI Security · Nov 12, 2026_
+3. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
 
 ## Biggest this week
 
@@ -48,7 +49,7 @@ _The last 7 days, most covered first._
 
 ## Claim changes
 
-_3 changes in the last 7 days; earlier ones fill in, each with its date._
+_No claim changed in the last 7 days; the last change was Nov 18, 2026._
 
 1. **Added:** [Harness choice alone can double an agent's cost](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims) · _current · Nov 18, 2026 · 2 sources_  
    On the same model and task, the harness alone changed cost up to about 2x at similar accuracy, and coding agents' first call ranges from about 1.9k to 32k input tokens.
@@ -63,10 +64,10 @@ _3 changes in the last 7 days; earlier ones fill in, each with its date._
 
 _Where agent harnesses still waste tokens or time, and what to change. [Harness feed](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md)._
 
+- [Verify end-to-end as a user, not only with unit tests](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=verify-end-to-end-as-a-user#claims) · _updated Nov 25, 2026_
 - [Harness choice alone can double an agent's cost](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims) · _updated Nov 18, 2026_
 - [Learn per-repo cost controls from past coding agent runs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=learn-per-repo-cost-controls#claims) · _updated Nov 18, 2026_
 - [Use one-hour cache markers when sessions pause over five minutes](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=one-hour-cache-for-paused-sessions#claims) · _updated Nov 18, 2026_
-- [Keep intermediate tool results out of the model context](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=keep-bulk-tool-output-out-of-context#claims) · _updated Nov 9, 2026_
 
 ## Explore
 
@@ -82,4 +83,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-25 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-26 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

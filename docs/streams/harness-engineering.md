@@ -2,19 +2,19 @@
 
 _How to build agent and coding harnesses that cost less, run faster, fail less and get more correct work done: measured results from papers, lab and practitioner engineering blogs, with the standing claims they support._
 
-_Generated 2026-11-25 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
+_Generated 2026-11-26 from the claim ledger, the pools and the archive of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/) by the rules in `data/streams.yaml`. Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness, like [efficiency.md](https://rcha0s.github.io/AwesomeSecurity-AIResearch/efficiency.md), which covers the first two sub-categories. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Findings are research from the last 120 days, newest first; **Worth a look** findings had their quotes checked against the source and passed, but sat below the Briefing's score bar. The same data as JSON Feed 1.1: [harness-engineering.json](https://rcha0s.github.io/AwesomeSecurity-AIResearch/streams/harness-engineering.json) (filter items by `_stream.subcategory`).
 
-33 live claims, 15 vetted findings, 13 worth a look.
+33 live claims, 16 vetted findings, 13 worth a look.
 
 - [Cost efficiency](#cost-efficiency): 11 claims, 8 findings
-- [Work efficiency](#work-efficiency): 6 claims, 1 finding
+- [Work efficiency](#work-efficiency): 6 claims, 2 findings
 - [Speed and latency](#speed-latency): 0 claims, 0 findings
-- [Reliability and recovery](#reliability): 0 claims, 1 finding
+- [Reliability and recovery](#reliability): 0 claims, 2 findings
 - [Context and memory](#context-memory): 5 claims, 1 finding
 - [Tools and interfaces](#tools-interfaces): 3 claims, 3 findings
-- [Orchestration and multi-agent](#orchestration): 0 claims, 2 findings
+- [Orchestration and multi-agent](#orchestration): 0 claims, 1 finding
 - [Evaluating harnesses](#harness-evals): 2 claims, 7 findings
 - [Harness design](#harness-design): 6 claims, 5 findings
 
@@ -233,6 +233,21 @@ Evidence, newest first:
 
 _More correct work per hour - planning and spec steps, task decomposition, delegation, parallel agents, verification loops, measured productivity._
 
+### Verify end-to-end as a user, not only with unit tests
+
+`verify-end-to-end-as-a-user` · current · confidence 0.70 · updated 2026-11-25 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=verify-end-to-end-as-a-user#claims)
+
+A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
+
+**Do this:** Require a browser-driven check or /verify-style step before a task is marked complete.
+
+**Conditions:** For user-facing apps; library code may be fully covered by tests.
+
+Evidence, newest first:
+- supports: [Anthropic verified its Python-to-Rust API migration against production traffic](https://www.anthropic.com/research/migrating-api-to-rust) (2026-11-25) About 98% of tests passed in April, yet only about a quarter of inputs matched on production traffic; shadow comparison on live traffic exposed the gaps.
+- supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would."
+- supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "That catches the kind of problem that tests and typechecks miss."
+
 ### Split generating from evaluating with a separate grader
 
 `separate-grader-from-generator` · current · confidence 0.50 · updated 2026-11-05 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=separate-grader-from-generator#claims)
@@ -262,20 +277,6 @@ Evidence, newest first:
 - supports: [OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](https://openai.com/index/a-thousand-fewer-paths-to-root/) (2026-11-05) A curated exploitation-technique library raised the older model's success from 76.2% to 88.9% but added only 1.5 points for the newer model, so OpenAI dropped it.
 - supports: [Anthropic Engineering: harness design long running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24) "This was partly common sense and partly a function of a more general principle: every component in a harness encodes an assumption about what the model can't do on its own, and those assumptions are worth stress testing, both because they…
 - supports: [Anthropic Engineering: effective context engineering for ai agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (2025-09-29) "We're already seeing that smarter models require less prescriptive engineering, allowing agents to operate with more autonomy."
-
-### Verify end-to-end as a user, not only with unit tests
-
-`verify-end-to-end-as-a-user` · current · confidence 0.70 · updated 2026-10-28 · [on the site](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=verify-end-to-end-as-a-user#claims)
-
-A harness should make the agent exercise the running app (browser automation) before marking work done, since unit tests and curl miss broken features.
-
-**Do this:** Require a browser-driven check or /verify-style step before a task is marked complete.
-
-**Conditions:** For user-facing apps; library code may be fully covered by tests.
-
-Evidence, newest first:
-- supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would."
-- supports: [Claude Code docs: best practices](https://code.claude.com/docs/en/best-practices) "That catches the kind of problem that tests and typechecks miss."
 
 ### Persist a feature list and progress log across sessions
 
@@ -323,8 +324,11 @@ Evidence, newest first:
 - supports: [METR: 2025 07 10 early 2025 ai experienced os dev study](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) (2025-07-10) "Surprisingly, we find that when developers use AI tools, they take 19% longer than without—AI makes them slower."
 - supports: [METR: 2025 07 10 early 2025 ai experienced os dev study](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) (2025-07-10) "developers expected AI to speed them up by 24%, and even after experiencing the slowdown, they still believed AI had sped them up by 20%."
 
-**New research** (1)
+**New research** (2)
 
+- **[Anthropic verified its Python-to-Rust API migration against production traffic](https://www.anthropic.com/research/migrating-api-to-rust)** · 2026-11-25 · Anthropic Research
+  When agents can generate changes faster than you can check them, invest in a production-shaped verifier plus a human gate between the agent sandbox and deployment.
+  Try: Build shadow comparison with fingerprints and a sandbox inner loop. Run old and new code on the same inputs, compare every stage, and record only the shape of each difference (stage, position, size). Group diffs by fingerprint, dispatch one agent per new fingerprint, give it a sandbox with fast local checks that do not call the model, and require human PR review before any fix reaches the production comparison.
 - **[Claude Code team explains how it verifies agent-written code at scale](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/)** · 2026-11-17 · @craigmart via Hacker News
   Treat the verification layer as a system of its own: run the real app, keep the checks out of reach of the change, and measure the checks against past incidents.
   Try: Add a verify skill and an observe-mode commit gate. Create a .claude/skills/verify skill next to the code that boots the app and drives it (browser, simulator or local service). Load review rules (such as REVIEW.md) from the default branch only. Add a commit gate with off, observe and enforce modes, stamp each commit with how it was verified (including 'none'), and let a commit through after two blocks so the agent is not stuck.
@@ -350,6 +354,12 @@ _Getting runs to finish correctly - error recovery, loop and stall detection, lo
 - **[OrchestraBench evaluates multi-agent orchestration failures and recovery](https://arxiv.org/abs/2608.05263)** · 2026-08-07
   Multi-agent orchestration failures are not uniform: tool faults recover, ambiguous delegation partially recovers, latent/semantic faults essentially never self-heal. Blind retry hides latent faults and delays detection, so containment requires an external trusted-state signal, not just per-agent detection. Keyword/flag routers collapse on adversarially framed inputs where an intent-reasoning rout…
   Try: Add failure-mode breakdown and cascade radius to agent evals. For internal multi-agent evals, separate tool-fault, ambiguous-delegation, and latent/semantic-error rates instead of reporting a single task-success number, and record cascade radius across pipeline depths. Do not rely on blind-retry for containment; add a trusted-state signal (external verifier or ground-truth check) at the boundary between agents.
+
+**Worth a look** (1)
+
+- **[Philipp Schmid says MCP will anchor agent harnesses in 2027](https://www.philschmid.de/mcp-2027)** · 2026-11-26 · Philipp Schmid
+  MCP is shifting from per-turn tool calls toward code-driven, typed, event-driven use, and each new capability adds untrusted input that harness builders must fence.
+  Try: Expose MCP tools as typed stubs in a sandbox and treat event payloads as untrusted. When evaluating MCP servers for your harness, prefer ones that declare outputSchema next to inputSchema so the client can generate typed stubs and let the model chain calls in one script, returning only the joined result to context. If you adopt MCP Events webhooks, verify the signed callback and handle the injected event as untrusted input before it wakes an agent.
 
 
 <a id="context-memory"></a>
@@ -496,14 +506,11 @@ Evidence, newest first:
 
 _How work is split across agents and turns - subagents, planners, multi-agent coordination, long-running and background agents._
 
-**Worth a look** (2)
+**Worth a look** (1)
 
 - **[Claude Code's Ultracode subagents worked 12+ hours from a one-line prompt](https://simonwillison.net/2026/Oct/16/sqlite-sparql-rust/)** · 2026-10-16 · Simon Willison's Weblog
   Large subagent workflows can finish big, test-backed builds without supervision, so the bottleneck moves to human review; plan for verification artifacts such as conformance suites, differential fuzzing and documentation up front.
   Try: Define verification before launching a long subagent run. Before starting a multi-hour orchestrated run, name the oracle the output will be judged against, such as a standard conformance suite, differential fuzzing against a reference implementation, or a benchmark. Require per-component READMEs and a tutorial in the initial prompt, not as a follow-up, so the result can be evaluated without reading all the code.
-- **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai)** · 2026-07-28
-  Once agents are cheap, verification is the bottleneck: acceptance tests, parity references, and named maintainers are the new critical infrastructure — not more agent capability.
-  Try: Verification-first harness pattern for agent-assisted engineering work. Codify the OpenAI field-report pattern for any team standing up an agent-assisted engineering loop: (1) before any agent runs, define an external reference — parity target, simulated dataset with known answers, or bounded statistical property — that will actually decide 'ship or not', (2) break the goal into small feedback-driven iterations with intermediate benchmarks so the agent's confident-but-wrong pattern gets caught early, (3) explicitly assign a human owner for last-mile edge cases (num…
 
 
 <a id="harness-evals"></a>

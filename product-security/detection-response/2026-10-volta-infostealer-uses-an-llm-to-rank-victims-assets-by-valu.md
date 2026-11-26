@@ -25,7 +25,7 @@ Cisco Talos describes VOLTA, a self-deleting Windows infostealer that, after ste
 
 **Topic:** Product Security  ·  **Domain:** Detection, Response & Threat Intel  
 **Source:** [@khalidkhair via Hacker News](https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/)  ·  **Author:** khalidkhair  ·  **Retrieved:** 2026-10-31  
-**Scores:** Newness 5 · Novelty 55 · Relevance 68 · Credibility 60 · **Composite 47** _(each 0-100)_  
+**Scores:** Newness 4 · Novelty 55 · Relevance 68 · Credibility 60 · **Composite 47** _(each 0-100)_  
 **Tags:** `infostealer`, `ai-integrated-malware`, `refusal-evasion`, `openrouter`, `llm-abuse`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Talos's CLOSEDQUORUM AI-driven C2 implant and SOCRadar's report of INC and The Gentlemen affiliates running intrusions through OpenRouter models; VOLTA applies the LLM to post-theft victim appraisal with a refusal-fallback chain.
 

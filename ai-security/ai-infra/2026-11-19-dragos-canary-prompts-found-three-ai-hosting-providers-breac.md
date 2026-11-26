@@ -29,7 +29,7 @@ From July to November 2026, Dragos sent about two million prompts to AI services
 
 **Topic:** AI Security  ·  **Domain:** AI Infrastructure & Incident Response  
 **Source:** [www.dragos.com](https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens)  ·  **Author:** HD Moore  ·  **Retrieved:** 2026-11-20  
-**Scores:** Newness 70 · Novelty 60 · Relevance 85 · Credibility 50 · **Composite 68** _(each 0-100)_  
+**Scores:** Newness 65 · Novelty 60 · Relevance 85 · Credibility 50 · **Composite 67** _(each 0-100)_  
 **Tags:** `canary-tokens`, `ai-routers`, `zero-data-retention`, `prompt-leakage`, `credential-theft`, `ai-supply-chain`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: arXiv 2604.08407 measured LLM API routers injecting code and stealing credentials (1 paid, 8 free). New here: canary measurement of providers, ignored Zero Data Retention flags, and route tracing.
 

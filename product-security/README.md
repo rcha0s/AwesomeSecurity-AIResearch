@@ -2,24 +2,33 @@
 
 > Securing products: application security, supply chain, cloud & infra, identity, mobile, plus red teaming and threat modeling (AI-assisted or not).
 
-_10 vetted findings · updated 2026-11-25 · ranked by composite · findings from the latest 31 days · [86 held for review](../REVIEW.md)._
+_11 vetted findings · updated 2026-11-26 · ranked by composite · findings from the latest 31 days · [91 held for review](../REVIEW.md)._
 
 ## 📈 Trending & In the News
 
 _Not new ideas - what the field is watching now: the editorial pass and the news gate. News is kept for good; findings are not._
 
+- **[1Password says a possibly compromised employee GitHub account exposed customer data](https://www.securityweek.com/1password-breach-exposes-customer-data-internal-source-code/)**
 - **[GreyNoise reports suspected AI-driven campaign against Check Point management servers](https://thehackernews.com/2026/11/hackers-compromise-24-check-point.html)**
   _Why now: Live campaign against Check Point management servers, with suspected AI-driven tooling; gives concrete hardening and monitoring steps for firewall management planes. · trending · newsworthy · timely · high-relevance_
 - **[WordPress blocks six backdoored WP Connect plugins after suspected developer account compromise](https://thehackernews.com/2026/11/wordpress-blocks-six-backdoored-wp.html)**
   _Why now: Hijacked maintainer account pushed backdoored plugin releases that a registry release hold caught; shows why release holds and cooldowns matter and gives a concrete check list. · newsworthy · timely · widely-reported_
 - **[Radware breach exposed customer log-export cloud keys via unauthenticated management API](https://www.bleepingcomputer.com/news/security/radware-discloses-breach-exposing-customer-cloud-access-keys/)**
   _Why now: Vendor breach that exposed customer log-export cloud keys, with customers already reporting AWS alerts; the action is to rotate the keys and review bucket access now. · newsworthy · widely-reported · timely · high-relevance_
+- **[WatchTowr sees attackers probing two new GeoServer flaws that chain to RCE](https://www.securityweek.com/two-newly-disclosed-geoserver-vulnerabilities-under-attack/)**
+- **[Eclypsium's InfraTrust report finds exploited appliance flaws mostly in bundled components](https://www.bleepingcomputer.com/news/security/infratrust-warns-of-exploited-supply-chain-flaws-in-network-appliances/)**
+- **[CISA adds exploited Mitel MiCollab command injection flaw to its KEV catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-133323)**
+- **[CISA adds exploited Mitel MiCollab weak authentication flaw to KEV catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-133311)**
+- **[CISA adds exploited Vates Xen Orchestra input validation flaw to KEV catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-133469)**
+- **[Hex.pm package registry servers were compromised through a decade-old RCE flaw](https://thehackernews.com/2026/11/hackers-exploited-cvss-100-hexpm-rce.html)**
 - **[OpenAI and Cisco launch Shirudo, agent-written eBPF shields for unpatched Linux](https://thehackernews.com/2026/11/openai-and-cisco-unveil-ai-assisted.html)**
 - **[WHMCS patches unauthenticated SQL injection exposing customer records and admin hashes](https://thehackernews.com/2026/11/whmcs-sql-injection-flaw-could-expose.html)**
-- **[Elecbrakes Bluetooth trailer brake controllers allow unauthenticated forced braking](https://www.securityweek.com/elecbrakes-bluetooth-vulnerabilities-expose-trailers-to-forced-braking/)**
 - **[Broadcom patches 23 VMware flaws, including critical vCenter and ESX bugs](https://www.securityweek.com/vmware-updates-patch-critical-esx-vcenter-vulnerabilities/)**
+- **[Elecbrakes Bluetooth trailer brake controllers allow unauthenticated forced braking](https://www.securityweek.com/elecbrakes-bluetooth-vulnerabilities-expose-trailers-to-forced-braking/)**
 - **[Sponsored post argues runtime context cuts container vulnerability noise](https://www.bleepingcomputer.com/news/security/from-vulnerability-noise-to-resilience-rethinking-security-in-the-ai-era/)**
 - **[AP source says attackers breached an unclassified CIA open-source intelligence system](https://www.securityweek.com/an-unclassified-cia-system-was-breached-in-a-cyberattack-ap-source-says/)**
+- **[CISA adds exploited Optimizely Web Experimentation state control flaw to KEV catalog](https://nvd.nist.gov/vuln/detail/CVE-2026-132224)**
+- **[nginx HTTP/2 flaw gets a public exploit for unauthenticated code execution](https://www.stepsecurity.io/blog/cve-2026-123007-nginx-http2-rce)**
 - **[OpenAI and Cisco release Shirudo to block Linux exploits before patches](https://www.securityweek.com/openai-cisco-unveil-open-source-tool-to-shield-unpatched-linux-systems/)**
 - **[Azure API Management flaw exposed secrets, tied to Norwegian energy firm incidents](https://www.securityweek.com/azure-flaw-exploited-to-target-secrets-at-norwegian-energy-firms/)**
 - **[GL.iNet's GoodCloud flaw let attackers push malware to routers and KVMs](https://www.securityweek.com/gl-inet-routers-kvms-compromised-via-remote-management-service-flaw/)**
@@ -323,50 +332,53 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 | Domain | Findings |
 | --- | --- |
-| Application Security | 5 |
+| Application Security | 6 |
 | Vulnerability Research & Red Teaming | 3 |
 | Software Supply Chain | 1 |
 | Detection, Response & Threat Intel | 1 |
 
 ## Application Security
 
-- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **67.72** · Nov 17, 2026 · 🔗 +7 sources  
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **67.22** · Nov 17, 2026 · 🔗 +7 sources  
   Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.  
   _[Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)_
-- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](appsec/2026-11-masato-kinugawa-solves-portswigger-s-impossible-innerhtml-wi.md)** · composite **64.04** · Nov 18, 2026  
+- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](appsec/2026-11-masato-kinugawa-solves-portswigger-s-impossible-innerhtml-wi.md)** · composite **63.54** · Nov 18, 2026  
   New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.  
   _[PortSwigger Research](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)_
-- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **55.4** · Nov 3, 2026  
+- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **54.9** · Nov 3, 2026  
   If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.  
   _[IEEE S&P (via arXiv)](http://arxiv.org/abs/2611.04291v1)_
-- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **53.24** · Nov 9, 2026  
-  Even Rust's standard library has soundness bugs of the three kinds the post names, and the authors say agents make the environment-dependent OS-boundary area practical to search.  
-  _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)_
-- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **53.13** · Oct 27, 2026  
+- **[OpenSec reports 12-year-old pre-auth remote root bug in Linux NFS server](appsec/2026-11-opensec-reports-12-year-old-pre-auth-remote-root-bug-in-linu.md)** · composite **53.85** · Nov 25, 2026  
+  Patch and reboot every Linux NFS server on the fixed kernel branches (or confirm your distribution backport), and until then limit tcp/2049 to the storage network or turn off NFSv4.1 and 4.2.  
+  _[@dm via Hacker News](https://opensec.in/blog/nfs2root-cve-2026-99362)_
+- **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **52.88** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
+- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **52.74** · Nov 9, 2026  
+  Even Rust's standard library has soundness bugs of the three kinds the post names, and the authors say agents make the environment-dependent OS-boundary area practical to search.  
+  _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)_
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **66.35** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **65.85** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **64.25** · Nov 13, 2026  
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **63.75** · Nov 13, 2026  
   A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
   _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
-- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **60.39** · Oct 27, 2026 · 🔗 +1 sources  
+- **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **60.14** · Oct 27, 2026 · 🔗 +1 sources  
   Frontier models now build working multi-bug exploit chains against hardened targets with little human help, so defenders need to scan their own code at scale and at PR time.  
   _[Anthropic Research](https://www.anthropic.com/research/discovering-vulnerabilities-with-claude)_
 
 ## Software Supply Chain
 
-- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](supply-chain/2026-11-malicious-npm-package-installs-hermes-agent-as-a-telegram-co.md)** · composite **57.01** · Nov 19, 2026  
+- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](supply-chain/2026-11-malicious-npm-package-installs-hermes-agent-as-a-telegram-co.md)** · composite **56.51** · Nov 19, 2026  
   A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.  
   _[SafeDep](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)_
 
 ## Detection, Response & Threat Intel
 
-- **[VOLTA infostealer uses an LLM to rank victims' assets by value](detection-response/2026-10-volta-infostealer-uses-an-llm-to-rank-victims-assets-by-valu.md)** · composite **47.15** · Oct 31, 2026  
+- **[VOLTA infostealer uses an LLM to rank victims' assets by value](detection-response/2026-10-volta-infostealer-uses-an-llm-to-rank-victims-assets-by-valu.md)** · composite **46.9** · Oct 31, 2026  
   Crimeware now uses LLMs as the analyst who decides which victims to work first, and is built to route around refusals.  
   _[@khalidkhair via Hacker News](https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/)_
 

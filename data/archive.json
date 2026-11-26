@@ -40834,5 +40834,320 @@
     "previous_slugs": [
       "public-bounty-server-runs-pre-php2shell-php-with-500-bitcoin"
     ]
+  },
+  {
+    "candidate_id": "nuguardai-nuguard-71b493a052",
+    "topic": "ai-security",
+    "domain": "ais.red-teaming",
+    "title": "NuGuard is an open-source AI-SBOM and red-team pipeline for agentic apps",
+    "source_url": "https://github.com/NuGuardAI/nuguard",
+    "summary": "NuGuard is an Apache-2.0 Python CLI and MCP server. It builds an AI-SBOM of an agentic app (agents, tools, models, endpoints, infra), statically scans it with OWASP/MITRE mapping, and runs behavior tests. It then red-teams a sandboxed instance with 100+ adversarial scenarios such as prompt injection, tool abuse and exfiltration, with an LLM judge and SARIF export. The README is vendor-led and points to a SaaS. Its feature comparison against Garak and Promptfoo was written by the vendor, and the open-source red-team mode needs you to bring your own adversarially tolerant LLM.",
+    "takeaway": "It is a candidate all-in-one CI red-team harness for agent apps. It's young (67 stars), so treat the comparison claims as unverified marketing until you've benchmarked it against Garak or Promptfoo.",
+    "lessons": [
+      {
+        "point": "The red-team stage runs against a sandboxed instance, not production, using a fixed scenario catalog.",
+        "excerpt": "red-teams a sandboxed instance with a catalog of 100+ adversarial scenarios",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "The open-source tier needs an attacker model willing to generate adversarial payloads, and the SaaS supplies one, so OSS results depend on which model you bring.",
+        "excerpt": "For redteam scenarios, an LLM with adversarial content tolerance is required to generate attack payloads effectively.",
+        "confidence": 0.65,
+        "grounded": true
+      },
+      {
+        "point": "Structural and supply-chain checks can run from the SBOM alone, without a live target, which suits CI gating.",
+        "excerpt": "find structural and supply-chain risks based on the SBOM (no source code or running application required)",
+        "confidence": 0.55,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "red-teaming",
+      "ai-sbom",
+      "llm-security-scanner",
+      "prompt-injection-testing",
+      "agentic-apps",
+      "sarif",
+      "open-source-tool"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Trial NuGuard in CI on a sandboxed agent build",
+      "detail": "pip install nuguard. Run `nuguard sbom generate` and `nuguard analyze` on PRs (no live target needed), then run `nuguard redteam` with the CI profile against a sandbox deployment and upload the SARIF. Check its findings against Garak or Promptfoo on the same target before relying on it."
+    },
+    "scores": {
+      "novelty": 35,
+      "relevance": 50,
+      "newness": 5,
+      "credibility": 49.3,
+      "composite": 34.14,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported all claims; 'no source required' holds only once an SBOM exists (sbom generate takes source). Verifier novelty 45; kept 35.",
+    "prior_art": "Close to Praetorian augustus (multi-turn LLM red-team scanner), Garak and Promptfoo, plus harness-config scanners already in the pool. The difference is bundling AI-SBOM generation and static infra/supply-chain analysis with sandboxed red-teaming in one pipeline. That is a variation in packaging, not a new technique.",
+    "related_claims": [],
+    "article_url": "https://github.com/NuGuardAI/nuguard",
+    "tweet_url": null,
+    "author": "NuGuardAI",
+    "date": "2026-10",
+    "published": "2026-10-25",
+    "raw_path": "data/_raw/nuguardai-nuguard-71b493a052.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:prompt-injection-llm",
+    "source_rank": 49.3,
+    "source_topics": [
+      "ai-security"
+    ],
+    "source_name": "NuGuardAI/nuguard",
+    "id": "nuguard-open-source-ai-sbom-static-analysis-and-9d198cd060",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: takeaway_sentences 2 > 1",
+        "mild: summary_sentences 5 > 4"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "nuguard-open-source-ai-sbom-static-analysis-and-100-scenario"
+    ]
+  },
+  {
+    "topic": "product-security",
+    "domain": "ps.cloud-infra",
+    "title": "CVM-Store paper protects confidential VM storage at near-raw disk speed",
+    "summary": "Confidential virtual machines encrypt memory in use but leave persistent storage outside their trust boundary, exposed to the cloud provider. CVM-Store, accepted at the NDSS 2027 conference, combines authenticated encryption with a userspace input/output engine to give confidentiality, integrity and freshness, and uses a trusted counter service for rollback protection. It reports staying within about 1% of raw disk bandwidth for writes and 1-19% for reads of large objects; only the abstract was available.",
+    "lessons": [
+      {
+        "point": "Confidential VMs protect memory, not disks, so stored data stays exposed to the provider.",
+        "excerpt": "they protect only data in use; persistent storage lies outside the CVM trust boundary, exposing all stateful data to the cloud provider.",
+        "confidence": 0.9,
+        "grounded": true
+      },
+      {
+        "point": "The overhead comes from combining encryption and input/output naively, not from either alone.",
+        "excerpt": "neither authenticated encryption nor I/O is a bottleneck by itself, but their naive combination is.",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Rollback protection needs a separate mechanism because the hardware offers none.",
+        "excerpt": "CVMs lack hardware primitives for this purpose, requiring alternative solutions.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Running in a confidential VM does not protect data on disk; stored data needs its own integrity and rollback protection.",
+    "tags": [
+      "confidential-computing",
+      "storage-encryption",
+      "rollback-protection",
+      "cloud",
+      "academic"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Check what protects data at rest in confidential VMs",
+      "detail": "For workloads in confidential VMs, confirm that disks use authenticated encryption with keys held inside the VM, and decide how you detect a provider rolling storage back to an older state, since the hardware gives no freshness guarantee."
+    },
+    "scores": {
+      "novelty": 50,
+      "relevance": 35,
+      "newness": 5,
+      "credibility": 72.0,
+      "composite": 37.55,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "verify_note": "Faithful to the abstract; figures are the authors' own, for large objects, and freshness is eventual due to epoch batching.",
+    "prior_art": "Disk encryption and integrity layers inside confidential VMs and trusted-counter rollback defenses exist; the paper's claim is near-raw throughput from co-designing the input/output path.",
+    "threat": "A cloud provider reading, altering or rolling back a confidential workload's persistent data.",
+    "conditions": "Stateful workloads in confidential VMs whose storage sits outside the trust boundary.",
+    "mitigations": "Authenticated encryption of stored data with keys inside the VM, plus an external trusted counter for freshness.",
+    "related_claims": [],
+    "source_url": "http://arxiv.org/abs/2610.34560v1",
+    "article_url": "http://arxiv.org/abs/2610.34560v1",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-25",
+    "raw_path": "data/_raw/cvm-store-a-secure-storage-system-for-confidenti-bcaeacc771.txt",
+    "discovered_via": "rss",
+    "source_id": null,
+    "source_rank": 72.0,
+    "source_topics": [],
+    "source_name": "NDSS (via arXiv)",
+    "id": "cvm-store-paper-protects-confidential-vm-storage-a806d8d77a",
+    "retrieved_at": "2026-10-27T18:41:51+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "candidate_id": "samsung-running-a-tensorflow-lite-model-on-960x5-e58947f015",
+    "topic": "product-security",
+    "domain": "ps.mobile",
+    "title": "Researcher reports Samsung Tizen runs AlexNet on screen captures to identify games",
+    "source_url": "https://twitter.com/mike64_t/status/2114150399406202896",
+    "summary": "In a tweet, a researcher reports that Samsung software (Tizen, per a reply) runs a TensorFlow Lite model called 'alex.tflite', which appears to be AlexNet, on 960x540 INT8 screen captures every couple of seconds to work out what game the user is playing. The researcher says it does nearest-neighbor feature matching against a database, fails most of the time, and that the inference runs before the consent gate, though its results are apparently discarded. These are unverified social-media claims; the captured text includes no device model, firmware version or reproduction steps.",
+    "takeaway": "When auditing TV/IoT firmware, check whether on-device ML screen capture runs before user consent, even if the output is dropped; here the evidence is a single unverified tweet.",
+    "lessons": [
+      {
+        "point": "The reported behavior is frequent on-device screen-content classification using a small, quantized off-the-shelf model.",
+        "excerpt": "running a freaking TensorFlow Lite model on 960×540 images with INT8 quantization every couple of seconds",
+        "confidence": 0.45,
+        "grounded": true
+      },
+      {
+        "point": "Model files with plain names in firmware (alex.tflite) make it easy to identify the architecture and purpose.",
+        "excerpt": "It's literally called \"alex.tflite\" and its literally AlexNet",
+        "confidence": 0.45,
+        "grounded": true
+      },
+      {
+        "point": "The inference reportedly runs before the consent check, which is an ordering problem in the privacy control even if results are discarded.",
+        "excerpt": "It also just seems to dump its results into the void because the consent gate comes later.",
+        "confidence": 0.35,
+        "grounded": true
+      }
+    ],
+    "tags": [
+      "samsung",
+      "tizen",
+      "smart-tv",
+      "privacy",
+      "on-device-ml",
+      "tflite",
+      "acr",
+      "firmware-analysis"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Audit consent ordering for on-device ML capture",
+      "detail": "When reverse engineering TV or IoT firmware, list the bundled .tflite/.onnx models, find the code that calls them, and check whether screen or microphone capture plus inference runs before the consent check is evaluated."
+    },
+    "scores": {
+      "novelty": 35,
+      "relevance": 25,
+      "newness": 5,
+      "credibility": 55.0,
+      "composite": 27.5,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "verify_note": "Verifier supported the claims; the researcher's post never names Samsung or Tizen (that comes from a quoted reply), and 'results discarded' is the researcher's own guess. Unverified single tweet. Verifier novelty 80; kept 35.",
+    "prior_art": "Smart-TV automatic content recognition (ACR) tracking (Samsung, LG, Vizio) is well documented. The pool's Samsung items, the LANDFALL zero-day and the SmartThings fridge bricking, are unrelated. The new part is the specific claim that a local AlexNet TFLite model runs before consent; it is unverified.",
+    "related_claims": [],
+    "threat": "On-device screen capture and classification of user activity, possibly before consent is given.",
+    "conditions": "Samsung Tizen device (model/firmware not specified in the source).",
+    "mitigations": "Disable viewing-information/ACR features; segment smart TVs on the network; wait for independent verification.",
+    "article_url": "https://twitter.com/mike64_t/status/2114150399406202896",
+    "tweet_url": null,
+    "author": "mashally",
+    "date": "2026-10",
+    "published": "2026-10-25",
+    "raw_path": "data/_raw/samsung-running-a-tensorflow-lite-model-on-960x5-e58947f015.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@mashally via Hacker News",
+    "id": "researcher-reports-samsung-tizen-running-int8-al-c809e732e8",
+    "retrieved_at": "2026-10-25T16:45:20+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "researcher-reports-samsung-tizen-running-int8-alexnet-tflite"
+    ]
+  },
+  {
+    "id": "models-are-the-how-harnesses-are-the-what-dae2fc2220",
+    "topic": "ai-research",
+    "domain": "air.agents",
+    "title": "Daniel Miessler argues harnesses should describe what you want, not steps",
+    "summary": "Daniel Miessler offers a way to remember what a harness is for: the model handles how to do the task, and the harness supplies what you want. That means your preferences, goals, context and what good looks like. He argues that harnesses which force the model through fixed steps limit it, while harnesses that describe your goals let it choose its own path. This is an opinion piece with no experiments.",
+    "lessons": [
+      {
+        "point": "Miessler quotes Theo's definition: a harness is the code around a model, its tools, the format for calling them, and the loop that runs them.",
+        "excerpt": "The code wrapped around a model that lets it act",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Forcing the model through fixed steps limits its results. Describing goals and preferences works better.",
+        "excerpt": "Micromanaging the steps caps the model; describing what you want frees it",
+        "confidence": 0.5,
+        "grounded": true
+      },
+      {
+        "point": "Context about the user stays valuable as models improve, even though he also says you will need the harness less.",
+        "excerpt": "A smarter model does more with that context, not less.",
+        "confidence": 0.5,
+        "grounded": true
+      }
+    ],
+    "takeaway": "Spend harness effort on user context and definitions of done rather than step-by-step scripts, as a heuristic, not a measured result.",
+    "tags": [
+      "harness-design",
+      "context-engineering",
+      "user-preferences",
+      "opinion"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Replace step scripts with goal, preference and done-criteria context",
+      "detail": "Review your agent's system prompt and skills. Where they prescribe numbered steps, try swapping them for who the user is, how they like things done and what a finished result looks like. Compare the two versions on the same task set before adopting the change."
+    },
+    "scores": {
+      "novelty": 15,
+      "relevance": 40,
+      "newness": 5,
+      "credibility": 75.0,
+      "composite": 29.0,
+      "scored_at": "2026-11-22T17:42:15+00:00"
+    },
+    "verified": true,
+    "prior_art": "No direct match. Closest: the claim retest-harness-scaffolding-on-model-change and 'Harness-Delta Attribution: Dissecting Gains From Harness Evolution' (ai-research). The post mostly restates the author's earlier essays.",
+    "related_claims": [
+      "retest-harness-scaffolding-on-model-change"
+    ],
+    "corroborating_sources": [],
+    "source_url": "https://danielmiessler.com/blog/models-how-harnesses-what",
+    "article_url": "https://danielmiessler.com/blog/models-how-harnesses-what",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-25",
+    "raw_path": "data/_raw/models-are-the-how-harnesses-are-the-what-dae2fc2220.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-danielmiessler-com-feed-rss",
+    "source_rank": 75.0,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Daniel Miessler",
+    "retrieved_at": "2026-10-28T16:52:04+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0
   }
 ]

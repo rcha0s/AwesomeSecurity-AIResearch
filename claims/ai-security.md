@@ -4,7 +4,7 @@
 
 > **What this page is.** The current answer for each question in this topic, ranked by confidence — and underneath, every answer it replaced, kept on purpose with the date and reason it was retired.
 
-_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-25_
+_30 current · 1 contested · 0 superseded · 2 refuted · updated 2026-11-26_
 
 [← Claim index](README.md) · [AI Security findings feed](../ai-security/README.md) · [Home](../README.md)
 
@@ -300,7 +300,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 
 **Conditions —** Based on a single documented Unit 42 incident investigation; the 2-weeks-to-10-hours compression factor is specific to that case and may not generalize to all attack types.
 
-<details><summary>Evidence (9)</summary>
+<details><summary>Evidence (10)</summary>
 
 | Stance | Source | Published |
 | --- | --- | --- |
@@ -313,6 +313,7 @@ A human attacker directing frontier AI agents in an automated monitor-decide-act
 | supports | [Wiz counts twenty more disclosed incidents since Black October amid agentic attacks](https://www.wiz.io/blog/agentic-attacks-artex-offensive-ai-frameworks) | Nov 23, 2026 |
 | supports | [Unit 42 tracks 10+ campaigns where autonomous AI agents ran the attacks](https://unit42.paloaltonetworks.com/autonomous-ai-agent-threat-campaigns/) | Nov 24, 2026 |
 | supports | [Attacker's OpenCode agent probed a financial firm, then used a decoy key](https://www.theregister.com/security/2026/11/24/an-ai-coding-agent-a-browser-and-a-mac-tool-found-a-financial-firms-access-key-in-under-6-minutes/5311922) | Nov 24, 2026 |
+| supports | [Microsoft details ARTEX agent architecture and how defenders can spot it](https://www.microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse/) | Nov 25, 2026 |
 
 </details>
 

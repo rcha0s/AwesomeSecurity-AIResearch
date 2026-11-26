@@ -25,7 +25,7 @@ The optional self-hosted todoist-mcp-http server dispatches POST /mcp without ch
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [GitHub Advisory Database](https://github.com/advisories/GHSA-833v-v58w-294h)  ·  **Retrieved:** 2026-11-20  
-**Scores:** Newness 26 · Novelty 25 · Relevance 70 · Credibility 70 · **Composite 46** _(each 0-100)_  
+**Scores:** Newness 24 · Novelty 25 · Relevance 70 · Credibility 70 · **Composite 45** _(each 0-100)_  
 **Tags:** `mcp`, `dns-rebinding`, `todoist`, `streamable-http`, `loopback`, `api-key`, `ghsa`, `cve-2026-76807`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: data/ai-security.json DNS-rebinding MCP entries (DebugMCP, NextDNS MCP, mysql-mcp-server SSE, obsidian-tc) and the claim localhost-agent-servers-are-reachable-from-any-webpage; this is the same class applied to the Todoist MCP HTTP server, with the minor additional point that the middleware checks the backend token rather than the caller.
 

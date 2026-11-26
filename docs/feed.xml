@@ -6,7 +6,7 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-25T00:00:00Z</updated>
+  <updated>2026-11-26T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
   <entry>
@@ -73,18 +73,18 @@
     <summary type="text">Apps cannot rely on a screenshot block to keep data from agents that hold broad OS permissions, so permission scope for agents needs its own controls.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week</id>
-    <title>Researchers using AI find critical NGINX HTTP/2 code execution flaws</title>
-    <updated>2026-11-18T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=researchers-using-ai-find-critical-nginx-http-2-851fd6b9ee#week" rel="alternate" type="text/html" />
-    <summary type="text">AI-assisted bug hunting is finding old, severe flaws in foundational software faster than defenders can patch, so assume internet-facing systems are vulnerable.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
     <title>Dragos canary prompts found three AI hosting providers breached</title>
     <updated>2026-11-19T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week" rel="alternate" type="text/html" />
     <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=inside-agentic-offensive-frameworks-intent-ids-09f606d944#week</id>
+    <title>Wiz shows ARTEX and Cairn leak numeric intent IDs into victim logs</title>
+    <updated>2026-11-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=inside-agentic-offensive-frameworks-intent-ids-09f606d944#week" rel="alternate" type="text/html" />
+    <summary type="text">Agent harnesses leak their own bookkeeping into victim telemetry, giving defenders a cheap pacing and linking signal when paired with a tool-specific anchor.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>
