@@ -1,6 +1,6 @@
 # Agent efficiency: what to change in your harness
 
-_Generated 2026-11-26 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
+_Generated 2026-11-27 from the claim ledger and the vetted findings of [Awesome Security & AI Research](https://rcha0s.github.io/AwesomeSecurity-AIResearch/). Generated - do not hand-edit._
 
 This page is meant to be fetched by an agent harness. Each claim is a standing answer: **Do this** is the change to make, **Conditions** is where it does not hold, and the evidence is newest first. Contested claims have evidence on both sides; weigh them before acting. New research lists the last month of findings that have not necessarily changed a claim yet.
 
@@ -273,11 +273,14 @@ Evidence, newest first:
 - supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "Set up a feature list file: based on the input spec, set up a structured JSON file with a list of end-to-end feature descriptions."
 - supports: [Anthropic Engineering: effective harnesses for long running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26) "In our experiments, we found that the best way to elicit this behavior was to ask the model to commit its progress to git with descriptive commit messages and to write summaries of its progress in a progress file."
 
-## New research, last 30 days (7)
+## New research, last 30 days (8)
 
 - **[Anthropic verified its Python-to-Rust API migration against production traffic](https://www.anthropic.com/research/migrating-api-to-rust)** · 2026-11-25 · Anthropic Research
   When agents can generate changes faster than you can check them, invest in a production-shaped verifier plus a human gate between the agent sandbox and deployment.
   Try: Build shadow comparison with fingerprints and a sandbox inner loop. Run old and new code on the same inputs, compare every stage, and record only the shape of each difference (stage, position, size). Group diffs by fingerprint, dispatch one agent per new fingerprint, give it a sandbox with fast local checks that do not call the model, and require human PR review before any fix reaches the production comparison.
+- **[Hugging Face agent tunes Inkling 2 Mini, raising decode speed 40%](https://huggingface.co/blog/inkling-2-mini-inference-hillclimb)** · 2026-11-25 · Hugging Face Blog
+  Agent-run optimisation works when the loop enforces controls, logging and correctness gates; reuse that protocol, not these exact flags.
+  Try: Adopt the control-candidate-control hill-climbing loop for agent-run tuning. When letting an agent tune a serving stack, require one variable per run, two control runs around each candidate, a run ledger that records failures, an unmeasured warmup, and gates (long-context retrieval, concurrency, greedy equivalence) before deploying with a pinned image digest and model revision. The skill is published as sybil-solutions/inference-optimisation-skill.
 - **[Google adds Tool Retrieval to the Gemini API to defer tool schemas](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/)** · 2026-11-19 · Google AI Blog
   Deferring tool schemas is now a built-in API feature, so large tool libraries need not be sent in full on every request.
   Try: Defer tool schemas for large tool libraries. If your agent carries dozens of tools, keep names and one-line descriptions in context and load full parameter schemas only when a tool is chosen. In the Gemini Interactions API add a tool\_search tool and set defer\_loading true on the tools to hold back; it is in preview and needs Gemini 3.6 or later. Measure input tokens and tool-selection accuracy before and after, since the post reports no numbers in the text read.

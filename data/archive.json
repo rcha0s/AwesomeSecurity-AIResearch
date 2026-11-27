@@ -41149,5 +41149,405 @@
       "issues": []
     },
     "grounding_score": 1.0
+  },
+  {
+    "id": "26th-october-threat-intelligence-report-88b0908ac4",
+    "topic": "product-security",
+    "domain": "ps.detection-response",
+    "related_claims": [],
+    "title": "Check Point digest: PHP2Shell attempts reportedly rose from thousands to millions",
+    "summary": "A weekly roundup of other outlets' reporting. It covers more than 26,000 Onamae Desktop Cloud servers potentially hit, compromised UpdraftCentral keys used to backdoor WordPress sites over 18 hours, and the trojanized LiteLLM 1.107.0 release. It also covers PHP2Shell attack traffic, a CVSS 10 GitLab bug, and the Aokigahara infostealer that targets AI developer tools.",
+    "lessons": [
+      {
+        "point": "After the PHP2Shell disclosure, attack traffic reportedly rose sharply, while about 97.5% of publicly visible PHP did not show a patched version two days later.",
+        "excerpt": "Attack traffic reportedly increased from thousands to millions of attempts following disclosure. As of October 23, approximately 97.5% of publicly visible PHP instances did not indicate patched versions.",
+        "confidence": 0.6,
+        "grounded": true
+      },
+      {
+        "point": "Compromised UpdraftCentral keys let attackers push backdoors to many WordPress sites at once.",
+        "excerpt": "Attackers subsequently abused compromised UpdraftCentral keys to install backdoors on WordPress websites during an 18-hour campaign on October 18 and 19.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "AI developer tools are now named infostealer targets. Treat their stored tokens like cloud credentials.",
+        "excerpt": "Targeted applications include Claude, ChatGPT Desktop, Cursor, and GitHub Copilot. Stolen information may include authentication tokens, account credentials, and other sensitive application data.",
+        "confidence": 0.65,
+        "grounded": true
+      },
+      {
+        "point": "The Arista VeloCloud Orchestrator flaw lets even read-only users gain operator rights, and it has been exploited in attacks.",
+        "excerpt": "The flaw carries a CVSS score of 9.4 and allows authenticated users, including those with read-only access, to obtain operator-level permissions.",
+        "confidence": 0.7,
+        "grounded": true
+      }
+    ],
+    "takeaway": "A news digest with nothing new, so use it as a checklist: PHP2Shell, LiteLLM 1.107.0, GitLab CVE-2026-110264, VeloCloud CVE-2026-114625, and AI-tool token theft.",
+    "tags": [
+      "weekly-digest",
+      "threat-intel",
+      "php2shell",
+      "litellm",
+      "infostealer",
+      "wordpress"
+    ],
+    "actionable": {
+      "type": "takeaway",
+      "title": "Use the digest as a patch and exposure checklist",
+      "detail": "Confirm PHP runtimes, including in container images, are on the October 21 release. Confirm no host installed LiteLLM 1.107.0. Patch GitLab and Arista VeloCloud Orchestrator. Rotate UpdraftCentral keys if you use it. Add the token stores of Claude, Cursor, ChatGPT Desktop and Copilot to your infostealer detections."
+    },
+    "scores": {
+      "novelty": 8,
+      "relevance": 40,
+      "newness": 4,
+      "credibility": 57.5,
+      "composite": 24.02,
+      "scored_at": "2026-11-26T17:46:17+00:00"
+    },
+    "prior_art": "The pool already covers the main items in depth: the Wiz PHP2Shell entry, 'LiteLLM 1.107.0 on PyPI and Docker was trojanized', and the Arista VeloCloud Orchestrator CVE-2026-114625 KEV entry. Only the 97.5% figure and the Aokigahara infostealer mention are new.",
+    "verified": false,
+    "verify_note": "Verifier: excerpts verbatim, but the draft overstated 'unpatched' (the source says 'did not indicate patched versions') and 'millions' (a reported figure). Text corrected; a secondary digest of already-covered stories.",
+    "source_url": "https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/",
+    "article_url": "https://research.checkpoint.com/2026/26th-october-threat-intelligence-report/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-26",
+    "raw_path": "data/_raw/26th-october-threat-intelligence-report-88b0908ac4.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-research-checkpoint-com-feed",
+    "source_rank": 57.5,
+    "source_topics": [
+      "product-security",
+      "ai-security"
+    ],
+    "source_name": "Check Point Research",
+    "retrieved_at": "2026-10-26T16:50:42+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 24 > 18"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "check-point-digest-oct-26-php2shell-traffic-reportedly-up-fr"
+    ]
+  },
+  {
+    "id": "akto-api-security-akto-d858d79ec2",
+    "topic": "product-security",
+    "domain": "ps.appsec",
+    "related_claims": [],
+    "title": "Akto README pitches open-source API security testing with a new AI-agent tagline",
+    "summary": "Akto builds an API inventory from sources such as Burp, Postman and cloud gateways, then runs OWASP and HackerOne Top 10 style tests, including BOLA (broken object-level authorization). Some features, such as scheduled CI/CD tests, are Enterprise-only. The tagline claims AI agent, MCP and LLM coverage, but the README documents only API-security features.",
+    "lessons": [
+      {
+        "point": "Akto bases its business-logic tests on observed traffic and says this cuts false positives. This is the vendor's claim, with no numbers given.",
+        "excerpt": "Akto's powerful testing engine runs variety of business logic tests by reading traffic data to understand API traffic pattern leading to reduced false positives.",
+        "confidence": 0.5,
+        "grounded": false
+      },
+      {
+        "point": "For a self-hosted install, the README says to open only port 9090 and restrict it to the VPC range or your own IP.",
+        "excerpt": "Open inbound security rule for port 9090 only. And restrict the source CIDR to VPC CIDR or your IP only.",
+        "confidence": 0.85,
+        "grounded": false
+      },
+      {
+        "point": "The README's local debug flags turn on remote JMX (Java Management Extensions) with authentication and SSL off. Keep them off any reachable host.",
+        "excerpt": "-Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false",
+        "confidence": 0.7,
+        "grounded": false
+      }
+    ],
+    "takeaway": "A known open-source API-testing tool with an AI-security tagline, but its README shows no AI- or MCP-specific capability, so judge it as an API testing tool.",
+    "tags": [
+      "api-security",
+      "bola",
+      "dast",
+      "open-source-tool",
+      "vendor-readme"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Trial Akto's testing CLI against a staging API",
+      "detail": "Run Akto's API testing CLI image against a staging API collection to check for missing authorization and BOLA. Keep any self-hosted dashboard on a private subnet with port 9090 limited to your VPC. Never use the README's debug JMX flags outside a local machine."
+    },
+    "scores": {
+      "novelty": 8,
+      "relevance": 30,
+      "newness": 4,
+      "credibility": 49.6,
+      "composite": 19.84,
+      "scored_at": "2026-11-26T17:46:17+00:00"
+    },
+    "prior_art": "Akto has been a known open-source API-security tool for years. The nearest pool items are generic BOLA and API-security entries; this README adds only an AI-security rebrand.",
+    "threat": "A self-hosted dashboard exposed to the internet, or the documented debug setup with unauthenticated remote JMX used on a reachable host.",
+    "conditions": "Akto deployed in a public subnet, or the debug flags used outside a local machine.",
+    "mitigations": "Use a private subnet with VPN or SSH tunnel access, restrict port 9090 by source CIDR, and keep JMX bound to localhost with authentication on.",
+    "verified": false,
+    "verify_note": "Verifier: excerpts verbatim, but the draft overstated features (CI/CD and mirrored traffic partly Enterprise-only; SSRF and JWT tests only named as examples) and inferred JVM code execution. Text corrected; a vendor README with marketing tagline.",
+    "source_url": "https://github.com/akto-api-security/akto",
+    "article_url": "https://github.com/akto-api-security/akto",
+    "tweet_url": null,
+    "author": "akto-api-security",
+    "date": "2026-10",
+    "published": "2026-10-26",
+    "raw_path": "data/_raw/akto-api-security-akto-d858d79ec2.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:ai-agent-security-guardrails",
+    "source_rank": 49.6,
+    "source_topics": [
+      "ai-security"
+    ],
+    "source_name": "akto-api-security/akto",
+    "retrieved_at": "2026-10-26T16:50:42+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 92,
+      "passed": false,
+      "issues": [
+        "mild: title_words 22 > 18"
+      ]
+    },
+    "grounding_score": 0.0,
+    "previous_slugs": [
+      "akto-readme-open-source-api-security-testing-api-inventory-o"
+    ]
+  },
+  {
+    "id": "logic-star-ai-swt-bench-7caa934cf5",
+    "topic": "ai-research",
+    "domain": "air.evals",
+    "related_claims": [],
+    "title": "SWT-Bench is a Docker harness that scores LLM-written tests reproducing GitHub issues",
+    "summary": "SWT-Bench re-uses SWE-bench tooling and datasets, but asks the model for a reproducing test instead of a fix. The test must fail on the original code and pass once a patch resolving the issue is applied. The harness has two modes: unit tests run in the project's suite, or standalone reproduction scripts judged only by exit code. It also reports coverage change and ships Lite (276), Verified (433) and Full (2294) datasets.",
+    "lessons": [
+      {
+        "point": "A good test for a bug report fails on the unpatched code and passes on the patched code. You can use the same check to verify agent-written reproduction tests in your own pipeline.",
+        "excerpt": "a language model is tasked with generating a *reproducing test* that fails in the original state of the code base and passes after a patch resolving the issue has been applied.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "Reproduction-script mode judges success only by the script's exit code. It does not run the project's existing test suite.",
+        "excerpt": "The evaluation harness runs the script on the codebase and determines success based on the script's exit code: 0 for pass and 1 for fail.",
+        "confidence": 0.75,
+        "grounded": true
+      },
+      {
+        "point": "Clean up agent leftovers before scoring. For OpenHands, the authors discarded all top-level files to remove stale reproduction scripts the agent wrote.",
+        "excerpt": "For our evaluation of OpenHands, we automatically discard all top-level files to remove stale reproduction scripts generated by the agent.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "If your coding agent claims it reproduced a bug, require a test that fails before the fix and passes after. SWT-Bench is a ready-made harness for measuring how often it can.",
+    "tags": [
+      "benchmark",
+      "test-generation",
+      "coding-agents",
+      "swe-bench",
+      "eval-harness",
+      "docker"
+    ],
+    "actionable": {
+      "type": "harness",
+      "title": "Add a fail-before, pass-after gate for agent-written reproduction tests",
+      "detail": "Run each agent-written reproduction test twice: on the base commit, where it must fail, and on the patched commit, where it must pass. Also run the existing suite to catch tests that break it. Before scoring, remove stray top-level scripts the agent left behind. To compare against published agents, run your model on SWT-Bench Lite (276 instances)."
+    },
+    "scores": {
+      "novelty": 22,
+      "relevance": 58,
+      "newness": 4,
+      "credibility": 50.8,
+      "composite": 32.62,
+      "scored_at": "2026-11-26T17:46:17+00:00"
+    },
+    "prior_art": "SWT-Bench is a 2024 NeurIPS paper built on the SWE-bench harness; the README adds no new results. The nearest pool items are the swe-bench-doesnt-generalize-to-production-tasks claim and eval-methodology entries; none cover fail-to-pass reproduction tests.",
+    "verified": false,
+    "verify_note": "Verifier: excerpts verbatim and dataset sizes correct, but the draft over-reached (author attribution, regression-catching inference, filler lesson). Text corrected; held as an old 2024 benchmark README with low novelty.",
+    "source_url": "https://github.com/logic-star-ai/swt-bench",
+    "article_url": "https://github.com/logic-star-ai/swt-bench",
+    "tweet_url": null,
+    "author": "logic-star-ai",
+    "date": "2026-10",
+    "published": "2026-10-26",
+    "raw_path": "data/_raw/logic-star-ai-swt-bench-7caa934cf5.txt",
+    "discovered_via": "github",
+    "source_id": "github_query:llm-evaluation-harness-benchmark",
+    "source_rank": 50.8,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "logic-star-ai/swt-bench",
+    "retrieved_at": "2026-10-26T16:50:42+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 84,
+      "passed": false,
+      "issues": [
+        "mild: title_words 21 > 18",
+        "mild: takeaway_sentences 2 > 1"
+      ]
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "swt-bench-neurips-2024-a-docker-harness-that-scores-llm-writ"
+    ]
+  },
+  {
+    "topic": "ai-research",
+    "domain": "air.tooling",
+    "title": "Simon Willison's Claude-run review finds webframe fast but rough for scraping",
+    "summary": "webframe, a small Go tool by Jeff Lindsay, runs a web page or file in the operating system's own hidden web view and prints `console.log()` output to standard output. Simon Willison had Claude Opus 5.5 test it as a scraper and as a sandbox. The report finds it fast and comparable to shot-scraper for scraping, but with rough edges: CSP failures, a 0×0 viewport, hanging loads, missing HTTP metadata and limited browser controls. The captured post gives no detail on the sandbox verdict.",
+    "lessons": [
+      {
+        "point": "webframe runs a page like a command-line program, printing console output.",
+        "excerpt": "lets you \"run a web page like a program\"",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "The evaluation found several practical rough edges.",
+        "excerpt": "but with important rough edges including CSP failures, a 0×0 viewport, hanging loads, missing HTTP metadata, and limited browser controls.",
+        "confidence": 0.85,
+        "grounded": true
+      },
+      {
+        "point": "It uses the system browser engine rather than bundling one.",
+        "excerpt": "it doesn't need to bundle its own browser engine.",
+        "confidence": 0.8,
+        "grounded": true
+      }
+    ],
+    "takeaway": "webframe is a lightweight way to run page JavaScript from scripts, but do not treat it as a sandbox without your own isolation.",
+    "tags": [
+      "scraping",
+      "headless-browser",
+      "sandbox",
+      "agent-tooling",
+      "evaluation"
+    ],
+    "actionable": {
+      "type": "tool",
+      "title": "Try webframe for light page scripting, not isolation",
+      "detail": "For agent or scraping tasks that just need page JavaScript output, webframe is a smaller alternative to Playwright-based tools. Run it inside your own container or VM if pages are untrusted, since the post gives no sandbox guarantees."
+    },
+    "scores": {
+      "novelty": 30,
+      "relevance": 30,
+      "newness": 4,
+      "credibility": 52.0,
+      "composite": 26.8,
+      "scored_at": "2026-11-26T17:46:17+00:00"
+    },
+    "verified": true,
+    "verify_note": "Matches the captured blurb; details rest on a one-line summary of the linked report.",
+    "prior_art": "shot-scraper and Playwright-based runners already cover this; webframe is a smaller variant built on the system web view.",
+    "related_claims": [],
+    "source_url": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+    "article_url": "https://simonwillison.net/2026/Oct/26/webframe-evaluation/",
+    "tweet_url": null,
+    "author": null,
+    "date": "2026-10",
+    "published": "2026-10-26",
+    "raw_path": "data/_raw/webframe-evaluated-as-a-scraper-and-a-sandbox-6c4e2e0e9d.txt",
+    "discovered_via": "rss",
+    "source_id": "rss:https-simonwillison-net-atom-everything",
+    "source_rank": 52.0,
+    "source_topics": [
+      "ai-research"
+    ],
+    "source_name": "Simon Willison's Weblog",
+    "id": "simon-willison-s-claude-run-review-finds-webfram-25bf35897e",
+    "retrieved_at": "2026-10-27T18:41:51+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0
+  },
+  {
+    "id": "sebastian-raschka-s-from-scratch-video-course-on-5051734d4d",
+    "topic": "ai-research",
+    "domain": "air.models",
+    "related_claims": [],
+    "title": "Sebastian Raschka releases a from-scratch video course on building reasoning models",
+    "summary": "Raschka published eight coding lectures (11 hours) to go with his book Build a Reasoning Model (From Scratch). Starting from a pre-trained Qwen3 0.6B, the course builds a MATH-500 answer verifier and uses it both as the evaluator and as the reward for reinforcement learning with verifiable rewards (RLVR). It then covers self-consistency, self-refinement, a simplified GRPO training loop, and distillation from DeepSeek R1 answers.",
+    "lessons": [
+      {
+        "point": "One answer verifier can serve as both your eval and your RL reward signal, which keeps measurement and training aligned.",
+        "excerpt": "However, the verifier also has a second job later in the series: providing the reward signal for reinforcement learning with verifiable rewards (RLVR).",
+        "confidence": 0.8,
+        "grounded": true
+      },
+      {
+        "point": "Raschka frames the reasoning model as the engine and the agent harness as the machinery around it, supplying context management and tool access.",
+        "excerpt": "The task of the harness is sophisticated context management and giving the LLM access to tools.",
+        "confidence": 0.7,
+        "grounded": true
+      },
+      {
+        "point": "The early text-generation and evaluation examples run on a CPU.",
+        "excerpt": "Compute-resource-wise, you can work through the early text-generation and evaluation examples on a CPU.",
+        "confidence": 0.85,
+        "grounded": true
+      }
+    ],
+    "takeaway": "A hands-on resource for understanding the reasoning model inside agents; teaching material, not a new finding.",
+    "tags": [
+      "reasoning-models",
+      "rlvr",
+      "grpo",
+      "distillation",
+      "course",
+      "pytorch"
+    ],
+    "actionable": {
+      "type": "other",
+      "title": "Work through the reasoning-from-scratch videos for RLVR and GRPO intuition",
+      "detail": "Follow the verifier and MATH-500 evaluation chapter and the simplified GRPO chapters alongside the videos. Reuse the verifier-as-reward pattern when building evals for your own agents."
+    },
+    "scores": {
+      "novelty": 8,
+      "relevance": 35,
+      "newness": 4,
+      "credibility": 55.0,
+      "composite": 22.15,
+      "scored_at": "2026-11-26T17:46:17+00:00"
+    },
+    "prior_art": "A course announcement that repackages Raschka's own book; the methods (self-consistency, GRPO, distillation) are well known. No pool entry covers it.",
+    "verified": true,
+    "verify_note": "Verifier: all excerpts verbatim and title/summary facts supported (not refuted). Novelty: lower of 8 and 12.",
+    "source_url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
+    "article_url": "https://magazine.sebastianraschka.com/p/building-reasoning-models",
+    "tweet_url": null,
+    "author": "sgiannopoulos",
+    "date": "2026-10",
+    "published": "2026-10-26",
+    "raw_path": "data/_raw/sebastian-raschka-s-from-scratch-video-course-on-5051734d4d.txt",
+    "discovered_via": "hackernews",
+    "source_id": null,
+    "source_rank": 55.0,
+    "source_topics": [],
+    "source_name": "@sgiannopoulos via Hacker News",
+    "retrieved_at": "2026-10-26T16:50:42+00:00",
+    "needs_review": true,
+    "readability": {
+      "score": 100,
+      "passed": true,
+      "issues": []
+    },
+    "grounding_score": 1.0,
+    "previous_slugs": [
+      "sebastian-raschka-s-11-hour-8-video-from-scratch-course-on-b"
+    ]
   }
 ]
