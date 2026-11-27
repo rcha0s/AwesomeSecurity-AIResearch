@@ -24,7 +24,7 @@ Starting November 10, 2026, an attacker used stolen GitHub tokens to open probe 
 
 **Topic:** Product Security  ·  **Domain:** Software Supply Chain  
 **Source:** [Chainguard Unchained](https://www.chainguard.dev/unchained/wfx-loot-stolen-github-tokens-pushed-a-ci-secret-stealer-into-60-000-repositories-november-2026)  ·  **Retrieved:** 2026-11-13  
-**Scores:** Newness 23 · Novelty 30 · Relevance 85 · Credibility 54 · **Composite 48** _(each 0-100)_  
+**Scores:** Newness 22 · Novelty 30 · Relevance 85 · Credibility 54 · **Composite 48** _(each 0-100)_  
 **Tags:** `github-actions`, `supply-chain`, `credential-theft`, `stolen-tokens`, `oidc`, `branch-protection`, `cloud-backdoor`, `ci-runner`, `anti-forensics`  
 **Also reported by:** [StepSecurity](https://www.stepsecurity.io/blog/wfx-phantom-the-github-actions-secret-stealer) _(+1 corroborating)_  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: SafeDep's 'wfx stealer pushed into 8,093+ repos, likely via stolen tokens' (push-revert, OIDC exchange, Entra and AWS backdoors). Adds Aikido's larger count, forged required status checks, run deletion detectable by missing run numbers, and AWS Principal * trust rewrites.

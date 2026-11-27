@@ -18,7 +18,7 @@ Ramparts is an open-source Rust scanner that audits MCP servers and agent skill 
 
 **Topic:** AI Security  ·  **Domain:** MCP, Tools & Skills  
 **Source:** [highflame-ai/ramparts](https://github.com/highflame-ai/ramparts)  ·  **Retrieved:** 2026-11-24  
-**Scores:** Newness 23 · Novelty 30 · Relevance 60 · Credibility 54 · **Composite 41** _(each 0-100)_  
+**Scores:** Newness 22 · Novelty 30 · Relevance 60 · Credibility 54 · **Composite 41** _(each 0-100)_  
 **Tags:** `mcp`, `skills`, `scanner`, `rug-pull`, `owasp`, `yara`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Devlab mcp-scanner and Snyk Agent Scan already cover MCP and skill scanning; Ramparts adds drift baselines and evasion-resistant rescans.
 

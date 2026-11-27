@@ -25,7 +25,7 @@ OpenSec disclosed CVE-2026-99362 (CVSS 9.8), a heap overflow in the Linux kernel
 
 **Topic:** Product Security  ·  **Domain:** Application Security  
 **Source:** [@dm via Hacker News](https://opensec.in/blog/nfs2root-cve-2026-99362)  ·  **Author:** dm  ·  **Retrieved:** 2026-11-26  
-**Scores:** Newness 23 · Novelty 60 · Relevance 72 · Credibility 60 · **Composite 54** _(each 0-100)_  
+**Scores:** Newness 22 · Novelty 60 · Relevance 72 · Credibility 60 · **Composite 54** _(each 0-100)_  
 **Tags:** `linux-kernel`, `nfsd`, `heap-overflow`, `pre-auth-rce`, `cve-2026-99362`, `ai-found-vuln`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Existing product-security entries on Linux kernel flaws (e.g. 'Two KSMBD RCE flaws hit public kernel lists with no patch', 'OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs') cover remote kernel RCE and AI-found kernel bugs, but not this nfsd reply-cache overflow.
 

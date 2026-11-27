@@ -344,31 +344,31 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Application Security
 
-- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **66.97** · Nov 17, 2026 · 🔗 +7 sources  
+- **[OpenJDK Base64 decoder flaw Java4Shell corrupts memory on AVX-512 CPUs](appsec/2026-11-openjdk-base64-decoder-flaw-java4shell-corrupts-memory-on-av.md)** · composite **66.72** · Nov 17, 2026 · 🔗 +7 sources  
   Patch JDK 17, 21, 25 and 27 (including bundled runtimes and container images), prioritizing x86-64 hosts whose CPUs report avx512vbmi.  
   _[Datadog Security Labs](https://securitylabs.datadoghq.com/articles/java4shell-remote-code-execution-in-openjdk-cve-2026-114938/)_
-- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](appsec/2026-11-masato-kinugawa-solves-portswigger-s-impossible-innerhtml-wi.md)** · composite **63.29** · Nov 18, 2026  
+- **[Masato Kinugawa solves PortSwigger's impossible innerHTML-without-equals XSS using the selectedcontent element](appsec/2026-11-masato-kinugawa-solves-portswigger-s-impossible-innerhtml-wi.md)** · composite **63.04** · Nov 18, 2026  
   New HTML elements create new XSS paths; sanitizers and filters that block characters or script tags need re-testing against them.  
   _[PortSwigger Research](https://portswigger.net/research/achieving-the-impossible-xss-in-innerhtml-without-equals)_
-- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **54.65** · Nov 3, 2026  
+- **[Malicious native apps can hijack browser Native Messaging to steal password vaults](appsec/2026-11-malicious-native-apps-can-hijack-browser-native-messaging-to.md)** · composite **54.4** · Nov 3, 2026  
   If your extension talks to a native helper, authenticate and encrypt that channel yourself; the browser does not.  
   _[IEEE S&P (via arXiv)](http://arxiv.org/abs/2611.04291v1)_
-- **[OpenSec reports 12-year-old pre-auth remote root bug in Linux NFS server](appsec/2026-11-opensec-reports-12-year-old-pre-auth-remote-root-bug-in-linu.md)** · composite **54.35** · Nov 25, 2026  
+- **[OpenSec reports 12-year-old pre-auth remote root bug in Linux NFS server](appsec/2026-11-opensec-reports-12-year-old-pre-auth-remote-root-bug-in-linu.md)** · composite **54.1** · Nov 25, 2026  
   Patch and reboot every Linux NFS server on the fixed kernel branches (or confirm your distribution backport), and until then limit tcp/2049 to the storage network or turn off NFSv4.1 and 4.2.  
   _[@dm via Hacker News](https://opensec.in/blog/nfs2root-cve-2026-99362)_
 - **[PortSwigger's Gareth Heyes bypassed six of eight popular vector-image sanitizers](appsec/2026-10-portswigger-s-gareth-heyes-bypassed-six-of-eight-popular-vec.md)** · composite **52.88** · Oct 27, 2026  
   If you accept SVG uploads, sanitize with DOMPurify or darylldoyle/svg-sanitizer, serve user files from a separate origin, and never let users influence response headers.  
   _[PortSwigger Research](https://portswigger.net/research/scalable-vector-grief)_
-- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **52.49** · Nov 9, 2026  
+- **[Microsoft FORGE Lab finds soundness bugs in Rust's standard library](appsec/2026-11-microsoft-forge-lab-finds-soundness-bugs-in-rust-s-standard.md)** · composite **52.24** · Nov 9, 2026  
   Even Rust's standard library has soundness bugs of the three kinds the post names, and the authors say agents make the environment-dependent OS-boundary area practical to search.  
   _[Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/09/forge-lab-uses-agentic-tools-to-identify-memory-safety-issues-in-rust/)_
 
 ## Vulnerability Research & Red Teaming
 
-- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **65.6** · Nov 5, 2026 · 🔗 +1 sources  
+- **[OpenAI pipeline finds, exploits and patches hundreds of Linux kernel root bugs](offensive/2026-11-openai-pipeline-finds-exploits-and-patches-hundreds-of-linux.md)** · composite **65.35** · Nov 5, 2026 · 🔗 +1 sources  
   Kernel LPE discovery and exploitation is now cheap and fast, so local-user access on an unpatched Linux host should be treated as close to root, and AI vulnerability pipelines need independent checks…  
   _[tl;dr sec (curator link)](https://openai.com/index/a-thousand-fewer-paths-to-root/)_
-- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **63.5** · Nov 13, 2026  
+- **[Google Project Zero shortens its disclosure deadline to 30 days by 2028](offensive/2026-11-google-project-zero-shortens-its-disclosure-deadline-to-30-d.md)** · composite **63.25** · Nov 13, 2026  
   A major research team now treats AI-accelerated exploitation as the default, so vendors need to fix every reported bug within 30 to 60 days and close the patch gap, whatever the bug's severity.  
   _[Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)_
 - **[Anthropic's unreleased model built five attack chains against major software](offensive/2026-10-anthropic-s-unreleased-model-built-five-attack-chains-agains.md)** · composite **60.14** · Oct 27, 2026 · 🔗 +1 sources  
@@ -377,7 +377,7 @@ _Not new ideas - what the field is watching now: the editorial pass and the news
 
 ## Software Supply Chain
 
-- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](supply-chain/2026-11-malicious-npm-package-installs-hermes-agent-as-a-telegram-co.md)** · composite **56.26** · Nov 19, 2026  
+- **[Malicious npm package installs Hermes Agent as a Telegram-controlled backdoor](supply-chain/2026-11-malicious-npm-package-installs-hermes-agent-as-a-telegram-co.md)** · composite **56.01** · Nov 19, 2026  
   A malicious package can drop a legitimate AI agent as the implant, so treat unexpected agent installs and agent services as compromise signals.  
   _[SafeDep](https://safedep.io/blog/malicious-npm-leadstack-crm-connect-hermes-agent-backdoor)_
 

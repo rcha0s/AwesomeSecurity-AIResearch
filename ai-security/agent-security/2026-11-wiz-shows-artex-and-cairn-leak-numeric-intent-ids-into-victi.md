@@ -25,7 +25,7 @@ Wiz Research found that the ARTEX and Cairn offensive agent frameworks number ea
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [Wiz Research](https://www.wiz.io/blog/agentic-offensive-frameworks-intent-ids-artex-cairn)  ·  **Retrieved:** 2026-11-26  
-**Scores:** Newness 23 · Novelty 70 · Relevance 70 · Credibility 66 · **Composite 58** _(each 0-100)_  
+**Scores:** Newness 22 · Novelty 70 · Relevance 70 · Credibility 66 · **Composite 57** _(each 0-100)_  
 **Tags:** `artex`, `cairn`, `agentic-attacks`, `threat-hunting`, `attribution`, `wiz`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Wiz's earlier fingerprints-of-agent-driven-intrusions entry and Datadog's CloudTrail ARTEX hunting cover behavioral and parameter fingerprints, but none of the existing entries describe sequence-counter leakage from harness internals.
 
