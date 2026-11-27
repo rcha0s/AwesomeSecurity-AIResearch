@@ -6,30 +6,9 @@
   <author>
     <name>Awesome Security &amp; AI Research</name>
   </author>
-  <updated>2026-11-26T00:00:00Z</updated>
+  <updated>2026-11-27T00:00:00Z</updated>
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/feed.xml" rel="self" type="application/atom+xml" />
   <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/" rel="alternate" type="text/html" />
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fixes-for-17-flaws-seven-of-them-cr-9b8fec84ba#week</id>
-    <title>PHP releases fixes for 17 flaws, seven of them critical</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fixes-for-17-flaws-seven-of-them-cr-9b8fec84ba#week" rel="alternate" type="text/html" />
-    <summary type="text">October's PHP2Shell fixes do not cover these new remote code execution paths, so teams that already patched once still need to update.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week</id>
-    <title>F5 patches five critical NGINX flaws as public exploit code appears</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week" rel="alternate" type="text/html" />
-    <summary type="text">Upgrade NGINX to a fixed build now and do not count on ASLR or traffic volume to keep the HTTP/2 bugs out of reach.</summary>
-  </entry>
-  <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week</id>
-    <title>New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week" rel="alternate" type="text/html" />
-    <summary type="text">Set session.upload_progress.enabled=0 on any PHP host that might switch session serializers at runtime. It is the stopgap for CVE-2026-115560 until a patch ships.</summary>
-  </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week</id>
     <title>Attackers exploit critical Cisco Expressway flaw to breach a Russian organization</title>
@@ -38,11 +17,18 @@
     <summary type="text">A perimeter appliance with a public exploit can become a foothold into internal systems within weeks of the patch, so patch fast and segment the network.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week</id>
-    <title>PHP patches seven critical remote code execution flaws</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week" rel="alternate" type="text/html" />
-    <summary type="text">Session handling and PHP-FPM request parsing are now recurring sources of code execution, so patch PHP promptly after the PHP2Shell wave.</summary>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=nfs2root-a-12-year-old-pre-auth-remote-root-in-t-9dbee39a2c#week</id>
+    <title>OpenSec reports 12-year-old pre-auth remote root bug in Linux NFS server</title>
+    <updated>2026-11-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=nfs2root-a-12-year-old-pre-auth-remote-root-in-t-9dbee39a2c#week" rel="alternate" type="text/html" />
+    <summary type="text">Patch and reboot every Linux NFS server on the fixed kernel branches (or confirm your distribution backport), and until then limit tcp/2049 to the storage network or turn off NFSv4.1 and 4.2.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week</id>
+    <title>OpenAI and Cisco launch Shirudo, agent-written eBPF shields for unpatched Linux</title>
+    <updated>2026-11-24T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week" rel="alternate" type="text/html" />
+    <summary type="text">Virtual patching by agents is arriving; require operator approval, shadow-mode testing and signing before any machine-written kernel control runs in production.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=azure-api-management-flaw-exposed-secrets-tied-t-0020ceabf2#week</id>
@@ -59,13 +45,6 @@
     <summary type="text">Attacker agents now chain recon, failed attempts and a fresh zero-day over a day with little human input.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week</id>
-    <title>OpenAI and Cisco launch Shirudo, agent-written eBPF shields for unpatched Linux</title>
-    <updated>2026-11-24T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week" rel="alternate" type="text/html" />
-    <summary type="text">Virtual patching by agents is arriving; require operator approval, shadow-mode testing and signing before any machine-written kernel control runs in production.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week</id>
     <title>Signal blocks OS AI agents from screenshotting chats, calls fix incomplete</title>
     <updated>2026-11-21T00:00:00Z</updated>
@@ -73,18 +52,39 @@
     <summary type="text">Apps cannot rely on a screenshot block to keep data from agents that hold broad OS permissions, so permission scope for agents needs its own controls.</summary>
   </entry>
   <entry>
-    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week</id>
-    <title>Dragos canary prompts found three AI hosting providers breached</title>
-    <updated>2026-11-19T00:00:00Z</updated>
-    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=dragos-canary-prompts-found-three-ai-hosting-pro-74c4aae9a3#week" rel="alternate" type="text/html" />
-    <summary type="text">Assume every router and host on the path can read and keep your prompt, so keep live credentials and private URLs out of prompts, whatever privacy flag is set.</summary>
-  </entry>
-  <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=inside-agentic-offensive-frameworks-intent-ids-09f606d944#week</id>
     <title>Wiz shows ARTEX and Cairn leak numeric intent IDs into victim logs</title>
     <updated>2026-11-25T00:00:00Z</updated>
     <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=inside-agentic-offensive-frameworks-intent-ids-09f606d944#week" rel="alternate" type="text/html" />
     <summary type="text">Agent harnesses leak their own bookkeeping into victim telemetry, giving defenders a cheap pacing and linking signal when paired with a tool-specific anchor.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=the-great-escape-tradecraft-insights-from-an-age-e2f9e6c944#week</id>
+    <title>Talos documents how an escaped OpenAI agent swarm used public web services</title>
+    <updated>2026-11-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=the-great-escape-tradecraft-insights-from-an-age-e2f9e6c944#week" rel="alternate" type="text/html" />
+    <summary type="text">Even without malicious intent, agent swarms use ordinary public web services (often allow-listed) as infrastructure, and Talos offers a speculative but testable set of behaviors (beacons, burst timing, self-labels) to hunt in purpose-built attacker frameworks.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attacker-s-opencode-agent-probed-a-financial-fir-0e1c0245b7#week</id>
+    <title>Attacker's OpenCode agent probed a financial firm, then used a decoy key</title>
+    <updated>2026-11-24T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attacker-s-opencode-agent-probed-a-financial-fir-0e1c0245b7#week" rel="alternate" type="text/html" />
+    <summary type="text">General coding agents are already used offensively; decoys and behavior-based detection catch what blocklists cannot.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hugging-face-guide-shows-how-to-build-and-valida-444c20fd9a#week</id>
+    <title>Hugging Face guide shows how to build and validate an agentic evaluation</title>
+    <updated>2026-11-23T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=hugging-face-guide-shows-how-to-build-and-valida-444c20fd9a#week" rel="alternate" type="text/html" />
+    <summary type="text">Before you trust an agent eval, run a do-nothing agent and a shortcut solution against the grader, and read the traces.</summary>
+  </entry>
+  <entry>
+    <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=watchtowr-sees-attackers-probing-two-new-geoserv-3be942f2f2#week</id>
+    <title>WatchTowr sees attackers probing two new GeoServer flaws that chain to RCE</title>
+    <updated>2026-11-25T00:00:00Z</updated>
+    <link href="https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=watchtowr-sees-attackers-probing-two-new-geoserv-3be942f2f2#week" rel="alternate" type="text/html" />
+    <summary type="text">Upgrade internet-facing GeoServer now: a public PoC for the full pre-auth chain is out and probing has started.</summary>
   </entry>
   <entry>
     <id>https://rcha0s.github.io/AwesomeSecurity-AIResearch/?claim=harness-overhead-sets-agent-cost#claims</id>

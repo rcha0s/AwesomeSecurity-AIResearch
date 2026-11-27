@@ -4,7 +4,7 @@
 
 > A weekly, source-cited briefing on AI security, product security and applied AI research, plus a claim ledger that calls out what the field now believes, what changed and what got overturned.
 
-![Updated](https://img.shields.io/badge/updated-2026--11--26-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-25-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
+![Updated](https://img.shields.io/badge/updated-2026--11--27-1f6feb) ![Vetted](https://img.shields.io/badge/vetted_findings-25-2da44e) ![Claims](https://img.shields.io/badge/standing_claims-83-6f42c1) ![License](https://img.shields.io/badge/content-CC--BY--4.0-8b949e)
 
 **The site is the product: [rcha0s.github.io/AwesomeSecurity-AIResearch/](https://rcha0s.github.io/AwesomeSecurity-AIResearch/)**. Open the Briefing for this week, Claims for the ledger, Topics to browse by domain. Click any title for the full writeup with its sources; every view and finding has a link you can share.
 
@@ -20,32 +20,30 @@ _Only incidents that are critical, covered by 3+ independent outlets, and clear 
 _Your focus areas, last 7 days: most areas matched first, then newest._
 
 1. **[Highflame's Ramparts scans MCP servers and agent skills for attack paths](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=highflame-s-ramparts-scans-mcp-servers-and-agent-717085ea3d#week)** · _AI Security · Nov 24, 2026_
-2. **[UK AISI found a universal jailbreak in pre-release OpenAI GPT-6.2 Astra](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uk-aisi-found-a-universal-jailbreak-in-pre-relea-25f6e68c00#week)** · _AI Security · Nov 20, 2026_
-3. **[Google explains how Duplex phone-calling moved from narrow models to Gemini](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=how-google-duplex-evolved-to-also-call-businesse-31274c5de7#week)** · _AI Research · Nov 20, 2026_
+2. **[Criminals adopt ARTEX AI hacking tool to attack banks and governments](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=criminals-adopt-artex-ai-hacking-tool-to-attack-e95eb47a27#week)** · _AI Security · Nov 26, 2026 · 2 sources_
+3. **[UK AISI found a universal jailbreak in pre-release OpenAI GPT-6.2 Astra](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=uk-aisi-found-a-universal-jailbreak-in-pre-relea-25f6e68c00#week)** · _AI Security · Nov 20, 2026_
 
 ## What to learn
 
 _From the last 14 days: each has proof (the work itself or a measured comparison) and serves one of your goals; more independent sources rank first._
 
 1. **[Anthropic verified its Python-to-Rust API migration against production traffic](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=migrating-our-messages-api-to-rust-f6d6d4f77d#week)** · _AI Research · Nov 25, 2026_
-2. **[MobileProbe red-teams mobile GUI agents by placing injections along their actual route](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=mobileprobe-red-teams-mobile-gui-agents-by-placi-63a32851c6#week)** · _AI Security · Nov 12, 2026_
-3. **[Microsoft finds 8% of coding sessions account for 44% of costs](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=microsoft-research-focus-edition-98-87946c1829#week)** · _AI Research · Nov 12, 2026_
 
 ## Biggest this week
 
 _Most covered in the last 7 days; single-outlet patch notices are left out._
 
-1. **[PHP releases fixes for 17 flaws, seven of them critical](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-releases-fixes-for-17-flaws-seven-of-them-cr-9b8fec84ba#week)** · _Product Security · Nov 19, 2026 · 9 sources_
-2. **[F5 patches five critical NGINX flaws as public exploit code appears](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=f5-patches-critical-nginx2root-flaws-as-poc-expl-ab56579d9e#week)** · _Product Security · Nov 19, 2026 · 7 sources_
-3. **[New unpatched PHP RCE (CVE-2026-115560) is separate from PHP2Shell](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-shares-mitigation-for-new-rce-vulnerability-17a56684d0#week)** · _Product Security · Nov 19, 2026 · 4 sources_
+1. **[Attackers exploit critical Cisco Expressway flaw to breach a Russian organization](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week)** · _Product Security · Nov 20, 2026 · 3 sources_
+2. **[OpenSec reports 12-year-old pre-auth remote root bug in Linux NFS server](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=nfs2root-a-12-year-old-pre-auth-remote-root-in-t-9dbee39a2c#week)** · _Product Security · Nov 25, 2026 · 2 sources_
+3. **[OpenAI and Cisco launch Shirudo, agent-written eBPF shields for unpatched Linux](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=openai-and-cisco-launch-shirudo-agent-written-eb-00451ce8bd#week)** · _Product Security · Nov 24, 2026 · 2 sources_
 
 ## This week's top stories
 
 _The last 7 days, most covered first._
 
-1. **[Attackers exploit critical Cisco Expressway flaw to breach a Russian organization](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=attackers-exploit-critical-cisco-expressway-flaw-53c39d492b#week)** · _Product Security · Nov 20, 2026 · 3 sources_
-2. **[PHP patches seven critical remote code execution flaws](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=php-patches-seven-critical-remote-code-execution-d0ec7a864e#week)** · _Product Security · Nov 19, 2026 · 3 sources_
-3. **[Azure API Management flaw exposed secrets, tied to Norwegian energy firm incidents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=azure-api-management-flaw-exposed-secrets-tied-t-0020ceabf2#week)** · _Product Security · Nov 23, 2026 · 2 sources_
+1. **[Azure API Management flaw exposed secrets, tied to Norwegian energy firm incidents](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=azure-api-management-flaw-exposed-secrets-tied-t-0020ceabf2#week)** · _Product Security · Nov 23, 2026 · 2 sources_
+2. **[Amazon: China-linked attackers used AI agents to exploit a university zero-day](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=amazon-china-linked-attackers-used-ai-agents-to-f597dd63c0#week)** · _AI Security · Nov 20, 2026 · 2 sources_
+3. **[Signal blocks OS AI agents from screenshotting chats, calls fix incomplete](https://rcha0s.github.io/AwesomeSecurity-AIResearch/?finding=signal-blocks-ai-agents-from-reading-private-cha-48384c7b38#week)** · _AI Security · Nov 21, 2026 · 2 sources_
 
 ## Claim changes
 
@@ -83,4 +81,4 @@ On GitHub: [AI Security](ai-security/README.md) · [Product Security](product-se
 
 Content is [CC BY 4.0](LICENSE), scripts MIT; linked research belongs to its authors.
 
-<sub>Last updated 2026-11-26 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>
+<sub>Last updated 2026-11-27 by <code>scripts/generate_site.py</code> from the pools in <code>data/</code>. Generated - do not hand-edit.</sub>

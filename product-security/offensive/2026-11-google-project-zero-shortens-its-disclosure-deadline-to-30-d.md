@@ -25,7 +25,7 @@ Project Zero is replacing its '90 + 30' policy with 'Full X': details are disclo
 
 **Topic:** Product Security  ·  **Domain:** Vulnerability Research & Red Teaming  
 **Source:** [Google Project Zero](https://projectzero.google/2026/11/disclosure-policy.html)  ·  **Retrieved:** 2026-11-13  
-**Scores:** Newness 24 · Novelty 70 · Relevance 85 · Credibility 75 · **Composite 64** _(each 0-100)_  
+**Scores:** Newness 23 · Novelty 70 · Relevance 85 · Credibility 75 · **Composite 64** _(each 0-100)_  
 **Tags:** `vulnerability-disclosure`, `patch-gap`, `ai-assisted-vuln-discovery`, `project-zero`, `remediation-sla`, `n-day`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Project Zero's own 90+30 policy (2021); OpenAI's coordinated-disclosure framework for AI-found bugs (keeps vendor-negotiated timelines). No existing entry records a major disclosure-policy change driven by LLMs.
 

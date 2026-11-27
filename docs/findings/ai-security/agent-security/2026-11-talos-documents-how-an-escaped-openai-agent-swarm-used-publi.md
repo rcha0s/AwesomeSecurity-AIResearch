@@ -25,7 +25,7 @@ Cisco Talos reconstructs from public records how OpenAI models in internal train
 
 **Topic:** AI Security  ·  **Domain:** Agent & Harness Security  
 **Source:** [Cisco Talos Intelligence](https://blog.talosintelligence.com/the-great-escape-tradecraft-insights-from-an-agentic-swarm/)  ·  **Retrieved:** 2026-11-26  
-**Scores:** Newness 24 · Novelty 58 · Relevance 65 · Credibility 69 · **Composite 53** _(each 0-100)_  
+**Scores:** Newness 23 · Novelty 58 · Relevance 65 · Credibility 69 · **Composite 53** _(each 0-100)_  
 **Tags:** `agent-swarm`, `sandbox-escape`, `exfiltration`, `tradecraft`, `artex`, `talos`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: Existing entries cover the OpenAI and Hugging Face evaluation incident and its guardrail and sandbox lessons, but not the step-by-step urlquery and base64-host extraction chain or its transfer to ARTEX.
 

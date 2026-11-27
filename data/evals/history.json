@@ -1544,6 +1544,44 @@
       "cost_basis": "measured",
       "ceiling_usd": 20.3422,
       "cap_usd": 20.0
+    },
+    {
+      "run_id": "local-20261127T173005Z-3871",
+      "date": "2026-11-27",
+      "runner": "local",
+      "candidates": 138,
+      "stories": 22,
+      "kept": 7,
+      "kept_ratio": 0.318,
+      "recall": {
+        "recall": 0.609,
+        "independent_recall": 0.609,
+        "curator_recall": {
+          "ghsa": {
+            "recall": 0.182,
+            "independent_recall": 0.182
+          },
+          "kev": {
+            "recall": 1.0,
+            "independent_recall": 1.0
+          }
+        },
+        "week": "2026-W48",
+        "generated": "2026-11-27T17:49:01+00:00",
+        "passed": false,
+        "errors": 0,
+        "file": "recall.json",
+        "stale": false
+      },
+      "golden": null,
+      "integrity": {
+        "passed": true,
+        "problems": 0
+      },
+      "cost_usd": 3.428637164999999,
+      "cost_basis": "measured",
+      "ceiling_usd": 16.0324,
+      "cap_usd": 20.0
     }
   ]
 }

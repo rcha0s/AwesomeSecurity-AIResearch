@@ -24,7 +24,7 @@ MobileProbe is an NDSS 2027 framework for red-teaming mobile GUI agents against 
 
 **Topic:** AI Security  ·  **Domain:** Red-Teaming & Threat Modeling  
 **Source:** [NDSS (via arXiv)](http://arxiv.org/abs/2611.16693v1)  ·  **Retrieved:** 2026-11-13  
-**Scores:** Newness 24 · Novelty 55 · Relevance 75 · Credibility 72 · **Composite 56** _(each 0-100)_  
+**Scores:** Newness 23 · Novelty 55 · Relevance 75 · Credibility 72 · **Composite 56** _(each 0-100)_  
 **Tags:** `prompt-injection`, `indirect-prompt-injection`, `gui-agents`, `mobile-agents`, `red-teaming`, `evals`, `computer-use`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: EIA (Liao et al. 2024, environmental injection on web agents); AEIA-MN and pop-up attacks on VLM computer agents, all fixed-step. New: trajectory-aware injection placement, automated attack-surface discovery, and the coverage critique of fixed-step benchmarks.
 
