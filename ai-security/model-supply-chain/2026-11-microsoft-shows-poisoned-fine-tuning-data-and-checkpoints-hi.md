@@ -25,7 +25,7 @@ Microsoft Defender Research poisoned about 1% of a terminal-agent fine-tuning se
 
 **Topic:** AI Security  ·  **Domain:** Model Supply Chain & Theft  
 **Source:** [Microsoft Security Blog](https://www.microsoft.com/en-us/security/blog/2026/11/12/trained-to-betray-how-post-training-supply-chain-attacks-hijack-coding-agents/)  ·  **Retrieved:** 2026-11-13  
-**Scores:** Newness 23 · Novelty 55 · Relevance 85 · Credibility 69 · **Composite 58** _(each 0-100)_  
+**Scores:** Newness 22 · Novelty 55 · Relevance 85 · Credibility 69 · **Composite 58** _(each 0-100)_  
 **Tags:** `backdoor`, `data-poisoning`, `model-supply-chain`, `coding-agents`, `fine-tuning`, `tool-use`, `open-weights`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: ProjectDiscovery's LoRA-poisoned Qwen that made Codex CLI exfiltrate .env files (fixed payload, one harness); Microsoft's Lazarus neuron-edit backdoor; Anthropic sleeper agents. New here: dataset-level poisoning that teaches tool discovery across harnesses, paraphrase generalization, SFT then RL to restore utility, and the reasoning-trace ablation.
 

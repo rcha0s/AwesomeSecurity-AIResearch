@@ -19,7 +19,7 @@ Anthropic migrated its Messages API from Python to Rust, with Claude writing a f
 
 **Topic:** AI Research  ·  **Domain:** Work Efficiency  
 **Source:** [Anthropic Research](https://www.anthropic.com/research/migrating-api-to-rust)  ·  **Retrieved:** 2026-11-26  
-**Scores:** Newness 23 · Novelty 60 · Relevance 70 · Credibility 68 · **Composite 55** _(each 0-100)_  
+**Scores:** Newness 22 · Novelty 60 · Relevance 70 · Credibility 68 · **Composite 55** _(each 0-100)_  
 **Tags:** `verification`, `migration`, `shadow-testing`, `agent-loops`, `rust`, `anthropic`  
 **Source-checked (automated):** the lesson quotes were found in the source and a second model pass did not refute them (not human review) · closest prior art: GitHub Scientist-style production shadowing (cited by the source) and Bun's Zig-to-Rust port; no equivalent in data/ for production-traffic shadow verification with fingerprinted diffs driving agent fix loops.
 
